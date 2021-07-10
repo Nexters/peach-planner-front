@@ -15,28 +15,28 @@ const Cards = [
   },
   {
     img: img2,
-    planner: '송영주 플래너',
-    company: '아이니웨딩'
+    planner: '이윤경 플래너',
+    company: '베리굿웨딩'
   },
   {
     img: img3,
-    planner: '송영주 플래너',
-    company: '아이니웨딩'
+    planner: '정화진 플래너',
+    company: '베리굿웨딩'
   },
   {
     img: img4,
-    planner: '송영주 플래너',
-    company: '아이니웨딩'
+    planner: '성시란 플래너',
+    company: '르웨딩플랜'
   },
   {
     img: img5,
-    planner: '송영주 플래너',
-    company: '아이니웨딩'
+    planner: '마이퍼스트레이디',
+    company: '스튜디오'
   },
   {
     img: img6,
-    planner: '송영주 플래너',
-    company: '아이니웨딩'
+    planner: '루나',
+    company: '스튜디오'
   }
 ];
 

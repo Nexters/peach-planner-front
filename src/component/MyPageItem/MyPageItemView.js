@@ -28,6 +28,7 @@ export const MyPageButton = styled.button`
   text-align: center;
   box-sizing: ${(props) => props.box || 'border-box'};
   cursor: pointer;
+  margin: ${(props) => props.margin || '0'};
 `;
 
 export const FlexDiv = styled.div`
@@ -130,4 +131,17 @@ export const CardImg = styled.img.attrs((props) => ({
   height: ${(props) => props.height || '130px'};
   width: ${(props) => props.width || '130px'};
   border-radius: 10px;
+`;
+
+export const EnterpriseDiv = styled.div`
+  height: 270px;
+  width: 430px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 #adb5bd;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 26px;
 `;

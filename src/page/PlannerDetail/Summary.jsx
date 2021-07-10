@@ -12,7 +12,7 @@ const Summary = () => {
 
   return (
     <$.Container>
-      <$.ImageContainer>Image?</$.ImageContainer>
+      <$.ImageContainer></$.ImageContainer>
       <$.InformationContainer>
         <$.InnerContainer>
           <$.NameContainer>
@@ -20,11 +20,11 @@ const Summary = () => {
             <div>HEART {HEART_COUNT}</div>
           </$.NameContainer>
           <$.CompanyName>{COMPANY_NAME}</$.CompanyName>
-          <HorizontalLine top={12} bottom={15} />
+          <HorizontalLine top="12px" bottom="15px" />
 
           <$.BoldGray>플래너 한줄소개</$.BoldGray>
           <$.OneLine>{ONE_LINE}</$.OneLine>
-          <HorizontalLine top={36} bottom={11} />
+          <HorizontalLine top="36px" bottom="11px" />
 
           <$.BoldGray>소셜미디어</$.BoldGray>
           <p>아이콘 추가하기~ </p>
@@ -32,7 +32,7 @@ const Summary = () => {
           <PButton color="pink">견적 요청하기</PButton>
           <$.ButtonContainer>
             <PButton>1:1 문의하기</PButton>
-            <PButton>찜하기</PButton>
+            <PButton>하트 아이콘! 찜하기</PButton>
           </$.ButtonContainer>
         </$.InnerContainer>
       </$.InformationContainer>

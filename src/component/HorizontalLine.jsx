@@ -10,6 +10,6 @@ export default HorizontalLine;
 const Line = styled.hr`
   color: #dee2e6;
   width: 100%;
-  ${({ top }) => `margin-top: ${top}px;`}
-  ${({ bottom }) => `margin-bottom: ${bottom}px;`}
+  ${({ top }) => `margin-top: ${top};`}
+  ${({ bottom }) => `margin-bottom: ${bottom};`}
 `;

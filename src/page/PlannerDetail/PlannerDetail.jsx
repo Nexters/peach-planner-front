@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import CompanyInfo from './CompanyInfo';
 import Detail from './Detail';
 import PlannerInfo from './PlannerInfo';
 import Summary from './Summary';
@@ -10,6 +11,7 @@ const PlannerDetail = () => {
       <Summary />
       <Detail />
       <PlannerInfo />
+      <CompanyInfo />
     </Container>
   );
 };

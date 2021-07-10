@@ -4,6 +4,7 @@ import PlannerDetail from './page/PlannerDetail/PlannerDetail';
 import Login from './page/User/Login/Login';
 import PrivateRoute from './routes/PrivateRoute';
 import UserPage from './page/User/MyPage/UserPage';
+import PlannerPage from './page/User/MyPage/PlannerPage';
 import '../src/styles/reset.css';
 
 const App = () => {
@@ -21,6 +22,9 @@ const App = () => {
         </Route>
         <Route path="/userPage">
           <UserPage />
+        </Route>
+        <Route path="/plannerPage">
+          <PlannerPage />
         </Route>
       </Switch>
     </BrowserRouter>

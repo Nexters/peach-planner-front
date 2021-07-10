@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CompanyInfo from './CompanyInfo';
 import Detail from './Detail';
+import PartnerInfo from './PartnerInfo';
 import PlannerInfo from './PlannerInfo';
 import Summary from './Summary';
 
@@ -12,6 +13,7 @@ const PlannerDetail = () => {
       <Detail />
       <PlannerInfo />
       <CompanyInfo />
+      <PartnerInfo />
     </Container>
   );
 };

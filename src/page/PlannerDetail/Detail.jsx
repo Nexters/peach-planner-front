@@ -7,8 +7,8 @@ const Detail = () => {
 
   return (
     <Container title="플래너가 담당해요">
-      {DETAIL_LIST.map((detail) => (
-        <DetailItem>체크! {detail}</DetailItem>
+      {DETAIL_LIST.map((detail, i) => (
+        <DetailItem key={i}>체크! {detail}</DetailItem>
       ))}
     </Container>
   );

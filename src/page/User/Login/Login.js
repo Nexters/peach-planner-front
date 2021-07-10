@@ -28,7 +28,13 @@ const Login = () => {
           로그인
         </$.LogInButton>
         <$.FlexDiv margin="8px 0 40px 0" justify="flex-end">
-          <$.LoginSpan weight="normal">이메일 / 비밀번호 찾기</$.LoginSpan>
+          <$.LoginSpan weight="normal" cursor="pointer">
+            이메일
+          </$.LoginSpan>
+          {' / '}
+          <$.LoginSpan weight="normal" cursor="pointer">
+            비밀번호 찾기
+          </$.LoginSpan>
         </$.FlexDiv>
         <$.FlexDiv>
           <$.LoginSpan weight="normal">SNS 계정으로 로그인</$.LoginSpan>
@@ -47,14 +53,16 @@ const Login = () => {
           width="312px"
           height="40px"
         >
-          <$.LoginSpan color="#E64980" weight="normal">
+          <$.LoginSpan color="#E64980" weight="normal" cursor="pointer">
             계정이 없으신가요?{' '}
           </$.LoginSpan>
-          <$.LoginSpan color="#E64980">회원가입 하기</$.LoginSpan>
+          <$.LoginSpan color="#E64980" cursor="pointer">
+            회원가입 하기
+          </$.LoginSpan>
         </$.LogInButton>
         <$.FlexDiv>
           <$.LoginSpan weight="normal">플래너이신가요?</$.LoginSpan>
-          <$.LoginSpan color="#E64980" weight="normal">
+          <$.LoginSpan color="#E64980" weight="normal" cursor="pointer">
             플래너 등록
           </$.LoginSpan>
         </$.FlexDiv>

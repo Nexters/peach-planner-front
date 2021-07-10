@@ -10,6 +10,7 @@ export const LoginSpan = styled.span`
   letter-spacing: 0;
   line-height: 20px;
   font-weight: ${(props) => props.weight || 'bold'};
+  cursor: ${(props) => props.cursor || 'default'};
 `;
 
 export const Input = styled.input.attrs({ type: 'text' })`

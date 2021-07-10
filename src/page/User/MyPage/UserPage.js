@@ -35,7 +35,7 @@ const UserPage = () => {
 
   return (
     <$.FlexDiv justify="flex-start">
-      <$.FlexDiv direction="column" width="500px">
+      <$.FlexDiv justify="flex-start" direction="column" width="500px">
         <$.ProfileDiv>
           <$.ProfileImgBox></$.ProfileImgBox>
           <$.MyPageSpan color="#212529">홍길동</$.MyPageSpan>
@@ -53,7 +53,7 @@ const UserPage = () => {
           })}
         </$.SideMenuDiv>
       </$.FlexDiv>
-      <$.FlexDiv direction="column" width="1000px">
+      <$.FlexDiv justify="flex-start" direction="column" width="1000px">
         {selectedItem === '' && (
           <>
             <Heart />

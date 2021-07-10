@@ -9,6 +9,7 @@ export const MyPageItemSpan = styled.span`
   line-height: 20px;
   font-weight: ${(props) => props.weight || 'bold'};
   cursor: ${(props) => props.cursor || 'default'};
+  margin: ${(props) => props.margin || '0'};
 `;
 
 export const MyPageButton = styled.button`
@@ -97,11 +98,36 @@ export const More = styled.span`
   line-height: 19px;
 `;
 
+export const Table = styled.table`
+  border-collapse: collapse;
+`;
+
+export const THead = styled.thead``;
+
+export const TBody = styled.tbody``;
+
+export const TR = styled.tr`
+  border-top: 1px solid #212529;
+  border-bottom: 1px solid #212529;
+  border-collapse: collapse;
+  height: ${(props) => props.height || '64px'};
+`;
+
+export const TH = styled.th`
+  width: ${(props) => props.width || '480px'};
+  text-align: center;
+`;
+
+export const TD = styled.td`
+  width: ${(props) => props.width || '480px'};
+  text-align: center;
+`;
+
 export const CardImg = styled.img.attrs((props) => ({
   src: props.src
 }))`
   cursor: pointer;
-  height: 130px;
-  width: 130px;
+  height: ${(props) => props.height || '130px'};
+  width: ${(props) => props.width || '130px'};
   border-radius: 10px;
 `;

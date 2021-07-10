@@ -38,6 +38,7 @@ export const FlexDiv = styled.div`
   align-items: ${(props) => props.align || 'center'};
   flex-direction: ${(props) => props.direction || 'row'};
   margin: ${(props) => props.margin || '20px 0'};
+  height: 100vh;
 `;
 
 export const ProfileDiv = styled.div`

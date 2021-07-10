@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Main from './page/Home/Main/Main';
+import PlannerDetail from './page/PlannerDetail/PlannerDetail';
 import Login from './page/User/Login/Login';
 import PrivateRoute from './routes/PrivateRoute';
 
@@ -7,8 +7,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          <Main />
+        <Route exact path="/"></Route>
+        <Route path="/detail">
+          <PlannerDetail />
         </Route>
         <Route path="/login">
           <Login />

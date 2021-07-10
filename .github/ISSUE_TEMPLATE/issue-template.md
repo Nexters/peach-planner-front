@@ -1,7 +1,7 @@
 ---
 name: Issue Template
 about: 이슈 템플릿
-title: "#[ISSUE_NUMBER] [ISSUE NAME]"
+title: "[이슈 제목]"
 labels: ''
 assignees: ''
 

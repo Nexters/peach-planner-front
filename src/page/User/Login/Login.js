@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as $ from './LoginView';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <$.FlexDiv>
       <$.LoginPageBox>
@@ -12,14 +15,14 @@ const Login = () => {
         </$.FlexDiv>
         <$.FlexDiv justify="flex-start" align="flex-start" direction="column" margin="10px 0">
           <$.LoginSpan weight="normal">이메일</$.LoginSpan>
-          <$.Input placeholder="이메일을 입력해 주세요." />
+          <$.Input placeholder="이메일을 입력해 주세요." type="email" id="inputEmail" />
           <$.LoginSpan color="#E03131" size="12px" weight="normal">
             이메일 형식이 유효하지 않습니다.
           </$.LoginSpan>
         </$.FlexDiv>
         <$.FlexDiv justify="flex-start" align="flex-start" direction="column" margin="10px 0">
           <$.LoginSpan weight="normal">비밀번호</$.LoginSpan>
-          <$.Input placeholder="비밀번호를 입력해 주세요." />
+          <$.Input placeholder="비밀번호를 입력해 주세요." type="password" id="inputPassword" />
           <$.LoginSpan color="#E03131" size="12px" weight="normal">
             비밀번호가 일치하지 않습니다.
           </$.LoginSpan>

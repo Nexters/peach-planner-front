@@ -13,7 +13,9 @@ export const LoginSpan = styled.span`
   cursor: ${(props) => props.cursor || 'default'};
 `;
 
-export const Input = styled.input.attrs({ type: 'text' })`
+export const Input = styled.input.attrs((props) => ({
+  type: props.type || 'text'
+}))`
   box-sizing: border-box;
   height: 41px;
   width: 313px;

@@ -1,4 +1,4 @@
-import BoldTitle from '../../component/BoldTitle';
+import BoldTitle from '../../../component/BoldTitle';
 import styled from 'styled-components';
 
 export const NewTitle = styled(BoldTitle)`

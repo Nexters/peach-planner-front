@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PButton from '../../../component/PButton';
 
 export const Container = styled.div`
   display: flex;
@@ -42,4 +43,13 @@ export const BoldGray = styled.div`
 
 export const OneLine = styled.div`
   font-size: 14px;
+`;
+
+export const ButtonContainer = styled.div`
+  margin-top: 13.5px;
+  display: flex;
+
+  button + button {
+    margin-left: 13px;
+  }
 `;

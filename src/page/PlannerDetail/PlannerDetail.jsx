@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Detail from './Detail';
+import PlannerInfo from './PlannerInfo';
 import Summary from './Summary';
 
 const PlannerDetail = () => {
@@ -8,6 +9,7 @@ const PlannerDetail = () => {
     <Container>
       <Summary />
       <Detail />
+      <PlannerInfo />
     </Container>
   );
 };

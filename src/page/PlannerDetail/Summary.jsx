@@ -1,5 +1,5 @@
 import React from 'react';
-import * as $ from './SummaryView';
+import * as $ from './view/SummaryView';
 import BoldTitle from '../../component/BoldTitle';
 import HorizontalLine from '../../component/HorizontalLine';
 import PButton from '../../component/PButton';
@@ -30,8 +30,10 @@ const Summary = () => {
           <p>아이콘 추가하기~ </p>
 
           <PButton color="pink">견적 요청하기</PButton>
-          <PButton>1:1 문의하기</PButton>
-          <PButton>찜하기</PButton>
+          <$.ButtonContainer>
+            <PButton>1:1 문의하기</PButton>
+            <PButton>찜하기</PButton>
+          </$.ButtonContainer>
         </$.InnerContainer>
       </$.InformationContainer>
     </$.Container>

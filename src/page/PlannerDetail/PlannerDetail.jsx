@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import Detail from './Detail';
 import Summary from './Summary';
 
 const PlannerDetail = () => {
   return (
     <Container>
       <Summary />
+      <Detail />
     </Container>
   );
 };

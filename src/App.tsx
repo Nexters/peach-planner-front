@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Login from './page/Login';
+import Login from './page/User/Login/Login';
 
 const App = () => {
   return (

@@ -1,13 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import PartnerItem from './PartnerItem';
+import { ReactComponent as LeftArrow } from '../../assets/svg/ic_arrow_left.svg';
+import { ReactComponent as RightArrow } from '../../assets/svg/ic_arrow_right.svg';
 
 const PartnerRow = ({ info }) => {
   return (
     <Container>
       <TopContainer>
         <Title>{info.title}</Title>
-        <div>더보기, 화살표 아이콘</div>
+        <TopRightContainer>
+          <ViewMore>더 보기</ViewMore>
+          <LeftArrow />
+          <RightArrow />
+        </TopRightContainer>
       </TopContainer>
       <BottomContainer>
         {info.data.map((item, i) => (
@@ -34,6 +40,19 @@ const Title = styled.div`
   font-size: 16px;
   color: #495057;
   font-weight: bold;
+`;
+
+const TopRightContainer = styled.div`
+  display: flex;
+
+  svg {
+    margin-left: 8px;
+  }
+`;
+
+const ViewMore = styled.div`
+  text-decoration: underline;
+  margin-right: 16px;
 `;
 
 const BottomContainer = styled.div`

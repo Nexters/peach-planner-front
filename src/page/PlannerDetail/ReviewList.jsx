@@ -20,8 +20,8 @@ const ReviewList = () => {
 
   return (
     <Container title={`리뷰 (${REVIEW_COUNT})`}>
-      {REVIEW_DATA.map((data) => (
-        <Review data={data} />
+      {REVIEW_DATA.map((data, i) => (
+        <Review data={data} key={i} />
       ))}
     </Container>
   );

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as $ from './MyPageView';
+import Heart from '../../../component/MyPageItem/Heart';
+import Estimate from '../../../component/MyPageItem/Estimate';
 
 const sideMenuItem = [
   {
@@ -25,9 +27,15 @@ const sideMenuItem = [
 ];
 
 const UserPage = () => {
+  const [selectedItem, setSelectedItem] = useState('');
+
+  const handleSideMenuItem = (item) => {
+    setSelectedItem(item);
+  };
+
   return (
     <$.FlexDiv justify="flex-start">
-      <$.FlexDiv direction="column">
+      <$.FlexDiv direction="column" width="500px">
         <$.ProfileDiv>
           <$.ProfileImgBox></$.ProfileImgBox>
           <$.MyPageSpan color="#212529">홍길동</$.MyPageSpan>
@@ -41,11 +49,20 @@ const UserPage = () => {
           </$.MyPageSpan>
           <$.Line />
           {sideMenuItem.map((item) => {
-            return <$.SideMenuItem>{item.name}</$.SideMenuItem>;
+            return <$.SideMenuItem onClick={() => handleSideMenuItem(item.value)}>{item.name}</$.SideMenuItem>;
           })}
         </$.SideMenuDiv>
       </$.FlexDiv>
-      <$.FlexDiv direction="column"></$.FlexDiv>
+      <$.FlexDiv direction="column" width="1000px">
+        {selectedItem === '' && (
+          <>
+            <Heart />
+            <Estimate />
+          </>
+        )}
+        {selectedItem === 'heart' && <Heart />}
+        {selectedItem === 'estimate' && <Estimate />}
+      </$.FlexDiv>
     </$.FlexDiv>
   );
 };

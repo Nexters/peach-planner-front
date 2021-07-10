@@ -11,6 +11,7 @@ export const MyPageSpan = styled.span`
   line-height: 20px;
   font-weight: ${(props) => props.weight || 'bold'};
   cursor: ${(props) => props.cursor || 'default'};
+  margin: ${(props) => props.margin || '0'};
 `;
 
 export const MyPageButton = styled.button`
@@ -38,7 +39,7 @@ export const FlexDiv = styled.div`
   align-items: ${(props) => props.align || 'center'};
   flex-direction: ${(props) => props.direction || 'row'};
   margin: ${(props) => props.margin || '20px 0'};
-  height: 100vh;
+  height: ${(props) => props.height || '100vh'};
 `;
 
 export const ProfileDiv = styled.div`

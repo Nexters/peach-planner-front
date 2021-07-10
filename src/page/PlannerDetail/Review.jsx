@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import HorizontalLine from '../../component/HorizontalLine';
+import { ReactComponent as AccountDefault } from '../../assets/svg/ic_account_default.svg';
 
 const Review = ({ data }) => {
   return (
     <>
       <Container>
-        <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs33kicMrwTO3bQTdskuUlvJRK9JAgmaGjZw&usqp=CAU" />
+        <AccountDefault />
+        {/* <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs33kicMrwTO3bQTdskuUlvJRK9JAgmaGjZw&usqp=CAU" /> */}
         <RightContainer>
           <Name>{data.name}</Name>
           <Date>{data.date}</Date>
@@ -28,10 +30,11 @@ const Container = styled.div`
 const Image = styled.img`
   width: 53.33px;
   height: 53.33px;
-  margin-right: 20px;
 `;
 
-const RightContainer = styled.div``;
+const RightContainer = styled.div`
+  margin-left: 20px;
+`;
 
 const Name = styled.div`
   font-size: 14px;

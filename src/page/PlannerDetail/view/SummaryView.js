@@ -29,6 +29,14 @@ export const NameContainer = styled.div`
   }
 `;
 
+export const HeartContainer = styled.div`
+  display: flex;
+
+  svg {
+    margin-right: 5px;
+  }
+`;
+
 export const CompanyName = styled.div`
   color: #e64980;
   font-size: 16px;
@@ -39,6 +47,15 @@ export const BoldGray = styled.div`
   margin-bottom: 4px;
   font-size: 13px;
   color: #868e96;
+`;
+
+export const SocialIcon = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+
+  svg + svg {
+    margin-left: 9px;
+  }
 `;
 
 export const OneLine = styled.div`

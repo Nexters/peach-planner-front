@@ -4,6 +4,8 @@ import CompanyInfo from './CompanyInfo';
 import Detail from './Detail';
 import PartnerInfo from './PartnerInfo';
 import PlannerInfo from './PlannerInfo';
+import QuestionAnswer from './QuestionAnswer';
+import ReviewList from './ReviewList';
 import Summary from './Summary';
 
 const PlannerDetail = () => {
@@ -14,6 +16,8 @@ const PlannerDetail = () => {
       <PlannerInfo />
       <CompanyInfo />
       <PartnerInfo />
+      <ReviewList />
+      <QuestionAnswer />
     </Container>
   );
 };

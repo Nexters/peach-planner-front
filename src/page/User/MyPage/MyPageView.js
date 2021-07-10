@@ -32,7 +32,7 @@ export const MyPageButton = styled.button`
 `;
 
 export const FlexDiv = styled.div`
-  width: 100%;
+  width: ${(props) => props.width || '100%'};
   display: flex;
   justify-content: ${(props) => props.justify || 'center'};
   align-items: ${(props) => props.align || 'center'};

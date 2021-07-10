@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import background from '../../../image/main_background.png';
 
-interface DivProps {
+export interface DivProps {
   height?: string;
   width?: string;
   margin?: string;
@@ -14,7 +14,7 @@ interface DivisionBoxProps {
   marginBottom: number;
 }
 
-interface ImageProps {
+export interface ImageProps {
   src: string;
   height: string;
   width: string;
@@ -101,7 +101,7 @@ export const Tag = styled.div`
   align-items: center;
 `;
 
-export const Footer = styled.div`
+export const FooterDiv = styled.div`
   height: 154px;
   width: 1440px;
   border-top: 1px solid;

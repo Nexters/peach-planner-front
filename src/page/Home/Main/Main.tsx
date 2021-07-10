@@ -1,4 +1,4 @@
-import { Image, DivisionBox, Title, FlexDiv, TopBox, Content, Tag, Footer } from './MainView';
+import { Image, DivisionBox, Title, FlexDiv, TopBox, Content, Tag } from './MainView';
 import planner1 from '../../../image/planner1.png';
 import planner2 from '../../../image/planner2.png';
 import planner3 from '../../../image/planner3.png';
@@ -6,7 +6,17 @@ import snap1 from '../../../image/snap1.png';
 import snap2 from '../../../image/snap2.png';
 import snap3 from '../../../image/snap3.png';
 import snap4 from '../../../image/snap4.png';
-import logo from '../../../image/logo.svg';
+import dummy1 from '../../../image/dummy/dummy1.png';
+import dummy2 from '../../../image/dummy/img_wedding_2.png';
+import dummy3 from '../../../image/dummy/img_wedding_3.png';
+import dummy4 from '../../../image/dummy/img_wedding_4.png';
+import dummy5 from '../../../image/dummy/img_wedding_5.png';
+import dummy6 from '../../../image/dummy/img_wedding_6.png';
+import dummy7 from '../../../image/dummy/img_wedding_7.png';
+import dummy8 from '../../../image/dummy/img_wedding_8.png';
+
+import PlannerCard from '../PlannerCard';
+import Footer from '../../common/Footer';
 
 const Main = () => {
   return (
@@ -22,14 +32,48 @@ const Main = () => {
           </Content>
         </FlexDiv>
       </TopBox>
-      <FlexDiv width={'1100px'} margin={'40px 0 0 0'}>
+      <FlexDiv width={'1100px'} margin={'40px 0 0 0'} direction="column">
         <DivisionBox marginBottom={8}>
           <Title height={'29px'} width={'97px'} fontSize={'20px'} lineHeight={'29px'}>
             신규 플래너
           </Title>
         </DivisionBox>
+        <FlexDiv direction="row">
+          <PlannerCard
+            imagePath={dummy1}
+            heartCount={12}
+            reviewCount={24}
+            name={'송영주'}
+            organization={'아이니웨딩'}
+            region={'서울,경기'}
+          ></PlannerCard>
+          <PlannerCard
+            imagePath={dummy2}
+            heartCount={12}
+            reviewCount={24}
+            name={'이윤정'}
+            organization={'베리굿웨딩'}
+            region={'서울,경기'}
+          ></PlannerCard>
+          <PlannerCard
+            imagePath={dummy3}
+            heartCount={12}
+            reviewCount={24}
+            name={'정화진'}
+            organization={'베리굿웨딩'}
+            region={'서울,경기'}
+          ></PlannerCard>
+          <PlannerCard
+            imagePath={dummy4}
+            heartCount={12}
+            reviewCount={24}
+            name={'성시란'}
+            organization={'르웨딩플랜'}
+            region={'서울,경기'}
+          ></PlannerCard>
+        </FlexDiv>
       </FlexDiv>
-      <FlexDiv width={'1100px'} margin={'0'} direction="column">
+      <FlexDiv width={'1100px'} margin={'54px 0 0 0'} direction="column">
         <DivisionBox marginBottom={27}>
           <Title height={'29px'} width={'97px'} fontSize={'20px'} lineHeight={'29px'}>
             인기 플래너
@@ -41,12 +85,46 @@ const Main = () => {
           <Image height={'258px'} width={'458px'} margin={'0 28px 0 0'} src={planner1}></Image>
         </FlexDiv>
       </FlexDiv>
-      <FlexDiv width={'1100px'} margin={'64px 0 0 0'} direction="row">
+      <FlexDiv width={'1100px'} margin={'64px 0 0 0'} direction="column">
         <DivisionBox marginBottom={8}>
           <Title height={'29px'} width={'97px'} fontSize={'20px'} lineHeight={'29px'}>
             추천 플래너
           </Title>
         </DivisionBox>
+        <FlexDiv direction="row">
+          <PlannerCard
+            imagePath={dummy5}
+            heartCount={12}
+            reviewCount={24}
+            name={'송영주'}
+            organization={'아이니웨딩'}
+            region={'서울,경기'}
+          ></PlannerCard>
+          <PlannerCard
+            imagePath={dummy6}
+            heartCount={12}
+            reviewCount={24}
+            name={'이윤정'}
+            organization={'베리굿웨딩'}
+            region={'서울,경기'}
+          ></PlannerCard>
+          <PlannerCard
+            imagePath={dummy7}
+            heartCount={12}
+            reviewCount={24}
+            name={'정화진'}
+            organization={'베리굿웨딩'}
+            region={'서울,경기'}
+          ></PlannerCard>
+          <PlannerCard
+            imagePath={dummy8}
+            heartCount={12}
+            reviewCount={24}
+            name={'성시란'}
+            organization={'르웨딩플랜'}
+            region={'서울,경기'}
+          ></PlannerCard>
+        </FlexDiv>
       </FlexDiv>
       <FlexDiv width={'1100px'} margin={'40px 0 0 0'} direction="column">
         <DivisionBox marginBottom={8}>
@@ -136,27 +214,8 @@ const Main = () => {
             </FlexDiv>
           </FlexDiv>
         </FlexDiv>
+        <Footer></Footer>
       </FlexDiv>
-      <Footer>
-        <FlexDiv margin={'36px 170px 0 170px'} align="start" direction="column">
-          <Image height={'24.55px'} width={'140.58px'} margin={'0'} src={logo}></Image>
-          <FlexDiv margin={'37px 0 0 0'} justify="space-between" align="start" direction="row">
-            <FlexDiv margin={'0'} justify="start" align="start" direction="row">
-              <Content height={'22px'} width={'52px'} color={'#343A40'} fontSize={'14px'} lineHeight={'22px'}>
-                이용약관
-              </Content>
-              <Content height={'22px'} width={'102px'} color={'#343A40'} fontSize={'14px'} lineHeight={'22px'}>
-                개인정보처리방침
-              </Content>
-            </FlexDiv>
-            <FlexDiv margin={'0'} justify="start" align="start" direction="row">
-              <Content height={'22px'} width={'278px'} color={'#495057'} fontSize={'5px'} lineHeight={'22px'}>
-                COPYRIGHT© Peachplanner ALL RIGHT RESERVED
-              </Content>
-            </FlexDiv>
-          </FlexDiv>
-        </FlexDiv>
-      </Footer>
     </FlexDiv>
   );
 };

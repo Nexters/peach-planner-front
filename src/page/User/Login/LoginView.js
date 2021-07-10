@@ -13,18 +13,7 @@ export const LoginSpan = styled.span`
   cursor: ${(props) => props.cursor || 'default'};
 `;
 
-export const Input = styled.input.attrs((props) => ({
-  type: props.type || 'text'
-}))`
-  box-sizing: border-box;
-  height: 41px;
-  width: 313px;
-  border: 1px solid #ced4da;
-  border-radius: 3px;
-  color: #adb5bd;
-  font-family: SpoqaHanSans;
-  font-size: 13px;
-`;
+export const Form = styled.form``;
 
 export const LogInButton = styled.button`
   height: ${(props) => props.height || '48px'};
@@ -51,4 +40,17 @@ export const FlexDiv = styled.div`
   align-items: ${(props) => props.align || 'center'};
   flex-direction: ${(props) => props.direction || 'row'};
   margin: ${(props) => props.margin || '20px 0'};
+`;
+
+export const Input = styled.input.attrs((props) => ({
+  type: props.type || 'text'
+}))`
+  box-sizing: border-box;
+  height: 41px;
+  width: 313px;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  color: #adb5bd;
+  font-family: SpoqaHanSans;
+  font-size: 13px;
 `;

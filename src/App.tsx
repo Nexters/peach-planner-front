@@ -8,10 +8,12 @@ import UserPage from './page/User/MyPage/UserPage';
 import PlannerPage from './page/User/MyPage/PlannerPage';
 // import '../src/styles/reset.css';
 import GlobalStyle from './styles/globalStyle';
+import theme from './styles/theme';
+import { ThemeProvider } from 'styled-components';
 
 const App = () => {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
       <BrowserRouter>
         <Switch>
@@ -35,7 +37,7 @@ const App = () => {
           </Route>
         </Switch>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 };
 

@@ -15,7 +15,7 @@ export const MyPageButton = styled.button`
   height: ${(props) => props.height || '48px'};
   width: ${(props) => props.width || '48px'};
   border-radius: ${(props) => props.radius || '100%'};
-  background-color: ${(props) => props.background || '#e64980'};
+  background-color: ${(props) => props.background || props.theme.colors.pink};
   outline: none;
   border: ${(props) => props.border || 'none'};
   color: ${(props) => props.color || '#ffffff'};

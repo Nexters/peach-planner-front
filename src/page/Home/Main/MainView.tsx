@@ -67,7 +67,6 @@ export const Title = styled.div<TitleProps>`
   height: ${(props: TitleProps) => props.height};
   width: ${(props: TitleProps) => props.width};
   color: #000000;
-  font-family: SpoqaHanSans;
   font-size: ${(props: TitleProps) => props.fontSize};
   font-weight: bold;
   letter-spacing: 0;

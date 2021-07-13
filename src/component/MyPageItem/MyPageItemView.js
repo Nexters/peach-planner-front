@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const MyPageItemSpan = styled.span`
   height: 19px;
   color: ${(props) => props.color || '#000000'};
-  font-family: SpoqaHanSans;
   font-size: ${(props) => props.size || '16px'};
   letter-spacing: 0;
   line-height: 20px;
@@ -20,7 +19,6 @@ export const MyPageButton = styled.button`
   outline: none;
   border: ${(props) => props.border || 'none'};
   color: ${(props) => props.color || '#ffffff'};
-  font-family: SpoqaHanSans;
   font-size: 14px;
   font-weight: bold;
   letter-spacing: 0;
@@ -93,7 +91,6 @@ export const More = styled.span`
   text-decoration: underline;
   height: 19px;
   color: #000000;
-  font-family: SpoqaHanSans;
   font-size: 13px;
   letter-spacing: 0;
   line-height: 19px;

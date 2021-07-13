@@ -6,32 +6,36 @@ import PlannerEstimate from './page/PlannerEstimate/PlannerEstimate';
 import PrivateRoute from './routes/PrivateRoute';
 import UserPage from './page/User/MyPage/UserPage';
 import PlannerPage from './page/User/MyPage/PlannerPage';
-import '../src/styles/reset.css';
+// import '../src/styles/reset.css';
+import GlobalStyle from './styles/globalStyle';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <Main></Main>
-        </Route>
-        <Route path="/detail">
-          <PlannerDetail />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/estimate">
-          <PlannerEstimate />
-        </Route>
-        <Route path="/userPage">
-          <UserPage />
-        </Route>
-        <Route path="/plannerPage">
-          <PlannerPage />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <>
+      <GlobalStyle />
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            <Main></Main>
+          </Route>
+          <Route path="/detail">
+            <PlannerDetail />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/estimate">
+            <PlannerEstimate />
+          </Route>
+          <Route path="/userPage">
+            <UserPage />
+          </Route>
+          <Route path="/plannerPage">
+            <PlannerPage />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 };
 

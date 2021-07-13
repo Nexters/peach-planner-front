@@ -7,10 +7,12 @@ import PrivateRoute from './routes/PrivateRoute';
 import UserPage from './page/User/MyPage/UserPage';
 import PlannerPage from './page/User/MyPage/PlannerPage';
 import '../src/styles/reset.css';
+import Header from './component/Header';
 
 const App = () => {
   return (
     <BrowserRouter>
+      <Header />
       <Switch>
         <Route exact path="/">
           <Main></Main>

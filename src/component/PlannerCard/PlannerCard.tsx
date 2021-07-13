@@ -2,7 +2,7 @@ import heart from '../../image/main/ic_heart.svg';
 import review from '../../image/main/ic_review.svg';
 import blog from '../../image/main/ic_blog.svg';
 import instagram from '../../image/main/ic_instagram.svg';
-import { Content, FlexDiv, ImageBox, Title } from '../GlobalStyledComponent/style';
+import { Content, FlexDiv, ImageBox, Title } from '../CommonStyle/style';
 
 interface PlannerProps {
   width: string;

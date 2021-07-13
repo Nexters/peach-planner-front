@@ -1,10 +1,14 @@
-import { Content, FlexDiv } from '../../../component/GlobalStyledComponent/style';
+import { Content, FlexDiv } from '../../../component/CommonStyle/style';
 
-const SearchSideBarRegion = () => {
+interface Props {
+  region: string;
+}
+
+const SearchSideBarRegion = ({ region }: Props) => {
   return (
-    <FlexDiv justify="flex-start" align="start" direction="column" margin="0">
+    <FlexDiv justify="flex-start" align="start" direction="column" margin="0 0 3px 0">
       <Content height={'18px'} width={'23px'} color={'#000000'} fontSize={'12px'} lineHeight={'18px'}>
-        전체
+        {region}
       </Content>
     </FlexDiv>
   );

@@ -11,7 +11,7 @@ const PButton = ({ color, width, height, fontSize, padding, children }) => {
 
 export default PButton;
 
-const Button = styled.button`
+export const Button = styled.button`
   cursor: pointer;
   border-radius: 3px;
   width: ${({ width }) => width || '100%'};

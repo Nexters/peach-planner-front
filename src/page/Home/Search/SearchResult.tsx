@@ -1,4 +1,4 @@
-import { FlexDiv, HorizontalLine, Title } from '../../../component/GlobalStyledComponent/style';
+import { FlexDiv, HorizontalLine, Title } from '../../../component/CommonStyle/style';
 import PlannerCard from '../../../component/PlannerCard/PlannerCard';
 import dummy1 from '../../../image/dummy/dummy1.png';
 import dummy2 from '../../../image/dummy/img_wedding_2.png';
@@ -19,9 +19,9 @@ const SearchResult = () => {
         <option value="리뷰순">리뷰순</option>
         <option value="커밍순">커밍순</option>
       </select>
-      {[...Array(2)].map(() => {
+      {[...Array(4)].map((value, index) => {
         return (
-          <FlexDiv justify="flex-start" align="start" direction="row" margin="16px 0 32px 0">
+          <FlexDiv key={index} justify="flex-start" align="start" direction="row" margin="16px 0 32px 0">
             <PlannerCard
               margin={'0 12px 0 0'}
               width={'206px'}

@@ -26,13 +26,14 @@ export interface ImageBoxProps {
   height: string;
   width: string;
   margin: string;
+  radius?: string;
 }
 
 export const ImageBox = styled.img.attrs((props: ImageBoxProps) => ({ src: props.src }))`
   height: ${(props: ImageBoxProps) => props.height};
   width: ${(props: ImageBoxProps) => props.width};
   margin: ${(props: ImageBoxProps) => props.margin};
-  border-radius: 10px;
+  border-radius: ${(props: ImageBoxProps) => (props.radius ? props.radius : '10px')};
 `;
 
 interface TitleProps {

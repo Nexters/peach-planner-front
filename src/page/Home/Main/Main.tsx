@@ -17,7 +17,7 @@ import dummy8 from '../../../image/dummy/img_wedding_8.png';
 
 import PlannerCard from '../../../component/PlannerCard/PlannerCard';
 import Footer from '../../common/Footer';
-import { Content, FlexDiv, ImageBox, Title } from '../../../component/GlobalStyledComponent/style';
+import { Content, FlexDiv, ImageBox, Title } from '../../../component/CommonStyle/style';
 
 const Main = () => {
   return (

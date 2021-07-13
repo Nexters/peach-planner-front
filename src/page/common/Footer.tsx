@@ -1,5 +1,5 @@
 import logo from '../../image/logo.svg';
-import { Content, FlexDiv, ImageBox } from '../../component/GlobalStyledComponent/style';
+import { Content, FlexDiv, ImageBox } from '../../component/CommonStyle/style';
 import { FooterDiv } from './FooterView';
 
 const Footer = () => {

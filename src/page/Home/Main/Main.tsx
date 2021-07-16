@@ -1,4 +1,4 @@
-import { Image, DivisionBox, Title, FlexDiv, TopBox, Content, Tag } from './MainView';
+import { DivisionBox, TopBox, Tag } from './MainView';
 import planner1 from '../../../image/planner1.png';
 import planner2 from '../../../image/planner2.png';
 import planner3 from '../../../image/planner3.png';
@@ -15,8 +15,9 @@ import dummy6 from '../../../image/dummy/img_wedding_6.png';
 import dummy7 from '../../../image/dummy/img_wedding_7.png';
 import dummy8 from '../../../image/dummy/img_wedding_8.png';
 
-import PlannerCard from '../PlannerCard';
+import PlannerCard from '../../../component/PlannerCard/PlannerCard';
 import Footer from '../../common/Footer';
+import { Content, FlexDiv, ImageBox, Title } from '../../../component/CommonStyle/style';
 
 const Main = () => {
   return (
@@ -38,8 +39,12 @@ const Main = () => {
             신규 플래너
           </Title>
         </DivisionBox>
-        <FlexDiv direction="row">
+        <FlexDiv justify="flex-start" align="start" direction="row">
           <PlannerCard
+            margin={'0 28px 0 0'}
+            width={'254px'}
+            imageHeight={'254px'}
+            subTextHeight={'150px'}
             imagePath={dummy1}
             heartCount={12}
             reviewCount={24}
@@ -48,6 +53,10 @@ const Main = () => {
             region={'서울,경기'}
           ></PlannerCard>
           <PlannerCard
+            margin={'0 28px 0 0'}
+            width={'254px'}
+            imageHeight={'254px'}
+            subTextHeight={'150px'}
             imagePath={dummy2}
             heartCount={12}
             reviewCount={24}
@@ -56,6 +65,10 @@ const Main = () => {
             region={'서울,경기'}
           ></PlannerCard>
           <PlannerCard
+            margin={'0 28px 0 0'}
+            width={'254px'}
+            imageHeight={'254px'}
+            subTextHeight={'150px'}
             imagePath={dummy3}
             heartCount={12}
             reviewCount={24}
@@ -64,6 +77,10 @@ const Main = () => {
             region={'서울,경기'}
           ></PlannerCard>
           <PlannerCard
+            margin={'0 28px 0 0'}
+            width={'254px'}
+            imageHeight={'254px'}
+            subTextHeight={'150px'}
             imagePath={dummy4}
             heartCount={12}
             reviewCount={24}
@@ -80,9 +97,9 @@ const Main = () => {
           </Title>
         </DivisionBox>
         <FlexDiv margin={'0'} justify="flex-start" direction="row">
-          <Image height={'258px'} width={'458px'} margin={'0 28px 0 0'} src={planner2}></Image>
-          <Image height={'258px'} width={'458px'} margin={'0 28px 0 0'} src={planner3}></Image>
-          <Image height={'258px'} width={'458px'} margin={'0 28px 0 0'} src={planner1}></Image>
+          <ImageBox height={'258px'} width={'458px'} margin={'0 28px 0 0'} src={planner2}></ImageBox>
+          <ImageBox height={'258px'} width={'458px'} margin={'0 28px 0 0'} src={planner3}></ImageBox>
+          <ImageBox height={'258px'} width={'458px'} margin={'0 28px 0 0'} src={planner1}></ImageBox>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv width={'1100px'} margin={'64px 0 0 0'} direction="column">
@@ -91,8 +108,12 @@ const Main = () => {
             추천 플래너
           </Title>
         </DivisionBox>
-        <FlexDiv direction="row">
+        <FlexDiv justify="flex-start" align="start" direction="row">
           <PlannerCard
+            margin={'0 28px 0 0'}
+            width={'254px'}
+            imageHeight={'254px'}
+            subTextHeight={'150px'}
             imagePath={dummy5}
             heartCount={12}
             reviewCount={24}
@@ -101,6 +122,10 @@ const Main = () => {
             region={'서울,경기'}
           ></PlannerCard>
           <PlannerCard
+            margin={'0 28px 0 0'}
+            width={'254px'}
+            imageHeight={'254px'}
+            subTextHeight={'150px'}
             imagePath={dummy6}
             heartCount={12}
             reviewCount={24}
@@ -109,6 +134,10 @@ const Main = () => {
             region={'서울,경기'}
           ></PlannerCard>
           <PlannerCard
+            margin={'0 28px 0 0'}
+            width={'254px'}
+            imageHeight={'254px'}
+            subTextHeight={'150px'}
             imagePath={dummy7}
             heartCount={12}
             reviewCount={24}
@@ -117,6 +146,10 @@ const Main = () => {
             region={'서울,경기'}
           ></PlannerCard>
           <PlannerCard
+            margin={'0 28px 0 0'}
+            width={'254px'}
+            imageHeight={'254px'}
+            subTextHeight={'150px'}
             imagePath={dummy8}
             heartCount={12}
             reviewCount={24}
@@ -134,7 +167,7 @@ const Main = () => {
         </DivisionBox>
         <FlexDiv margin={'0 0 120px 0'} justify="space-between" align="start">
           <FlexDiv margin={'0'} width={'646px'} direction="column">
-            <Image height={'385px'} width={'646px'} margin={'0 28px 0 0'} src={snap1}></Image>
+            <ImageBox height={'385px'} width={'646px'} margin={'0 28px 0 0'} src={snap1}></ImageBox>
             <Title margin={'14px 0 11px 0'} height={'41px'} width={'646px'} fontSize={'28px'} lineHeight={'41px'}>
               자연을 담는 사진가
             </Title>
@@ -164,7 +197,7 @@ const Main = () => {
                   </Tag>
                 </FlexDiv>
               </FlexDiv>
-              <Image height={'120px'} width={'120px'} margin={'0'} src={snap2}></Image>
+              <ImageBox height={'120px'} width={'120px'} margin={'0'} src={snap2}></ImageBox>
             </FlexDiv>
             <FlexDiv margin={'0 0 56px 0'} width={'414px'} justify="space-between" align="start" direction="row">
               <FlexDiv margin={'0'} justify-content="flex-start" align="start" direction="column">
@@ -187,7 +220,7 @@ const Main = () => {
                   </Tag>
                 </FlexDiv>
               </FlexDiv>
-              <Image height={'120px'} width={'120px'} margin={'0'} src={snap3}></Image>
+              <ImageBox height={'120px'} width={'120px'} margin={'0'} src={snap3}></ImageBox>
             </FlexDiv>
             <FlexDiv margin={'0'} width={'414px'} justify="space-between" align="start" direction="row">
               <FlexDiv margin={'0'} justify-content="flex-start" align="start" direction="column">
@@ -210,7 +243,7 @@ const Main = () => {
                   </Tag>
                 </FlexDiv>
               </FlexDiv>
-              <Image height={'120px'} width={'120px'} margin={'0'} src={snap4}></Image>
+              <ImageBox height={'120px'} width={'120px'} margin={'0'} src={snap4}></ImageBox>
             </FlexDiv>
           </FlexDiv>
         </FlexDiv>

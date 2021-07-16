@@ -8,6 +8,7 @@ import UserPage from './page/User/MyPage/UserPage';
 import PlannerPage from './page/User/MyPage/PlannerPage';
 import '../src/styles/reset.css';
 import Header from './component/Header';
+import Search from './page/Home/Search/Search';
 
 const App = () => {
   return (
@@ -15,7 +16,10 @@ const App = () => {
       <Header />
       <Switch>
         <Route exact path="/">
-          <Main></Main>
+          <Main />
+        </Route>
+        <Route path="/search">
+          <Search />
         </Route>
         <Route path="/detail">
           <PlannerDetail />

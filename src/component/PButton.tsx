@@ -7,6 +7,7 @@ interface PBUttonProps {
   height?: string;
   fontSize?: string;
   padding?: string;
+  border?: string;
   onClick?: () => void;
 }
 
@@ -16,11 +17,20 @@ const PButton: FC<PBUttonProps> = ({
   height = 'auto',
   fontSize = '14px',
   padding = '11px',
+  border,
   children,
   onClick
 }) => {
   return (
-    <Button color={color} width={width} height={height} fontSize={fontSize} padding={padding} onClick={onClick}>
+    <Button
+      color={color}
+      width={width}
+      height={height}
+      fontSize={fontSize}
+      padding={padding}
+      border={border}
+      onClick={onClick}
+    >
       {children}
     </Button>
   );
@@ -28,7 +38,13 @@ const PButton: FC<PBUttonProps> = ({
 
 export default PButton;
 
-const Button = styled.button<{ width: string; height: string; padding: string; fontSize: string }>`
+export const Button = styled.button<{
+  width: string;
+  height: string;
+  padding: string;
+  fontSize: string;
+  border: string | undefined;
+}>`
   cursor: pointer;
   border-radius: 3px;
   width: ${({ width }) => width};
@@ -37,5 +53,5 @@ const Button = styled.button<{ width: string; height: string; padding: string; f
   font-size: ${({ fontSize }) => fontSize};
   background-color: ${({ color }) => (color == 'pink' ? '#E64980' : 'white')};
   color: ${({ color }) => (color == 'pink' ? 'white' : 'black')};
-  border: ${({ color }) => (color == 'pink' ? 'none' : '1px solid #adb5bd')};
+  border: ${({ border, color }) => (border ? border : color == 'pink' ? 'none' : '1px solid #adb5bd')};
 `;

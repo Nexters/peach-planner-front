@@ -28,6 +28,8 @@ jobs:
         cache: 'npm'
     - run: npm i
     - run: npm run build
+      env:
+         CI: ""
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:

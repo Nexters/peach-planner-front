@@ -62,6 +62,7 @@ interface ContentProps {
   color: string;
   fontSize: string;
   lineHeight: string;
+  margin?: string;
 }
 
 export const Content = styled.span<ContentProps>`
@@ -70,6 +71,8 @@ export const Content = styled.span<ContentProps>`
   color: ${(props: ContentProps) => props.color};
   font-size: ${(props: ContentProps) => props.fontSize};
   line-height: ${(props: ContentProps) => props.lineHeight};
+  margin: ${(props: ContentProps) => props.margin};
+  -webkit-user-select: none;
 `;
 
 interface HorizontalLineProps {
@@ -84,4 +87,32 @@ export const HorizontalLine = styled.hr<HorizontalLineProps>`
   width: ${(props: HorizontalLineProps) => props.width};
   margin: ${(props: HorizontalLineProps) => props.margin};
   background-color: ${(props: HorizontalLineProps) => props.backgroundColor};
+`;
+
+interface ProfileImageBoxProps {
+  height: string;
+  width: string;
+}
+
+export const ProfileImgBox = styled.div<ProfileImageBoxProps>`
+  height: ${(props: ProfileImageBoxProps) => props.height};
+  width: ${(props: ProfileImageBoxProps) => props.width};
+  background-color: #adb5bd;
+  border-radius: 100%;
+`;
+
+interface BoxProps {
+  height: string;
+  width: string;
+}
+
+export const Box = styled.div<BoxProps>`
+  box-sizing: border-box;
+  height: ${(props: BoxProps) => props.height};
+  width: ${(props: BoxProps) => props.width};
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  display: flex;
+  justify-content: 'center';
+  align-items: 'center';
 `;

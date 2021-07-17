@@ -6,38 +6,36 @@ import PlannerEstimate from './page/PlannerEstimate/PlannerEstimate';
 import PrivateRoute from './routes/PrivateRoute';
 import UserPage from './page/User/MyPage/UserPage';
 import PlannerPage from './page/User/MyPage/PlannerPage';
-// import '../src/styles/reset.css';
-import GlobalStyle from './styles/globalStyle';
-import theme from './styles/theme';
-import { ThemeProvider } from 'styled-components';
+import '../src/styles/reset.css';
+import Search from './page/Home/Search/Search';
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            <Main></Main>
-          </Route>
-          <Route path="/detail">
-            <PlannerDetail />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/estimate">
-            <PlannerEstimate />
-          </Route>
-          <Route path="/userPage">
-            <UserPage />
-          </Route>
-          <Route path="/plannerPage">
-            <PlannerPage />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    </ThemeProvider>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          <Main></Main>
+        </Route>
+        <Route path="/search">
+          <Search></Search>
+        </Route>
+        <Route path="/detail">
+          <PlannerDetail />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/estimate">
+          <PlannerEstimate />
+        </Route>
+        <Route path="/userPage">
+          <UserPage />
+        </Route>
+        <Route path="/plannerPage">
+          <PlannerPage />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 };
 

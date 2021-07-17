@@ -1,12 +1,15 @@
-import styled from 'styled-components';
-import { Content, FlexDiv, Image, Title } from './Main/MainView';
 import heart from '../../image/main/ic_heart.svg';
 import review from '../../image/main/ic_review.svg';
 import blog from '../../image/main/ic_blog.svg';
 import instagram from '../../image/main/ic_instagram.svg';
+import { Content, FlexDiv, ImageBox, Title } from '../CommonStyle/style';
 
 interface PlannerProps {
+  width: string;
   imagePath: string;
+  imageHeight: string;
+  subTextHeight: string;
+  margin: string;
   heartCount: number;
   reviewCount: number;
   name: string;
@@ -16,15 +19,22 @@ interface PlannerProps {
 
 const PlannerCard = (props: PlannerProps) => {
   return (
-    <FlexDiv justify="flex-start" align="start" direction="column" margin={'0'}>
-      <Image src={props.imagePath} height={'254px'} width={'254px'} margin={'0'}></Image>
-      <FlexDiv justify="flex-start" align="start" height="150px" width="254px" margin={'0'} direction="column">
+    <FlexDiv width={props.width} direction="column" margin={props.margin}>
+      <ImageBox src={props.imagePath} height={props.imageHeight} width={props.width} margin={'0'}></ImageBox>
+      <FlexDiv
+        justify="flex-start"
+        align="start"
+        height={props.subTextHeight}
+        width={props.width}
+        margin={'0'}
+        direction="column"
+      >
         <FlexDiv justify="flex-start" margin={'13px 0 0 0'}>
-          <Image src={heart} height={'13.29px'} width={'14.43px'} margin={'0 4px 0 0'}></Image>
+          <ImageBox src={heart} height={'13.29px'} width={'14.43px'} margin={'0 4px 0 0'}></ImageBox>
           <Content height={'18px'} width={'12px'} color={'#868E96'} fontSize={'12px'} lineHeight={'18px'}>
             {props.heartCount}
           </Content>
-          <Image src={review} height={'16px'} width={'16px'} margin={'0 4px 0 16px'}></Image>
+          <ImageBox src={review} height={'16px'} width={'16px'} margin={'0 4px 0 16px'}></ImageBox>
           <Content height={'18px'} width={'12px'} color={'#868E96'} fontSize={'12px'} lineHeight={'18px'}>
             {props.reviewCount}
           </Content>
@@ -50,10 +60,10 @@ const PlannerCard = (props: PlannerProps) => {
             {props.region}
           </Content>
         </FlexDiv>
-        <FlexDiv justify="flex-start" margin={'12px 0 0 0'}>
-          <Image src={instagram} height={'20px'} width={'20px'} margin={'14px 8px 0 0'}></Image>
-          <Image src={blog} height={'20px'} width={'20px'} margin={'14px 8px 0 0'}></Image>
-        </FlexDiv>
+      </FlexDiv>
+      <FlexDiv justify="flex-start" margin={'0'}>
+        <ImageBox src={instagram} height={'20px'} width={'20px'} margin={'0px 8px 0 0'}></ImageBox>
+        <ImageBox src={blog} height={'20px'} width={'20px'} margin={'0px 8px 0 0'}></ImageBox>
       </FlexDiv>
     </FlexDiv>
   );

@@ -47,7 +47,6 @@
     ]
   },
   "devDependencies": {
-    "@types/react-modal": "^3.12.1",
     "@types/styled-components": "^5.1.11"
   }
 }

@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/peach-planner-front/static/css/main.88c6cf9c.chunk.css",
-    "main.js": "/peach-planner-front/static/js/main.919d0088.chunk.js",
-    "main.js.map": "/peach-planner-front/static/js/main.919d0088.chunk.js.map",
+    "main.js": "/peach-planner-front/static/js/main.80d28810.chunk.js",
+    "main.js.map": "/peach-planner-front/static/js/main.80d28810.chunk.js.map",
     "runtime-main.js": "/peach-planner-front/static/js/runtime-main.3ba07746.js",
     "runtime-main.js.map": "/peach-planner-front/static/js/runtime-main.3ba07746.js.map",
     "static/js/2.e8480ff6.chunk.js": "/peach-planner-front/static/js/2.e8480ff6.chunk.js",
@@ -45,6 +45,6 @@
     "static/js/runtime-main.3ba07746.js",
     "static/js/2.e8480ff6.chunk.js",
     "static/css/main.88c6cf9c.chunk.css",
-    "static/js/main.919d0088.chunk.js"
+    "static/js/main.80d28810.chunk.js"
   ]
 }

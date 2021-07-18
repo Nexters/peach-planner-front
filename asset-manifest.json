@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.88c6cf9c.chunk.css",
-    "main.js": "/static/js/main.80d28810.chunk.js",
-    "main.js.map": "/static/js/main.80d28810.chunk.js.map",
+    "main.js": "/static/js/main.b2da91e7.chunk.js",
+    "main.js.map": "/static/js/main.b2da91e7.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.89646432.js",
     "runtime-main.js.map": "/static/js/runtime-main.89646432.js.map",
     "static/js/2.a6151b97.chunk.js": "/static/js/2.a6151b97.chunk.js",
@@ -23,6 +23,7 @@
     "static/media/ic_heart.ed1cb932.svg": "/static/media/ic_heart.ed1cb932.svg",
     "static/media/ic_instagram.d49b0047.svg": "/static/media/ic_instagram.d49b0047.svg",
     "static/media/ic_review.f465c58b.svg": "/static/media/ic_review.f465c58b.svg",
+    "static/media/ic_search.8e247b39.svg": "/static/media/ic_search.8e247b39.svg",
     "static/media/img_wedding_1.fe21c4cc.png": "/static/media/img_wedding_1.fe21c4cc.png",
     "static/media/img_wedding_2.596cf60d.png": "/static/media/img_wedding_2.596cf60d.png",
     "static/media/img_wedding_3.b102ce34.png": "/static/media/img_wedding_3.b102ce34.png",
@@ -45,6 +46,6 @@
     "static/js/runtime-main.89646432.js",
     "static/js/2.a6151b97.chunk.js",
     "static/css/main.88c6cf9c.chunk.css",
-    "static/js/main.80d28810.chunk.js"
+    "static/js/main.b2da91e7.chunk.js"
   ]
 }

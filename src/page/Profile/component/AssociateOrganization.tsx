@@ -1,7 +1,8 @@
 import { Content, FlexDiv, HorizontalLine, ImageBox } from '../../../component/CommonStyle/style';
 import { Input } from '../../../component/Form/InputForm';
-import Button from '../../../component/PButton';
 import LineAndTitle from './LindAndTitle';
+import AddPhoto from '../../../assets/svg/ic_addphoto.svg';
+import PButton from '../../../component/PButton';
 
 interface Props {
   name: string;
@@ -32,7 +33,7 @@ const AssociateOrganization = ({ name }: Props) => {
       >
         {`${name} 업체 사진`}
       </Content>
-      <ImageBox src="1234" height="93px" width="93px" margin="0px 0px 16px 0"></ImageBox>
+      <ImageBox src={AddPhoto} height="93px" width="93px" margin="0px 0px 16px 0" radius="0px"></ImageBox>
       <Content
         height={'36px'}
         width={'auto'}
@@ -44,7 +45,11 @@ const AssociateOrganization = ({ name }: Props) => {
         권장 크기 : 00 x 00 <br></br> jpg,jpeg,gif,png,bmp 형식의 정지 이미지만 등록됩니다.
       </Content>
       <HorizontalLine height="1px" width="632px" backgroundColor="#CED4DA" margin="0"></HorizontalLine>
-      {/* <Button width="126px" height="45px" border="1px solid #ADB5BD"></Button> */}
+      <FlexDiv margin="15px 0 0 0" direction="column" justify="flex-start" align="start">
+        <PButton color="black" fontSize="14px" height="45px" width="auto" padding="14px 25px 14px 25px">
+          업체 등록하기
+        </PButton>
+      </FlexDiv>
     </FlexDiv>
   );
 };

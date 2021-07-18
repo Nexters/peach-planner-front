@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { FlexDiv } from '../../component/CommonStyle/style';
 import Footer from '../common/Footer';
+import AssociateOrganization from './component/AssociateOrganization';
 import MyProfile from './component/MyProfile';
 import PlannerArea from './component/PlannerArea';
 import PlannerOfferList from './component/PlannerOfferList';
@@ -31,6 +32,9 @@ const Profile = ({ isUpdate }: ProfileProps) => {
           <PlannerArea></PlannerArea>
           <PlannerOfferList></PlannerOfferList>
           <PlannerOrganization></PlannerOrganization>
+          <AssociateOrganization name="스튜디오"></AssociateOrganization>
+          <AssociateOrganization name="드레스"></AssociateOrganization>
+          <AssociateOrganization name="메이크업"></AssociateOrganization>
         </FlexDiv>
       </InnerContainer>
       <FlexDiv margin="0">

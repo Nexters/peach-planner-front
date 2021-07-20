@@ -104,6 +104,7 @@ export const ProfileImgBox = styled.div<ProfileImageBoxProps>`
 interface BoxProps {
   height: string;
   width: string;
+  direction?: string;
 }
 
 export const Box = styled.div<BoxProps>`
@@ -113,6 +114,7 @@ export const Box = styled.div<BoxProps>`
   border: 1px solid #ced4da;
   border-radius: 3px;
   display: flex;
+  flex-direction: ${(props: BoxProps) => props.direction || 'row'};
   justify-content: 'center';
   align-items: 'center';
 `;

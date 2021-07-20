@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Box, Content, FlexDiv, ProfileImgBox, Title } from '../../../component/CommonStyle/style';
+import PButton from '../../../component/PButton';
 
 const userProps = {
   name: '홍길동',
@@ -27,6 +28,11 @@ const UserProfile = () => {
               {userProps.type}
             </Content>
           </TypeBox>
+          <FlexDiv margin="18px 0 0 0" direction="column">
+            <PButton fontSize="14px" height="41px" width="98px">
+              계정 설정
+            </PButton>
+          </FlexDiv>
         </FlexDiv>
       </Box>
     </FlexDiv>

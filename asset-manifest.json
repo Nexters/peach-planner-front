@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.88c6cf9c.chunk.css",
-    "main.js": "/static/js/main.da6a4fbf.chunk.js",
-    "main.js.map": "/static/js/main.da6a4fbf.chunk.js.map",
+    "main.js": "/static/js/main.f0265677.chunk.js",
+    "main.js.map": "/static/js/main.f0265677.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.89646432.js",
     "runtime-main.js.map": "/static/js/runtime-main.89646432.js.map",
-    "static/js/2.a6151b97.chunk.js": "/static/js/2.a6151b97.chunk.js",
-    "static/js/2.a6151b97.chunk.js.map": "/static/js/2.a6151b97.chunk.js.map",
+    "static/js/2.48d7e025.chunk.js": "/static/js/2.48d7e025.chunk.js",
+    "static/js/2.48d7e025.chunk.js.map": "/static/js/2.48d7e025.chunk.js.map",
     "static/js/3.ac5ea5c3.chunk.js": "/static/js/3.ac5ea5c3.chunk.js",
     "static/js/3.ac5ea5c3.chunk.js.map": "/static/js/3.ac5ea5c3.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.88c6cf9c.chunk.css.map": "/static/css/main.88c6cf9c.chunk.css.map",
-    "static/js/2.a6151b97.chunk.js.LICENSE.txt": "/static/js/2.a6151b97.chunk.js.LICENSE.txt",
+    "static/js/2.48d7e025.chunk.js.LICENSE.txt": "/static/js/2.48d7e025.chunk.js.LICENSE.txt",
     "static/media/dummy1.fe21c4cc.png": "/static/media/dummy1.fe21c4cc.png",
     "static/media/ic_account_default.c5466f51.svg": "/static/media/ic_account_default.c5466f51.svg",
     "static/media/ic_arrow_left.80cc756b.svg": "/static/media/ic_arrow_left.80cc756b.svg",
@@ -32,6 +32,7 @@
     "static/media/img_wedding_7.7e609520.png": "/static/media/img_wedding_7.7e609520.png",
     "static/media/img_wedding_8.c45b33d5.png": "/static/media/img_wedding_8.c45b33d5.png",
     "static/media/logo.8f8345c0.svg": "/static/media/logo.8f8345c0.svg",
+    "static/media/logo_peachplanner.8f8345c0.svg": "/static/media/logo_peachplanner.8f8345c0.svg",
     "static/media/main_background.8c12a12c.png": "/static/media/main_background.8c12a12c.png",
     "static/media/planner1.8dd231a6.png": "/static/media/planner1.8dd231a6.png",
     "static/media/planner2.c807a9c4.png": "/static/media/planner2.c807a9c4.png",
@@ -43,8 +44,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.89646432.js",
-    "static/js/2.a6151b97.chunk.js",
+    "static/js/2.48d7e025.chunk.js",
     "static/css/main.88c6cf9c.chunk.css",
-    "static/js/main.da6a4fbf.chunk.js"
+    "static/js/main.f0265677.chunk.js"
   ]
 }

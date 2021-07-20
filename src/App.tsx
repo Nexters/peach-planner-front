@@ -13,6 +13,7 @@ import Search from './page/Home/Search/Search';
 const App = () => {
   return (
     <BrowserRouter>
+      <Header />
       <Switch>
         <Route exact path="/">
           <Main />

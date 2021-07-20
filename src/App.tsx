@@ -12,7 +12,7 @@ import Search from './page/Home/Search/Search';
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Header />
       <Switch>
         <Route exact path="/">

@@ -12,8 +12,7 @@ import Search from './page/Home/Search/Search';
 
 const App = () => {
   return (
-    <BrowserRouter basename="peach-planner-front">
-      <Header />
+    <BrowserRouter>
       <Switch>
         <Route exact path="/">
           <Main />

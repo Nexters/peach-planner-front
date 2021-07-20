@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.88c6cf9c.chunk.css",
-    "main.js": "/static/js/main.91bdd083.chunk.js",
-    "main.js.map": "/static/js/main.91bdd083.chunk.js.map",
+    "main.js": "/static/js/main.f0265677.chunk.js",
+    "main.js.map": "/static/js/main.f0265677.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.89646432.js",
     "runtime-main.js.map": "/static/js/runtime-main.89646432.js.map",
     "static/js/2.48d7e025.chunk.js": "/static/js/2.48d7e025.chunk.js",
@@ -14,7 +14,6 @@
     "static/js/2.48d7e025.chunk.js.LICENSE.txt": "/static/js/2.48d7e025.chunk.js.LICENSE.txt",
     "static/media/dummy1.fe21c4cc.png": "/static/media/dummy1.fe21c4cc.png",
     "static/media/ic_account_default.c5466f51.svg": "/static/media/ic_account_default.c5466f51.svg",
-    "static/media/ic_addphoto.f6b2f6a6.svg": "/static/media/ic_addphoto.f6b2f6a6.svg",
     "static/media/ic_arrow_left.80cc756b.svg": "/static/media/ic_arrow_left.80cc756b.svg",
     "static/media/ic_arrow_right.6458d2d4.svg": "/static/media/ic_arrow_right.6458d2d4.svg",
     "static/media/ic_blog.9c2f4331.svg": "/static/media/ic_blog.9c2f4331.svg",
@@ -24,7 +23,6 @@
     "static/media/ic_heart.ed1cb932.svg": "/static/media/ic_heart.ed1cb932.svg",
     "static/media/ic_instagram.d49b0047.svg": "/static/media/ic_instagram.d49b0047.svg",
     "static/media/ic_review.f465c58b.svg": "/static/media/ic_review.f465c58b.svg",
-    "static/media/ic_search.8e247b39.svg": "/static/media/ic_search.8e247b39.svg",
     "static/media/img_wedding_1.fe21c4cc.png": "/static/media/img_wedding_1.fe21c4cc.png",
     "static/media/img_wedding_2.596cf60d.png": "/static/media/img_wedding_2.596cf60d.png",
     "static/media/img_wedding_3.b102ce34.png": "/static/media/img_wedding_3.b102ce34.png",
@@ -48,6 +46,6 @@
     "static/js/runtime-main.89646432.js",
     "static/js/2.48d7e025.chunk.js",
     "static/css/main.88c6cf9c.chunk.css",
-    "static/js/main.91bdd083.chunk.js"
+    "static/js/main.f0265677.chunk.js"
   ]
 }

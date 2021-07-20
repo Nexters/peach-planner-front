@@ -11,7 +11,7 @@ import Profile from './page/Profile/Profile';
 
 const App = () => {
   return (
-    <BrowserRouter basename="peach-planner-front">
+    <BrowserRouter>
       <Switch>
         <Route exact path="/">
           <Main></Main>

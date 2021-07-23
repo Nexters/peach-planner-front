@@ -1,7 +1,7 @@
 import { Content, FlexDiv, HorizontalLine, ImageBox, Title } from '../../../component/CommonStyle/style';
 import { Input } from '../../../component/Form/InputForm';
 import SideText from './SideText';
-import SearchIcon from '../../../assets/svg/ic_search.svg';
+import SearchIconSvg from '../../../assets/svg/ic_search.svg';
 import styled from 'styled-components';
 
 const PlannerOrganization = () => {
@@ -36,7 +36,7 @@ const PlannerOrganization = () => {
       </Content>
       <SearchBox>
         <Input height="41px" width="421px"></Input>
-        <ImageBox src={SearchIcon} height="20px" width="20px" margin="0px"></ImageBox>
+        <SearchIcon src={SearchIconSvg} height="20px" width="20px" margin="0px" />
       </SearchBox>
       <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-start" align="start">
         <SideText text="사업자 인증을 진행하지 않은 업체입니다." colorText="사업자 인증하기"></SideText>
@@ -48,3 +48,7 @@ const PlannerOrganization = () => {
 export default PlannerOrganization;
 
 const SearchBox = styled.div``;
+
+const SearchIcon = styled(ImageBox)`
+  margin-left: -35px;
+`;

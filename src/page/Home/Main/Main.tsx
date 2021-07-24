@@ -90,7 +90,7 @@ const Main = () => {
           ></PlannerCard>
         </FlexDiv>
       </FlexDiv>
-      {/* <FlexDiv width={'1100px'} margin={'54px 0 0 0'} direction="column">
+      <FlexDiv width={'1100px'} margin={'54px 0 0 0'} direction="column">
         <DivisionBox marginBottom={27}>
           <Title height={'29px'} width={'auto'} fontSize={'20px'} lineHeight={'29px'}>
             인기 플래너
@@ -101,7 +101,7 @@ const Main = () => {
           <ImageBox height={'258px'} width={'458px'} margin={'0 28px 0 0'} src={planner3}></ImageBox>
           <ImageBox height={'258px'} width={'458px'} margin={'0 28px 0 0'} src={planner1}></ImageBox>
         </FlexDiv>
-      </FlexDiv> */}
+      </FlexDiv>
       <FlexDiv width={'1100px'} margin={'64px 0 0 0'} direction="column">
         <DivisionBox marginBottom={8}>
           <Title height={'29px'} width={'auto'} fontSize={'20px'} lineHeight={'29px'}>

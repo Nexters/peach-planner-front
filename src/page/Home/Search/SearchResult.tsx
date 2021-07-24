@@ -1,9 +1,9 @@
 import { FlexDiv, HorizontalLine, Title } from '../../../component/CommonStyle/style';
 import PlannerCard from '../../../component/PlannerCard/PlannerCard';
-import dummy1 from '../../../image/dummy/dummy1.png';
-import dummy2 from '../../../image/dummy/img_wedding_2.png';
-import dummy3 from '../../../image/dummy/img_wedding_3.png';
-import dummy4 from '../../../image/dummy/img_wedding_4.png';
+import dummy1 from '../../../images/img_wedding_1.png';
+import dummy2 from '../../../images/img_wedding_2.png';
+import dummy3 from '../../../images/img_wedding_3.png';
+import dummy4 from '../../../images/img_wedding_4.png';
 
 const SearchResult = () => {
   return (

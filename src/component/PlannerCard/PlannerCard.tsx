@@ -1,7 +1,7 @@
-import heart from '../../image/main/ic_heart.svg';
-import review from '../../image/main/ic_review.svg';
-import blog from '../../image/main/ic_blog.svg';
-import instagram from '../../image/main/ic_instagram.svg';
+import heart from '../../assets/svg/ic_heart.svg';
+import review from '../../assets/svg/ic_review.svg';
+import blog from '../../assets/svg/ic_blog.svg';
+import instagram from '../../assets/svg/ic_instagram.svg';
 import { Content, FlexDiv, ImageBox, Title } from '../CommonStyle/style';
 
 interface PlannerProps {

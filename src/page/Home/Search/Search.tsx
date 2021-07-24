@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FlexDiv } from '../../../component/CommonStyle/style';
-import Footer from '../../common/Footer';
+import Footer from '../../../component/Footer';
 import SearchResult from './SearchResult';
 import SearchSideBar from './SearchSideBar';
 

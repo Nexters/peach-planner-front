@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { FlexDiv } from '../../component/CommonStyle/style';
 import PButton from '../../component/PButton';
-import Footer from '../common/Footer';
+import Footer from '../../component/Footer';
 import AssociateOrganization from './component/AssociateOrganization';
 import MyProfile from './component/MyProfile';
 import PlannerArea from './component/PlannerArea';

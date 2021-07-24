@@ -1,51 +1,9 @@
 import styled from 'styled-components';
 import background from '../../../image/main_background.png';
 
-export interface DivProps {
-  height?: string;
-  width?: string;
-  margin?: string;
-  direction?: string;
-  justify?: string;
-  align?: string;
-}
-
 interface DivisionBoxProps {
   marginBottom: number;
 }
-
-export interface ImageProps {
-  src: string;
-  height: string;
-  width: string;
-  margin: string;
-}
-
-interface TitleProps {
-  height: string;
-  width: string;
-  fontSize: string;
-  lineHeight: string;
-  margin?: string;
-}
-
-interface ContentProps {
-  height: string;
-  width: string;
-  color: string;
-  fontSize: string;
-  lineHeight: string;
-}
-
-export const FlexDiv = styled.div<DivProps>`
-  height: ${(props: DivProps) => props.height};
-  width: ${(props: DivProps) => props.width || '100%'};
-  display: flex;
-  justify-content: ${(props: DivProps) => props.justify || 'center'};
-  align-items: ${(props: DivProps) => props.align || 'center'};
-  flex-direction: ${(props: DivProps) => props.direction || 'row'};
-  margin: ${(props: DivProps) => props.margin || '20px 0'};
-`;
 
 export const TopBox = styled.div`
   height: 320px;
@@ -63,6 +21,7 @@ export const DivisionBox = styled.span<DivisionBoxProps>`
   align-items: center;
 `;
 
+<<<<<<< HEAD
 export const Title = styled.div<TitleProps>`
   height: ${(props: TitleProps) => props.height};
   width: ${(props: TitleProps) => props.width};
@@ -89,6 +48,8 @@ export const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }
   border-radius: 10px;
 `;
 
+=======
+>>>>>>> 29e9c05dff2d713dadcd235a93ae0e0c24ed170e
 export const Tag = styled.div`
   box-sizing: border-box;
   height: 25px;
@@ -100,9 +61,4 @@ export const Tag = styled.div`
   align-items: center;
 `;
 
-export const FooterDiv = styled.div`
-  height: 154px;
-  width: 1440px;
-  border-top: 1px solid;
-  border-top-color: #868e96;
-`;
+

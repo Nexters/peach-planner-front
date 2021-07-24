@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ContentProps, TitleProps, ImageBoxProps } from '../../../component/CommonStyle/style';
 import background from '../../../image/main_background.png';
 
 interface DivisionBoxProps {
@@ -21,8 +22,6 @@ export const DivisionBox = styled.span<DivisionBoxProps>`
   align-items: center;
 `;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 export const Title = styled.div<TitleProps>`
   height: ${(props: TitleProps) => props.height};
   width: ${(props: TitleProps) => props.width};
@@ -42,17 +41,13 @@ export const Content = styled.span<ContentProps>`
   line-height: ${(props: ContentProps) => props.lineHeight};
 `;
 
-export const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
-  height: ${(props: ImageProps) => props.height};
-  width: ${(props: ImageProps) => props.width};
-  margin: ${(props: ImageProps) => props.margin};
+export const Image = styled.img.attrs((props: ImageBoxProps) => ({ src: props.src }))`
+  height: ${(props: ImageBoxProps) => props.height};
+  width: ${(props: ImageBoxProps) => props.width};
+  margin: ${(props: ImageBoxProps) => props.margin};
   border-radius: 10px;
 `;
 
-=======
->>>>>>> 29e9c05dff2d713dadcd235a93ae0e0c24ed170e
-=======
->>>>>>> b17969109fe4be2073ce74a5b622f5f6bfcb9d4d
 export const Tag = styled.div`
   box-sizing: border-box;
   height: 25px;
@@ -63,5 +58,3 @@ export const Tag = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-

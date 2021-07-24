@@ -36,7 +36,7 @@ export const ImageBox = styled.img.attrs((props: ImageBoxProps) => ({ src: props
   border-radius: ${(props: ImageBoxProps) => (props.radius ? props.radius : '10px')};
 `;
 
-interface TitleProps {
+export interface TitleProps {
   height: string;
   width: string;
   fontSize: string;
@@ -56,7 +56,7 @@ export const Title = styled.div<TitleProps>`
   margin: ${(props: TitleProps) => props.margin};
 `;
 
-interface ContentProps {
+export interface ContentProps {
   height: string;
   width: string;
   color: string;

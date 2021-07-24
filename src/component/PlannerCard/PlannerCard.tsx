@@ -31,16 +31,16 @@ const PlannerCard = (props: PlannerProps) => {
       >
         <FlexDiv justify="flex-start" margin={'13px 0 0 0'}>
           <ImageBox src={heart} height={'13.29px'} width={'14.43px'} margin={'0 4px 0 0'}></ImageBox>
-          <Content height={'18px'} width={'12px'} color={'#868E96'} fontSize={'12px'} lineHeight={'18px'}>
+          <Content height={'18px'} width={'auto'} color={'#868E96'} fontSize={'12px'} lineHeight={'18px'}>
             {props.heartCount}
           </Content>
           <ImageBox src={review} height={'16px'} width={'16px'} margin={'0 4px 0 16px'}></ImageBox>
-          <Content height={'18px'} width={'12px'} color={'#868E96'} fontSize={'12px'} lineHeight={'18px'}>
+          <Content height={'18px'} width={'auto'} color={'#868E96'} fontSize={'12px'} lineHeight={'18px'}>
             {props.reviewCount}
           </Content>
         </FlexDiv>
         <FlexDiv justify="flex-start" margin={'5px 0 0 0'}>
-          <Title height={'24px'} width={'254px'} fontSize={'16px'} lineHeight={'24px'}>
+          <Title height={'24px'} width={'auto'} fontSize={'16px'} lineHeight={'24px'}>
             {props.name}
           </Title>
         </FlexDiv>
@@ -48,7 +48,7 @@ const PlannerCard = (props: PlannerProps) => {
           <Content height={'20px'} width={'56px'} color={'#868E96'} fontSize={'14px'} lineHeight={'20px'}>
             소속
           </Content>
-          <Content height={'20px'} width={'190px'} color={'#000000'} fontSize={'14px'} lineHeight={'20px'}>
+          <Content height={'20px'} width={'auto'} color={'#000000'} fontSize={'14px'} lineHeight={'20px'}>
             {props.organization}
           </Content>
         </FlexDiv>
@@ -56,7 +56,7 @@ const PlannerCard = (props: PlannerProps) => {
           <Content height={'20px'} width={'56px'} color={'#868E96'} fontSize={'14px'} lineHeight={'20px'}>
             지역
           </Content>
-          <Content height={'20px'} width={'190px'} color={'#000000'} fontSize={'14px'} lineHeight={'20px'}>
+          <Content height={'20px'} width={'auto'} color={'#000000'} fontSize={'14px'} lineHeight={'20px'}>
             {props.region}
           </Content>
         </FlexDiv>

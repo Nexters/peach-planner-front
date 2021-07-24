@@ -38,7 +38,7 @@ export const HeartContainer = styled.div`
 `;
 
 export const CompanyName = styled.div`
-  color: #e64980;
+  color: ${({ theme }) => theme.colors.pink};
   font-size: 16px;
   font-weight: bold;
 `;

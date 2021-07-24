@@ -5,7 +5,6 @@ export const LoginPageBox = styled.div``;
 export const MyPageSpan = styled.span`
   height: 20px;
   color: ${(props) => props.color || '#495057'};
-  font-family: SpoqaHanSans;
   font-size: ${(props) => props.size || '14px'};
   letter-spacing: 0;
   line-height: 20px;
@@ -22,7 +21,6 @@ export const MyPageButton = styled.button`
   outline: none;
   border: ${(props) => props.border || 'none'};
   color: ${(props) => props.color || '#ffffff'};
-  font-family: SpoqaHanSans;
   font-size: 14px;
   font-weight: bold;
   letter-spacing: 0;

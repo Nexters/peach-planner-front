@@ -24,10 +24,10 @@ const Main = () => {
     <FlexDiv margin={'0'} direction="column">
       <TopBox>
         <FlexDiv margin={'97px 0 0 73px'} justify="flex-start" align="start" direction="column">
-          <Title height={'72px'} width={'271px'} fontSize={'24px'} lineHeight={'36px'} margin={'0 0 14px 0'}>
+          <Title height={'72px'} width={'auto'} fontSize={'24px'} lineHeight={'36px'} margin={'0 0 14px 0'}>
             나와 맞는 웨딩플래너, <br></br>피치플래너에서 찾아보세요
           </Title>
-          <Content height={'44px'} width={'351px'} color={'#343A40'} fontSize={'14px'} lineHeight={'22px'}>
+          <Content height={'44px'} width={'auto'} color={'#343A40'} fontSize={'14px'} lineHeight={'22px'}>
             한번뿐인 결혼식,믿을 수 있는 웨딩플래너를 찾기 힘드신가요? <br></br>피치플래너에서 검증된 웨딩플래너를
             찾아보세요.
           </Content>
@@ -35,7 +35,7 @@ const Main = () => {
       </TopBox>
       <FlexDiv width={'1100px'} margin={'40px 0 0 0'} direction="column">
         <DivisionBox marginBottom={8}>
-          <Title height={'29px'} width={'97px'} fontSize={'20px'} lineHeight={'29px'}>
+          <Title height={'29px'} width={'auto'} fontSize={'20px'} lineHeight={'29px'}>
             신규 플래너
           </Title>
         </DivisionBox>
@@ -92,7 +92,7 @@ const Main = () => {
       </FlexDiv>
       <FlexDiv width={'1100px'} margin={'54px 0 0 0'} direction="column">
         <DivisionBox marginBottom={27}>
-          <Title height={'29px'} width={'97px'} fontSize={'20px'} lineHeight={'29px'}>
+          <Title height={'29px'} width={'auto'} fontSize={'20px'} lineHeight={'29px'}>
             인기 플래너
           </Title>
         </DivisionBox>
@@ -104,7 +104,7 @@ const Main = () => {
       </FlexDiv>
       <FlexDiv width={'1100px'} margin={'64px 0 0 0'} direction="column">
         <DivisionBox marginBottom={8}>
-          <Title height={'29px'} width={'97px'} fontSize={'20px'} lineHeight={'29px'}>
+          <Title height={'29px'} width={'auto'} fontSize={'20px'} lineHeight={'29px'}>
             추천 플래너
           </Title>
         </DivisionBox>
@@ -161,7 +161,7 @@ const Main = () => {
       </FlexDiv>
       <FlexDiv width={'1100px'} margin={'40px 0 0 0'} direction="column">
         <DivisionBox marginBottom={8}>
-          <Title height={'29px'} width={'97px'} fontSize={'20px'} lineHeight={'29px'}>
+          <Title height={'29px'} width={'auto'} fontSize={'20px'} lineHeight={'29px'}>
             추천 포스트
           </Title>
         </DivisionBox>
@@ -178,7 +178,7 @@ const Main = () => {
           <FlexDiv margin={'0'} width={'414px'} justify="start" align="start" direction="column">
             <FlexDiv margin={'0 0 56px 0'} width={'414px'} justify="space-between" align="start" direction="row">
               <FlexDiv margin={'0'} justify-content="flex-start" align="start" direction="column">
-                <Title height={'27px'} width={'254px'} fontSize={'20px'} lineHeight={'29px'}>
+                <Title height={'27px'} width={'auto'} fontSize={'20px'} lineHeight={'29px'}>
                   제주도에서 함께한 순간들
                 </Title>
                 <Content height={'40px'} width={'254px'} color={'#495057'} fontSize={'14px'} lineHeight={'20px'}>
@@ -201,7 +201,7 @@ const Main = () => {
             </FlexDiv>
             <FlexDiv margin={'0 0 56px 0'} width={'414px'} justify="space-between" align="start" direction="row">
               <FlexDiv margin={'0'} justify-content="flex-start" align="start" direction="column">
-                <Title height={'27px'} width={'254px'} fontSize={'20px'} lineHeight={'29px'}>
+                <Title height={'27px'} width={'auto'} fontSize={'20px'} lineHeight={'29px'}>
                   제주도에서 함께한 순간들
                 </Title>
                 <Content height={'40px'} width={'254px'} color={'#495057'} fontSize={'14px'} lineHeight={'20px'}>
@@ -224,7 +224,7 @@ const Main = () => {
             </FlexDiv>
             <FlexDiv margin={'0'} width={'414px'} justify="space-between" align="start" direction="row">
               <FlexDiv margin={'0'} justify-content="flex-start" align="start" direction="column">
-                <Title height={'27px'} width={'254px'} fontSize={'20px'} lineHeight={'29px'}>
+                <Title height={'27px'} width={'auto'} fontSize={'20px'} lineHeight={'29px'}>
                   제주도에서 함께한 순간들
                 </Title>
                 <Content height={'40px'} width={'254px'} color={'#495057'} fontSize={'14px'} lineHeight={'20px'}>

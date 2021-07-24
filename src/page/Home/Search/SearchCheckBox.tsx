@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Content, FlexDiv, ImageBox } from '../../../component/CommonStyle/style';
 import borders from '../../../assets/svg/ic_borders.svg';
 import fill from '../../../assets/svg/ic_fill.svg';
-import styled from 'styled-components';
 import PButton from '../../../component/PButton';
 
 interface Props {

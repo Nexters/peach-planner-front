@@ -10,7 +10,7 @@ const SearchSideBar = () => {
   return (
     <FlexDiv justify="flex-start" height="auto" width="200px" margin={'0 40px 0 0'} direction="column">
       <FlexDiv align="start" width="200px" height="56px" margin={'0'} direction="column">
-        <Title height={'24px'} width={'106px'} fontSize={'16px'} lineHeight={'24px'} margin={'0'}>
+        <Title height={'24px'} width={'auto'} fontSize={'16px'} lineHeight={'24px'} margin={'0'}>
           웨딩플래너 찾기
         </Title>
       </FlexDiv>

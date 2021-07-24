@@ -9,7 +9,7 @@ const SearchResult = () => {
   return (
     <FlexDiv justify="flex-start" align="start" width="860px" margin={'0'} direction="column">
       <FlexDiv align="start" height="56px" width="860px" margin={'0'} direction="column">
-        <Title height={'24px'} width={'30px'} fontSize={'16px'} lineHeight={'24px'} margin={'0'}>
+        <Title height={'24px'} width={'auto'} fontSize={'16px'} lineHeight={'24px'} margin={'0'}>
           전체
         </Title>
       </FlexDiv>

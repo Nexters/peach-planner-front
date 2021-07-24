@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "https://peachplanner.com/static/js/main.ea1f7f5f.chunk.js",
-    "main.js.map": "https://peachplanner.com/static/js/main.ea1f7f5f.chunk.js.map",
+    "main.js": "https://peachplanner.com/static/js/main.7788e8a1.chunk.js",
+    "main.js.map": "https://peachplanner.com/static/js/main.7788e8a1.chunk.js.map",
     "runtime-main.js": "https://peachplanner.com/static/js/runtime-main.c16545a1.js",
     "runtime-main.js.map": "https://peachplanner.com/static/js/runtime-main.c16545a1.js.map",
     "static/js/2.5b144493.chunk.js": "https://peachplanner.com/static/js/2.5b144493.chunk.js",
@@ -47,6 +47,6 @@
   "entrypoints": [
     "static/js/runtime-main.c16545a1.js",
     "static/js/2.5b144493.chunk.js",
-    "static/js/main.ea1f7f5f.chunk.js"
+    "static/js/main.7788e8a1.chunk.js"
   ]
 }

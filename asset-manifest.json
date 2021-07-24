@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.js": "https://peachplanner.com/static/js/main.410d0b47.chunk.js",
-    "main.js.map": "https://peachplanner.com/static/js/main.410d0b47.chunk.js.map",
-    "runtime-main.js": "https://peachplanner.com/static/js/runtime-main.4c245384.js",
-    "runtime-main.js.map": "https://peachplanner.com/static/js/runtime-main.4c245384.js.map",
-    "static/js/2.0b99be03.chunk.js": "https://peachplanner.com/static/js/2.0b99be03.chunk.js",
-    "static/js/2.0b99be03.chunk.js.map": "https://peachplanner.com/static/js/2.0b99be03.chunk.js.map",
-    "static/js/3.64092a96.chunk.js": "https://peachplanner.com/static/js/3.64092a96.chunk.js",
-    "static/js/3.64092a96.chunk.js.map": "https://peachplanner.com/static/js/3.64092a96.chunk.js.map",
+    "main.js": "https://peachplanner.com/static/js/main.337489d7.chunk.js",
+    "main.js.map": "https://peachplanner.com/static/js/main.337489d7.chunk.js.map",
+    "runtime-main.js": "https://peachplanner.com/static/js/runtime-main.515f4788.js",
+    "runtime-main.js.map": "https://peachplanner.com/static/js/runtime-main.515f4788.js.map",
+    "static/js/2.353fe9f7.chunk.js": "https://peachplanner.com/static/js/2.353fe9f7.chunk.js",
+    "static/js/2.353fe9f7.chunk.js.map": "https://peachplanner.com/static/js/2.353fe9f7.chunk.js.map",
+    "static/js/3.ac5ea5c3.chunk.js": "https://peachplanner.com/static/js/3.ac5ea5c3.chunk.js",
+    "static/js/3.ac5ea5c3.chunk.js.map": "https://peachplanner.com/static/js/3.ac5ea5c3.chunk.js.map",
     "index.html": "https://peachplanner.com/index.html",
-    "static/js/2.0b99be03.chunk.js.LICENSE.txt": "https://peachplanner.com/static/js/2.0b99be03.chunk.js.LICENSE.txt",
+    "static/js/2.353fe9f7.chunk.js.LICENSE.txt": "https://peachplanner.com/static/js/2.353fe9f7.chunk.js.LICENSE.txt",
     "static/media/dummy1.fe21c4cc.png": "https://peachplanner.com/static/media/dummy1.fe21c4cc.png",
     "static/media/ic_account_default.c5466f51.svg": "https://peachplanner.com/static/media/ic_account_default.c5466f51.svg",
     "static/media/ic_addphoto.f6b2f6a6.svg": "https://peachplanner.com/static/media/ic_addphoto.f6b2f6a6.svg",
@@ -18,10 +18,13 @@
     "static/media/ic_blog.9c2f4331.svg": "https://peachplanner.com/static/media/ic_blog.9c2f4331.svg",
     "static/media/ic_borders.876ca960.svg": "https://peachplanner.com/static/media/ic_borders.876ca960.svg",
     "static/media/ic_check.cc54ea5e.svg": "https://peachplanner.com/static/media/ic_check.cc54ea5e.svg",
+    "static/media/ic_close_w.7a3474d9.svg": "https://peachplanner.com/static/media/ic_close_w.7a3474d9.svg",
     "static/media/ic_fill.d4f6bb26.svg": "https://peachplanner.com/static/media/ic_fill.d4f6bb26.svg",
     "static/media/ic_heart.ed1cb932.svg": "https://peachplanner.com/static/media/ic_heart.ed1cb932.svg",
     "static/media/ic_instagram.d49b0047.svg": "https://peachplanner.com/static/media/ic_instagram.d49b0047.svg",
+    "static/media/ic_left_img.fbabefeb.svg": "https://peachplanner.com/static/media/ic_left_img.fbabefeb.svg",
     "static/media/ic_review.f465c58b.svg": "https://peachplanner.com/static/media/ic_review.f465c58b.svg",
+    "static/media/ic_right_img.fd67d45e.svg": "https://peachplanner.com/static/media/ic_right_img.fd67d45e.svg",
     "static/media/ic_search.8e247b39.svg": "https://peachplanner.com/static/media/ic_search.8e247b39.svg",
     "static/media/img_wedding_1.fe21c4cc.png": "https://peachplanner.com/static/media/img_wedding_1.fe21c4cc.png",
     "static/media/img_wedding_2.596cf60d.png": "https://peachplanner.com/static/media/img_wedding_2.596cf60d.png",
@@ -43,8 +46,8 @@
     "static/media/snap4.37693847.png": "https://peachplanner.com/static/media/snap4.37693847.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.4c245384.js",
-    "static/js/2.0b99be03.chunk.js",
-    "static/js/main.410d0b47.chunk.js"
+    "static/js/runtime-main.515f4788.js",
+    "static/js/2.353fe9f7.chunk.js",
+    "static/js/main.337489d7.chunk.js"
   ]
 }

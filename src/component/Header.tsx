@@ -52,7 +52,6 @@ const Header = () => {
           <Logo />
         </Link>
         <LeftLink to="/search">웨딩플래너 찾기</LeftLink>
-        <LeftLink to="/community">커뮤니티</LeftLink>
       </InnerContainer>
       {right}
     </Container>

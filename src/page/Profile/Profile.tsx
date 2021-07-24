@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { FlexDiv } from '../../component/CommonStyle/style';
 import PButton from '../../component/PButton';
-import Footer from '../common/Footer';
 import AssociateOrganization from './component/AssociateOrganization';
 import MyProfile from './component/MyProfile';
 import PlannerArea from './component/PlannerArea';
@@ -43,9 +42,6 @@ const Profile = ({ isUpdate }: ProfileProps) => {
           </FlexDiv>
         </FlexDiv>
       </InnerContainer>
-      <FlexDiv margin="0">
-        <Footer></Footer>
-      </FlexDiv>
     </Container>
   );
 };

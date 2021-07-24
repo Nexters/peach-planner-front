@@ -16,7 +16,7 @@ import dummy7 from '../../../image/dummy/img_wedding_7.png';
 import dummy8 from '../../../image/dummy/img_wedding_8.png';
 
 import PlannerCard from '../../../component/PlannerCard/PlannerCard';
-import Footer from '../../common/Footer';
+import Footer from '../../../component/Footer';
 import { Content, FlexDiv, ImageBox, Title } from '../../../component/CommonStyle/style';
 
 const Main = () => {
@@ -247,7 +247,6 @@ const Main = () => {
             </FlexDiv>
           </FlexDiv>
         </FlexDiv>
-        <Footer></Footer>
       </FlexDiv>
     </FlexDiv>
   );

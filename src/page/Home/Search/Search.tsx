@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { FlexDiv } from '../../../component/CommonStyle/style';
-import Footer from '../../common/Footer';
 import SearchResult from './SearchResult';
 import SearchSideBar from './SearchSideBar';
 
@@ -8,12 +6,9 @@ const Search = () => {
   return (
     <Container>
       <InnerContainer>
-        <SearchSideBar></SearchSideBar>
-        <SearchResult></SearchResult>
+        <SearchSideBar />
+        <SearchResult />
       </InnerContainer>
-      <FlexDiv margin="0">
-        <Footer></Footer>
-      </FlexDiv>
     </Container>
   );
 };

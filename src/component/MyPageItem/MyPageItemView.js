@@ -70,7 +70,6 @@ export const Line = styled.hr`
 export const SideMenuItem = styled.li`
   height: 17px;
   color: #212529;
-  font-family: 'Apple SD Gothic Neo';
   font-size: 14px;
   letter-spacing: 0;
   line-height: 17px;

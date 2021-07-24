@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Main from './page/Home/Main/Main';
 import PlannerDetail from './page/PlannerDetail/PlannerDetail';
 import Login from './page/User/Login/Login';
@@ -12,34 +12,33 @@ import Profile from './page/Profile/Profile';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Header />
-      <Switch>
-        <Route exact path="/">
-          <Main />
-        </Route>
-        <Route path="/search">
-          <Search />
-        </Route>
-        <Route path="/detail">
-          <PlannerDetail />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/estimate">
-          <PlannerEstimate />
-        </Route>
-        <Route path="/userPage">
-          <UserPage />
-        </Route>
-        <Route path="/plannerPage">
-          <PlannerPage />
-        </Route>
-        <Route path="/editProfile">
-          <Profile isUpdate={true}></Profile>
-        </Route>
-      </Switch>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
+          <Route path="/search">
+            <Search />
+          </Route>
+          <Route path="/detail">
+            <PlannerDetail />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/estimate">
+            <PlannerEstimate />
+          </Route>
+          <Route path="/userPage">
+            <UserPage />
+          </Route>
+          <Route path="/plannerPage">
+            <PlannerPage />
+          </Route>
+        </Switch>
+      </Router>
     </BrowserRouter>
   );
 };

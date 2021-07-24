@@ -5,7 +5,6 @@ export const LoginPageBox = styled.div``;
 export const LoginSpan = styled.span`
   height: 20px;
   color: ${(props) => props.color || '#495057'};
-  font-family: SpoqaHanSans;
   font-size: ${(props) => props.size || '14px'};
   letter-spacing: 0;
   line-height: 20px;
@@ -23,7 +22,6 @@ export const LogInButton = styled.button`
   outline: none;
   border: ${(props) => props.border || 'none'}; // 1px solid #e64980;
   color: ${(props) => props.color || '#ffffff'}; //#e64980
-  font-family: SpoqaHanSans;
   font-size: 14px;
   font-weight: bold;
   letter-spacing: 0;
@@ -51,6 +49,5 @@ export const Input = styled.input.attrs((props) => ({
   border: 1px solid #ced4da;
   border-radius: 3px;
   color: #adb5bd;
-  font-family: SpoqaHanSans;
   font-size: 13px;
 `;

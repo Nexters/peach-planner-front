@@ -3,12 +3,12 @@ import Main from './page/Home/Main/Main';
 import PlannerDetail from './page/PlannerDetail/PlannerDetail';
 import Login from './page/User/Login/Login';
 import PlannerEstimate from './page/PlannerEstimate/PlannerEstimate';
-import PrivateRoute from './routes/PrivateRoute';
 import UserPage from './page/User/MyPage/UserPage';
 import PlannerPage from './page/User/MyPage/PlannerPage';
 import '../src/styles/reset.css';
 import Header from './component/Header';
 import Search from './page/Home/Search/Search';
+import Profile from './page/Profile/Profile';
 
 const App = () => {
   return (

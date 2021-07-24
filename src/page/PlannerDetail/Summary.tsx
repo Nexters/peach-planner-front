@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as $ from './view/SummaryView';
 import BoldTitle from '../../component/BoldTitle';
 import HorizontalLine from '../../component/HorizontalLine';
@@ -6,6 +6,7 @@ import PButton from '../../component/PButton';
 import { ReactComponent as Heart } from '../../assets/svg/ic_heart.svg';
 import { ReactComponent as Instagram } from '../../assets/svg/ic_instagram.svg';
 import { ReactComponent as Blog } from '../../assets/svg/ic_blog.svg';
+import ImageModal from './ImageModal';
 
 const Summary = () => {
   const PLANNER_NAME = '이윤경';
@@ -13,9 +14,21 @@ const Summary = () => {
   const HEART_COUNT = 12;
   const ONE_LINE = '당신의 웨딩로망을 서포트합니다 :)';
 
+  const [showImageModal, setShowImageModal] = useState<boolean>(false);
+  const openImageModal = () => setShowImageModal(true);
+  const closeImageModal = () => {
+    setShowImageModal(false);
+    console.log('close');
+  };
+
   return (
     <$.Container>
-      <$.ImageContainer></$.ImageContainer>
+      <$.ImageContainer>
+        <PButton width="97px" height="31px" fontSize="12px" padding="0" onClick={openImageModal}>
+          사진 모두 보기
+        </PButton>
+        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} />
+      </$.ImageContainer>
       <$.InformationContainer>
         <$.InnerContainer>
           <$.NameContainer>

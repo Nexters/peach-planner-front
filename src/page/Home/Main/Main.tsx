@@ -16,7 +16,6 @@ const Main = () => {
         <PopularPlanner></PopularPlanner>
         <RecommendPlanner></RecommendPlanner>
         <RecommendPost></RecommendPost>
-        <Footer></Footer>
       </FlexDiv>
     </FlexDiv>
   );

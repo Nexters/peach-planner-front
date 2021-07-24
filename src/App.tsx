@@ -11,6 +11,7 @@ import { ThemeProvider } from 'styled-components';
 import Search from './page/Home/Search/Search';
 import Profile from './page/Profile/Profile';
 import Header from './component/Header';
+import Footer from './component/Footer';
 
 const App = () => {
   return (
@@ -45,6 +46,7 @@ const App = () => {
               <Profile isUpdate={true} />
             </Route>
           </Switch>
+          <Footer />
         </Router>
       </BrowserRouter>
     </ThemeProvider>

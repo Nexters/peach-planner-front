@@ -22,6 +22,7 @@ export const DivisionBox = styled.span<DivisionBoxProps>`
 `;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export const Title = styled.div<TitleProps>`
   height: ${(props: TitleProps) => props.height};
   width: ${(props: TitleProps) => props.width};
@@ -50,6 +51,8 @@ export const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }
 
 =======
 >>>>>>> 29e9c05dff2d713dadcd235a93ae0e0c24ed170e
+=======
+>>>>>>> b17969109fe4be2073ce74a5b622f5f6bfcb9d4d
 export const Tag = styled.div`
   box-sizing: border-box;
   height: 25px;

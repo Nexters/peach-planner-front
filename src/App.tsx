@@ -37,6 +37,9 @@ const App = () => {
           <Route path="/plannerPage">
             <PlannerPage />
           </Route>
+          <Route path="/editProfile">
+            <Profile isUpdate={true} />
+          </Route>
         </Switch>
       </Router>
     </BrowserRouter>

@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { Content, FlexDiv, ImageBox, Title } from '../../../../component/CommonStyle/style';
 import snap1 from './dummy/snap1.png';
 import snap2 from './dummy/snap2.png';
@@ -14,7 +13,7 @@ const RecommendPost = () => {
           추천 포스트
         </Title>
       </FlexDiv>
-      <FlexDiv margin={'0 0 120px 0'} justify="flex-start" align="start">
+      <FlexDiv margin={'0 0 0px 0'} justify="flex-start" align="start">
         <FlexDiv margin={'0'} justify="flex-start" align="start" direction="column">
           <ImageBox height={'385px'} width={'646px'} margin={'0 0px 0 0'} src={snap1}></ImageBox>
           <Title margin={'14px 0 11px 0'} height={'41px'} width={'646px'} fontSize={'28px'} lineHeight={'41px'}>

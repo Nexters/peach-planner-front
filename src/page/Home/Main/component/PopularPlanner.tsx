@@ -6,7 +6,7 @@ import planner3 from './dummy/planner3.png';
 const PopularPlanner = () => {
   return (
     <FlexDiv margin={'54px 0 0 0'} direction="column">
-      <FlexDiv height={'56px'} justify="between" margin={'0 0 27px 0'}>
+      <FlexDiv height={'56px'} justify="between" margin={'0 0 40px 0'}>
         <Title height={'29px'} width={'auto'} fontSize={'20px'} lineHeight={'29px'}>
           인기 플래너
         </Title>

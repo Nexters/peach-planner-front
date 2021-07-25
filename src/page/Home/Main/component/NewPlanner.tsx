@@ -14,7 +14,7 @@ const NewPlanner = () => {
           신규 플래너
         </Title>
       </FlexDiv>
-      <FlexDiv justify="flex-start" align="start" direction="row">
+      <FlexDiv justify="flex-start" align="start" direction="row" margin="0">
         <PlannerCard
           margin={'0 28px 0 0'}
           width={'254px'}

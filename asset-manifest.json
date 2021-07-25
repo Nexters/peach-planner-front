@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.js": "https://peachplanner.com/static/js/main.edecd181.chunk.js",
-    "main.js.map": "https://peachplanner.com/static/js/main.edecd181.chunk.js.map",
+    "main.js": "https://peachplanner.com/static/js/main.599ca0f3.chunk.js",
+    "main.js.map": "https://peachplanner.com/static/js/main.599ca0f3.chunk.js.map",
     "runtime-main.js": "https://peachplanner.com/static/js/runtime-main.c16545a1.js",
     "runtime-main.js.map": "https://peachplanner.com/static/js/runtime-main.c16545a1.js.map",
-    "static/js/2.5b144493.chunk.js": "https://peachplanner.com/static/js/2.5b144493.chunk.js",
-    "static/js/2.5b144493.chunk.js.map": "https://peachplanner.com/static/js/2.5b144493.chunk.js.map",
+    "static/js/2.4978d3f6.chunk.js": "https://peachplanner.com/static/js/2.4978d3f6.chunk.js",
+    "static/js/2.4978d3f6.chunk.js.map": "https://peachplanner.com/static/js/2.4978d3f6.chunk.js.map",
     "static/js/3.6e227148.chunk.js": "https://peachplanner.com/static/js/3.6e227148.chunk.js",
     "static/js/3.6e227148.chunk.js.map": "https://peachplanner.com/static/js/3.6e227148.chunk.js.map",
     "index.html": "https://peachplanner.com/index.html",
-    "static/js/2.5b144493.chunk.js.LICENSE.txt": "https://peachplanner.com/static/js/2.5b144493.chunk.js.LICENSE.txt",
+    "static/js/2.4978d3f6.chunk.js.LICENSE.txt": "https://peachplanner.com/static/js/2.4978d3f6.chunk.js.LICENSE.txt",
     "static/media/ic_account_default.c5466f51.svg": "https://peachplanner.com/static/media/ic_account_default.c5466f51.svg",
     "static/media/ic_addphoto.f6b2f6a6.svg": "https://peachplanner.com/static/media/ic_addphoto.f6b2f6a6.svg",
     "static/media/ic_arrow_left.80cc756b.svg": "https://peachplanner.com/static/media/ic_arrow_left.80cc756b.svg",
@@ -17,6 +17,7 @@
     "static/media/ic_blog.9c2f4331.svg": "https://peachplanner.com/static/media/ic_blog.9c2f4331.svg",
     "static/media/ic_borders.876ca960.svg": "https://peachplanner.com/static/media/ic_borders.876ca960.svg",
     "static/media/ic_check.cc54ea5e.svg": "https://peachplanner.com/static/media/ic_check.cc54ea5e.svg",
+    "static/media/ic_close_b.6481c7d6.svg": "https://peachplanner.com/static/media/ic_close_b.6481c7d6.svg",
     "static/media/ic_close_w.7a3474d9.svg": "https://peachplanner.com/static/media/ic_close_w.7a3474d9.svg",
     "static/media/ic_fill.d4f6bb26.svg": "https://peachplanner.com/static/media/ic_fill.d4f6bb26.svg",
     "static/media/ic_heart.ed1cb932.svg": "https://peachplanner.com/static/media/ic_heart.ed1cb932.svg",
@@ -46,7 +47,7 @@
   },
   "entrypoints": [
     "static/js/runtime-main.c16545a1.js",
-    "static/js/2.5b144493.chunk.js",
-    "static/js/main.edecd181.chunk.js"
+    "static/js/2.4978d3f6.chunk.js",
+    "static/js/main.599ca0f3.chunk.js"
   ]
 }

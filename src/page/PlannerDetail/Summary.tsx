@@ -39,7 +39,7 @@ const Summary = () => {
             </HeartContainer>
           </NameContainer>
           <CompanyName>{COMPANY_NAME}</CompanyName>
-          <HorizontalLine top="12px" bottom="15px" />
+          <HorizontalLine color="#dee2e6" top="12px" bottom="15px" />
 
           <BoldGray>플래너 한줄소개</BoldGray>
           <OneLine>{ONE_LINE}</OneLine>

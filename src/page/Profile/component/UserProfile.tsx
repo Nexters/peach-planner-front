@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Box, Content, FlexDiv, ProfileImgBox, Title } from '../../../component/CommonStyle/style';
+import { Content, FlexDiv, Title } from '../../../component/style/style';
 import PButton from '../../../component/PButton';
 
 const userProps = {
@@ -10,9 +10,9 @@ const userProps = {
 const UserProfile = () => {
   return (
     <FlexDiv justify="flex-start" margin="0 0 0 0">
-      <Box height="340px" width="310px">
+      <Box>
         <FlexDiv margin="0" direction="column">
-          <ProfileImgBox height="124px" width="124px"></ProfileImgBox>
+          <ProfileImageBox></ProfileImageBox>
           <Title height={'27px'} width={'auto'} fontSize={'18px'} lineHeight={'27px'} margin={'24px 0 7px 0'}>
             {userProps.name}
           </Title>
@@ -48,4 +48,23 @@ const TypeBox = styled.div`
   display: flex;
   justify-content: 'center';
   align-items: 'center';
+`;
+
+const Box = styled.div`
+  box-sizing: border-box;
+  height: 340px;
+  width: 310px;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: row;
+  justify-content: 'center';
+  align-items: 'center';
+`;
+
+const ProfileImageBox = styled.div`
+  height: 124px;
+  width: 124px;
+  background-color: #adb5bd;
+  border-radius: 100%;
 `;

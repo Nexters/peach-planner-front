@@ -13,7 +13,7 @@ const Container: FC<ContainerProps> = ({ title, children }) => {
     <>
       <Title>{title}</Title>
       {children}
-      <HorizontalLine top="40px" bottom="40px" />
+      <HorizontalLine color="#dee2e6" top="40px" bottom="40px" />
     </>
   );
 };

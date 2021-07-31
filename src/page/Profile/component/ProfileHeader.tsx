@@ -1,4 +1,4 @@
-import { FlexDiv, Title } from '../../../component/CommonStyle/style';
+import { FlexDiv, Title } from '../../../component/style/style';
 import PButton from '../../../component/PButton';
 import { ProfileProps } from '../Profile';
 

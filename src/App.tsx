@@ -1,5 +1,5 @@
 import { BrowserRouter, HashRouter as Router, Route, Switch } from 'react-router-dom';
-import Main from './page/Home/Main/Main';
+import Main from './page/home/main/Main';
 import PlannerDetail from './page/PlannerDetail/PlannerDetail';
 import Login from './page/User/Login/Login';
 import PlannerEstimate from './page/PlannerEstimate/PlannerEstimate';
@@ -8,8 +8,8 @@ import PlannerPage from './page/User/MyPage/PlannerPage';
 import GlobalStyle from './styles/globalStyle';
 import theme from './styles/theme';
 import { ThemeProvider } from 'styled-components';
-import Search from './page/Home/Search/Search';
-import Profile from './page/Profile/Profile';
+import Search from './page/home/search/Search';
+import Profile from './page/profile/Profile';
 import Header from './component/Header';
 import Footer from './component/Footer';
 

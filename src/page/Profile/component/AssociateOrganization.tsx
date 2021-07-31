@@ -1,11 +1,12 @@
-import { Content, FlexDiv, HorizontalLine, ImageBox } from '../../../component/CommonStyle/style';
+import { useState } from 'react';
+import { Content, FlexDiv } from '../../../component/style/style';
 import { Input } from '../../../component/Form/InputForm';
 import LineAndTitle from './LindAndTitle';
 import AddPhoto from '../../../assets/svg/ic_addphoto.svg';
 import PButton from '../../../component/PButton';
 import SideText from './SideText';
-import { useState } from 'react';
 import OrganizationRegisterModal from './OrganizationRegisterModal';
+import styled from 'styled-components';
 
 interface Props {
   name: string;
@@ -44,7 +45,7 @@ const AssociateOrganization = ({ name, margin }: Props) => {
       >
         {`${name} 업체 사진`}
       </Content>
-      <ImageBox src={AddPhoto} height="93px" width="93px" margin="0px 0px 16px 0" radius="0px"></ImageBox>
+      <Image src={AddPhoto}></Image>
       <Content
         height={'36px'}
         width={'auto'}
@@ -55,7 +56,7 @@ const AssociateOrganization = ({ name, margin }: Props) => {
       >
         권장 크기 : 00 x 00 <br></br> jpg,jpeg,gif,png,bmp 형식의 정지 이미지만 등록됩니다.
       </Content>
-      <HorizontalLine height="1px" width="632px" backgroundColor="#CED4DA" margin="0"></HorizontalLine>
+      <HorizontalLine color="#dee2e6"></HorizontalLine>
       <FlexDiv margin="15px 0 72px 0" direction="row" justify="space-between" align="start">
         <PButton color="black" fontSize="14px" height="45px" width="126px" onClick={openImageModal}>
           업체 등록하기
@@ -65,9 +66,25 @@ const AssociateOrganization = ({ name, margin }: Props) => {
           <SideText text="소속업체의 제휴업체를 불러올 수 있어요." colorText="제휴업체 불러오기"></SideText>
         </FlexDiv>
       </FlexDiv>
-      <HorizontalLine height="1px" width="632px" backgroundColor="#CED4DA" margin="0"></HorizontalLine>
+      <HorizontalLine></HorizontalLine>
     </FlexDiv>
   );
 };
 
 export default AssociateOrganization;
+
+const HorizontalLine = styled.hr`
+  height: 1px;
+  width: 632px;
+  background-color: #ced4da;
+`;
+
+interface ImageProps {
+  src: string;
+}
+
+const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+  height: 93px;
+  width: 93px;
+  margin: 0px 0px 16px 0;
+`;

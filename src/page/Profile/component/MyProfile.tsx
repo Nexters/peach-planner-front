@@ -1,4 +1,4 @@
-import { FlexDiv, Title, HorizontalLine, Content } from '../../../component/CommonStyle/style';
+import { FlexDiv, Content } from '../../../component/style/style';
 import { Input, TextArea } from '../../../component/Form/InputForm';
 import LineAndTitle from './LindAndTitle';
 

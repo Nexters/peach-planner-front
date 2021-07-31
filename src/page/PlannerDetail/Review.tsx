@@ -20,7 +20,7 @@ const Review: FC<ReviewProps> = ({ data }) => {
           <Detail>{data.detail}</Detail>
         </RightContainer>
       </Container>
-      <HorizontalLine />
+      <HorizontalLine color="#dee2e6" />
     </>
   );
 };

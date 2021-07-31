@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Content } from '../../../component/CommonStyle/style';
+import { Content } from '../../../component/style/style';
 
 interface Props {
   content: string;

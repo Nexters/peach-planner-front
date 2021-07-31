@@ -1,4 +1,4 @@
-import { FlexDiv } from '../../../component/CommonStyle/style';
+import { FlexDiv } from '../../../component/style/style';
 import ClickableButton from './ClickableButton';
 import LineAndTitle from './LindAndTitle';
 

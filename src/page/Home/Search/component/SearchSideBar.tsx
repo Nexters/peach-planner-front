@@ -1,4 +1,4 @@
-import { FlexDiv, HorizontalLine, Title } from '../../../component/CommonStyle/style';
+import { FlexDiv, Title } from '../../../../component/style/style';
 import SearchCheckBox from './SearchCheckBox';
 import SearchMenu from './SearchMenu';
 import SearchSideBarRegion from './SearchSideBarRegion';

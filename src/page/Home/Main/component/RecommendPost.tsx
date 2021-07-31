@@ -1,4 +1,5 @@
-import { Content, FlexDiv, ImageBox, Title } from '../../../../component/CommonStyle/style';
+import styled from 'styled-components';
+import { Content, FlexDiv, Title } from '../../../../component/style/style';
 import snap1 from './dummy/snap1.png';
 import snap2 from './dummy/snap2.png';
 import snap3 from './dummy/snap3.png';
@@ -15,7 +16,7 @@ const RecommendPost = () => {
       </FlexDiv>
       <FlexDiv margin={'0 0 0px 0'} justify="flex-start" align="start">
         <FlexDiv margin={'0'} justify="flex-start" align="start" direction="column">
-          <ImageBox height={'385px'} width={'646px'} margin={'0 0px 0 0'} src={snap1}></ImageBox>
+          <Image src={snap1}></Image>
           <Title margin={'14px 0 11px 0'} height={'41px'} width={'646px'} fontSize={'28px'} lineHeight={'41px'}>
             자연을 담는 사진가
           </Title>
@@ -49,3 +50,14 @@ const RecommendPost = () => {
 };
 
 export default RecommendPost;
+
+interface ImageProps {
+  src: string;
+}
+
+const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+  height: 385px;
+  width: 646px;
+  margin: 0;
+  border-radius: 10px;
+`;

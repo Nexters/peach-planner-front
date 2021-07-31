@@ -1,4 +1,6 @@
-import { Content, HorizontalLine, Title } from '../../../component/CommonStyle/style';
+import styled from 'styled-components';
+import HorizontalLine from '../../../component/HorizontalLine';
+import { Content, Title } from '../../../component/style/style';
 
 interface Props {
   title: string;
@@ -8,7 +10,7 @@ interface Props {
 const LineAndTitle = ({ title, content }: Props) => {
   return (
     <>
-      <HorizontalLine height="1px" width="632px" backgroundColor="#868E96" margin="0"></HorizontalLine>
+      <HorizontalLine color="#dee2e6"></HorizontalLine>
       <Title height={'27px'} width={'430px'} fontSize={'18px'} lineHeight={'27px'} margin={'12px 0 0 0'}>
         {title}
       </Title>

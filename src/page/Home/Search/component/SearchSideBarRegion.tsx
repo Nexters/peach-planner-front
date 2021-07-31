@@ -1,4 +1,4 @@
-import { Content, FlexDiv } from '../../../component/CommonStyle/style';
+import { Content, FlexDiv } from '../../../../component/style/style';
 
 interface Props {
   region: string;

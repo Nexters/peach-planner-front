@@ -10,8 +10,12 @@ import { ThemeProvider } from 'styled-components';
 import Search from './page/home/search';
 import Header from './component/Header';
 import Footer from './component/Footer';
+<<<<<<< HEAD
 import Profile from './page/profile';
 import Login from './page/user/login/Login';
+=======
+import Chat from './page/chat/Chat';
+>>>>>>> Add chat basic screen
 
 const App = () => {
   return (
@@ -44,6 +48,9 @@ const App = () => {
             </Route>
             <Route path="/editProfile">
               <Profile isUpdate={true} />
+            </Route>
+            <Route path="/chats">
+              <Chat />
             </Route>
           </Switch>
           <Footer />

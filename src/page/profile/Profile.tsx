@@ -46,6 +46,8 @@ const Profile = ({ isUpdate }: ProfileProps) => {
   );
 };
 
+export default Profile;
+
 const Container = styled.div`
   margin: 16px auto;
 `;
@@ -55,5 +57,3 @@ const InnerContainer = styled.div`
   width: 1100px;
   margin: 0 auto;
 `;
-
-export default Profile;

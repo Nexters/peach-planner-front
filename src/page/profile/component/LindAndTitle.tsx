@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import HorizontalLine from '../../../component/HorizontalLine';
 import { Content, Title } from '../../../component/style/style';
 

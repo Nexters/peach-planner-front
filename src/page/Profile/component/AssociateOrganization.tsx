@@ -4,6 +4,8 @@ import LineAndTitle from './LindAndTitle';
 import AddPhoto from '../../../assets/svg/ic_addphoto.svg';
 import PButton from '../../../component/PButton';
 import SideText from './SideText';
+import { useState } from 'react';
+import OrganizationRegisterModal from './OrganizationRegisterModal';
 
 interface Props {
   name: string;
@@ -11,6 +13,13 @@ interface Props {
 }
 
 const AssociateOrganization = ({ name, margin }: Props) => {
+  const [showImageModal, setShowImageModal] = useState<boolean>(false);
+  const openImageModal = () => setShowImageModal(true);
+  const closeImageModal = () => {
+    setShowImageModal(false);
+    console.log('close');
+  };
+
   return (
     <FlexDiv width="632px" margin={margin} direction="column" justify="flex-start" align="start">
       <LineAndTitle title={`제휴 ${name} 업체`} content="제휴업체를 등록할 수 있어요."></LineAndTitle>
@@ -48,14 +57,14 @@ const AssociateOrganization = ({ name, margin }: Props) => {
       </Content>
       <HorizontalLine height="1px" width="632px" backgroundColor="#CED4DA" margin="0"></HorizontalLine>
       <FlexDiv margin="15px 0 72px 0" direction="row" justify="space-between" align="start">
-        <PButton color="black" fontSize="14px" height="45px" width="126px">
+        <PButton color="black" fontSize="14px" height="45px" width="126px" onClick={openImageModal}>
           업체 등록하기
         </PButton>
+        <OrganizationRegisterModal showImageModal={showImageModal} closeImageModal={closeImageModal} />
         <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-end" align="start">
           <SideText text="소속업체의 제휴업체를 불러올 수 있어요." colorText="제휴업체 불러오기"></SideText>
         </FlexDiv>
       </FlexDiv>
-
       <HorizontalLine height="1px" width="632px" backgroundColor="#CED4DA" margin="0"></HorizontalLine>
     </FlexDiv>
   );

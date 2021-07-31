@@ -1,10 +1,11 @@
-import { Box, Content, FlexDiv, Title } from '../../../component/CommonStyle/style';
+import styled from 'styled-components';
+import { Content, FlexDiv, Title } from '../../../component/style/style';
 import Certification from './Certification';
 
 const UserCertification = () => {
   return (
     <FlexDiv margin="24px 0 0 0">
-      <Box height="250px" width="310px" direction="column">
+      <Box>
         <Title height={'27px'} width="288px" fontSize={'18px'} lineHeight={'27px'} margin={'24px 0 0 21px'}>
           인증
         </Title>
@@ -26,3 +27,15 @@ const UserCertification = () => {
 };
 
 export default UserCertification;
+
+const Box = styled.div`
+  box-sizing: border-box;
+  height: 250px;
+  width: 310px;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: 'center';
+  align-items: 'center';
+`;

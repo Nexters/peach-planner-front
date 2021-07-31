@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Popup from 'reactjs-popup';
-import { Content, FlexDiv, ImageBox, Title } from '../../../component/CommonStyle/style';
+import { Content, FlexDiv, Title } from '../../../component/style/style';
 import Close from '../../../assets/svg/ic_close_b.svg';
 import { Input } from '../../../component/Form/InputForm';
 import PButton from '../../../component/PButton';
@@ -19,7 +19,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
           <Title height={'36px'} width={'auto'} fontSize={'24px'} lineHeight={'36px'}>
             업체 등록하기
           </Title>
-          <CloseButton height="24px" width="24px" src={Close} margin="0" onClick={closeImageModal}></CloseButton>
+          <CloseButton src={Close} onClick={closeImageModal}></CloseButton>
         </FlexDiv>
 
         <FlexDiv margin="0" justify="space-between">
@@ -93,7 +93,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
             >
               대표사진 등록
             </Content>
-            <ImageBox src={AddPhoto} height="93px" width="93px" margin="6px 0px 6px 0" radius="0px"></ImageBox>
+            <Image src={AddPhoto}></Image>
             <Content
               height={'36px'}
               width={'auto'}
@@ -132,6 +132,18 @@ const StyledPopup = styled(Popup)`
   }
 `;
 
-const CloseButton = styled(ImageBox)`
+interface ImageProps {
+  src: string;
+}
+
+const CloseButton = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   cursor: pointer;
+  height: 24px;
+  width: 24px;
+`;
+
+const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+  height: 93px;
+  width: 93px;
+  margin: 6px 0px 6px 0;
 `;

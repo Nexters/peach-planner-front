@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexDiv } from '../../component/CommonStyle/style';
+import { FlexDiv } from '../../component/style/style';
 import PButton from '../../component/PButton';
 import AssociateOrganization from './component/AssociateOrganization';
 import MyProfile from './component/MyProfile';

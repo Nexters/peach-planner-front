@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import SearchResult from './SearchResult';
-import SearchSideBar from './SearchSideBar';
+import SearchResult from './component/SearchResult';
+import SearchSideBar from './component/SearchSideBar';
 
 const Search = () => {
   return (

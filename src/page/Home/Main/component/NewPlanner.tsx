@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { FlexDiv, Title } from '../../../../component/CommonStyle/style';
-import PlannerCard from '../../../../component/PlannerCard/PlannerCard';
+import { FlexDiv, Title } from '../../../../component/style/style';
+import PlannerCard from '../../../../component/PlannerCard';
 import dummy1 from './dummy/img_wedding_1.png';
 import dummy2 from './dummy/img_wedding_2.png';
 import dummy3 from './dummy/img_wedding_3.png';
@@ -17,8 +17,7 @@ const NewPlanner = () => {
       <FlexDiv justify="flex-start" align="start" direction="row" margin="0">
         <PlannerCard
           margin={'0 28px 0 0'}
-          width={'254px'}
-          imageHeight={'254px'}
+          size={'254px'}
           subTextHeight={'150px'}
           imagePath={dummy1}
           heartCount={12}
@@ -29,8 +28,7 @@ const NewPlanner = () => {
         ></PlannerCard>
         <PlannerCard
           margin={'0 28px 0 0'}
-          width={'254px'}
-          imageHeight={'254px'}
+          size={'254px'}
           subTextHeight={'150px'}
           imagePath={dummy2}
           heartCount={12}
@@ -41,8 +39,7 @@ const NewPlanner = () => {
         ></PlannerCard>
         <PlannerCard
           margin={'0 28px 0 0'}
-          width={'254px'}
-          imageHeight={'254px'}
+          size={'254px'}
           subTextHeight={'150px'}
           imagePath={dummy3}
           heartCount={12}
@@ -53,8 +50,7 @@ const NewPlanner = () => {
         ></PlannerCard>
         <PlannerCard
           margin={'0 28px 0 0'}
-          width={'254px'}
-          imageHeight={'254px'}
+          size={'254px'}
           subTextHeight={'150px'}
           imagePath={dummy4}
           heartCount={12}

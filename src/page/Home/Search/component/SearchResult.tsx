@@ -1,9 +1,9 @@
-import { FlexDiv, HorizontalLine, Title } from '../../../component/CommonStyle/style';
-import PlannerCard from '../../../component/PlannerCard/PlannerCard';
-import dummy1 from '../../../images/img_wedding_1.png';
-import dummy2 from '../../../images/img_wedding_2.png';
-import dummy3 from '../../../images/img_wedding_3.png';
-import dummy4 from '../../../images/img_wedding_4.png';
+import { FlexDiv, Title } from '../../../../component/style/style';
+import PlannerCard from '../../../../component/PlannerCard';
+import dummy1 from '../../../../images/img_wedding_1.png';
+import dummy2 from '../../../../images/img_wedding_2.png';
+import dummy3 from '../../../../images/img_wedding_3.png';
+import dummy4 from '../../../../images/img_wedding_4.png';
 
 const SearchResult = () => {
   return (
@@ -24,8 +24,7 @@ const SearchResult = () => {
           <FlexDiv key={index} justify="flex-start" align="start" direction="row" margin="16px 0 32px 0">
             <PlannerCard
               margin={'0 12px 0 0'}
-              width={'206px'}
-              imageHeight={'206px'}
+              size={'206px'}
               subTextHeight={'127px'}
               imagePath={dummy1}
               heartCount={12}
@@ -36,8 +35,7 @@ const SearchResult = () => {
             ></PlannerCard>
             <PlannerCard
               margin={'0 12px 0 0'}
-              width={'206px'}
-              imageHeight={'206px'}
+              size={'206px'}
               subTextHeight={'127px'}
               imagePath={dummy2}
               heartCount={12}
@@ -48,8 +46,7 @@ const SearchResult = () => {
             ></PlannerCard>
             <PlannerCard
               margin={'0 12px 0 0'}
-              width={'206px'}
-              imageHeight={'206px'}
+              size={'206px'}
               subTextHeight={'127px'}
               imagePath={dummy3}
               heartCount={12}
@@ -60,8 +57,7 @@ const SearchResult = () => {
             ></PlannerCard>
             <PlannerCard
               margin={'0 12px 0 0'}
-              width={'206px'}
-              imageHeight={'206px'}
+              size={'206px'}
               subTextHeight={'127px'}
               imagePath={dummy4}
               heartCount={12}

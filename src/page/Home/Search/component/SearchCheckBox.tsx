@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Content, FlexDiv, ImageBox } from '../../../component/CommonStyle/style';
-import borders from '../../../assets/svg/ic_borders.svg';
-import fill from '../../../assets/svg/ic_fill.svg';
-import PButton from '../../../component/PButton';
+import { Content, FlexDiv } from '../../../../component/style/style';
+import borders from '../../../../assets/svg/ic_borders.svg';
+import fill from '../../../../assets/svg/ic_fill.svg';
+import PButton from '../../../../component/PButton';
+import styled from 'styled-components';
 
 interface Props {
   name: string;
@@ -18,11 +19,7 @@ const SearchCheckBox = ({ name }: Props) => {
   return (
     <FlexDiv justify="flex-start" width="200px" height="24px" margin={'0'} direction="row">
       <PButton width="auto" padding="0px" border="0px" onClick={handleClick}>
-        {isChecking ? (
-          <ImageBox src={borders} height={'16px'} width={'16px'} margin={'0 8px 0 0'} radius="0"></ImageBox>
-        ) : (
-          <ImageBox src={fill} height={'16px'} width={'16px'} margin={'0 8px 0 0'} radius="0"></ImageBox>
-        )}
+        {isChecking ? <CheckBox src={borders}></CheckBox> : <CheckBox src={fill}></CheckBox>}
       </PButton>
       <Content height={'18px'} width={'auto'} color={'#000000'} fontSize={'12px'} lineHeight={'18px'}>
         {name}
@@ -32,3 +29,13 @@ const SearchCheckBox = ({ name }: Props) => {
 };
 
 export default SearchCheckBox;
+
+interface ImageProps {
+  src: string;
+}
+
+const CheckBox = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+  height: 16px;
+  width: 16px;
+  margin: 0 8px 0 0;
+`;

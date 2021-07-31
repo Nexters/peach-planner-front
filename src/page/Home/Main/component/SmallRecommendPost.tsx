@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Content, FlexDiv, ImageBox, Title } from '../../../../component/CommonStyle/style';
+import { Content, FlexDiv, Title } from '../../../../component/style/style';
 
 interface Props {
   title: string;
@@ -52,14 +52,14 @@ const SmallRecommendPost = ({ title, content, img, tag }: Props) => {
           </Tag>
         </FlexDiv>
       </FlexDiv>
-      <ImageBox height={'120px'} width={'120px'} margin={'0'} src={img}></ImageBox>
+      <Image src={img}></Image>
     </FlexDiv>
   );
 };
 
 export default SmallRecommendPost;
 
-export const Tag = styled.div`
+const Tag = styled.div`
   box-sizing: border-box;
   height: 25px;
   border: 1px solid #ced4da;
@@ -68,4 +68,15 @@ export const Tag = styled.div`
   margin-right: 8px;
   justify-content: center;
   align-items: center;
+`;
+
+interface ImageProps {
+  src: string;
+}
+
+const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+  height: 120px;
+  width: 120px;
+  margin: 0;
+  border-radius: 10px;
 `;

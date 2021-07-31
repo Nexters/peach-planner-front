@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexDiv } from '../../../component/CommonStyle/style';
+import { FlexDiv } from '../../../component/style/style';
 import Footer from '../../../component/Footer';
 import MainTop from './component/MainTop';
 import NewPlanner from './component/NewPlanner';

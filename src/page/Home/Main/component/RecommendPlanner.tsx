@@ -1,5 +1,5 @@
-import { FlexDiv, Title } from '../../../../component/CommonStyle/style';
-import PlannerCard from '../../../../component/PlannerCard/PlannerCard';
+import { FlexDiv, Title } from '../../../../component/style/style';
+import PlannerCard from '../../../../component/PlannerCard';
 import dummy5 from './dummy/img_wedding_5.png';
 import dummy6 from './dummy/img_wedding_6.png';
 import dummy7 from './dummy/img_wedding_7.png';
@@ -16,8 +16,7 @@ const RecommendPlanner = () => {
       <FlexDiv justify="flex-start" align="start" direction="row" margin="0">
         <PlannerCard
           margin={'0 28px 0 0'}
-          width={'254px'}
-          imageHeight={'254px'}
+          size={'254px'}
           subTextHeight={'150px'}
           imagePath={dummy5}
           heartCount={12}
@@ -28,8 +27,7 @@ const RecommendPlanner = () => {
         ></PlannerCard>
         <PlannerCard
           margin={'0 28px 0 0'}
-          width={'254px'}
-          imageHeight={'254px'}
+          size={'254px'}
           subTextHeight={'150px'}
           imagePath={dummy6}
           heartCount={12}
@@ -40,8 +38,7 @@ const RecommendPlanner = () => {
         ></PlannerCard>
         <PlannerCard
           margin={'0 28px 0 0'}
-          width={'254px'}
-          imageHeight={'254px'}
+          size={'254px'}
           subTextHeight={'150px'}
           imagePath={dummy7}
           heartCount={12}
@@ -52,8 +49,7 @@ const RecommendPlanner = () => {
         ></PlannerCard>
         <PlannerCard
           margin={'0 28px 0 0'}
-          width={'254px'}
-          imageHeight={'254px'}
+          size={'254px'}
           subTextHeight={'150px'}
           imagePath={dummy8}
           heartCount={12}

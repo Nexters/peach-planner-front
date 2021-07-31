@@ -9,9 +9,9 @@ import GlobalStyle from './styles/globalStyle';
 import theme from './styles/theme';
 import { ThemeProvider } from 'styled-components';
 import Search from './page/home/search/Search';
-import Profile from './page/profile/Profile';
 import Header from './component/Header';
 import Footer from './component/Footer';
+import Profile from './page/profile/Profile';
 
 const App = () => {
   return (

@@ -25,7 +25,6 @@ const SearchResult = () => {
             <PlannerCard
               margin={'0 12px 0 0'}
               size={'206px'}
-              subTextHeight={'127px'}
               imagePath={dummy1}
               heartCount={12}
               reviewCount={24}
@@ -36,7 +35,6 @@ const SearchResult = () => {
             <PlannerCard
               margin={'0 12px 0 0'}
               size={'206px'}
-              subTextHeight={'127px'}
               imagePath={dummy2}
               heartCount={12}
               reviewCount={24}
@@ -47,7 +45,6 @@ const SearchResult = () => {
             <PlannerCard
               margin={'0 12px 0 0'}
               size={'206px'}
-              subTextHeight={'127px'}
               imagePath={dummy3}
               heartCount={12}
               reviewCount={24}
@@ -58,7 +55,6 @@ const SearchResult = () => {
             <PlannerCard
               margin={'0 12px 0 0'}
               size={'206px'}
-              subTextHeight={'127px'}
               imagePath={dummy4}
               heartCount={12}
               reviewCount={24}

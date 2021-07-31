@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Content, FlexDiv, Title } from '../../../component/style/style';
+import { FlexDiv } from '../../../component/style/style';
 
 interface Props {
   title: string;
@@ -12,43 +12,14 @@ const SmallRecommendPost = ({ title, content, img, tag }: Props) => {
   return (
     <FlexDiv margin={'0 0 56px 0'} width={'414px'} justify="space-between" align="start" direction="row">
       <FlexDiv margin={'0'} justify-content="flex-start" align="start" direction="column">
-        <Title height={'27px'} width={'auto'} fontSize={'20px'} lineHeight={'29px'}>
-          {title}
-        </Title>
-        <Content
-          height={'40px'}
-          width={'254px'}
-          color={'#495057'}
-          fontSize={'14px'}
-          lineHeight={'20px'}
-          margin="8px 0 0 0"
-        >
-          {content}
-        </Content>
+        <Title>{title}</Title>
+        <Content>{content}</Content>
         <FlexDiv margin={'0'} width={'auto'} direction="row">
           <Tag>
-            <Content
-              height={'18px'}
-              width={'auto'}
-              color={'#000000'}
-              fontSize={'12px'}
-              lineHeight={'18px'}
-              margin="4px 9px 4px 9px"
-            >
-              {tag[0]}
-            </Content>
+            <TagContent>{tag[0]}</TagContent>
           </Tag>
           <Tag>
-            <Content
-              height={'18px'}
-              width={'auto'}
-              color={'#000000'}
-              fontSize={'12px'}
-              lineHeight={'18px'}
-              margin="4px 9px 4px 9px"
-            >
-              {tag[1]}
-            </Content>
+            <TagContent>{tag[1]}</TagContent>
           </Tag>
         </FlexDiv>
       </FlexDiv>
@@ -79,4 +50,32 @@ const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   width: 120px;
   margin: 0;
   border-radius: 10px;
+`;
+
+const Title = styled.div`
+  height: 27px;
+  width: auto;
+  color: #000000;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 29px;
+`;
+
+const Content = styled.span`
+  height: 40px;
+  width: 254px;
+  color: #495057;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 8px 0 0 0;
+`;
+
+const TagContent = styled.span`
+  height: 18px;
+  width: auto;
+  color: #000000;
+  font-size: 12px;
+  line-height: 18px;
+  margin: 4px 9px 4px 9px;
 `;

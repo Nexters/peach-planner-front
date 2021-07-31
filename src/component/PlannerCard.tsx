@@ -2,13 +2,12 @@ import heart from '../assets/svg/ic_heart.svg';
 import review from '../assets/svg/ic_review.svg';
 import blog from '../assets/svg/ic_blog.svg';
 import instagram from '../assets/svg/ic_instagram.svg';
-import { Content, FlexDiv, Title } from './style/style';
+import { FlexDiv } from './style/style';
 import styled from 'styled-components';
 
 interface PlannerProps {
   size: string;
   imagePath: string;
-  subTextHeight: string;
   margin: string;
   heartCount: number;
   reviewCount: number;
@@ -21,47 +20,26 @@ const PlannerCard = (props: PlannerProps) => {
   return (
     <FlexDiv width={props.size} direction="column" margin={props.margin}>
       <PlannerImage src={props.imagePath} height={props.size}></PlannerImage>
-      <FlexDiv
-        justify="flex-start"
-        align="start"
-        height={props.subTextHeight}
-        width={props.size}
-        margin={'0'}
-        direction="column"
-      >
+      <FlexDiv justify="flex-start" align="start" width={props.size} margin={'0'} direction="column">
         <FlexDiv justify="flex-start" margin={'13px 0 0 0'}>
           <HeartIcon src={heart}></HeartIcon>
-          <Content height={'18px'} width={'auto'} color={'#868E96'} fontSize={'12px'} lineHeight={'18px'}>
-            {props.heartCount}
-          </Content>
+          <Count>{props.heartCount}</Count>
           <ReviewIcon src={review}></ReviewIcon>
-          <Content height={'18px'} width={'auto'} color={'#868E96'} fontSize={'12px'} lineHeight={'18px'}>
-            {props.reviewCount}
-          </Content>
+          <Count>{props.reviewCount}</Count>
         </FlexDiv>
         <FlexDiv justify="flex-start" margin={'5px 0 0 0'}>
-          <Title height={'24px'} width={'auto'} fontSize={'16px'} lineHeight={'24px'}>
-            {props.name}
-          </Title>
+          <Title>{props.name}</Title>
         </FlexDiv>
         <FlexDiv justify="flex-start" margin={'8px 0 0 0'}>
-          <Content height={'20px'} width={'56px'} color={'#868E96'} fontSize={'14px'} lineHeight={'20px'}>
-            소속
-          </Content>
-          <Content height={'20px'} width={'auto'} color={'#000000'} fontSize={'14px'} lineHeight={'20px'}>
-            {props.organization}
-          </Content>
+          <DetailTitle>소속</DetailTitle>
+          <DetailContent>{props.organization}</DetailContent>
         </FlexDiv>
         <FlexDiv justify="flex-start" margin={'8px 0 0 0'}>
-          <Content height={'20px'} width={'56px'} color={'#868E96'} fontSize={'14px'} lineHeight={'20px'}>
-            지역
-          </Content>
-          <Content height={'20px'} width={'auto'} color={'#000000'} fontSize={'14px'} lineHeight={'20px'}>
-            {props.region}
-          </Content>
+          <DetailTitle>지역</DetailTitle>
+          <DetailContent>{props.region}</DetailContent>
         </FlexDiv>
       </FlexDiv>
-      <FlexDiv justify="flex-start" margin={'0'}>
+      <FlexDiv justify="flex-start" margin={'12px 0 0 0'}>
         <SnsIcon src={instagram}></SnsIcon>
         <SnsIcon src={blog}></SnsIcon>
       </FlexDiv>
@@ -79,6 +57,7 @@ interface PlannerImageProps {
 const PlannerImage = styled.img.attrs((props: PlannerImageProps) => ({ src: props.src }))`
   height: ${(props: PlannerImageProps) => props.height}};
   width: 100%;
+  border-radius: 10px;
 `;
 
 interface ImageProps {
@@ -101,4 +80,38 @@ const SnsIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   height: 20px;
   width: 20px;
   margin: 0 8px 0 0;
+`;
+
+const Title = styled.div`
+  height: 24px;
+  width: auto;
+  color: #000000;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 24px;
+`;
+
+const Count = styled.span`
+  height: 18px;
+  width: auto;
+  color: #868e96;
+  font-size: 12px;
+  line-height: 18px;
+`;
+
+const DetailTitle = styled.span`
+  height: 20px;
+  width: 56px;
+  color: #868e96;
+  font-size: 14px;
+  line-height: 20px;
+`;
+
+const DetailContent = styled.span`
+  height: 20px;
+  width: auto;
+  color: #000000;
+  font-size: 14px;
+  line-height: 20px;
 `;

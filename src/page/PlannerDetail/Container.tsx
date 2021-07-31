@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import BoldTitle from '../../component/BoldTitle';
-import HorizontalLine from '../../component/HorizontalLine';
 import styled from 'styled-components';
+import HorizontalLine from '../../component/HorizontalLine';
 
 interface ContainerProps {
   title: string;

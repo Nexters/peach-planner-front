@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { FC, ReactNode } from 'react';
 import BoldTitle from '../../component/BoldTitle';
 import HorizontalLine from '../../component/HorizontalLine';
 import styled from 'styled-components';
 
-const Container = ({ title, children }) => {
+interface ContainerProps {
+  title: string;
+  children: ReactNode;
+}
+
+const Container: FC<ContainerProps> = ({ title, children }) => {
   return (
     <>
       <Title>{title}</Title>

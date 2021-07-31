@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import HorizontalLine from '../../component/HorizontalLine';
 import { ReactComponent as AccountDefault } from '../../assets/svg/ic_account_default.svg';
+import { ReviewData } from './ReviewList';
 
-const Review = ({ data }) => {
+interface ReviewProps {
+  data: ReviewData;
+}
+
+const Review: FC<ReviewProps> = ({ data }) => {
   return (
     <>
       <Container>

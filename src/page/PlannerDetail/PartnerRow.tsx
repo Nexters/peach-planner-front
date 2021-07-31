@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import PartnerItem from './PartnerItem';
+import { PartnerInformation } from './PartnerInfo';
 import { ReactComponent as LeftArrow } from '../../assets/svg/ic_arrow_left.svg';
 import { ReactComponent as RightArrow } from '../../assets/svg/ic_arrow_right.svg';
 
-const PartnerRow = ({ info }) => {
+interface PartnerRowProps {
+  info: PartnerInformation;
+}
+
+const PartnerRow: FC<PartnerRowProps> = ({ info }) => {
   return (
     <Container>
       <TopContainer>

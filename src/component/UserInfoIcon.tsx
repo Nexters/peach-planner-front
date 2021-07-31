@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import PButton from './PButton';
 import { ReactComponent as Heart } from '../assets/svg/ic_heart.svg';
 import { ReactComponent as Review } from '../assets/svg/ic_review.svg';
 
-const UserInfoIcon = ({ title, detail, buttonText }) => {
+interface UserInfoIconProps {
+  title: string;
+  detail?: string;
+  buttonText?: string;
+}
+
+const UserInfoIcon: FC<UserInfoIconProps> = ({ title, detail, buttonText }) => {
   return (
     <Container>
       <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs33kicMrwTO3bQTdskuUlvJRK9JAgmaGjZw&usqp=CAU" />
@@ -47,7 +53,7 @@ const InnerContainer = styled.div`
   margin-left: 17px;
 `;
 
-const Title = styled.div`
+const Title = styled.div<{ detail: string | undefined }>`
   margin-bottom: ${({ detail }) => (detail ? '5px' : '10.5px')};
   font-size: 16px;
 `;

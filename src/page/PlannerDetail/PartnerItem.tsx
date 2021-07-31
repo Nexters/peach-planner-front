@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
+import { DetailInformation } from './PartnerInfo';
 
-const PartnerItem = ({ data }) => {
+interface PartnerItemProps {
+  data: DetailInformation;
+}
+
+const PartnerItem: FC<PartnerItemProps> = ({ data }) => {
   return (
     <Container>
       <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs33kicMrwTO3bQTdskuUlvJRK9JAgmaGjZw&usqp=CAU" />

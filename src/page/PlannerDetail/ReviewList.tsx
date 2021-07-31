@@ -2,9 +2,15 @@ import React from 'react';
 import Container from './Container';
 import Review from './Review';
 
+export interface ReviewData {
+  name: String;
+  date: String;
+  detail: String;
+}
+
 const ReviewList = () => {
-  const REVIEW_COUNT = 24;
-  const REVIEW_DATA = [
+  const REVIEW_COUNT: number = 24;
+  const REVIEW_DATA: ReviewData[] = [
     { name: 'Alice', date: '2021년 6월 12일', detail: '너무 친절하시고 좋았습니다!' },
     {
       name: '초이밍',

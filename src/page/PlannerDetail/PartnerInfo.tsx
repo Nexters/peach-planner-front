@@ -2,8 +2,18 @@ import React from 'react';
 import Container from './Container';
 import PartnerRow from './PartnerRow';
 
+export interface DetailInformation {
+  name: string;
+  location: string;
+}
+
+export interface PartnerInformation {
+  title: string;
+  data: DetailInformation[];
+}
+
 const PartnerInfo = () => {
-  const PARTNER_INFO = [
+  const PARTNER_INFO: PartnerInformation[] = [
     {
       title: '스튜디오',
       data: [

@@ -1,7 +1,8 @@
-import React, { useState, version } from 'react';
+import React, { ChangeEvent, useState, version } from 'react';
 import styled from 'styled-components';
 import PButton from '../../component/PButton';
 import EstimateBox from './EstimateBox';
+import EstimateRow from './EstimateRow';
 
 const PlannerEstimate = () => {
   const [myInfo, setMyInfo] = useState({
@@ -21,11 +22,11 @@ const PlannerEstimate = () => {
     mobileInvitation: true
   });
 
-  const handleMyInfoChange = (e) => {
+  const handleMyInfoChange = (e: ChangeEvent<HTMLInputElement>) => {
     setMyInfo({ ...myInfo, [e.target.name]: e.target.value });
   };
 
-  const handleCompanyInfoChange = (e) => {
+  const handleCompanyInfoChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCompanyInfo({ ...companyInfo, [e.target.name]: e.target.value });
   };
 
@@ -44,63 +45,37 @@ const PlannerEstimate = () => {
           </PButton>
         </FlexContainer>
       </EstimateBox>
-      <EstimateBox>
-        <BoxTitle>나의 정보</BoxTitle>
-        <Row>
-          <Label>이름</Label>
-          <Content>
-            <input type="text" value={myInfo.name} name="name" onChange={handleMyInfoChange} />
-          </Content>
-        </Row>
-        <Row>
-          <Label>연락처</Label>
-          <Content>
-            <input type="number" value={myInfo.phone1} name="phone1" onChange={handleMyInfoChange} />
-            -
-            <input type="number" value={myInfo.phone2} name="phone2" onChange={handleMyInfoChange} />
-            -
-            <input type="number" value={myInfo.phone3} name="phone3" onChange={handleMyInfoChange} />
-          </Content>
-        </Row>
-        <Row>
-          <Label>이메일</Label>
-          <Content>{myInfo.email}</Content>
-        </Row>
-        <Row>
-          <Label>예식 예정일</Label>
-          <Content>
-            <input type="text" value={myInfo.date} name="date" onChange={handleMyInfoChange} />
-          </Content>
-        </Row>
+      <EstimateBox title="나의 정보">
+        <EstimateRow label="이름">
+          <input type="text" value={myInfo.name} name="name" onChange={handleMyInfoChange} />
+        </EstimateRow>
+        <EstimateRow label="연락처">
+          <input type="number" value={myInfo.phone1} name="phone1" onChange={handleMyInfoChange} />
+          -
+          <input type="number" value={myInfo.phone2} name="phone2" onChange={handleMyInfoChange} />
+          -
+          <input type="number" value={myInfo.phone3} name="phone3" onChange={handleMyInfoChange} />
+        </EstimateRow>
+        <EstimateRow label="이메일">{myInfo.email}</EstimateRow>
+        <EstimateRow label="예식 예정일">
+          <input type="text" value={myInfo.date} name="date" onChange={handleMyInfoChange} />
+        </EstimateRow>
       </EstimateBox>
-      <EstimateBox>
-        <BoxTitle>업체 선택</BoxTitle>
-        <Row>
-          <Label>스튜디오</Label>
-          <Content>
-            <input type="text" value={companyInfo.name} name="name" onChange={handleCompanyInfoChange} />
-          </Content>
-        </Row>
-        <Row>
-          <Label>드레스</Label>
-          <Content>
-            <input type="text" value={companyInfo.dress} name="dress" onChange={handleCompanyInfoChange} />
-          </Content>
-        </Row>
-        <Row>
-          <Label>메이크업</Label>
-          <Content>
-            <input type="text" value={companyInfo.makeup} name="makeup" onChange={handleCompanyInfoChange} />
-          </Content>
-        </Row>
+      <EstimateBox title="업체 선택">
+        <EstimateRow label="스튜디오">
+          <input type="text" value={companyInfo.name} name="name" onChange={handleCompanyInfoChange} />
+        </EstimateRow>
+        <EstimateRow label="드레스">
+          <input type="text" value={companyInfo.dress} name="dress" onChange={handleCompanyInfoChange} />
+        </EstimateRow>
+        <EstimateRow label="메이크업">
+          <input type="text" value={companyInfo.makeup} name="makeup" onChange={handleCompanyInfoChange} />
+        </EstimateRow>
       </EstimateBox>
-      <EstimateBox>
-        <BoxTitle>요청사항</BoxTitle>
+      <EstimateBox title="요청사항">
         <TextArea placeholder="웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. "></TextArea>
       </EstimateBox>
-      <EstimateBox>
-        <BoxTitle>첨부파일</BoxTitle>
-      </EstimateBox>
+      <EstimateBox title="첨부파일">첨부파일</EstimateBox>
       <EstimateBox>
         <PButton color="pink">전적 요청하기</PButton>
         <SaveButton>임시저장</SaveButton>
@@ -143,27 +118,6 @@ const CompanyName = styled.div`
 const Description = styled.div`
   font-size: 13px;
   color: #868e96;
-`;
-
-const BoxTitle = styled.div`
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 20px;
-`;
-
-const Row = styled.div`
-  display: flex;
-  margin-bottom: 15px;
-`;
-
-const Label = styled.label`
-  flex: 1;
-  font-size: 16px;
-  color: #868e96;
-`;
-
-const Content = styled.div`
-  flex: 5;
 `;
 
 const TextArea = styled.textarea`

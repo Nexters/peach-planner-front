@@ -1,17 +1,17 @@
 import { BrowserRouter, HashRouter as Router, Route, Switch } from 'react-router-dom';
-import Main from './page/Home/Main/Main';
-import PlannerDetail from './page/PlannerDetail/PlannerDetail';
-import Login from './page/User/Login/Login';
-import PlannerEstimate from './page/PlannerEstimate/PlannerEstimate';
-import UserPage from './page/User/MyPage/UserPage';
-import PlannerPage from './page/User/MyPage/PlannerPage';
+import Main from './page/home/main';
+import PlannerDetail from './page/planner-detail';
+import PlannerEstimate from './page/planner-estimate/PlannerEstimate';
+import UserPage from './page/user/mypage/UserPage';
+import PlannerPage from './page/user/mypage/PlannerPage';
 import GlobalStyle from './styles/globalStyle';
 import theme from './styles/theme';
 import { ThemeProvider } from 'styled-components';
-import Search from './page/Home/Search/Search';
-import Profile from './page/Profile/Profile';
+import Search from './page/home/search';
 import Header from './component/Header';
 import Footer from './component/Footer';
+import Profile from './page/profile';
+import Login from './page/user/login/Login';
 
 const App = () => {
   return (

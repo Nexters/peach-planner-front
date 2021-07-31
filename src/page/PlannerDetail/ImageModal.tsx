@@ -38,7 +38,6 @@ const ImageModal: FC<ImageModalProps> = ({ showImageModal, closeImageModal }) =>
 
   return (
     <StyledPopup open={showImageModal} closeOnDocumentClick onClose={closeImageModal}>
-      {/* TODO: X 아이콘 추가 */}
       <CloseButton onClick={closeImageModal}>
         <Close /> 닫기
       </CloseButton>
@@ -85,6 +84,8 @@ const CloseButton = styled.button`
   font-size: 18px;
   display: flex;
   line-height: 33px;
+  background-color: transparent;
+  border: none;
 
   svg {
     margin-right: 4px;

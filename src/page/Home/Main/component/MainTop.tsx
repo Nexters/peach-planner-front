@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Content, FlexDiv, Title } from '../../../../component/CommonStyle/style';
-import background from '../../../../assets/img/main_background.png';
+import background from '../../../../assets/img/img_background.png';
 
 const MainTop = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import * as $ from './MyPageView';
-import Heart from '../../../component/MyPageItem/Heart';
-import Estimate from '../../../component/MyPageItem/Estimate';
+import { FlexDiv, ProfileDiv, ProfileImgBox, MyPageSpan, SideMenuDiv, Line, SideMenuItem } from './MyPageView';
+import Heart from '../../../component/Heart';
+import Estimate from '../../../component/Estimate';
 
 const sideMenuItem = [
   {
@@ -34,26 +34,26 @@ const UserPage = () => {
   };
 
   return (
-    <$.FlexDiv justify="flex-start">
-      <$.FlexDiv justify="flex-start" direction="column" width="500px">
-        <$.ProfileDiv>
-          <$.ProfileImgBox></$.ProfileImgBox>
-          <$.MyPageSpan color="#212529">홍길동</$.MyPageSpan>
-          <$.MyPageSpan color="#868E96" weight="normal" size="12px">
+    <FlexDiv justify="flex-start">
+      <FlexDiv justify="flex-start" direction="column" width="500px">
+        <ProfileDiv>
+          <ProfileImgBox></ProfileImgBox>
+          <MyPageSpan color="#212529">홍길동</MyPageSpan>
+          <MyPageSpan color="#868E96" weight="normal" size="12px">
             example@gmail.com
-          </$.MyPageSpan>
-        </$.ProfileDiv>
-        <$.SideMenuDiv>
-          <$.MyPageSpan color="#000000" size="16px">
+          </MyPageSpan>
+        </ProfileDiv>
+        <SideMenuDiv>
+          <MyPageSpan color="#000000" size="16px">
             내 페이지
-          </$.MyPageSpan>
-          <$.Line />
+          </MyPageSpan>
+          <Line />
           {sideMenuItem.map((item) => {
-            return <$.SideMenuItem onClick={() => handleSideMenuItem(item.value)}>{item.name}</$.SideMenuItem>;
+            return <SideMenuItem onClick={() => handleSideMenuItem(item.value)}>{item.name}</SideMenuItem>;
           })}
-        </$.SideMenuDiv>
-      </$.FlexDiv>
-      <$.FlexDiv justify="flex-start" direction="column" width="1000px">
+        </SideMenuDiv>
+      </FlexDiv>
+      <FlexDiv justify="flex-start" direction="column" width="1000px">
         {selectedItem === '' && (
           <>
             <Heart />
@@ -62,8 +62,8 @@ const UserPage = () => {
         )}
         {selectedItem === 'heart' && <Heart />}
         {selectedItem === 'estimate' && <Estimate />}
-      </$.FlexDiv>
-    </$.FlexDiv>
+      </FlexDiv>
+    </FlexDiv>
   );
 };
 

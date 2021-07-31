@@ -18,7 +18,7 @@ export const FlexDiv = styled.div<DivProps>`
   justify-content: ${(props: DivProps) => props.justify || 'center'};
   align-items: ${(props: DivProps) => props.align || 'center'};
   flex-direction: ${(props: DivProps) => props.direction || 'row'};
-  margin: ${(props: DivProps) => props.margin || '20px 0'};
+  margin: ${(props: DivProps) => props.margin};
 `;
 
 export interface TitleProps {

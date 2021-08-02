@@ -27,6 +27,7 @@ export interface TitleProps {
   fontSize: string;
   lineHeight: string;
   margin?: string;
+  padding?: string;
 }
 
 export const Title = styled.div<TitleProps>`
@@ -38,6 +39,7 @@ export const Title = styled.div<TitleProps>`
   letter-spacing: 0;
   line-height: ${(props: TitleProps) => props.lineHeight};
   margin: ${(props: TitleProps) => props.margin};
+  padding: ${(props: TitleProps) => props.padding};
 `;
 
 export interface ContentProps {

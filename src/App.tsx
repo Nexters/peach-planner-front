@@ -12,45 +12,56 @@ import Header from './component/Header';
 import Footer from './component/Footer';
 import Profile from './page/profile';
 import Login from './page/user/login/Login';
+import { isMobile, isBrowser } from 'react-device-detect';
+import Mobile from './page/mobile';
 
 const App = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Router>
-          <Header />
-          <Switch>
-            <Route exact path="/">
-              <Main />
-            </Route>
-            <Route path="/search">
-              <Search />
-            </Route>
-            <Route path="/detail">
-              <PlannerDetail />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/estimate">
-              <PlannerEstimate />
-            </Route>
-            <Route path="/userPage">
-              <UserPage />
-            </Route>
-            <Route path="/plannerPage">
-              <PlannerPage />
-            </Route>
-            <Route path="/editProfile">
-              <Profile isUpdate={true} />
-            </Route>
-          </Switch>
-          <Footer />
-        </Router>
-      </BrowserRouter>
-    </ThemeProvider>
-  );
+  if (!isBrowser) {
+    return (
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Mobile></Mobile>
+      </ThemeProvider>
+    );
+  } else {
+    return (
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
+          <Router>
+            <Header />
+            <Switch>
+              <Route exact path="/">
+                <Main />
+              </Route>
+              <Route path="/search">
+                <Search />
+              </Route>
+              <Route path="/detail">
+                <PlannerDetail />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/estimate">
+                <PlannerEstimate />
+              </Route>
+              <Route path="/userPage">
+                <UserPage />
+              </Route>
+              <Route path="/plannerPage">
+                <PlannerPage />
+              </Route>
+              <Route path="/editProfile">
+                <Profile isUpdate={true} />
+              </Route>
+            </Switch>
+            <Footer />
+          </Router>
+        </BrowserRouter>
+      </ThemeProvider>
+    );
+  }
 };
 
 export default App;

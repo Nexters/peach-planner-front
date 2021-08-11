@@ -12,6 +12,7 @@ import Header from './component/Header';
 import Footer from './component/Footer';
 import Profile from './page/profile';
 import Login from './page/user/login/Login';
+import Chat from './page/chat/Chat';
 
 const App = () => {
   return (
@@ -44,6 +45,9 @@ const App = () => {
             </Route>
             <Route path="/editProfile">
               <Profile isUpdate={true} />
+            </Route>
+            <Route path="/chats">
+              <Chat />
             </Route>
           </Switch>
           <Footer />

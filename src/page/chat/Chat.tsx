@@ -1,7 +1,7 @@
-import { Title } from 'src/component/style/style';
+import { Title } from '../../component/style/style';
 import styled from 'styled-components';
-import shape from 'src/images/Shape 2.png';
-import imgWedding from 'src/images/img_wedding_1.png';
+import shape from '../../images/Shape 2.png';
+import imgWedding from '../../images/img_wedding_1.png';
 
 export default () => {
   return (
@@ -83,7 +83,9 @@ export default () => {
                   <ChatMessageProfileName>송영주 플래너</ChatMessageProfileName>
                   <ChatMessageProfileDatetime>오전 9:41</ChatMessageProfileDatetime>
                 </ChatMessageTitle>
-                <ChatMessage>안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :)</ChatMessage>
+                <ChatMessage>
+                  안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :)
+                </ChatMessage>
               </ChatMessageCard>
             </ChatMessageDiv>
             <ChatMessageDiv>
@@ -98,7 +100,9 @@ export default () => {
             </ChatMessageDiv>
             <SystemMessageDiv>
               <SystemMessage>상담에 만족하셨나요? 플래너 리뷰를 작성하실 수 있습니다.</SystemMessage>
-              <a href="/"><SystemMessageLink>플래너 리뷰 작성하기</SystemMessageLink></a>
+              <a href="/">
+                <SystemMessageLink>플래너 리뷰 작성하기</SystemMessageLink>
+              </a>
             </SystemMessageDiv>
           </Cell>
         </Row>

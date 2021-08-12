@@ -15,6 +15,7 @@ import Login from './page/user/login/Login';
 import Chat from './page/chat/Chat';
 import { setAxiosDefaults } from './api';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { UserPrivateRoute, PlannerPrivateRoute, PublicOnlyRoute } from './routes';
 
 const queryClient = new QueryClient();
 
@@ -38,24 +39,24 @@ const App = () => {
               <Route path="/detail">
                 <PlannerDetail />
               </Route>
-              <Route path="/login">
+              <PublicOnlyRoute path="/login">
                 <Login />
-              </Route>
-              <Route path="/estimate">
+              </PublicOnlyRoute>
+              <UserPrivateRoute path="/estimate">
                 <PlannerEstimate />
-              </Route>
-              <Route path="/userPage">
+              </UserPrivateRoute>
+              <UserPrivateRoute path="/userPage">
                 <UserPage />
-              </Route>
-              <Route path="/plannerPage">
+              </UserPrivateRoute>
+              <PlannerPrivateRoute path="/plannerPage">
                 <PlannerPage />
-              </Route>
-              <Route path="/editProfile">
+              </PlannerPrivateRoute>
+              <PlannerPrivateRoute path="/editProfile">
                 <Profile isUpdate={true} />
-              </Route>
-              <Route path="/chats">
+              </PlannerPrivateRoute>
+              <UserPrivateRoute path="/chats">
                 <Chat />
-              </Route>
+              </UserPrivateRoute>
             </Switch>
             <Footer />
           </Router>

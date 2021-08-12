@@ -57,7 +57,8 @@ const NewPlanner = () => {
                   name={planner.name}
                   organization={planner.company.name}
                   region={planner.locations.join(',')}
-                ></PlannerCard>
+                  id={planner.id}
+                />
               );
             })
           ) : (
@@ -72,6 +73,7 @@ const NewPlanner = () => {
             name={'송영주'}
             organization={'아이니웨딩'}
             region={'서울,경기'}
+            id={0}
           ></PlannerCard>
 
           <PlannerCard
@@ -83,6 +85,7 @@ const NewPlanner = () => {
             name={'이윤정'}
             organization={'베리굿웨딩'}
             region={'서울,경기'}
+            id={0}
           ></PlannerCard>
 
           <PlannerCard
@@ -94,6 +97,7 @@ const NewPlanner = () => {
             name={'정화진'}
             organization={'베리굿웨딩'}
             region={'서울,경기'}
+            id={0}
           ></PlannerCard>
 
           <PlannerCard
@@ -105,6 +109,7 @@ const NewPlanner = () => {
             name={'성시란'}
             organization={'르웨딩플랜'}
             region={'서울,경기'}
+            id={0}
           ></PlannerCard>
           <PlannerCard
             margin={'0 28px 0 0'}
@@ -115,6 +120,7 @@ const NewPlanner = () => {
             name={'송영주'}
             organization={'아이니웨딩'}
             region={'서울,경기'}
+            id={0}
           ></PlannerCard>
 
           <PlannerCard
@@ -126,6 +132,7 @@ const NewPlanner = () => {
             name={'이윤정'}
             organization={'베리굿웨딩'}
             region={'서울,경기'}
+            id={0}
           ></PlannerCard>
 
           <PlannerCard
@@ -137,6 +144,7 @@ const NewPlanner = () => {
             name={'정화진'}
             organization={'베리굿웨딩'}
             region={'서울,경기'}
+            id={0}
           ></PlannerCard>
 
           <PlannerCard
@@ -148,6 +156,7 @@ const NewPlanner = () => {
             name={'성시란'}
             organization={'르웨딩플랜'}
             region={'서울,경기'}
+            id={0}
           ></PlannerCard>
         </Slider>
       </FlexDiv>

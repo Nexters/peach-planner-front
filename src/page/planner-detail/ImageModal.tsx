@@ -4,24 +4,15 @@ import Popup from 'reactjs-popup';
 import { ReactComponent as Close } from '../../assets/svg/ic_close_w.svg';
 import { ReactComponent as Left } from '../../assets/svg/ic_left_img.svg';
 import { ReactComponent as Right } from '../../assets/svg/ic_right_img.svg';
-
-// 임시 이미지 Import
-import img1 from '../../images/img_wedding_1.png';
-import img2 from '../../images/img_wedding_2.png';
-import img3 from '../../images/img_wedding_3.png';
-import img4 from '../../images/img_wedding_4.png';
-import img5 from '../../images/img_wedding_5.png';
-import img6 from '../../images/img_wedding_8.png';
 import SmallImage from './SmallImage';
-
-const imageList = [img1, img2, img3, img4, img5, img6];
 
 interface ImageModalProps {
   showImageModal: boolean;
   closeImageModal(): void;
+  imageList: string[];
 }
 
-const ImageModal: FC<ImageModalProps> = ({ showImageModal, closeImageModal }) => {
+const ImageModal: FC<ImageModalProps> = ({ showImageModal, closeImageModal, imageList }) => {
   const [imgIndex, setImgIndex] = useState<number>(0);
 
   const showLeftImage = () => {

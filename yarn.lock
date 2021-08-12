@@ -9541,9 +9541,9 @@
   "version" "17.0.1"
 
 "react-query@^3.19.1":
-  "integrity" "sha512-tMBVKlmWevPHYWgI8ZBEgsTulJXSuXsxDbxqANODRnPI+3hd5GRVcc7nNIYSUx3aaULt08rN3EhTMHyTcFUNJw=="
-  "resolved" "https://registry.npmjs.org/react-query/-/react-query-3.19.1.tgz"
-  "version" "3.19.1"
+  "integrity" "sha512-21WfvDgBXvPzJtG4gAxi0h6ipOUNPKZGR3vZJ17m/kHGbj9g6rPblc0lG4sY5oVLpM05LP+BdDt/IYfy0IIKmg=="
+  "resolved" "https://registry.npmjs.org/react-query/-/react-query-3.19.6.tgz"
+  "version" "3.19.6"
   dependencies:
     "@babel/runtime" "^7.5.5"
     "broadcast-channel" "^3.4.1"

@@ -13,10 +13,17 @@ import Footer from './component/Footer';
 import Profile from './page/profile';
 import Login from './page/user/login/Login';
 import Chat from './page/chat/Chat';
-import { isMobile, isBrowser } from 'react-device-detect';
+import { isBrowser } from 'react-device-detect';
 import Mobile from './page/mobile';
 
+import { setAxiosDefaults } from './api';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
+
 const App = () => {
+  setAxiosDefaults();
+
   if (!isBrowser) {
     return (
       <ThemeProvider theme={theme}>
@@ -26,44 +33,46 @@ const App = () => {
     );
   } else {
     return (
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
-          <Router>
-            <Header />
-            <Switch>
-              <Route exact path="/">
-                <Main />
-              </Route>
-              <Route path="/search">
-                <Search />
-              </Route>
-              <Route path="/detail">
-                <PlannerDetail />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/estimate">
-                <PlannerEstimate />
-              </Route>
-              <Route path="/userPage">
-                <UserPage />
-              </Route>
-              <Route path="/plannerPage">
-                <PlannerPage />
-              </Route>
-              <Route path="/editProfile">
-                <Profile isUpdate={true} />
-              </Route>
-              <Route path="/chats">
-                <Chat />
-              </Route>
-            </Switch>
-            <Footer />
-          </Router>
-        </BrowserRouter>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <BrowserRouter basename={process.env.PUBLIC_URL}>
+            <Router>
+              <Header />
+              <Switch>
+                <Route exact path="/">
+                  <Main />
+                </Route>
+                <Route path="/search">
+                  <Search />
+                </Route>
+                <Route path="/detail">
+                  <PlannerDetail />
+                </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path="/estimate">
+                  <PlannerEstimate />
+                </Route>
+                <Route path="/userPage">
+                  <UserPage />
+                </Route>
+                <Route path="/plannerPage">
+                  <PlannerPage />
+                </Route>
+                <Route path="/editProfile">
+                  <Profile isUpdate={true} />
+                </Route>
+                <Route path="/chats">
+                  <Chat />
+                </Route>
+              </Switch>
+              <Footer />
+            </Router>
+          </BrowserRouter>
+        </ThemeProvider>
+      </QueryClientProvider>
     );
   }
 };

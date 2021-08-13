@@ -1,9 +1,5 @@
 import { FlexDiv } from '../../../component/style/style';
 import PlannerCard from '../../../component/PlannerCard';
-import dummy5 from './dummy/img_wedding_5.png';
-import dummy6 from './dummy/img_wedding_6.png';
-import dummy7 from './dummy/img_wedding_7.png';
-import dummy8 from './dummy/img_wedding_8.png';
 import LeftArrow from '../../../assets/svg/ic_arrow_left.svg';
 import RightArrow from '../../../assets/svg/ic_arrow_right.svg';
 import styled from 'styled-components';
@@ -24,6 +20,7 @@ const RecommendPlanner = () => {
     variableWidth: true,
     arrows: false
   });
+  console.log(planners);
 
   return (
     <FlexDiv margin={'64px 0 0 0'} direction="column">
@@ -51,7 +48,7 @@ const RecommendPlanner = () => {
                   key={planner.id}
                   margin={'0 28px 0 0'}
                   size={'254px'}
-                  imagePath={dummy5}
+                  imagePath={planner.images[0]}
                   heartCount={planner.likes}
                   reviewCount={24}
                   name={planner.name}
@@ -63,86 +60,6 @@ const RecommendPlanner = () => {
           ) : (
             <>loading...</>
           )}
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy5}
-            heartCount={12}
-            reviewCount={24}
-            name={'송영주'}
-            organization={'아이니웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy6}
-            heartCount={12}
-            reviewCount={24}
-            name={'이윤정'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy7}
-            heartCount={12}
-            reviewCount={24}
-            name={'정화진'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy8}
-            heartCount={12}
-            reviewCount={24}
-            name={'성시란'}
-            organization={'르웨딩플랜'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy5}
-            heartCount={12}
-            reviewCount={24}
-            name={'송영주'}
-            organization={'아이니웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy6}
-            heartCount={12}
-            reviewCount={24}
-            name={'이윤정'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy7}
-            heartCount={12}
-            reviewCount={24}
-            name={'정화진'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy8}
-            heartCount={12}
-            reviewCount={24}
-            name={'성시란'}
-            organization={'르웨딩플랜'}
-            region={'서울,경기'}
-          ></PlannerCard>
         </Slider>
       </FlexDiv>
     </FlexDiv>

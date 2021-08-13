@@ -1,9 +1,12 @@
 import { Title } from '../../component/style/style';
 import styled from 'styled-components';
-import shape from '../../images/Shape 2.png';
-import imgWedding from '../../images/img_wedding_1.png';
+import shape from 'src/images/Shape 2.png';
+import imgWedding from 'src/images/img_wedding_1.png';
+import React from 'react';
 
 export default () => {
+  const [selected, setSelected] = React.useState(0);
+
   return (
     <Container>
       <Page>
@@ -22,7 +25,7 @@ export default () => {
 
         <Row height="60vh">
           <Cell width="35%">
-            <ChatCard>
+            <ChatCard selected={selected === 0} onClick={() => setSelected(0)}>
               <ChatProfileImg src={shape} />
               <ChatProfileText>
                 <ChatProfileLine>
@@ -34,7 +37,7 @@ export default () => {
                 </ChatLastMessage>
               </ChatProfileText>
             </ChatCard>
-            <ChatCard selected={true}>
+            <ChatCard selected={selected === 1} onClick={() => setSelected(1)}>
               <ChatProfileImg src={shape} />
               <ChatProfileText>
                 <ChatProfileLine>
@@ -46,7 +49,7 @@ export default () => {
                 </ChatLastMessage>
               </ChatProfileText>
             </ChatCard>
-            <ChatCard>
+            <ChatCard selected={selected === 2} onClick={() => setSelected(2)}>
               <ChatProfileImg src={shape} />
               <ChatProfileText>
                 <ChatProfileLine>
@@ -58,7 +61,7 @@ export default () => {
                 </ChatLastMessage>
               </ChatProfileText>
             </ChatCard>
-            <ChatCard>
+            <ChatCard selected={selected === 3} onClick={() => setSelected(3)}>
               <ChatProfileImg src={shape} />
               <ChatProfileText>
                 <ChatProfileLine>

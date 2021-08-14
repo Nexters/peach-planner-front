@@ -30,7 +30,6 @@ const Title = styled.div`
   height: 36px;
   width: auto;
   color: #212529;
-  font-family: SpoqaHanSans;
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 0;
@@ -43,7 +42,6 @@ const Content = styled.div`
   height: 44px;
   width: auto;
   color: #343a40;
-  font-family: SpoqaHanSans;
   font-size: 14px;
   letter-spacing: 0;
   line-height: 22px;

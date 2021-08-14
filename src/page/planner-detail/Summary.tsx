@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import BoldTitle from '../../component/BoldTitle';
 import HorizontalLine from '../../component/HorizontalLine';
@@ -7,27 +7,42 @@ import { ReactComponent as Heart } from '../../assets/svg/ic_heart.svg';
 import { ReactComponent as Instagram } from '../../assets/svg/ic_instagram.svg';
 import { ReactComponent as Blog } from '../../assets/svg/ic_blog.svg';
 import ImageModal from './ImageModal';
+import { Planner } from '../../api/Planner';
 
-const Summary = () => {
-  const PLANNER_NAME = '이윤경';
-  const COMPANY_NAME = '아이니웨딩';
-  const HEART_COUNT = 12;
-  const ONE_LINE = '당신의 웨딩로망을 서포트합니다 :)';
+interface SummaryProps {
+  plannerInfo: Planner;
+}
+
+const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
+  const PLANNER_NAME = plannerInfo.name;
+  const COMPANY_NAME = plannerInfo.company.name;
+  const HEART_COUNT = plannerInfo.likes;
+  const ONE_LINE_SUMMARY = plannerInfo.summary;
+  const INSTAGRAM_LINK = plannerInfo.externalLinks.instagramLink;
+  const BLOG_LINK = plannerInfo.externalLinks.blogLink;
+  const IMAGES = plannerInfo.images;
 
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const openImageModal = () => setShowImageModal(true);
   const closeImageModal = () => {
     setShowImageModal(false);
-    console.log('close');
   };
 
   return (
     <Container>
       <ImageContainer>
-        <PButton width="97px" height="31px" fontSize="12px" padding="0" onClick={openImageModal}>
-          사진 모두 보기
-        </PButton>
-        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} />
+        <ImageWrapper>
+          {IMAGES.slice(0, 2).map((image) => (
+            <Image src={image} />
+          ))}
+        </ImageWrapper>
+        <ImageWrapper>
+          {IMAGES.slice(2, 4).map((image) => (
+            <Image src={image} />
+          ))}
+        </ImageWrapper>
+        {IMAGES.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}
+        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={IMAGES} />
       </ImageContainer>
       <InformationContainer>
         <InnerContainer>
@@ -42,13 +57,17 @@ const Summary = () => {
           <HorizontalLine color="#dee2e6" top="12px" bottom="15px" />
 
           <BoldGray>플래너 한줄소개</BoldGray>
-          <OneLine>{ONE_LINE}</OneLine>
+          <OneLine>{ONE_LINE_SUMMARY}</OneLine>
           <HorizontalLine top="36px" bottom="11px" />
 
           <BoldGray>소셜미디어</BoldGray>
           <SocialIcon>
-            <Instagram />
-            <Blog />
+            <a href={INSTAGRAM_LINK} target="_blank">
+              <Instagram />
+            </a>
+            <a href={BLOG_LINK} target="_blank">
+              <Blog />
+            </a>
           </SocialIcon>
 
           <PButton color="pink">견적 요청하기</PButton>
@@ -70,8 +89,38 @@ const Container = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  background-color: #e9ecef;
+  // background-color: #e9ecef;
   flex: 1;
+  position: relative;
+`;
+
+const ImageWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+  & + & {
+    margin-top: 8px;
+  }
+`;
+
+const Image = styled.img`
+  width: 211px;
+  height: 211px;
+  border-radius: 10px;
+`;
+
+const ShowImageButton = styled.button`
+  cursor: pointer;
+  border-radius: 3px;
+  width: 97px;
+  height: 31px;
+  padding: 0px;
+  font-size: 12px;
+  border: 1px solid #adb5bd;
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 19.5px;
 `;
 
 const InformationContainer = styled.div`

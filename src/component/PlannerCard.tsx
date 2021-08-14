@@ -4,6 +4,7 @@ import blog from '../assets/svg/ic_blog.svg';
 import instagram from '../assets/svg/ic_instagram.svg';
 import { FlexDiv } from './style/style';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 interface PlannerProps {
   size: string;
@@ -14,12 +15,20 @@ interface PlannerProps {
   name: string;
   organization: string;
   region: string;
+  id: number;
 }
 
 const PlannerCard = (props: PlannerProps) => {
+  const history = useHistory();
+
+  const handlePlannerClick = () => {
+    const plannerId = props.id;
+    history.push(`/planner/${plannerId}`);
+  };
+
   return (
     <FlexDiv width={props.size} direction="column" margin={props.margin}>
-      <PlannerImage src={props.imagePath} height={props.size}></PlannerImage>
+      <PlannerImage src={props.imagePath} height={props.size} onClick={handlePlannerClick} />
       <FlexDiv justify="flex-start" align="start" width={props.size} margin={'0'} direction="column">
         <FlexDiv justify="flex-start" margin={'13px 0 0 0'}>
           <HeartIcon src={heart}></HeartIcon>
@@ -28,7 +37,7 @@ const PlannerCard = (props: PlannerProps) => {
           <Count>{props.reviewCount}</Count>
         </FlexDiv>
         <FlexDiv justify="flex-start" margin={'5px 0 0 0'}>
-          <Title>{props.name}</Title>
+          <Title onClick={handlePlannerClick}>{props.name}</Title>
         </FlexDiv>
         <FlexDiv justify="flex-start" margin={'8px 0 0 0'}>
           <DetailTitle>소속</DetailTitle>
@@ -58,6 +67,7 @@ const PlannerImage = styled.img.attrs((props: PlannerImageProps) => ({ src: prop
   height: ${(props: PlannerImageProps) => props.height}};
   width: 100%;
   border-radius: 10px;
+  cursor: pointer; 
 `;
 
 interface ImageProps {
@@ -90,6 +100,7 @@ const Title = styled.div`
   font-weight: bold;
   letter-spacing: 0;
   line-height: 24px;
+  cursor: pointer;
 `;
 
 const Count = styled.span`

@@ -2,10 +2,21 @@ import { Title } from '../../component/style/style';
 import styled from 'styled-components';
 import shape from 'src/images/Shape 2.png';
 import imgWedding from 'src/images/img_wedding_1.png';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useQuery, QueryFunctionContext } from 'react-query';
+import axios from 'axios';
+import { ChatRoom, fetchChatRooms } from 'src/api/ChatRoom';
 
 export default () => {
-  const [selected, setSelected] = React.useState(0);
+  const [selected, setSelected] = React.useState(-1);
+  const { data: rooms } = useQuery(['rooms'], fetchChatRooms);
+  const [currentRoom, setCurrentRoom] = React.useState<ChatRoom>();
+
+  useEffect(() => {
+    if (!currentRoom) return;
+
+    useQuery([''])
+  }, [currentRoom]);
 
   return (
     <Container>
@@ -18,61 +29,31 @@ export default () => {
           </Cell>
           <Cell width="65%">
             <Title height="20px" width="auto" fontSize="14px" lineHeight="20px" padding="24px 0 24px 16px">
-              송영주 플래너
+              { currentRoom ? currentRoom.roomName : ""}
             </Title>
           </Cell>
         </Row>
 
         <Row height="60vh">
           <Cell width="35%">
-            <ChatCard selected={selected === 0} onClick={() => setSelected(0)}>
-              <ChatProfileImg src={shape} />
-              <ChatProfileText>
-                <ChatProfileLine>
-                  <ChatProfileName>A 플래너</ChatProfileName>
-                  <ChatLastMessageDate>21.07.13</ChatLastMessageDate>
-                </ChatProfileLine>
-                <ChatLastMessage>
-                  안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :){' '}
-                </ChatLastMessage>
-              </ChatProfileText>
-            </ChatCard>
-            <ChatCard selected={selected === 1} onClick={() => setSelected(1)}>
-              <ChatProfileImg src={shape} />
-              <ChatProfileText>
-                <ChatProfileLine>
-                  <ChatProfileName>송영주 플래너</ChatProfileName>
-                  <ChatLastMessageDate>21.07.13</ChatLastMessageDate>
-                </ChatProfileLine>
-                <ChatLastMessage>
-                  안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :){' '}
-                </ChatLastMessage>
-              </ChatProfileText>
-            </ChatCard>
-            <ChatCard selected={selected === 2} onClick={() => setSelected(2)}>
-              <ChatProfileImg src={shape} />
-              <ChatProfileText>
-                <ChatProfileLine>
-                  <ChatProfileName>B 플래너</ChatProfileName>
-                  <ChatLastMessageDate>21.07.13</ChatLastMessageDate>
-                </ChatProfileLine>
-                <ChatLastMessage>
-                  안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :){' '}
-                </ChatLastMessage>
-              </ChatProfileText>
-            </ChatCard>
-            <ChatCard selected={selected === 3} onClick={() => setSelected(3)}>
-              <ChatProfileImg src={shape} />
-              <ChatProfileText>
-                <ChatProfileLine>
-                  <ChatProfileName>C 플래너</ChatProfileName>
-                  <ChatLastMessageDate>2021.07.13</ChatLastMessageDate>
-                </ChatProfileLine>
-                <ChatLastMessage>
-                  안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :){' '}
-                </ChatLastMessage>
-              </ChatProfileText>
-            </ChatCard>
+            {rooms ? rooms.map((room, index) => {
+                return <ChatCard selected={selected == index} onClick={() => {
+                  setSelected(index);
+                  setCurrentRoom(rooms[index]);
+                }}>
+                  <ChatProfileImg src={shape} />
+                  <ChatProfileText>
+                    <ChatProfileLine>
+                      <ChatProfileName>{room.roomName}</ChatProfileName>
+                      <ChatLastMessageDate>{(new Date(room.lastMessageDateTime)).toDateString()}</ChatLastMessageDate>
+                    </ChatProfileLine>
+                    <ChatLastMessage>
+                      {room.lastMessage}
+                    </ChatLastMessage>
+                  </ChatProfileText>
+                </ChatCard>
+              }) : <></>
+            }
           </Cell>
           <Cell width="65%">
             <ChatMessageDate>2021년 5월 10일</ChatMessageDate>
@@ -277,7 +258,6 @@ const ChatMessageProfileDatetime = styled.p`
   padding-left: 4px;
 
   height: 15px;
-  width: 42px;
   color: #495057;
   font-family: SpoqaHanSans;
   font-size: 10px;

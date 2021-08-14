@@ -5,15 +5,17 @@ import { ReactComponent as Heart } from '../assets/svg/ic_heart.svg';
 import { ReactComponent as Review } from '../assets/svg/ic_review.svg';
 
 interface UserInfoIconProps {
+  imgSrc: string;
   title: string;
   detail?: string;
   buttonText?: string;
+  likeCount?: number;
 }
 
-const UserInfoIcon: FC<UserInfoIconProps> = ({ title, detail, buttonText }) => {
+const UserInfoIcon: FC<UserInfoIconProps> = ({ imgSrc, title, detail, buttonText, likeCount }) => {
   return (
     <Container>
-      <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs33kicMrwTO3bQTdskuUlvJRK9JAgmaGjZw&usqp=CAU" />
+      <Image src={imgSrc} />
 
       <InnerContainer>
         <Title detail={detail}>{title}</Title>
@@ -21,7 +23,7 @@ const UserInfoIcon: FC<UserInfoIconProps> = ({ title, detail, buttonText }) => {
           <>
             <Detail>{detail}</Detail>
             <IconContainer>
-              <Heart /> 12
+              <Heart /> {likeCount}
               <Review /> 24
             </IconContainer>
           </>

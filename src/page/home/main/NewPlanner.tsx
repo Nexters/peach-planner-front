@@ -53,7 +53,8 @@ const NewPlanner = () => {
                   name={planner.name}
                   organization={planner.company.name}
                   region={planner.locations.join(',')}
-                ></PlannerCard>
+                  id={planner.id}
+                />
               );
             })
           ) : (

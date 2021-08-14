@@ -46,7 +46,7 @@ const App = () => {
                 <Route path="/search">
                   <Search />
                 </Route>
-                <Route path="/detail">
+                <Route path="/planner/:id">
                   <PlannerDetail />
                 </Route>
                 <Route path="/login">

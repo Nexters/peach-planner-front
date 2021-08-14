@@ -34,6 +34,7 @@ const SearchResult = () => {
                 name={planner.name}
                 organization={planner.company.name}
                 region={planner.locations.join(',')}
+                id={planner.id}
               ></PlannerCard>
             );
           })

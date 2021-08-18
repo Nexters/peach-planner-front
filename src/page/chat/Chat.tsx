@@ -6,17 +6,16 @@ import React, { useEffect } from 'react';
 import { useQuery, QueryFunctionContext } from 'react-query';
 import axios from 'axios';
 import { ChatRoom, fetchChatRooms } from 'src/api/ChatRoom';
+import { ChatMessage, fetchChatMessages } from 'src/api/ChatMessage';
 
 export default () => {
   const [selected, setSelected] = React.useState(-1);
   const { data: rooms } = useQuery(['rooms'], fetchChatRooms);
   const [currentRoom, setCurrentRoom] = React.useState<ChatRoom>();
+  
+  const { data: chatMessages, error } = useQuery<ChatMessage[], Error>([`rooms/${currentRoom?.id}`, currentRoom?.id], () => fetchChatMessages(currentRoom ? currentRoom.id : 0));
 
-  useEffect(() => {
-    if (!currentRoom) return;
-
-    useQuery([''])
-  }, [currentRoom]);
+  console.log(chatMessages);
 
   return (
     <Container>
@@ -67,9 +66,9 @@ export default () => {
                   <ChatMessageProfileName>송영주 플래너</ChatMessageProfileName>
                   <ChatMessageProfileDatetime>오전 9:41</ChatMessageProfileDatetime>
                 </ChatMessageTitle>
-                <ChatMessage>
+                <ChatMessageText>
                   안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :)
-                </ChatMessage>
+                </ChatMessageText>
               </ChatMessageCard>
             </ChatMessageDiv>
             <ChatMessageDiv>
@@ -79,7 +78,7 @@ export default () => {
                   <ChatMessageProfileName>홍길동</ChatMessageProfileName>
                   <ChatMessageProfileDatetime>오전 9:41</ChatMessageProfileDatetime>
                 </ChatMessageTitle>
-                <ChatMessage>감사합니다.</ChatMessage>
+                <ChatMessageText>감사합니다.</ChatMessageText>
               </ChatMessageCard>
             </ChatMessageDiv>
             <SystemMessageDiv>
@@ -265,7 +264,7 @@ const ChatMessageProfileDatetime = styled.p`
   line-height: 15px;
 `;
 
-const ChatMessage = styled.p`
+const ChatMessageText = styled.p`
   padding-left: 4px;
   color: #000000;
   font-family: SpoqaHanSans;

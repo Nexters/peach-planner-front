@@ -23,7 +23,7 @@ export const FlexDiv = styled.div<DivProps>`
 
 export interface TitleProps {
   height: string;
-  width: string;
+  width?: string;
   fontSize: string;
   lineHeight: string;
   margin?: string;

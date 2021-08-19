@@ -9,6 +9,7 @@ interface PBUttonProps {
   fontWeight?: string;
   padding?: string;
   border?: string;
+  margin?: string;
   onClick?: () => void;
 }
 
@@ -20,6 +21,7 @@ const PButton: FC<PBUttonProps> = ({
   fontWeight,
   padding = '11px',
   border,
+  margin,
   children,
   onClick
 }) => {
@@ -32,6 +34,7 @@ const PButton: FC<PBUttonProps> = ({
       fontWeidght={fontWeight}
       padding={padding}
       border={border}
+      margin={margin}
       onClick={onClick}
     >
       {children}
@@ -48,6 +51,7 @@ export const Button = styled.button<{
   fontSize: string;
   fontWeidght: string | undefined;
   border: string | undefined;
+  margin: string | undefined;
 }>`
   cursor: pointer;
   border-radius: 3px;
@@ -59,4 +63,5 @@ export const Button = styled.button<{
   background-color: ${({ color }) => (color == 'pink' ? '#E64980' : 'white')};
   color: ${({ color }) => (color == 'pink' ? 'white' : 'black')};
   border: ${({ border, color }) => (border ? border : color == 'pink' ? 'none' : '1px solid #adb5bd')};
+  margin: ${({ margin }) => margin};
 `;

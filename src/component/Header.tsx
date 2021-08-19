@@ -6,16 +6,19 @@ import PButton from './PButton';
 
 const Header = () => {
   let history = useHistory();
-  const handleSignUp = () => history.push('/signup');
-
-  //   TODO: 나중에 로직 추가하기
-  const LOGGED_IN = true;
+  const handleSignUp = () => history.push('/signUp');
+  const LOGGED_IN = localStorage.getItem('accessToken') ? false : true;
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    window.location.reload();
+  };
 
   let right;
   if (LOGGED_IN) {
     right = (
       <InnerContainer>
-        <RightLink to="/signup">플래너 가입</RightLink>
+        <RightLink to="/plannerSignUp">플래너 가입</RightLink>
         <RightLink to="/login">로그인</RightLink>
         <PButton color="pink" width="114px" height="33px" fontSize="12px" padding="0" onClick={handleSignUp}>
           무료 회원가입
@@ -37,7 +40,7 @@ const Header = () => {
               <li>내 페이지</li>
               <li>프로필 관리</li>
               <li>계정 설정</li>
-              <li>로그아웃</li>
+              <li onClick={logout}>로그아웃</li>
             </ul>
           </nav>
         </DropdownContainer>

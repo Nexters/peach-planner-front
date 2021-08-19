@@ -12,6 +12,8 @@ import Header from './component/Header';
 import Footer from './component/Footer';
 import Profile from './page/profile';
 import Login from './page/user/login/Login';
+import SignUpSelect from './page/user/SignUp/SignUpSelect/SignUpSelect';
+import UserSignUp from './page/user/SignUp/UserSignUp/UserSignUp';
 import Chat from './page/chat/Chat';
 import { isBrowser } from 'react-device-detect';
 import Mobile from './page/mobile';
@@ -67,6 +69,11 @@ const App = () => {
                 <Route path="/chats">
                   <Chat />
                 </Route>
+                <Route path="/detail">
+                  <PlannerDetail />
+                </Route>
+                <Route path="/plannerSignUp" component={SignUpSelect} />
+                <Route path="/signUp" component={UserSignUp} />
               </Switch>
               <Footer />
             </Router>

@@ -1,32 +1,15 @@
 import { FlexDiv, Content } from '../../component/style/style';
 import LineAndTitle from './LindAndTitle';
 import styled from 'styled-components';
+import PlannerInputTitle from './PlannerInputTitle';
 
 const MyProfile = () => {
   return (
     <FlexDiv width="632px" margin="0 0 72px 0" direction="column" justify="flex-start" align="start">
       <LineAndTitle title="내 프로필"></LineAndTitle>
-      <Content
-        height={'24px'}
-        width={'auto'}
-        color={'#495057'}
-        fontSize={'16px'}
-        lineHeight={'24px'}
-        margin={'20px 0 8px 0'}
-      >
-        플래너 한줄소개
-      </Content>
+      <PlannerInputTitle name="플래너 한줄 소개" margin="20px 0 8px 0"></PlannerInputTitle>
       <Input></Input>
-      <Content
-        height={'24px'}
-        width={'auto'}
-        color={'#495057'}
-        fontSize={'16px'}
-        lineHeight={'24px'}
-        margin={'24px 0 8px 0'}
-      >
-        플래너 소개
-      </Content>
+      <PlannerInputTitle name="플래너 소개" margin="24px 0 8px 0"></PlannerInputTitle>
       <TextArea></TextArea>
     </FlexDiv>
   );
@@ -55,4 +38,5 @@ export const TextArea = styled.textarea`
   padding: 13px;
   border: 1px solid #ced4da;
   border-radius: 3px;
+  resize: none;
 `;

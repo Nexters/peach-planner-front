@@ -71,7 +71,7 @@ const AssociateOrganization = ({ id, name, margin }: Props) => {
         {`${name} 업체 사진`}
       </Content>
       <ImageUpload
-        id={name}
+        id={id}
         previewImage={previewImage}
         setPreviewImage={changePreviewImage}
         setImageFile={changeImageFile}
@@ -117,6 +117,4 @@ const OrganizationLists = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-flow: row wrap;
-
-
 `;

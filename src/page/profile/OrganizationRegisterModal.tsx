@@ -6,6 +6,7 @@ import PButton from '../../component/PButton';
 import SearchInput from './SearchInput';
 import HorizontalLine from 'src/component/HorizontalLine';
 import ImageUpload from './ImageUpload';
+import { useState } from 'react';
 
 interface ImageModalProps {
   showImageModal: boolean;
@@ -13,6 +14,23 @@ interface ImageModalProps {
 }
 
 const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageModalProps) => {
+  const [organizationName, setOrganizationName] = useState('');
+  const [previewImage, setPreviewImage] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleChangeOrganizationName = (e: any) => {
+    const value = e.target.value;
+    setOrganizationName(value);
+  };
+
+  const changePreviewImage = (image: string) => {
+    setPreviewImage(image);
+  };
+
+  const changeImageFile = (imageFile: any) => {
+    setImageFile(imageFile);
+  };
+
   return (
     <StyledPopup open={showImageModal} closeOnDocumentClick onClose={closeImageModal}>
       <FlexDiv margin="0" justify="space-between" direction="column">
@@ -117,7 +135,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
             >
               대표사진 등록
             </Content>
-            {/* <ImageUpload></ImageUpload> */}
+            <ImageUpload id="modal" previewImage={previewImage} setImageFile={changeImageFile} setPreviewImage={changePreviewImage}></ImageUpload>
           </FlexDiv>
         </FlexDiv>
         <FlexDiv margin="16px 0 0 0" justify="flex-start" align="start">

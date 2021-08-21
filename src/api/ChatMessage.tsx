@@ -7,14 +7,15 @@ export interface ChatMessage {
     senderType: "SYSTEM" | "USER" | "PLANNER";
     message: string;
     dateTime: string;
-}
+};
 
 export const fetchChatMessages = async (roomId: number) => {
-    console.log(roomId);
-  const { data } = await axios.get<[]>(`/chat/rooms/${roomId}/messages`, {
+  const { data } = await axios.get<ChatMessage[]>(`/chat/rooms/${roomId}/messages`, {
       headers: {
-        Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI4OTUwNTY0LCJleHAiOjE2MjkwMzY5NjR9.bpO_7JEt7YGGdihEJCHbj5Atmpb3NKGGfPJHSvuWCaVZn_FermxVyDOifVr7WCNM',
+        Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI5NDgxMTg5LCJleHAiOjE2Mjk1Njc1ODl9.SxLi9ez2oFuZYRn_y_mC2iM8KoLnvLBt6jWLpR3FmZalCBKVfgSnAn-xoTUx1SVf',
       }
   });
   return data;
 };
+
+

@@ -17,7 +17,7 @@ const AssociateOrganization = ({ name, margin }: Props) => {
   const openImageModal = () => setShowImageModal(true);
   const closeImageModal = () => {
     setShowImageModal(false);
-    console.log('close');
+    
   };
 
   return (

@@ -1,6 +1,6 @@
+import Accordion from 'src/component/Accordion';
 import { FlexDiv, Title } from '../../../component/style/style';
 import SearchCheckBox from './SearchCheckBox';
-import SearchMenu from './SearchMenu';
 import SearchSideBarRegion from './SearchSideBarRegion';
 
 const regions = ['전체', '서울', '경기', '인천', '부산', '강원', '전라', '경상', '대구', '충청', '대전', '제주'];
@@ -14,14 +14,16 @@ const SearchSideBar = () => {
           웨딩플래너 찾기
         </Title>
       </FlexDiv>
-      <SearchMenu menuName="지역" margin="0"></SearchMenu>
-      {regions.map((value, index) => {
-        return <SearchSideBarRegion key={index} region={value}></SearchSideBarRegion>;
-      })}
-      <SearchMenu menuName="기타" margin="16px 0 0 0"></SearchMenu>
-      {checkBox.map((value, index) => {
-        return <SearchCheckBox key={index} name={value}></SearchCheckBox>;
-      })}
+      <Accordion title="지역">
+        {regions.map((value, index) => {
+          return <SearchSideBarRegion key={index} region={value}></SearchSideBarRegion>;
+        })}
+      </Accordion>
+      <Accordion title="기타">
+        {checkBox.map((value, index) => {
+          return <SearchCheckBox key={index} name={value}></SearchCheckBox>;
+        })}
+      </Accordion>
     </FlexDiv>
   );
 };

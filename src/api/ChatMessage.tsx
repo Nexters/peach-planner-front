@@ -19,3 +19,16 @@ export const fetchChatMessages = async (roomId: number) => {
 };
 
 
+export interface ChatMessageReq {
+    roomId: number;
+    messageType: "NORMAL";
+    message: string;
+}
+
+export const sendMessage = async (chatMessageReq: ChatMessageReq) => {
+    await axios.post(`/chat/message`, chatMessageReq, {
+        headers: {
+            Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI5NjI1NzczLCJleHAiOjE2Mjk3MTIxNzN9.HWl4OyLIHQGoiYfG9-F-V04p9gpkz5wiIC6mIEX1DjcqdAD91zuE1PtU8hjbezrZ',
+        },
+    });
+}

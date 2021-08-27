@@ -8,37 +8,42 @@ import { ReactComponent as Instagram } from '../../assets/svg/ic_instagram.svg';
 import { ReactComponent as Blog } from '../../assets/svg/ic_blog.svg';
 import ImageModal from './ImageModal';
 import { Planner } from '../../api/Planner';
+import { useHistory } from 'react-router-dom';
 
 interface SummaryProps {
   plannerInfo: Planner;
 }
 
 const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
+  const history = useHistory();
+
   const PLANNER_NAME = plannerInfo.name;
   const COMPANY_NAME = plannerInfo.company.name;
   const HEART_COUNT = plannerInfo.likes;
   const ONE_LINE_SUMMARY = plannerInfo.summary;
-  const INSTAGRAM_LINK = plannerInfo.externalLinks.instagramLink;
-  const BLOG_LINK = plannerInfo.externalLinks.blogLink;
+  const EXTERNAL_LINKS = plannerInfo.externalLinks;
   const IMAGES = plannerInfo.images;
 
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const openImageModal = () => setShowImageModal(true);
-  const closeImageModal = () => {
-    setShowImageModal(false);
+  const closeImageModal = () => setShowImageModal(false);
+
+  const handleEstimateRequest = () => {
+    const plannerId = plannerInfo.id;
+    history.push(`/estimate/${plannerId}`);
   };
 
   return (
     <Container>
       <ImageContainer>
         <ImageWrapper>
-          {IMAGES.slice(0, 2).map((image) => (
-            <Image src={image} />
+          {IMAGES.slice(0, 2).map((image, i) => (
+            <Image src={image} key={i} />
           ))}
         </ImageWrapper>
         <ImageWrapper>
-          {IMAGES.slice(2, 4).map((image) => (
-            <Image src={image} />
+          {IMAGES.slice(2, 4).map((image, i) => (
+            <Image src={image} key={i} />
           ))}
         </ImageWrapper>
         {IMAGES.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}
@@ -60,17 +65,23 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
           <OneLine>{ONE_LINE_SUMMARY}</OneLine>
           <HorizontalLine top="36px" bottom="11px" />
 
-          <BoldGray>소셜미디어</BoldGray>
-          <SocialIcon>
-            <a href={INSTAGRAM_LINK} target="_blank">
-              <Instagram />
-            </a>
-            <a href={BLOG_LINK} target="_blank">
-              <Blog />
-            </a>
-          </SocialIcon>
+          {EXTERNAL_LINKS != null && (
+            <>
+              <BoldGray>소셜미디어</BoldGray>
+              <SocialIcon>
+                <a href={EXTERNAL_LINKS.instagramLink} target="_blank">
+                  <Instagram />
+                </a>
+                <a href={EXTERNAL_LINKS.blogLink} target="_blank">
+                  <Blog />
+                </a>
+              </SocialIcon>
+            </>
+          )}
 
-          <PButton color="pink">견적 요청하기</PButton>
+          <PButton color="pink" onClick={handleEstimateRequest}>
+            견적 요청하기
+          </PButton>
           <ButtonContainer>
             <PButton>1:1 문의하기</PButton>
             <PButton>찜하기</PButton>

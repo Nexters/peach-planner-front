@@ -52,7 +52,7 @@ const App = () => {
                 <Route path="/login">
                   <Login />
                 </Route>
-                <Route path="/estimate">
+                <Route path="/estimate/:id">
                   <PlannerEstimate />
                 </Route>
                 <Route path="/userPage">

@@ -19,15 +19,17 @@ export default EstimateRow;
 
 const Row = styled.div`
   display: flex;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 const Label = styled.label`
   flex: 1;
   font-size: 16px;
   color: #868e96;
+  padding: 8.5px 0;
 `;
 
 const Content = styled.div`
   flex: 5;
+  padding-left: 10px;
 `;

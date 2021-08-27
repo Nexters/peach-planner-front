@@ -1,7 +1,7 @@
 import { FlexDiv, Title } from '../../../component/style/style';
 import PlannerCard from '../../../component/PlannerCard';
 import { useQuery } from 'react-query';
-import { fetchPlanners } from 'src/api/Planner';
+import { fetchPlanners } from '../../../api/Planner';
 import styled from 'styled-components';
 
 const SearchResult = () => {

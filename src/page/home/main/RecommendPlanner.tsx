@@ -20,7 +20,7 @@ const RecommendPlanner = () => {
     variableWidth: true,
     arrows: false
   });
-  console.log(planners);
+  
 
   return (
     <FlexDiv margin={'64px 0 0 0'} direction="column">

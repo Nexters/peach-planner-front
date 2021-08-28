@@ -44,10 +44,6 @@ export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
 };
 
 export const fetchPlanner = async (plannerId: string) => {
-  try {
-    const { data } = await axios.get<Planner>(`/planners/${plannerId}`);
-    return data;
-  } catch (e) {
-    throw new Error(e);
-  }
+  const { data } = await axios.get<Planner>(`/planners/${plannerId}`);
+  return data;
 };

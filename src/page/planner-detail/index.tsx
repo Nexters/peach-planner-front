@@ -19,7 +19,7 @@ const PlannerDetail = () => {
   const { params } = useRouteMatch<routeProps>();
   const plannerId = params.id;
 
-  const { data: plannerInfo, error } = useQuery<Planner, Error>(['planner', plannerId], () => fetchPlanner(plannerId));
+  const { data: plannerInfo } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
 
   return plannerInfo ? (
     <Container>

@@ -11,7 +11,7 @@ export interface DivProps {
 }
 
 export const FlexDiv = styled.div<DivProps>`
-  min-height: : ${(props: DivProps) => props.minHeight};
+  min-height: ${(props: DivProps) => props.minHeight};
   height: ${(props: DivProps) => props.height};
   width: ${(props: DivProps) => props.width || '100%'};
   display: flex;

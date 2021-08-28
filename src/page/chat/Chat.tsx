@@ -1,9 +1,44 @@
 import { Title } from '../../component/style/style';
 import styled from 'styled-components';
-import shape from '../../images/Shape 2.png';
-import imgWedding from '../../images/img_wedding_1.png';
+import shape from 'src/images/Shape 2.png';
+import imgWedding from 'src/images/img_wedding_1.png';
+import React, { useEffect } from 'react';
+import { useQuery, QueryFunctionContext } from 'react-query';
+import axios from 'axios';
+import { ChatRoom, ChatRoomParticipant, fetchChatRoomParticipant, fetchChatRooms } from 'src/api/ChatRoom';
+import { ChatMessage, fetchChatMessages } from 'src/api/ChatMessage';
+import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default () => {
+const ChatContainer = () => {
+  const [selected, setSelected] = React.useState(-1);
+  const { data: rooms } = useQuery(['rooms'], fetchChatRooms);
+  const [currentRoom, setCurrentRoom] = React.useState<ChatRoom>();
+  const [typingMessage, setTypingMessage] = React.useState("");
+
+  console.log(currentRoom)
+
+  const { data: chatRoomParticipants, refetch: refetchChatRoomParticipant } = useQuery<ChatRoomParticipant[]>([`rooms/${currentRoom?.id}`, currentRoom?.id], () => fetchChatRoomParticipant(currentRoom ? currentRoom.id : 0), {
+    refetchOnWindowFocus: false,
+    enabled: false,
+  });
+  const chatRoomParticpantsDict = chatRoomParticipants?.reduce((map: {[key: string]: number | string}, participant: ChatRoomParticipant) => {
+    map[""+participant.participantId] = participant.name;
+    return map
+  }, {}) ?? {};
+
+  console.log(chatRoomParticpantsDict);
+
+  const { data: chatMessages, refetch: refetchChatRoomMessages } = useQuery<ChatMessage[], Error>([`rooms/${currentRoom?.id}/messages`, currentRoom?.id], () => fetchChatMessages(currentRoom ? currentRoom.id : 0), {
+    refetchOnWindowFocus: false,
+    enabled: false,
+  });
+
+  useEffect(() => {
+    refetchChatRoomParticipant();
+    refetchChatRoomMessages();
+  }, [currentRoom])
+
   return (
     <Container>
       <Page>
@@ -15,101 +50,80 @@ export default () => {
           </Cell>
           <Cell width="65%">
             <Title height="20px" width="auto" fontSize="14px" lineHeight="20px" padding="24px 0 24px 16px">
-              송영주 플래너
+              { currentRoom ? currentRoom.roomName : ""}
             </Title>
           </Cell>
         </Row>
 
         <Row height="60vh">
           <Cell width="35%">
-            <ChatCard>
-              <ChatProfileImg src={shape} />
-              <ChatProfileText>
-                <ChatProfileLine>
-                  <ChatProfileName>A 플래너</ChatProfileName>
-                  <ChatLastMessageDate>21.07.13</ChatLastMessageDate>
-                </ChatProfileLine>
-                <ChatLastMessage>
-                  안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :){' '}
-                </ChatLastMessage>
-              </ChatProfileText>
-            </ChatCard>
-            <ChatCard selected={true}>
-              <ChatProfileImg src={shape} />
-              <ChatProfileText>
-                <ChatProfileLine>
-                  <ChatProfileName>송영주 플래너</ChatProfileName>
-                  <ChatLastMessageDate>21.07.13</ChatLastMessageDate>
-                </ChatProfileLine>
-                <ChatLastMessage>
-                  안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :){' '}
-                </ChatLastMessage>
-              </ChatProfileText>
-            </ChatCard>
-            <ChatCard>
-              <ChatProfileImg src={shape} />
-              <ChatProfileText>
-                <ChatProfileLine>
-                  <ChatProfileName>B 플래너</ChatProfileName>
-                  <ChatLastMessageDate>21.07.13</ChatLastMessageDate>
-                </ChatProfileLine>
-                <ChatLastMessage>
-                  안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :){' '}
-                </ChatLastMessage>
-              </ChatProfileText>
-            </ChatCard>
-            <ChatCard>
-              <ChatProfileImg src={shape} />
-              <ChatProfileText>
-                <ChatProfileLine>
-                  <ChatProfileName>C 플래너</ChatProfileName>
-                  <ChatLastMessageDate>2021.07.13</ChatLastMessageDate>
-                </ChatProfileLine>
-                <ChatLastMessage>
-                  안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :){' '}
-                </ChatLastMessage>
-              </ChatProfileText>
-            </ChatCard>
+            <CellContent>
+              {rooms ? rooms.map((room, index) => {
+                  return <ChatCard selected={selected === index} onClick={() => {
+                    setSelected(index);
+                    setCurrentRoom(rooms[index]);
+                  }}>
+                    <ChatProfileImg src={shape} />
+                    <ChatProfileText>
+                      <ChatProfileLine>
+                        <ChatProfileName>{room.roomName}</ChatProfileName>
+                        <ChatLastMessageDate>{(new Date(room.lastMessageDateTime)).toDateString()}</ChatLastMessageDate>
+                      </ChatProfileLine>
+                      <ChatLastMessage>
+                        {room.lastMessage}
+                      </ChatLastMessage>
+                    </ChatProfileText>
+                  </ChatCard>
+                }) : <></>}
+            </CellContent>
           </Cell>
           <Cell width="65%">
-            <ChatMessageDate>2021년 5월 10일</ChatMessageDate>
-            <SystemMessageDiv>
-              <SystemMessage>송영주 플래너에게 견적 상담을 요청했어요.</SystemMessage>
-            </SystemMessageDiv>
-            <ChatMessageDiv>
-              <ChatMessageProfileImg src={imgWedding} />
-              <ChatMessageCard>
-                <ChatMessageTitle>
-                  <ChatMessageProfileName>송영주 플래너</ChatMessageProfileName>
-                  <ChatMessageProfileDatetime>오전 9:41</ChatMessageProfileDatetime>
-                </ChatMessageTitle>
-                <ChatMessage>
-                  안녕하세요, 문의 주셔서 감사합니다. 현재 9월부터 예약이 가능하니, 참고 부탁드릴게요 :)
-                </ChatMessage>
-              </ChatMessageCard>
-            </ChatMessageDiv>
-            <ChatMessageDiv>
-              <ChatMessageProfileImg src={shape} />
-              <ChatMessageCard>
-                <ChatMessageTitle>
-                  <ChatMessageProfileName>홍길동</ChatMessageProfileName>
-                  <ChatMessageProfileDatetime>오전 9:41</ChatMessageProfileDatetime>
-                </ChatMessageTitle>
-                <ChatMessage>감사합니다.</ChatMessage>
-              </ChatMessageCard>
-            </ChatMessageDiv>
-            <SystemMessageDiv>
-              <SystemMessage>상담에 만족하셨나요? 플래너 리뷰를 작성하실 수 있습니다.</SystemMessage>
-              <a href="/">
-                <SystemMessageLink>플래너 리뷰 작성하기</SystemMessageLink>
-              </a>
-            </SystemMessageDiv>
+            <CellContent>
+              {chatMessages ? <ChatMessageDate>{new Date(chatMessages[0].dateTime).toLocaleDateString("ko-KR")}</ChatMessageDate> : <></> }
+              {chatMessages ? chatMessages.map((message) => {
+                if (message.messageType === "SYSTEM_START") {
+                  return <SystemMessageDiv>
+                    <SystemMessage>{message.message}</SystemMessage>
+                  </SystemMessageDiv>;
+                }
+
+                if (message.messageType === "SYSTEM_END") {
+                  return <SystemMessageDiv>
+                    <SystemMessage>{message.message}</SystemMessage>
+                    <a href="/">
+                      <SystemMessageLink>플래너 리뷰 작성하기</SystemMessageLink>
+                    </a>
+                  </SystemMessageDiv>;
+                }
+
+                return <ChatMessageDiv>
+                  <ChatMessageProfileImg src={shape} />
+                  <ChatMessageCard>
+                    <ChatMessageTitle>
+                      <ChatMessageProfileName>{chatRoomParticpantsDict[message.senderId]}</ChatMessageProfileName>
+                      <ChatMessageProfileDatetime>{new Date(message.dateTime).toLocaleTimeString("ko-KR", { hour12: true, hour: '2-digit', minute: '2-digit' } )}</ChatMessageProfileDatetime>
+                    </ChatMessageTitle>
+                    <ChatMessageText>{message.message}</ChatMessageText>
+                  </ChatMessageCard>
+                </ChatMessageDiv>
+              }): <></> }
+            </CellContent>
+            <ChatMessageBoxDiv>
+              <ChatMessageClipDiv>
+                <FontAwesomeIconDiv icon={faPaperclip}></FontAwesomeIconDiv>
+              </ChatMessageClipDiv>
+              <ChatMessageInputForm onSubmit={() => { console.log("submit"); setTypingMessage(""); return false;} }>
+                <ChatMessageInput placeholder="메시지를 입력하세요." value={typingMessage} onChange={(e) => setTypingMessage(e.target.value)}></ChatMessageInput>
+              </ChatMessageInputForm>
+            </ChatMessageBoxDiv>
           </Cell>
         </Row>
       </Page>
     </Container>
   );
 };
+
+export default ChatContainer;
 
 const Container = styled.div`
   background-color: white;
@@ -147,7 +161,31 @@ const Cell = styled.div<CellProps>`
   border: 1px solid;
   border-color: #d8d8d8;
   vertical-align: top;
+  max-height: 340px;
+  position: relative;
 `;
+
+const CellContent = styled.div`
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  max-height: 500px;
+  flex-direction: column;
+  padding-bottom: 24px;
+  
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #2f354266;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
+`
 
 interface ChatCardProps {
   selected?: boolean;
@@ -240,7 +278,6 @@ const SystemMessage = styled.p`
 const ChatMessageDiv = styled.div`
   display: flex;
   margin: 0 39px 0 39px;
-  height: 80px;
   width: 645px;
 `;
 
@@ -261,6 +298,48 @@ const ChatMessageProfileName = styled.p`
   line-height: 19px;
 `;
 
+const ChatMessageBoxDiv = styled.div`
+  width: 100%;
+  height: 80px;
+  display: flex;
+  position: relative;
+  bottom: 0;
+  border-top: 1px solid;
+  border-color: #d8d8d8;
+  background-color: white;
+`;
+
+const ChatMessageClipDiv = styled.div`
+  padding: 14px 14px 14px 14px;
+`;
+
+const ChatMessageInputForm = styled.form`
+  width: 80%;
+`;
+
+const ChatMessageInput = styled.input.attrs({ type: 'text' })`
+  margin: 15.5px;
+  margin-left: 0px;
+  padding: 15.5px;
+  width: 100%;
+  border: 1px solid #495057;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-family: SpoqaHanSans;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 24px;
+  ::placeholder {
+    color: #868E96;
+  }
+`;
+
+const FontAwesomeIconDiv = styled(FontAwesomeIcon)`
+  padding: 16px;
+  background-color: #DDDDDDDD;
+  border-radius: 10px;
+`;
+
 const ChatMessageProfileImg = styled.img`
   margin: 20px 0 20px 0;
   width: 40px;
@@ -274,7 +353,6 @@ const ChatMessageProfileDatetime = styled.p`
   padding-left: 4px;
 
   height: 15px;
-  width: 42px;
   color: #495057;
   font-family: SpoqaHanSans;
   font-size: 10px;
@@ -282,7 +360,7 @@ const ChatMessageProfileDatetime = styled.p`
   line-height: 15px;
 `;
 
-const ChatMessage = styled.p`
+const ChatMessageText = styled.pre`
   padding-left: 4px;
   color: #000000;
   font-family: SpoqaHanSans;

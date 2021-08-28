@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PButton from '../../../../component/PButton';
-import { Content, FlexDiv, Title } from '../../../../component/style/style';
-import HorizontalLine from '../../../../component/HorizontalLine';
+import PButton from 'src/component/PButton';
+import HorizontalLine from 'src/component/HorizontalLine';
+import { FlexDiv, Content, Title } from 'src/component/style/style';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;

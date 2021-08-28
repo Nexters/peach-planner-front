@@ -47,3 +47,12 @@ export const fetchPlanner = async (plannerId: string) => {
   const { data } = await axios.get<Planner>(`/planners/${plannerId}`);
   return data;
 };
+
+export interface User {
+  name?: string;
+  nickName?: string;
+  userName: string;
+  password: string;
+  type?: 'USER';
+  loginType?: 'BASIC';
+}

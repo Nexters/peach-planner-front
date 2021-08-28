@@ -32,9 +32,9 @@ const Profile = ({ isUpdate }: ProfileProps) => {
           <PlannerArea></PlannerArea>
           <PlannerOfferList></PlannerOfferList>
           <PlannerOrganization></PlannerOrganization>
-          <AssociateOrganization name="스튜디오" margin="0 0 72px 0"></AssociateOrganization>
-          <AssociateOrganization name="드레스" margin="0 0 72px 0"></AssociateOrganization>
-          <AssociateOrganization name="메이크업" margin="0 0 24px 0"></AssociateOrganization>
+          <AssociateOrganization id="studio" name="스튜디오" margin="0 0 72px 0"></AssociateOrganization>
+          <AssociateOrganization id="dress" name="드레스" margin="0 0 72px 0"></AssociateOrganization>
+          <AssociateOrganization id="makeup" name="메이크업" margin="0 0 24px 0"></AssociateOrganization>
           <FlexDiv direction="row" margin="0 0 320px 48px" justify="flex-start">
             <PButton color="pink" fontSize="14px" height="40px" width="312px" fontWeight="bold">
               수정하기

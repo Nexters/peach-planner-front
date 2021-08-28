@@ -14,6 +14,7 @@ const HorizontalLine: FC<HorizontalLineProps> = ({ color, top, bottom }) => {
 export default HorizontalLine;
 
 const Line = styled.hr<HorizontalLineProps>`
+  height: 1px;
   color: ${(props: HorizontalLineProps) => props.color};
   width: 100%;
   margin-top: ${(props: HorizontalLineProps) => props.top};

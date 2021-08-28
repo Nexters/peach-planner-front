@@ -31,13 +31,13 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
     <Container>
       <ImageContainer>
         <ImageWrapper>
-          {IMAGES.slice(0, 2).map((image) => (
-            <Image src={image} />
+          {IMAGES.slice(0, 2).map((image, i) => (
+            <Image src={image} key={i} />
           ))}
         </ImageWrapper>
         <ImageWrapper>
-          {IMAGES.slice(2, 4).map((image) => (
-            <Image src={image} />
+          {IMAGES.slice(2, 4).map((image, i) => (
+            <Image src={image} key={i} />
           ))}
         </ImageWrapper>
         {IMAGES.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}

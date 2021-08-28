@@ -25,6 +25,7 @@ export interface TitleProps {
   height: string;
   width?: string;
   fontSize: string;
+  color?: string;
   lineHeight: string;
   margin?: string;
   padding?: string;
@@ -33,7 +34,7 @@ export interface TitleProps {
 export const Title = styled.div<TitleProps>`
   height: ${(props: TitleProps) => props.height};
   width: ${(props: TitleProps) => props.width};
-  color: #000000;
+  color: ${(props: TitleProps) => (props.color ? props.color : '#000000')};
   font-size: ${(props: TitleProps) => props.fontSize};
   font-weight: bold;
   letter-spacing: 0;
@@ -49,6 +50,7 @@ export interface ContentProps {
   fontSize: string;
   lineHeight: string;
   margin?: string;
+  onClick?: () => void;
 }
 
 export const Content = styled.span<ContentProps>`
@@ -59,4 +61,5 @@ export const Content = styled.span<ContentProps>`
   line-height: ${(props: ContentProps) => props.lineHeight};
   margin: ${(props: ContentProps) => props.margin};
   -webkit-user-select: none;
+  cursor: ${(props: ContentProps) => (props.onClick ? 'pointer' : null)};
 `;

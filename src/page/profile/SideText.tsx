@@ -3,9 +3,10 @@ import { Content } from '../../component/style/style';
 interface Props {
   text: string;
   colorText: string;
+  onClick?: () => void;
 }
 
-const SideText = ({ text, colorText }: Props) => {
+const SideText = ({ text, colorText, onClick }: Props) => {
   return (
     <>
       <Content
@@ -18,7 +19,7 @@ const SideText = ({ text, colorText }: Props) => {
       >
         {text}
       </Content>
-      <Content height={'18px'} width={'auto'} color={'#E64980'} fontSize={'12px'} lineHeight={'18px'}>
+      <Content height={'18px'} width={'auto'} color={'#E64980'} fontSize={'12px'} lineHeight={'18px'} onClick={onClick}>
         {colorText}
       </Content>
     </>

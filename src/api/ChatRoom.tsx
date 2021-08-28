@@ -13,7 +13,7 @@ export const fetchChatRooms = async ({ queryKey }: QueryFunctionContext) => {
   const [key, params] = queryKey;
   const { data } = await axios.get<ChatRoom[]>('/chat/rooms', {
       headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI5NDgxMTg5LCJleHAiOjE2Mjk1Njc1ODl9.SxLi9ez2oFuZYRn_y_mC2iM8KoLnvLBt6jWLpR3FmZalCBKVfgSnAn-xoTUx1SVf',
+          Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjMwMTMwMjE4LCJleHAiOjE2MzAyMTY2MTh9.CJS2lBWFYnGGbH0rGg4aJ7jETht4gcK7uaiDQ8_9sbvbDaaWAuvScYlOYNjly5Do',
       }
   });
   return data;
@@ -29,7 +29,7 @@ export interface ChatRoomParticipant {
 export const fetchChatRoomParticipant = async (roomId: number) => {
     const { data } = await axios.get<ChatRoomParticipant[]>(`/chat/rooms/${roomId}`, {
         headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI5NDgxMTg5LCJleHAiOjE2Mjk1Njc1ODl9.SxLi9ez2oFuZYRn_y_mC2iM8KoLnvLBt6jWLpR3FmZalCBKVfgSnAn-xoTUx1SVf',
+          Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjMwMTMwMjE4LCJleHAiOjE2MzAyMTY2MTh9.CJS2lBWFYnGGbH0rGg4aJ7jETht4gcK7uaiDQ8_9sbvbDaaWAuvScYlOYNjly5Do',
         }
     });
     return data;

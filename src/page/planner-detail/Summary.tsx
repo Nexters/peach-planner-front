@@ -18,8 +18,7 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
   const COMPANY_NAME = plannerInfo.company.name;
   const HEART_COUNT = plannerInfo.likes;
   const ONE_LINE_SUMMARY = plannerInfo.summary;
-  const INSTAGRAM_LINK = plannerInfo.externalLinks.instagramLink;
-  const BLOG_LINK = plannerInfo.externalLinks.blogLink;
+  const EXTERNAL_LINKS = plannerInfo.externalLinks;
   const IMAGES = plannerInfo.images;
 
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
@@ -60,15 +59,19 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
           <OneLine>{ONE_LINE_SUMMARY}</OneLine>
           <HorizontalLine top="36px" bottom="11px" />
 
-          <BoldGray>소셜미디어</BoldGray>
-          <SocialIcon>
-            <a href={INSTAGRAM_LINK} target="_blank">
-              <Instagram />
-            </a>
-            <a href={BLOG_LINK} target="_blank">
-              <Blog />
-            </a>
-          </SocialIcon>
+          {EXTERNAL_LINKS != null && (
+            <>
+              <BoldGray>소셜미디어</BoldGray>
+              <SocialIcon>
+                <a href={EXTERNAL_LINKS.instagramLink} target="_blank">
+                  <Instagram />
+                </a>
+                <a href={EXTERNAL_LINKS.blogLink} target="_blank">
+                  <Blog />
+                </a>
+              </SocialIcon>
+            </>
+          )}
 
           <PButton color="pink">견적 요청하기</PButton>
           <ButtonContainer>

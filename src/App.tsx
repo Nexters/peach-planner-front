@@ -17,6 +17,7 @@ import UserSignUp from './page/user/SignUp/UserSignUp/UserSignUp';
 import Chat from './page/chat/Chat';
 import { isBrowser } from 'react-device-detect';
 import Mobile from './page/mobile';
+import CompanyDetail from './page/company-detail/CompanyDetail';
 
 import { setAxiosDefaults } from './api';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -68,6 +69,9 @@ const App = () => {
                 </Route>
                 <Route path="/chats">
                   <Chat />
+                </Route>
+                <Route path="/company/:id">
+                  <CompanyDetail />
                 </Route>
                 <Route path="/detail">
                   <PlannerDetail />

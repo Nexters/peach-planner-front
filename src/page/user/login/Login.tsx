@@ -53,20 +53,14 @@ const Login = () => {
   }
 
   const login = async (data: User) => {
-    try {
-      const res = await axios.post('http://api.peachplanner.com/api/auth/login', data);
-      localStorage.setItem('accessToken', res.data.accessToken);
-      localStorage.setItem('refreshToken', res.data.refreshToken);
-      history.push('/');
-      alert('로그인되었습니다.');
-      // axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
-      const expireTime = Date.parse(res.data.expireDateTime);
-      setTimeout(refreshToken, expireTime - 60000);
-      return;
-    } catch (e) {
-      console.log(e);
-      throw new Error(e);
-    }
+    const res = await axios.post('http://api.peachplanner.com/api/auth/login', data);
+    localStorage.setItem('accessToken', res.data.accessToken);
+    localStorage.setItem('refreshToken', res.data.refreshToken);
+    history.push('/');
+    alert('로그인되었습니다.');
+    // axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
+    const expireTime = Date.parse(res.data.expireDateTime);
+    setTimeout(refreshToken, expireTime - 60000);
   };
 
   const refreshToken = async () => {
@@ -77,14 +71,9 @@ const Login = () => {
         Authorization: `Bearer ${access}`
       }
     };
-    try {
-      const res = await axios.post('http://api.peachplanner.com/api/auth/token/refresh', { refreshToken }, config);
-      localStorage.setItem('accessToken', res.data.accessToken);
-      localStorage.setItem('refreshToken', res.data.refreshToken);
-    } catch (e) {
-      console.log(e);
-      throw new Error(e);
-    }
+    const res = await axios.post('http://api.peachplanner.com/api/auth/token/refresh', { refreshToken }, config);
+    localStorage.setItem('accessToken', res.data.accessToken);
+    localStorage.setItem('refreshToken', res.data.refreshToken);
   };
 
   return (

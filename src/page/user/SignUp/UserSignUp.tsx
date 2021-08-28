@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PButton from '../../../../component/PButton';
-import { Content, FlexDiv, Title } from '../../../../component/style/style';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { User } from 'src/api/Planner';
+import PButton from 'src/component/PButton';
+import { FlexDiv, Content, Title } from 'src/component/style/style';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -55,17 +56,8 @@ const UserSignUp = () => {
     }
   };
 
-  interface User {
-    name?: string;
-    nickName?: string;
-    userName: string;
-    password: string;
-    type?: 'USER';
-    loginType?: 'BASIC';
-  }
-
   const signup = async (data: User) => {
-    const res = await axios.post('http://api.peachplanner.com/api/auth/signup', data);
+    const res = await axios.post('/auth/signup', data);
     login({
       userName: email,
       password,
@@ -74,7 +66,7 @@ const UserSignUp = () => {
   };
 
   const login = async (data: User) => {
-    const res = await axios.post('http://api.peachplanner.com/api/auth/login', data);
+    const res = await axios.post('/auth/login', data);
     localStorage.setItem('accessToken', res.data.accessToken);
     localStorage.setItem('refreshToken', res.data.refreshToken);
     history.push('/');
@@ -92,7 +84,7 @@ const UserSignUp = () => {
         Authorization: `Bearer ${access}`
       }
     };
-    const res = await axios.post('http://api.peachplanner.com/api/auth/token/refresh', { refreshToken }, config);
+    const res = await axios.post('/auth/token/refresh', { refreshToken }, config);
     localStorage.setItem('accessToken', res.data.accessToken);
     localStorage.setItem('refreshToken', res.data.refreshToken);
   };

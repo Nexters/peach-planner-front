@@ -12,8 +12,8 @@ import Header from './component/Header';
 import Footer from './component/Footer';
 import Profile from './page/profile';
 import Login from './page/user/login/Login';
-import SignUpSelect from './page/user/signup/SignUpSelect';
-import UserSignUp from './page/user/signup/UserSignUp';
+import UserSignUp from './page/user/signUp/UserSignUp';
+import PlannerSignUp from './page/user/signUp/PlannerSignUp';
 import ChatContainer from './page/chat/Chat';
 import { isBrowser } from 'react-device-detect';
 import Mobile from './page/mobile';
@@ -72,7 +72,7 @@ const App = () => {
                 <Route path="/detail">
                   <PlannerDetail />
                 </Route>
-                <Route path="/plannerSignUp" component={SignUpSelect} />
+                <Route path="/plannerSignUp" component={PlannerSignUp} />
                 <Route path="/signUp" component={UserSignUp} />
               </Switch>
               <Footer />

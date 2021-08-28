@@ -70,9 +70,9 @@ const App = () => {
                 <Route path="/chats">
                   <Chat />
                 </Route>
-                <Route path="/company/:id">
+                {/* <Route path="/company/:id">
                   <CompanyDetail />
-                </Route>
+                </Route> */}
                 <Route path="/detail">
                   <PlannerDetail />
                 </Route>

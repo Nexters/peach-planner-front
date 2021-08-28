@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRouteMatch } from 'react-router';
 import { useQuery } from 'react-query';
-import { fetchCompany } from '../../api/Company';
+import { Company, fetchCompany } from '../../api/Company';
 
 interface routeProps {
   id: string;
@@ -12,11 +12,9 @@ const CompanyDetail = () => {
   const { params } = useRouteMatch<routeProps>();
   const companyId = params.id;
 
-  const { data: companyInfo, error } = useQuery(['company', companyId], () => fetchCompany(companyId));
+  const { data: companyInfo, error } = useQuery<Company, Error>(['company', companyId], () => fetchCompany(companyId));
 
-  console.log(companyInfo);
-
-  return (
+  return companyInfo ? (
     <Container>
       <Title>{companyInfo.name}</Title>
       <Information>
@@ -24,6 +22,8 @@ const CompanyDetail = () => {
         <div>{companyInfo.tel}</div>
       </Information>
     </Container>
+  ) : (
+    <>Loading</>
   );
 };
 

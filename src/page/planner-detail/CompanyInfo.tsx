@@ -13,7 +13,7 @@ const CompanyInfo: FC<CompanyInfoProps> = ({ companyInfo }) => {
 
   const showCompanyDetail = () => {
     const companyId = companyInfo.id;
-    history.push(`/company/${companyId}`);
+    // history.push(`/company/${companyId}`);
   };
 
   return (

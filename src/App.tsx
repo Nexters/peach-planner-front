@@ -72,8 +72,12 @@ const App = () => {
                 <Route path="/detail">
                   <PlannerDetail />
                 </Route>
-                <Route path="/plannerSignUp" component={PlannerSignUp} />
-                <Route path="/signUp" component={UserSignUp} />
+                <Route path="/plannerSignUp">
+                  <PlannerSignUp></PlannerSignUp>
+                </Route>
+                <Route path="/signUp">
+                  <UserSignUp></UserSignUp>
+                </Route>
               </Switch>
               <Footer />
             </Router>

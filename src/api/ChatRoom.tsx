@@ -13,7 +13,7 @@ export const fetchChatRooms = async ({ queryKey }: QueryFunctionContext) => {
   const [key, params] = queryKey;
   const { data } = await axios.get<ChatRoom[]>('/chat/rooms', {
       headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjMwMTMwMjE4LCJleHAiOjE2MzAyMTY2MTh9.CJS2lBWFYnGGbH0rGg4aJ7jETht4gcK7uaiDQ8_9sbvbDaaWAuvScYlOYNjly5Do',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       }
   });
   return data;
@@ -26,11 +26,15 @@ export interface ChatRoomParticipant {
     profileImage: string; 
 }
 
+
 export const fetchChatRoomParticipant = async (roomId: number) => {
     const { data } = await axios.get<ChatRoomParticipant[]>(`/chat/rooms/${roomId}`, {
         headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjMwMTMwMjE4LCJleHAiOjE2MzAyMTY2MTh9.CJS2lBWFYnGGbH0rGg4aJ7jETht4gcK7uaiDQ8_9sbvbDaaWAuvScYlOYNjly5Do',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         }
     });
-    return data;
+    return data.reduce((map: {[key: string]: string}, participant: ChatRoomParticipant) => {
+        map[`${participant.participantId}`] = participant.name;
+        return map
+      }, {}) ?? {};
   };

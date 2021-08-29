@@ -4,40 +4,92 @@ import shape from 'src/images/Shape 2.png';
 import imgWedding from 'src/images/img_wedding_1.png';
 import React, { useEffect } from 'react';
 import { useQuery, QueryFunctionContext } from 'react-query';
-import axios from 'axios';
 import { ChatRoom, ChatRoomParticipant, fetchChatRoomParticipant, fetchChatRooms } from 'src/api/ChatRoom';
-import { ChatMessage, fetchChatMessages } from 'src/api/ChatMessage';
+import { ChatMessage, ChatMessageReq, fetchChatMessages, sendMessage } from 'src/api/ChatMessage';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Client, Message, IFrame, ActivationState } from '@stomp/stompjs';
+import { useMemo } from 'react';
+
+
+const client = new Client({
+  brokerURL: 'ws://api.peachplanner.com/websocket',
+  connectHeaders: {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+  },
+  // debug: (str) => console.log(str),
+  reconnectDelay: 5000, //자동 재 연결
+  heartbeatIncoming: 4000,
+  heartbeatOutgoing: 4000,
+  onConnect: (receipt: IFrame) => {
+    console.log(receipt.body);
+  },
+});
+const subscribeIds = new Set();
+
+interface ChatMessageModel {
+  id: number;
+  sender: string;
+  messageType: "SYSTEM_START" | "NORMAL" | "SYSTEM_END";
+  senderType: "SYSTEM" | "USER" | "PLANNER";
+  message: string;
+  dateTime: string;
+}
+
 
 const ChatContainer = () => {
   const [selected, setSelected] = React.useState(-1);
   const { data: rooms } = useQuery(['rooms'], fetchChatRooms);
-  const [currentRoom, setCurrentRoom] = React.useState<ChatRoom>();
+  const currentRoom = React.useRef<ChatRoom>({} as ChatRoom);
   const [typingMessage, setTypingMessage] = React.useState("");
 
-  console.log(currentRoom)
 
-  const { data: chatRoomParticipants, refetch: refetchChatRoomParticipant } = useQuery<ChatRoomParticipant[]>([`rooms/${currentRoom?.id}`, currentRoom?.id], () => fetchChatRoomParticipant(currentRoom ? currentRoom.id : 0), {
-    refetchOnWindowFocus: false,
-    enabled: false,
-  });
-  const chatRoomParticpantsDict = chatRoomParticipants?.reduce((map: {[key: string]: number | string}, participant: ChatRoomParticipant) => {
-    map[""+participant.participantId] = participant.name;
-    return map
-  }, {}) ?? {};
-
-  console.log(chatRoomParticpantsDict);
-
-  const { data: chatMessages, refetch: refetchChatRoomMessages } = useQuery<ChatMessage[], Error>([`rooms/${currentRoom?.id}/messages`, currentRoom?.id], () => fetchChatMessages(currentRoom ? currentRoom.id : 0), {
-    refetchOnWindowFocus: false,
-    enabled: false,
-  });
+  const chatRoomParticipant = React.useRef<{[key: string]: string}>()
+  const [chatMessages, setChatMessages] = React.useState<ChatMessageModel[]>([]);
+  
+  useEffect(() => {
+    client.activate();
+  }, []);
 
   useEffect(() => {
-    refetchChatRoomParticipant();
-    refetchChatRoomMessages();
-  }, [currentRoom])
+    const subscribeRooms = () => {
+      rooms?.forEach((room) => {  
+        if (subscribeIds.has(room.id)) return;
+  
+  
+        if (client.state === ActivationState.ACTIVE) {
+          client.subscribe(`/topic/chat/${room.id}`, (message: IFrame) => {
+            console.log(currentRoom.current.id);
+            if (currentRoom.current.id === room.id) {
+              const chatMessage = JSON.parse(message.body) as ChatMessage;
+              setChatMessages(draft => [...draft, {
+                id: chatMessage.id,
+                sender: chatRoomParticipant.current?.[chatMessage.senderId],
+
+                messageType: chatMessage.messageType,
+                senderType: chatMessage.senderType,
+                message: chatMessage.message,
+                dateTime: chatMessage.dateTime,
+              } as ChatMessageModel]);
+              console.log(chatMessages);
+            }
+          });
+        }
+  
+        subscribeIds.add(room.id);
+      });
+    };
+
+    if (client.state === ActivationState.ACTIVE) {
+      subscribeRooms();
+    }
+    if (client.state === ActivationState.INACTIVE) {
+      client.onConnect = (receipt: IFrame) => {
+        subscribeRooms();
+      }
+    }
+
+  }, [rooms]);
 
   return (
     <Container>
@@ -50,7 +102,7 @@ const ChatContainer = () => {
           </Cell>
           <Cell width="65%">
             <Title height="20px" width="auto" fontSize="14px" lineHeight="20px" padding="24px 0 24px 16px">
-              { currentRoom ? currentRoom.roomName : ""}
+              { currentRoom.current.roomName }
             </Title>
           </Cell>
         </Row>
@@ -61,7 +113,26 @@ const ChatContainer = () => {
               {rooms ? rooms.map((room, index) => {
                   return <ChatCard selected={selected === index} onClick={() => {
                     setSelected(index);
-                    setCurrentRoom(rooms[index]);
+                    currentRoom.current = rooms[index];
+                
+                    (async () => {
+                      await Promise.all([
+                        fetchChatMessages(currentRoom.current.id),
+                        fetchChatRoomParticipant(currentRoom.current.id)
+                      ]).then(([messages, roomParticipants]) => {
+                        setChatMessages(messages.map((message) => {
+                          return {
+                            id: message.id,
+                            sender: roomParticipants[message.senderId],
+                            messageType: message.messageType,
+                            senderType: message.senderType,
+                            message: message.message,
+                            dateTime: message.dateTime,
+                          } as ChatMessageModel;
+                        }));
+                        chatRoomParticipant.current = roomParticipants;
+                      });
+                    })();
                   }}>
                     <ChatProfileImg src={shape} />
                     <ChatProfileText>
@@ -79,7 +150,7 @@ const ChatContainer = () => {
           </Cell>
           <Cell width="65%">
             <CellContent>
-              {chatMessages ? <ChatMessageDate>{new Date(chatMessages[0].dateTime).toLocaleDateString("ko-KR")}</ChatMessageDate> : <></> }
+              {chatMessages && chatMessages.length > 0 ? <ChatMessageDate>{new Date(chatMessages[0].dateTime).toLocaleDateString("ko-KR")}</ChatMessageDate> : <></> }
               {chatMessages ? chatMessages.map((message) => {
                 if (message.messageType === "SYSTEM_START") {
                   return <SystemMessageDiv>
@@ -100,7 +171,7 @@ const ChatContainer = () => {
                   <ChatMessageProfileImg src={shape} />
                   <ChatMessageCard>
                     <ChatMessageTitle>
-                      <ChatMessageProfileName>{chatRoomParticpantsDict[message.senderId]}</ChatMessageProfileName>
+                      <ChatMessageProfileName>{message.sender}</ChatMessageProfileName>
                       <ChatMessageProfileDatetime>{new Date(message.dateTime).toLocaleTimeString("ko-KR", { hour12: true, hour: '2-digit', minute: '2-digit' } )}</ChatMessageProfileDatetime>
                     </ChatMessageTitle>
                     <ChatMessageText>{message.message}</ChatMessageText>
@@ -112,7 +183,16 @@ const ChatContainer = () => {
               <ChatMessageClipDiv>
                 <FontAwesomeIconDiv icon={faPaperclip}></FontAwesomeIconDiv>
               </ChatMessageClipDiv>
-              <ChatMessageInputForm onSubmit={() => { console.log("submit"); setTypingMessage(""); return false;} }>
+              <ChatMessageInputForm onSubmit={(e) => {
+                e.preventDefault();
+
+                sendMessage({
+                  roomId: currentRoom.current.id,
+                  message: typingMessage,
+                } as ChatMessageReq);
+                setTypingMessage(""); 
+                return false;} 
+              }>
                 <ChatMessageInput placeholder="메시지를 입력하세요." value={typingMessage} onChange={(e) => setTypingMessage(e.target.value)}></ChatMessageInput>
               </ChatMessageInputForm>
             </ChatMessageBoxDiv>

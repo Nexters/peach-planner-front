@@ -20,14 +20,14 @@ const Login = () => {
 
   const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email === '' || email.match(emailRegExp) === null) {
-      console.log(email);
-      console.log(email.match(emailRegExp));
-      setIsValidEmail(false);
-      return;
-    } else {
+    // if (email === '' || email.match(emailRegExp) === null) {
+    //   console.log(email);
+    //   console.log(email.match(emailRegExp));
+    //   setIsValidEmail(false);
+    //   return;
+    // } else {
       setIsValidEmail(true);
-    }
+    // }
     if (!password) {
       setIsValidPassword(false);
       return;

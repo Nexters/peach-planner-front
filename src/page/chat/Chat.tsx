@@ -8,14 +8,14 @@ import { ChatRoom, ChatRoomParticipant, fetchChatRoomParticipant, fetchChatRooms
 import { ChatMessage, ChatMessageReq, fetchChatMessages, sendMessage } from 'src/api/ChatMessage';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Client, Message, IFrame } from '@stomp/stompjs';
+import { Client, Message, IFrame, ActivationState } from '@stomp/stompjs';
 import { useMemo } from 'react';
 
 
 const client = new Client({
-  brokerURL: 'ws://localhost:8080/websocket',
+  brokerURL: 'ws://api.peachplanner.com/websocket',
   connectHeaders: {
-    Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjI5NTM4OTM0LCJleHAiOjE2Mjk2MjUzMzR9.b08SUj-ijkmJ80BbbDu6Tf3u8Kj2kGG_tn7L1Vx9COoNL5mTayMAIcZ5M_PO5P8X'
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
   },
   // debug: (str) => console.log(str),
   reconnectDelay: 5000, //자동 재 연결
@@ -23,9 +23,18 @@ const client = new Client({
   heartbeatOutgoing: 4000,
   onConnect: (receipt: IFrame) => {
     console.log(receipt.body);
-  }
+  },
 });
 const subscribeIds = new Set();
+
+interface ChatMessageModel {
+  id: number;
+  sender: string;
+  messageType: "SYSTEM_START" | "NORMAL" | "SYSTEM_END";
+  senderType: "SYSTEM" | "USER" | "PLANNER";
+  message: string;
+  dateTime: string;
+}
 
 
 const ChatContainer = () => {
@@ -35,36 +44,52 @@ const ChatContainer = () => {
   const [typingMessage, setTypingMessage] = React.useState("");
 
 
-  const { data: chatRoomParticipantsDict, refetch: refetchChatRoomParticipant } = useQuery<{[key: string]: number | string}>([`rooms/${currentRoom.current.id}`, currentRoom.current.id], () => fetchChatRoomParticipant(currentRoom.current.id), {
-    refetchOnWindowFocus: false,
-    enabled: false,
-    refetchOnMount: false,
-  });
-
-  const [chatMessages, setChatMessages] = React.useState<ChatMessage[]>([]);
-
-
+  const chatRoomParticipant = React.useRef<{[key: string]: string}>()
+  const [chatMessages, setChatMessages] = React.useState<ChatMessageModel[]>([]);
   
   useEffect(() => {
     client.activate();
   }, []);
 
   useEffect(() => {
-    rooms?.forEach((room) => {
-      if (subscribeIds.has(room.id)) return;
+    const subscribeRooms = () => {
+      rooms?.forEach((room) => {  
+        if (subscribeIds.has(room.id)) return;
+  
+  
+        if (client.state === ActivationState.ACTIVE) {
+          client.subscribe(`/topic/chat/${room.id}`, (message: IFrame) => {
+            console.log(currentRoom.current.id);
+            if (currentRoom.current.id === room.id) {
+              const chatMessage = JSON.parse(message.body) as ChatMessage;
+              setChatMessages(draft => [...draft, {
+                id: chatMessage.id,
+                sender: chatRoomParticipant.current?.[chatMessage.senderId],
 
-      client.subscribe(`/topic/chat/${room.id}`, (message: IFrame) => {
-        console.log(currentRoom.current.id);
-        if (currentRoom.current.id === room.id) {
-          setChatMessages(draft => [...draft, JSON.parse(message.body) as ChatMessage]);
-          console.log(chatMessages);
+                messageType: chatMessage.messageType,
+                senderType: chatMessage.senderType,
+                message: chatMessage.message,
+                dateTime: chatMessage.dateTime,
+              } as ChatMessageModel]);
+              console.log(chatMessages);
+            }
+          });
         }
+  
+        subscribeIds.add(room.id);
       });
-      subscribeIds.add(room.id);
-    });
+    };
 
-  }, [rooms])
+    if (client.state === ActivationState.ACTIVE) {
+      subscribeRooms();
+    }
+    if (client.state === ActivationState.INACTIVE) {
+      client.onConnect = (receipt: IFrame) => {
+        subscribeRooms();
+      }
+    }
 
+  }, [rooms]);
 
   return (
     <Container>
@@ -91,9 +116,22 @@ const ChatContainer = () => {
                     currentRoom.current = rooms[index];
                 
                     (async () => {
-                      const messages = await fetchChatMessages(currentRoom.current.id);
-                      await refetchChatRoomParticipant();
-                      setChatMessages(messages);
+                      await Promise.all([
+                        fetchChatMessages(currentRoom.current.id),
+                        fetchChatRoomParticipant(currentRoom.current.id)
+                      ]).then(([messages, roomParticipants]) => {
+                        setChatMessages(messages.map((message) => {
+                          return {
+                            id: message.id,
+                            sender: roomParticipants[message.senderId],
+                            messageType: message.messageType,
+                            senderType: message.senderType,
+                            message: message.message,
+                            dateTime: message.dateTime,
+                          } as ChatMessageModel;
+                        }));
+                        chatRoomParticipant.current = roomParticipants;
+                      });
                     })();
                   }}>
                     <ChatProfileImg src={shape} />
@@ -133,7 +171,7 @@ const ChatContainer = () => {
                   <ChatMessageProfileImg src={shape} />
                   <ChatMessageCard>
                     <ChatMessageTitle>
-                      <ChatMessageProfileName>{chatRoomParticipantsDict ? chatRoomParticipantsDict![message.senderId] : ""}</ChatMessageProfileName>
+                      <ChatMessageProfileName>{message.sender}</ChatMessageProfileName>
                       <ChatMessageProfileDatetime>{new Date(message.dateTime).toLocaleTimeString("ko-KR", { hour12: true, hour: '2-digit', minute: '2-digit' } )}</ChatMessageProfileDatetime>
                     </ChatMessageTitle>
                     <ChatMessageText>{message.message}</ChatMessageText>
@@ -145,7 +183,9 @@ const ChatContainer = () => {
               <ChatMessageClipDiv>
                 <FontAwesomeIconDiv icon={faPaperclip}></FontAwesomeIconDiv>
               </ChatMessageClipDiv>
-              <ChatMessageInputForm onSubmit={() => {
+              <ChatMessageInputForm onSubmit={(e) => {
+                e.preventDefault();
+
                 sendMessage({
                   roomId: currentRoom.current.id,
                   message: typingMessage,

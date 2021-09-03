@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { ReactComponent as Logo } from '../assets/svg/logo_peachplanner.svg';
 import PButton from './PButton';
+import { usePeachTokenState } from 'src/atoms/AuthStatus';
 
 const Header = () => {
   let history = useHistory();
   const handleSignUp = () => history.push('/signUp');
-  const LOGGED_IN = localStorage.getItem('accessToken') ? false : true;
+  const [peachTokenState] = usePeachTokenState();
+  const LOGGED_IN = peachTokenState ? false : true;
   const logout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');

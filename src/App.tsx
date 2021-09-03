@@ -17,6 +17,7 @@ import UserSignUp from './page/user/signup/UserSignUp';
 import ChatContainer from './page/chat/Chat';
 import { isBrowser } from 'react-device-detect';
 import Mobile from './page/mobile';
+import { RecoilRoot } from 'recoil';
 
 import { setAxiosDefaults } from './api';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -35,55 +36,57 @@ const App = () => {
     );
   } else {
     return (
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <BrowserRouter basename={process.env.PUBLIC_URL}>
-            <Router>
-              <Header />
-              <Switch>
-                <Route exact path="/">
-                  <Main />
-                </Route>
-                <Route path="/search">
-                  <Search />
-                </Route>
-                <Route path="/planner/:id">
-                  <PlannerDetail />
-                </Route>
-                <Route path="/login">
-                  <Login />
-                </Route>
-                <Route path="/estimate">
-                  <PlannerEstimate />
-                </Route>
-                <Route path="/userPage">
-                  <UserPage />
-                </Route>
-                <Route path="/plannerPage">
-                  <PlannerPage />
-                </Route>
-                <Route path="/editProfile">
-                  <Profile isUpdate={true} />
-                </Route>
-                <Route path="/chats">
-                  <ChatContainer />
-                </Route>
-                <Route path="/detail">
-                  <PlannerDetail />
-                </Route>
-                <Route path="/plannerSignUp">
-                  <PlannerSignUp></PlannerSignUp>
-                </Route>
-                <Route path="/signUp">
-                  <UserSignUp></UserSignUp>
-                </Route>
-              </Switch>
-              <Footer />
-            </Router>
-          </BrowserRouter>
-        </ThemeProvider>
-      </QueryClientProvider>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
+              <Router>
+                <Header />
+                <Switch>
+                  <Route exact path="/">
+                    <Main />
+                  </Route>
+                  <Route path="/search">
+                    <Search />
+                  </Route>
+                  <Route path="/planner/:id">
+                    <PlannerDetail />
+                  </Route>
+                  <Route path="/login">
+                    <Login />
+                  </Route>
+                  <Route path="/estimate">
+                    <PlannerEstimate />
+                  </Route>
+                  <Route path="/userPage">
+                    <UserPage />
+                  </Route>
+                  <Route path="/plannerPage">
+                    <PlannerPage />
+                  </Route>
+                  <Route path="/editProfile">
+                    <Profile isUpdate={true} />
+                  </Route>
+                  <Route path="/chats">
+                    <ChatContainer />
+                  </Route>
+                  <Route path="/detail">
+                    <PlannerDetail />
+                  </Route>
+                  <Route path="/plannerSignUp">
+                    <PlannerSignUp></PlannerSignUp>
+                  </Route>
+                  <Route path="/signUp">
+                    <UserSignUp></UserSignUp>
+                  </Route>
+                </Switch>
+                <Footer />
+              </Router>
+            </BrowserRouter>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </RecoilRoot>
     );
   }
 };

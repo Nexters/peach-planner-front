@@ -4,12 +4,14 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { User } from 'src/api/Planner';
 import { FlexDiv } from 'src/component/style/style';
+import { usePeachTokenState } from 'src/atoms/AuthStatus';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
 const Login = () => {
   const history = useHistory();
+  const [, setPeachTokenState] = usePeachTokenState();
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [inputs, setInputs] = useState({
@@ -49,26 +51,28 @@ const Login = () => {
 
   const login = async (data: User) => {
     const res = await axios.post('/auth/login', data);
-    localStorage.setItem('accessToken', res.data.accessToken);
-    localStorage.setItem('refreshToken', res.data.refreshToken);
+    const accessToken = res.data.accessToken;
+    const refreshToken = res.data.refreshToken;
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
     history.push('/');
     alert('로그인되었습니다.');
-    // axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
     const expireTime = Date.parse(res.data.expireDateTime);
-    setTimeout(refreshToken, expireTime - 60000);
+    setPeachTokenState(accessToken);
   };
 
   const refreshToken = async () => {
     const refreshToken = localStorage.getItem('refreshToken');
-    const access = localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem('accessToken');
     const config = {
       headers: {
-        Authorization: `Bearer ${access}`
+        Authorization: `Bearer ${accessToken}`
       }
     };
     const res = await axios.post('/auth/token/refresh', { refreshToken }, config);
     localStorage.setItem('accessToken', res.data.accessToken);
     localStorage.setItem('refreshToken', res.data.refreshToken);
+    setPeachTokenState(accessToken);
   };
 
   return (

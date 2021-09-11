@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { User } from 'src/api/Planner';
-import { FlexDiv } from 'src/component/style/style';
+import { FlexDiv, Title } from 'src/component/style/style';
 import { usePeachTokenState } from 'src/atoms/AuthStatus';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
@@ -23,8 +23,6 @@ const Login = () => {
   const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email === '' || email.match(emailRegExp) === null) {
-      console.log(email);
-      console.log(email.match(emailRegExp));
       setIsValidEmail(false);
       return;
     } else {
@@ -79,9 +77,9 @@ const Login = () => {
     <FlexDiv>
       <LoginPageBox>
         <FlexDiv>
-          <Span color="#212529" size="18px">
+          <Title color={'#212529'} fontSize={'18px'} lineHeight={'27px'} height={'27px'}>
             로그인
-          </Span>
+          </Title>
         </FlexDiv>
 
         <Form onSubmit={handleForm}>
@@ -132,7 +130,7 @@ const Login = () => {
           </Span>
         </FlexDiv>
 
-        <FlexDiv>
+        <FlexDiv margin="0 0 16px 0">
           <Span weight="normal">SNS 계정으로 로그인</Span>
         </FlexDiv>
         <FlexDiv justify="space-around">
@@ -149,6 +147,7 @@ const Login = () => {
           color="#E64980"
           width="312px"
           height="40px"
+          margin="39.5px 0 17.5px"
           onClick={() => history.push('/signUp')}
         >
           <Span color="#E64980" weight="normal" cursor="pointer">
@@ -192,7 +191,9 @@ interface Props {
   box?: string;
   border?: string;
 }
-const LoginPageBox = styled.div``;
+const LoginPageBox = styled.div`
+  margin-top: 40px;
+`;
 const Form = styled.form``;
 
 const Span = styled.span<Props>`
@@ -238,4 +239,5 @@ const LogInButton = styled.button<Props>`
   text-align: center;
   box-sizing: ${(props: Props) => props.box || 'border-box'};
   cursor: pointer;
+  margin: ${(props: Props) => props.margin || '0'};
 `;

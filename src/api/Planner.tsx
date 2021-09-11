@@ -53,6 +53,6 @@ export interface User {
   nickName?: string;
   userName: string;
   password: string;
-  type?: 'USER';
-  loginType?: 'BASIC';
+  type?: 'USER' | 'PLANNER';
+  loginType?: 'BASIC' | 'KAKAO' | 'FACEBOOK';
 }

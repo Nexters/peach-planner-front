@@ -12,7 +12,7 @@ export interface ChatMessage {
 export const fetchChatMessages = async (roomId: number): Promise<ChatMessage[]> => {
   const { data } = await axios.get<ChatMessage[]>(`/chat/rooms/${roomId}/messages`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       }
   });
   return data;

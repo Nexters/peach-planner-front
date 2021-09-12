@@ -10,6 +10,7 @@ import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Client, Message, IFrame, ActivationState } from '@stomp/stompjs';
 import { useMemo } from 'react';
+import { fetchMe, User } from 'src/api/Login';
 
 
 const client = new Client({
@@ -30,6 +31,7 @@ const subscribeIds = new Set();
 interface ChatMessageModel {
   id: number;
   sender: string;
+  senderId: number;
   messageType: "SYSTEM_START" | "NORMAL" | "SYSTEM_END";
   senderType: "SYSTEM" | "USER" | "PLANNER";
   message: string;
@@ -46,9 +48,17 @@ const ChatContainer = () => {
 
   const chatRoomParticipant = React.useRef<{[key: string]: string}>()
   const [chatMessages, setChatMessages] = React.useState<ChatMessageModel[]>([]);
+
+  const messagesEndRef = React.useRef<null | HTMLDivElement>(null);
+
+  const me = React.useRef<User>();
   
   useEffect(() => {
-    client.activate();
+    // client.activate();
+    fetchMe().then(user => { 
+      console.log(user);
+      me.current = user;
+    });
   }, []);
 
   useEffect(() => {
@@ -65,7 +75,7 @@ const ChatContainer = () => {
               setChatMessages(draft => [...draft, {
                 id: chatMessage.id,
                 sender: chatRoomParticipant.current?.[chatMessage.senderId],
-
+                senderId: chatMessage.senderId,
                 messageType: chatMessage.messageType,
                 senderType: chatMessage.senderType,
                 message: chatMessage.message,
@@ -90,6 +100,13 @@ const ChatContainer = () => {
     }
 
   }, [rooms]);
+
+
+  
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [chatMessages]);
+
 
   return (
     <Container>
@@ -124,6 +141,7 @@ const ChatContainer = () => {
                           return {
                             id: message.id,
                             sender: roomParticipants[message.senderId],
+                            senderId: message.senderId,
                             messageType: message.messageType,
                             senderType: message.senderType,
                             message: message.message,
@@ -167,6 +185,20 @@ const ChatContainer = () => {
                   </SystemMessageDiv>;
                 }
 
+                if (me.current?.id === message.senderId) {
+                  return <MyChatMessageDiv>
+                  <MyChatMessageCard>
+                    <MyChatMessageTitle>
+                      <ChatMessageProfileName>{message.sender}</ChatMessageProfileName>
+                      <ChatMessageProfileDatetime>{new Date(message.dateTime).toLocaleTimeString("ko-KR", { hour12: true, hour: '2-digit', minute: '2-digit' } )}</ChatMessageProfileDatetime>
+                    </MyChatMessageTitle>
+                    <MyChatMessageText>{message.message}</MyChatMessageText>
+                  </MyChatMessageCard>
+                  <ChatMessageProfileImg src={shape} />
+                </MyChatMessageDiv>;
+                }
+
+
                 return <ChatMessageDiv>
                   <ChatMessageProfileImg src={shape} />
                   <ChatMessageCard>
@@ -178,6 +210,7 @@ const ChatContainer = () => {
                   </ChatMessageCard>
                 </ChatMessageDiv>
               }): <></> }
+              <div ref={messagesEndRef}/>
             </CellContent>
             <ChatMessageBoxDiv>
               <ChatMessageClipDiv>
@@ -431,6 +464,7 @@ const ChatMessageProfileDatetime = styled.p`
   margin-top: auto;
   bottom: 0px;
   padding-left: 4px;
+  padding-right: 4px;
 
   height: 15px;
   color: #495057;
@@ -442,6 +476,7 @@ const ChatMessageProfileDatetime = styled.p`
 
 const ChatMessageText = styled.pre`
   padding-left: 4px;
+  padding-right: 4px;
   color: #000000;
   font-family: SpoqaHanSans;
   font-size: 13px;
@@ -459,4 +494,19 @@ const SystemMessageLink = styled.p`
   font-weight: bold;
   letter-spacing: 0;
   line-height: 18px;
+`;
+
+const MyChatMessageDiv = styled(ChatMessageDiv)`
+  justify-content: flex-end;
+`;
+
+const MyChatMessageCard = styled(ChatMessageCard)`
+  justify-content: flex-end;
+`;
+
+const MyChatMessageTitle = styled(ChatMessageTitle)`
+  justify-content: flex-end;
+`;
+const MyChatMessageText = styled(ChatMessageText)`
+  text-align: right;
 `;

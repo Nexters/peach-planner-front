@@ -3,8 +3,20 @@ import styled from 'styled-components';
 import PButton from '../../component/PButton';
 import EstimateBox from './EstimateBox';
 import EstimateRow from './EstimateRow';
+import { useRouteMatch } from 'react-router';
+import { useQuery } from 'react-query';
+import { fetchPlanner } from '../../api/Planner';
+
+interface routeProps {
+  id: string;
+}
 
 const PlannerEstimate = () => {
+  const { params } = useRouteMatch<routeProps>();
+  const plannerId = params.id;
+
+  const { data: plannerInfo } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
+
   const [myInfo, setMyInfo] = useState({
     name: '홍길동',
     phone1: '010',
@@ -30,14 +42,16 @@ const PlannerEstimate = () => {
     setCompanyInfo({ ...companyInfo, [e.target.name]: e.target.value });
   };
 
+  console.log(plannerInfo);
+
   return (
     <Container>
       <Title>견적 요청하기</Title>
       <EstimateBox>
         <FlexContainer>
           <div>
-            <PlannerName>이윤경 플래너</PlannerName>
-            <CompanyName>아이니웨딩</CompanyName>
+            <PlannerName>{plannerInfo ? plannerInfo.name : ''} 플래너</PlannerName>
+            <CompanyName>{plannerInfo ? plannerInfo.company.name : ''}</CompanyName>
             <Description>견적 요청이 아닌 웨딩 계약서는 플래너에게 따로 요청해주세요.</Description>
           </div>
           <PButton width="107px" height="44px">

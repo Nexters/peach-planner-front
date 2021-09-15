@@ -2,6 +2,7 @@ import React, { useState, FC } from 'react';
 import styled from 'styled-components';
 import Popup from 'reactjs-popup';
 import { ReactComponent as Close } from '../../assets/svg/ic_close_w.svg';
+// import { ReactComponent as Close } from '../../assets/svg/ic_left_gray.svg';
 import { ReactComponent as Left } from '../../assets/svg/ic_left_img.svg';
 import { ReactComponent as Right } from '../../assets/svg/ic_right_img.svg';
 import SmallImage from './SmallImage';

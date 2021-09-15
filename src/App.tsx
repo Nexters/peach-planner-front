@@ -21,6 +21,7 @@ import { RecoilRoot } from 'recoil';
 
 import { setAxiosDefaults } from './api';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import CompanyDetail from './page/company-detail/CompanyDetail';
 
 const queryClient = new QueryClient();
 
@@ -53,10 +54,13 @@ const App = () => {
                   <Route path="/planner/:id">
                     <PlannerDetail />
                   </Route>
+                  <Route path="/company/:id">
+                    <CompanyDetail />
+                  </Route>
                   <Route path="/login">
                     <Login />
                   </Route>
-                  <Route path="/estimate">
+                  <Route path="/estimate/:id">
                     <PlannerEstimate />
                   </Route>
                   <Route path="/userPage">
@@ -70,9 +74,6 @@ const App = () => {
                   </Route>
                   <Route path="/chats">
                     <ChatContainer />
-                  </Route>
-                  <Route path="/detail">
-                    <PlannerDetail />
                   </Route>
                   <Route path="/plannerSignUp">
                     <PlannerSignUp></PlannerSignUp>

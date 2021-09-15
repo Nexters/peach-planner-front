@@ -8,12 +8,16 @@ import { ReactComponent as Instagram } from '../../assets/svg/ic_instagram.svg';
 import { ReactComponent as Blog } from '../../assets/svg/ic_blog.svg';
 import ImageModal from './ImageModal';
 import { Planner } from '../../api/Planner';
+import { useHistory } from 'react-router-dom';
+import DefaultImage from '../../assets/svg/img_photo_defult.svg';
 
 interface SummaryProps {
   plannerInfo: Planner;
 }
 
 const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
+  const history = useHistory();
+
   const PLANNER_NAME = plannerInfo.name;
   const COMPANY_NAME = plannerInfo.company.name;
   const HEART_COUNT = plannerInfo.likes;
@@ -27,6 +31,11 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
     setShowImageModal(false);
   };
 
+  const handleEstimateClick = () => {
+    const plannerId = plannerInfo.id;
+    history.push(`/estimate/${plannerId}`);
+  };
+
   return (
     <Container>
       <ImageContainer>
@@ -34,11 +43,15 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
           {IMAGES.slice(0, 2).map((image, i) => (
             <Image src={image} key={i} />
           ))}
+          {IMAGES.length == 0 && <Image src={DefaultImage} />}
+          {IMAGES.length <= 1 && <Image src={DefaultImage} />}
         </ImageWrapper>
         <ImageWrapper>
           {IMAGES.slice(2, 4).map((image, i) => (
             <Image src={image} key={i} />
           ))}
+          {IMAGES.length <= 2 && <Image src={DefaultImage} />}
+          {IMAGES.length <= 3 && <Image src={DefaultImage} />}
         </ImageWrapper>
         {IMAGES.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}
         <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={IMAGES} />
@@ -73,7 +86,9 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
             </>
           )}
 
-          <PButton color="pink">견적 요청하기</PButton>
+          <PButton color="pink" onClick={handleEstimateClick}>
+            견적 요청하기
+          </PButton>
           <ButtonContainer>
             <PButton>1:1 문의하기</PButton>
             <PButton>찜하기</PButton>

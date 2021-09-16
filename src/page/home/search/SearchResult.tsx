@@ -4,7 +4,12 @@ import { useQuery } from 'react-query';
 import { fetchPlanners } from '../../../api/Planner';
 import styled from 'styled-components';
 
-const SearchResult = () => {
+interface Props {
+  location: string;
+  support: string[];
+}
+
+const SearchResult = ({ location, support }: Props) => {
   const { data: planners } = useQuery(['planners'], fetchPlanners);
 
   return (

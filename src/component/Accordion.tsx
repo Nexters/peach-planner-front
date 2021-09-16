@@ -9,12 +9,11 @@ interface Props {
 }
 
 const Accordion: FC<Props> = ({ title, children }) => {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(true);
 
   return (
     <Container>
       <AccordionTitle onClick={() => setOpen(!isOpen)}>
-        <HorizontalLine></HorizontalLine>
         <TitleContainer>
           <Title>{title}</Title>
           <Image src={isOpen ? ArrowDown : ArrowUp}></Image>
@@ -33,11 +32,13 @@ const Container = styled.div`
 
 const AccordionTitle = styled.div`
   cursor: pointer;
+  height: 32px;
 `;
 
 const TitleContainer = styled.div`
   display: felx;
   justify-content: space-between;
+  border-top: solid 1px #212529;
 `;
 
 const Title = styled.div`
@@ -46,6 +47,8 @@ const Title = styled.div`
   font-size: 14px;
   line-height: 20px;
   font-weight: bold;
+  margin-top: 6px;
+  margin-bottom: 6px;
 `;
 
 interface AccordionProps {

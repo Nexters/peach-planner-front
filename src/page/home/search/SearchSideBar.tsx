@@ -6,7 +6,14 @@ import SearchSideBarRegion from './SearchSideBarRegion';
 const regions = ['전체', '서울', '경기', '인천', '부산', '강원', '전라', '경상', '대구', '충청', '대전', '제주'];
 const checkBox = ['동행', '비동행', '방문상담', '메시지상담'];
 
-const SearchSideBar = () => {
+interface Props {
+  location: string;
+  changeLocation: (data: string) => void;
+  support: string[];
+  changeSupport: (data: string[]) => void;
+}
+
+const SearchSideBar = ({ location, changeLocation, support, changeSupport }: Props) => {
   return (
     <FlexDiv justify="flex-start" height="auto" width="200px" margin={'0 40px 0 0'} direction="column">
       <FlexDiv align="start" width="200px" height="56px" margin={'0'} direction="column">
@@ -16,12 +23,14 @@ const SearchSideBar = () => {
       </FlexDiv>
       <Accordion title="지역">
         {regions.map((value, index) => {
-          return <SearchSideBarRegion key={index} region={value}></SearchSideBarRegion>;
+          return <SearchSideBarRegion key={index} name={value} location={location} changeLocation={changeLocation}></SearchSideBarRegion>;
         })}
       </Accordion>
       <Accordion title="기타">
         {checkBox.map((value, index) => {
-          return <SearchCheckBox key={index} name={value}></SearchCheckBox>;
+          return (
+            <SearchCheckBox key={index} name={value} support={support} changeSupport={changeSupport}></SearchCheckBox>
+          );
         })}
       </Accordion>
     </FlexDiv>

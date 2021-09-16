@@ -7,6 +7,7 @@ import { usePeachTokenState } from 'src/atoms/AuthStatus';
 import DefaultProfileImage from '../assets/svg/ic_account_default.svg';
 import DownArrowImage from '../assets/svg/ic_arrow_down.svg';
 import NotiDefault from '../assets/svg/ic_noti_default.svg';
+import HorizontalLine from './HorizontalLine';
 
 const Header = () => {
   let history = useHistory();
@@ -42,16 +43,27 @@ const Header = () => {
         </ProfileContainer>
         {isClickedProfile ? (
           <DropdownContainer>
-            <nav>
-              <ul>
-                <li>메시지</li>
-                <li>알림</li>
-                <li>내 페이지</li>
-                <li>프로필 관리</li>
-                <li>계정 설정</li>
-                <li onClick={logout}>로그아웃</li>
-              </ul>
-            </nav>
+            <MenuTop>
+              <Menu>
+                <DropdownMessage>메시지</DropdownMessage>
+              </Menu>
+            </MenuTop>
+            <MenuBody>
+              <Menu>
+                <MenuName>내 페이지</MenuName>
+              </Menu>
+              <Menu>
+                <MenuName>프로필 관리</MenuName>
+              </Menu>
+              <Menu>
+                <MenuName>계정 설정</MenuName>
+              </Menu>
+            </MenuBody>
+            <MenuBottom>
+              <Menu>
+                <MenuName onClick={logout}>로그 아웃</MenuName>
+              </Menu>
+            </MenuBottom>
           </DropdownContainer>
         ) : (
           <></>
@@ -118,7 +130,7 @@ const RightLink = styled(StyledLink)`
 const DropdownContainer = styled.div`
   position: absolute;
   margin: 10px 0 0 0;
-  height: 266px;
+  height: auto;
   width: 234px;
   border-radius: 6px;
   background-color: #ffffff;
@@ -157,4 +169,48 @@ const NotiImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   height: 24px;
   width: 24px;
   margin: 0 10px 0 0;
+`;
+
+const MenuTop = styled.div`
+  margin-top: 16px;
+  margin-bottom: 8px;
+  border-bottom: solid 1px #ced4da;
+`;
+
+const Menu = styled.div`
+  height: 40px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const DropdownMessage = styled.div`
+  height: 19px;
+  width: auto;
+  color: #000000;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 19px;
+  margin-left: 16px;
+`;
+
+const MenuName = styled.div`
+  height: 16px;
+  width: auto;
+  color: #000000;
+  font-size: 13px;
+  letter-spacing: 0;
+  line-height: 16px;
+  margin-left: 16px;
+`;
+
+const MenuBody = styled.div`
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border-bottom: solid 1px #ced4da;
+`;
+
+const MenuBottom = styled.div`
+  margin-bottom: 16px;
 `;

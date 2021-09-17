@@ -18,7 +18,7 @@ const SearchSideBarRegion = ({ name, location, changeLocation }: Props) => {
   };
 
   return (
-    <FlexDiv justify="flex-start" align="start" direction="column" margin="0 0 3px 0" onClick={handleClick}>
+    <FlexDiv justify="center" align="start" direction="column" margin="0 0 3px 0" onClick={handleClick} height="24px">
       {name === location ? <SelectedRegion>{name}</SelectedRegion> : <Region>{name}</Region>}
     </FlexDiv>
   );
@@ -28,7 +28,7 @@ export default SearchSideBarRegion;
 
 const SelectedRegion = styled.div`
   height: 18px;
-  width: 23px;
+  width: auto;
   font-weight: bold;
   color: #000000;
   font-size: 12px;
@@ -38,7 +38,7 @@ const SelectedRegion = styled.div`
 
 const Region = styled.div`
   height: 18px;
-  width: 23px;
+  width: auto;
   color: #000000;
   font-size: 12px;
   line-height: 18px;

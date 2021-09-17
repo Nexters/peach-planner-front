@@ -6,13 +6,14 @@ import ArrowDown from '../assets/svg/ic_arrow_down.svg';
 
 interface Props {
   title: string;
+  margin: string;
 }
 
-const Accordion: FC<Props> = ({ title, children }) => {
+const Accordion: FC<Props> = ({ title, margin, children }) => {
   const [isOpen, setOpen] = useState(true);
 
   return (
-    <Container>
+    <Container margin={margin}>
       <AccordionTitle onClick={() => setOpen(!isOpen)}>
         <TitleContainer>
           <Title>{title}</Title>
@@ -26,7 +27,12 @@ const Accordion: FC<Props> = ({ title, children }) => {
 
 export default Accordion;
 
-const Container = styled.div`
+interface ContainerProps {
+  margin: string;
+}
+
+const Container = styled.div<ContainerProps>`
+  margin: ${(props: ContainerProps) => props.margin};
   width: 200px;
 `;
 

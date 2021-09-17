@@ -39,7 +39,8 @@ interface AdditionalProp {
 
 export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
-  const { data } = await axios.get<Planner[]>('/planners');
+  console.log(params);
+  const { data } = await axios.get<Planner[]>('/planners', { params });
   return data;
 };
 

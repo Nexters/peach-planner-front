@@ -16,17 +16,24 @@ interface Props {
 const SearchSideBar = ({ location, changeLocation, support, changeSupport }: Props) => {
   return (
     <FlexDiv justify="flex-start" height="auto" width="200px" margin={'0 40px 0 0'} direction="column">
-      <FlexDiv align="start" width="200px" height="56px" margin={'0'} direction="column">
-        <Title height={'24px'} width={'auto'} fontSize={'16px'} lineHeight={'24px'} margin={'0'}>
+      <FlexDiv justify="center" align="start" width="200px" height="56px" margin={'0'} direction="column">
+        <Title height={'24px'} width={'auto'} fontSize={'16px'} lineHeight={'24px'} margin={'16px 0 16px 0'}>
           웨딩플래너 찾기
         </Title>
       </FlexDiv>
-      <Accordion title="지역">
+      <Accordion title="지역" margin="">
         {regions.map((value, index) => {
-          return <SearchSideBarRegion key={index} name={value} location={location} changeLocation={changeLocation}></SearchSideBarRegion>;
+          return (
+            <SearchSideBarRegion
+              key={index}
+              name={value}
+              location={location}
+              changeLocation={changeLocation}
+            ></SearchSideBarRegion>
+          );
         })}
       </Accordion>
-      <Accordion title="기타">
+      <Accordion title="기타" margin="16px">
         {checkBox.map((value, index) => {
           return (
             <SearchCheckBox key={index} name={value} support={support} changeSupport={changeSupport}></SearchCheckBox>

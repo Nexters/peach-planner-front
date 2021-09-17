@@ -10,7 +10,7 @@ interface Props {
 }
 
 const SearchResult = ({ location, support }: Props) => {
-  const { data: planners } = useQuery(['planners'], fetchPlanners);
+  const { data: planners } = useQuery(['planners', {location, support}], fetchPlanners);
 
   return (
     <FlexDiv justify="flex-start" align="start" width="880px" margin={'0'} direction="column">

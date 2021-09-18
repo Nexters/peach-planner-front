@@ -10,7 +10,8 @@ interface Props {
 }
 
 const SearchResult = ({ location, support }: Props) => {
-  const { data: planners } = useQuery(['planners', {location, support}], fetchPlanners);
+  const supportInfos = support.join();
+  const { data: planners } = useQuery(['planners', { location, supportInfos }], fetchPlanners);
 
   return (
     <FlexDiv justify="flex-start" align="start" width="880px" margin={'0'} direction="column">
@@ -27,7 +28,7 @@ const SearchResult = ({ location, support }: Props) => {
       </select>
       <SearchResultList>
         {planners ? (
-          planners.map((planner) => {
+          planners.content.map((planner) => {
             return (
               <PlannerCard
                 key={planner.id}

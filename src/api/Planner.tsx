@@ -1,6 +1,13 @@
 import axios from 'axios';
 import { QueryFunctionContext } from 'react-query';
 
+interface PagedPlanner {
+  content: Planner[];
+  size: number;
+  totalElements: number;
+  totalPages: number;
+}
+
 export interface Planner {
   id: number;
   images: string[];
@@ -40,7 +47,7 @@ interface AdditionalProp {
 export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
   console.log(params);
-  const { data } = await axios.get<Planner[]>('/planners', { params });
+  const { data } = await axios.get<PagedPlanner>('/planners', { params });
   return data;
 };
 

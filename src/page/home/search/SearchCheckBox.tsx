@@ -17,8 +17,8 @@ const SearchCheckBox = ({ name, support, changeSupport }: Props) => {
   const handleClick = () => {
     setIsChecking(!isChecking);
     if (isChecking) {
-      support.push(name);
-      changeSupport(support);
+      const supports = support.concat(name);
+      changeSupport(supports);
     } else {
       const supports = support.filter((value) => value !== name);
       changeSupport(supports);

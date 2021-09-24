@@ -10,7 +10,8 @@ interface PartnerInfoProps {
 
 const PartnerInfo: FC<PartnerInfoProps> = ({ plannerId }) => {
   const { data: partnerInfo } = useQuery(['partners', plannerId], () => fetchPlannerPartners(plannerId));
-  return partnerInfo ? (
+
+  return partnerInfo && Object.keys(partnerInfo).length ? (
     <Container title="제휴 업체 정보">
       <PartnerRow title="스튜디오" partner={partnerInfo.STUDIO} />
       <PartnerRow title="메이크업" partner={partnerInfo.MAKEUP} />

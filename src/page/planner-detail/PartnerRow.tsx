@@ -23,9 +23,7 @@ const PartnerRow: FC<PartnerRowProps> = ({ title, partner }) => {
     arrows: false
   });
 
-  console.log(partner);
-
-  return (
+  return partner ? (
     <Container>
       <TopContainer>
         <Title>{title}</Title>
@@ -44,6 +42,8 @@ const PartnerRow: FC<PartnerRowProps> = ({ title, partner }) => {
         </FlexContainer>
       </BottomContainer>
     </Container>
+  ) : (
+    <></>
   );
 };
 

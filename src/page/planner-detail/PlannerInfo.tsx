@@ -4,16 +4,34 @@ import Container from './Container';
 import styled from 'styled-components';
 import PButton from '../../component/PButton';
 import { Planner } from '../../api/Planner';
+import { useHistory } from 'react-router';
+import axios from 'axios';
 
 interface PlannerInfoProps {
   plannerInfo: Planner;
 }
 
 const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
+  const history = useHistory();
+
   const PLANNER_NAME: string = plannerInfo.name;
   const DETAIL: string = plannerInfo.summary;
   const LIKES: number = plannerInfo.likes;
   const DESCRIPTION: string[] = plannerInfo.description.split('\\n');
+
+  const handleChat = () => {
+    axios
+      .post(
+        `/chat/rooms/${plannerInfo.id}`,
+        {},
+        { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+      )
+      .then((res) => {
+        if (res.status == 200) {
+          history.push('/chats');
+        }
+      });
+  };
 
   return (
     <Container title="플래너 소개">
@@ -23,7 +41,9 @@ const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
           <div key={i}>{desc}</div>
         ))}
       </Detail>
-      <PButton width="108px">1:1 문의하기</PButton>
+      <PButton width="108px" onClick={handleChat}>
+        1:1 문의하기
+      </PButton>
     </Container>
   );
 };

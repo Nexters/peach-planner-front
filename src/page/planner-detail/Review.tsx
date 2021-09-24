@@ -6,9 +6,10 @@ import { ReviewData } from './ReviewList';
 
 interface ReviewProps {
   data: ReviewData;
+  noLine?: boolean;
 }
 
-const Review: FC<ReviewProps> = ({ data }) => {
+const Review: FC<ReviewProps> = ({ data, noLine = false }) => {
   return (
     <>
       <Container>
@@ -20,7 +21,7 @@ const Review: FC<ReviewProps> = ({ data }) => {
           <Detail>{data.detail}</Detail>
         </RightContainer>
       </Container>
-      <HorizontalLine color="#dee2e6" />
+      {!noLine && <HorizontalLine color="#dee2e6" />}
     </>
   );
 };

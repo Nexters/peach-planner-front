@@ -8,9 +8,9 @@ import { ReactComponent as Instagram } from '../../assets/svg/ic_instagram.svg';
 import { ReactComponent as Blog } from '../../assets/svg/ic_blog.svg';
 import ImageModal from './ImageModal';
 import { Planner } from '../../api/Planner';
-import { useHistory } from 'react-router-dom';
 import DefaultImage from '../../assets/svg/img_photo_defult.svg';
-import { PickReq, pick } from '../../api/Pick';
+import { PickReq, pick } from 'src/api/Pick';
+import { useHistory } from 'react-router';
 import axios from 'axios';
 
 interface SummaryProps {
@@ -40,7 +40,7 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
 
   const pickPlanner = () => {
     const plannerId = plannerInfo.id;
-    pick({ targetCategoryType: 'PLANNER', targetId: plannerId });
+    pick({ targetCategoryType: 'PLANNER', targetId: plannerId } as PickReq);
   };
 
   const handleChat = () => {
@@ -51,7 +51,9 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
         { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
       )
       .then((res) => {
-        console.log(res);
+        if (res.status == 200) {
+          history.push('/chats');
+        }
       });
   };
 

@@ -10,6 +10,8 @@ import ImageModal from './ImageModal';
 import { Planner } from '../../api/Planner';
 import { useHistory } from 'react-router-dom';
 import DefaultImage from '../../assets/svg/img_photo_defult.svg';
+import { PickReq, pick } from '../../api/Pick';
+import axios from 'axios';
 
 interface SummaryProps {
   plannerInfo: Planner;
@@ -34,6 +36,23 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
   const handleEstimateClick = () => {
     const plannerId = plannerInfo.id;
     history.push(`/estimate/${plannerId}`);
+  };
+
+  const pickPlanner = () => {
+    const plannerId = plannerInfo.id;
+    pick({ targetCategoryType: 'PLANNER', targetId: plannerId });
+  };
+
+  const handleChat = () => {
+    axios
+      .post(
+        `/chat/rooms/${plannerInfo.id}`,
+        {},
+        { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+      )
+      .then((res) => {
+        console.log(res);
+      });
   };
 
   return (
@@ -90,8 +109,8 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
             견적 요청하기
           </PButton>
           <ButtonContainer>
-            <PButton>1:1 문의하기</PButton>
-            <PButton>찜하기</PButton>
+            <PButton onClick={handleChat}>1:1 문의하기</PButton>
+            <PButton onClick={pickPlanner}>찜하기</PButton>
           </ButtonContainer>
         </InnerContainer>
       </InformationContainer>

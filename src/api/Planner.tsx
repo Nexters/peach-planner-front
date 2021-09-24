@@ -52,7 +52,7 @@ export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
 
 export const fetchRecommendedPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
-  const { data } = await axios.get<Planner[]>('/planners/recommended');
+  const { data } = await axios.get<PagedPlanner>('/planners/recommended');
   return data;
 };
 

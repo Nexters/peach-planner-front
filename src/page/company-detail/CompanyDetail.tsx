@@ -14,8 +14,6 @@ const CompanyDetail = () => {
 
   const { data: companyInfo, error } = useQuery(['company', companyId], () => fetchCompany(companyId));
 
-  console.log(companyInfo);
-
   return companyInfo ? (
     <Container>
       <Title>{companyInfo.name}</Title>

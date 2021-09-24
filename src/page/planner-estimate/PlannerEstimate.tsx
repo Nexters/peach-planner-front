@@ -42,8 +42,6 @@ const PlannerEstimate = () => {
     setCompanyInfo({ ...companyInfo, [e.target.name]: e.target.value });
   };
 
-  console.log(plannerInfo);
-
   return (
     <Container>
       <Title>견적 요청하기</Title>

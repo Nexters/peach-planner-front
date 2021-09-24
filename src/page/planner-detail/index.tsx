@@ -8,7 +8,7 @@ import ReviewList from './ReviewList';
 import Summary from './Summary';
 import { useRouteMatch } from 'react-router';
 import { useQuery } from 'react-query';
-import { Planner, fetchPlanner } from '../../api/Planner';
+import { Planner, fetchPlanner, fetchPlannerPartners } from '../../api/Planner';
 
 interface routeProps {
   id: string;
@@ -26,8 +26,8 @@ const PlannerDetail = () => {
       <Detail plannerInfo={plannerInfo} />
       <PlannerInfo plannerInfo={plannerInfo} />
       <CompanyInfo companyInfo={plannerInfo.company} />
-      <PartnerInfo partnerInfo={plannerInfo.partners} />
-      <ReviewList />
+      <PartnerInfo plannerId={plannerId} />
+      <ReviewList plannerInfo={plannerInfo} />
     </Container>
   ) : (
     <>Loading</>

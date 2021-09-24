@@ -1,29 +1,47 @@
-import React, { FC } from 'react';
+import React, { useState, FC } from 'react';
 import styled from 'styled-components';
 import PartnerItem from './PartnerItem';
-import { PartnerInformation } from './PartnerInfo';
 import { ReactComponent as LeftArrow } from '../../assets/svg/ic_arrow_left.svg';
 import { ReactComponent as RightArrow } from '../../assets/svg/ic_arrow_right.svg';
+import { PartnerInfo } from 'src/api/Planner';
+import Slick, { Settings } from 'react-slick';
 
 interface PartnerRowProps {
-  info: PartnerInformation;
+  title: string;
+  partner: PartnerInfo[];
 }
 
-const PartnerRow: FC<PartnerRowProps> = ({ info }) => {
+const PartnerRow: FC<PartnerRowProps> = ({ title, partner }) => {
+  const [slider, setSlider] = useState<Slick>();
+  const [slickSettings, setSlickSettings] = useState<Settings>({
+    draggable: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    infinite: true,
+    variableWidth: true,
+    arrows: false
+  });
+
+  console.log(partner);
+
   return (
     <Container>
       <TopContainer>
-        <Title>{info.title}</Title>
+        <Title>{title}</Title>
         <TopRightContainer>
-          <ViewMore>더 보기</ViewMore>
-          <LeftArrow />
-          <RightArrow />
+          <LeftArrow onClick={slider?.slickPrev} style={{ cursor: 'pointer' }} />
+          <RightArrow onClick={slider?.slickNext} style={{ cursor: 'pointer' }} />
         </TopRightContainer>
       </TopContainer>
       <BottomContainer>
-        {info.data.map((item, i) => (
-          <PartnerItem data={item} key={i} />
-        ))}
+        <FlexContainer>
+          <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
+            {partner.map((item, i) => {
+              return <PartnerItem data={item} key={i} />;
+            })}
+          </Slider>
+        </FlexContainer>
       </BottomContainer>
     </Container>
   );
@@ -32,7 +50,7 @@ const PartnerRow: FC<PartnerRowProps> = ({ info }) => {
 export default PartnerRow;
 
 const Container = styled.div`
-  margin: 13px 0 32px 0;
+  margin: 13px 0 40px 0;
 `;
 
 const TopContainer = styled.div`
@@ -62,4 +80,32 @@ const ViewMore = styled.div`
 
 const BottomContainer = styled.div`
   display: flex;
+`;
+
+const FlexContainer = styled.div`
+  display: flex;
+  width: 860px;
+  justify-content: flex-start;
+  align-item: start;
+  flex-direction: row;
+  overflow: hidden;
+`;
+
+const Slider = styled(Slick)`
+  .slick-initialized slick-slider {
+    overflow: hidden;
+    flex: 1;
+    max-width: 1100px !important;
+  }
+
+  .slick-track {
+    display: flex;
+    width: 1100px;
+    overflow: hidden;
+  }
+  .slick-list {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+  }
 `;

@@ -20,6 +20,7 @@ const Container: FC<ContainerProps> = ({ title, children }) => {
 
 export default Container;
 
-export const Title = styled(BoldTitle)`
-  margin-bottom: 13px;
+export const Title = styled.p`
+  margin-bottom: 25px;
+  font-weight: bold;
 `;

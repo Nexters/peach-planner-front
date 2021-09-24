@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
+import { PartnerInfo } from 'src/api/Planner';
 import styled from 'styled-components';
-import { DetailInformation } from './PartnerInfo';
 
 interface PartnerItemProps {
-  data: DetailInformation;
+  data: PartnerInfo;
 }
 
 const PartnerItem: FC<PartnerItemProps> = ({ data }) => {
   return (
     <Container>
-      <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs33kicMrwTO3bQTdskuUlvJRK9JAgmaGjZw&usqp=CAU" />
+      <Image src={data.primaryImage} />
       <Title>{data.name}</Title>
       <Detail>{data.location}</Detail>
     </Container>
@@ -20,6 +20,7 @@ export default PartnerItem;
 
 const Container = styled.div`
   flex: 1;
+  margin-right: 15px;
 `;
 
 const Image = styled.img`

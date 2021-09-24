@@ -9,11 +9,17 @@ interface DetailProps {
 
 const Detail: FC<DetailProps> = ({ plannerInfo }) => {
   const DETAIL_LIST = plannerInfo.locations;
+  const SUPPORT_INFO = plannerInfo.supportInfos;
 
   return (
     <Container title="플래너가 담당해요">
       <InnerContainer>
         {DETAIL_LIST.map((detail, i) => (
+          <DetailItem key={i}>
+            <Check /> {detail}
+          </DetailItem>
+        ))}
+        {SUPPORT_INFO.map((detail, i) => (
           <DetailItem key={i}>
             <Check /> {detail}
           </DetailItem>

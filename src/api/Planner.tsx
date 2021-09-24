@@ -17,6 +17,7 @@ export interface Planner {
     instagramLink: string;
   };
   likes: number;
+  reviews: number;
   locations: string[];
   description: string;
   company: Company;
@@ -26,6 +27,7 @@ export interface Planner {
     additionalProp3: AdditionalProp;
   };
   summary: string;
+  supportInfos: string[];
 }
 
 export interface Company {
@@ -42,6 +44,22 @@ interface AdditionalProp {
   locations: string;
   name: string;
   primaryImage: string;
+}
+
+export interface PartnerInfo {
+  id: number;
+  location: string;
+  name: string;
+  owner: 'PLANNER';
+  pick: boolean;
+  primaryImage: string;
+  tel: string;
+  type: 'STUDIO' | 'MAKEUP';
+}
+
+export interface Partners {
+  MAKEUP: PartnerInfo[];
+  STUDIO: PartnerInfo[];
 }
 
 export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
@@ -69,3 +87,8 @@ export interface User {
   type?: 'USER' | 'PLANNER';
   loginType?: 'BASIC' | 'KAKAO' | 'FACEBOOK';
 }
+
+export const fetchPlannerPartners = async (plannerId: string) => {
+  const { data } = await axios.get<Partners>(`/planners/${plannerId}/partners`);
+  return data;
+};

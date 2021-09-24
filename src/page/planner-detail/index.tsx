@@ -4,7 +4,6 @@ import CompanyInfo from './CompanyInfo';
 import Detail from './Detail';
 import PartnerInfo from './PartnerInfo';
 import PlannerInfo from './PlannerInfo';
-import QuestionAnswer from './QuestionAnswer';
 import ReviewList from './ReviewList';
 import Summary from './Summary';
 import { useRouteMatch } from 'react-router';
@@ -27,9 +26,8 @@ const PlannerDetail = () => {
       <Detail plannerInfo={plannerInfo} />
       <PlannerInfo plannerInfo={plannerInfo} />
       <CompanyInfo companyInfo={plannerInfo.company} />
-      <PartnerInfo />
+      <PartnerInfo partnerInfo={plannerInfo.partners} />
       <ReviewList />
-      <QuestionAnswer />
     </Container>
   ) : (
     <>Loading</>

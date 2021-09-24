@@ -64,10 +64,11 @@ const Title = styled.div<{ detail: string | undefined }>`
 const Detail = styled.div`
   font-size: 16px;
   color: #495057;
+  margin-top: 15px;
 `;
 
 const IconContainer = styled.div`
-  margin-top: 9px;
+  margin-top: 15px;
   display: flex;
   font-size: 14px;
 

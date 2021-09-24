@@ -31,7 +31,7 @@ const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
 export default PlannerInfo;
 
 const Detail = styled.div`
-  margin: 17px 0 23.5px 0;
+  margin: 30px 0 23.5px 0;
   font-size: 16px;
   color: #495057;
 `;

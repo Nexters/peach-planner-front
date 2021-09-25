@@ -3,15 +3,17 @@ import styled from 'styled-components';
 import PButton from '../../component/PButton';
 import EstimateBox from './EstimateBox';
 import EstimateRow from './EstimateRow';
-import { useRouteMatch } from 'react-router';
+import { useRouteMatch, useHistory } from 'react-router';
 import { useQuery } from 'react-query';
 import { fetchPlanner } from '../../api/Planner';
-
+import axios from 'axios';
 interface routeProps {
   id: string;
 }
 
 const PlannerEstimate = () => {
+  const history = useHistory();
+
   const { params } = useRouteMatch<routeProps>();
   const plannerId = params.id;
 
@@ -42,6 +44,20 @@ const PlannerEstimate = () => {
     setCompanyInfo({ ...companyInfo, [e.target.name]: e.target.value });
   };
 
+  const handleChat = () => {
+    axios
+      .post(
+        `/chat/rooms/${plannerId}`,
+        {},
+        { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+      )
+      .then((res) => {
+        if (res.status == 200) {
+          history.push('/chats');
+        }
+      });
+  };
+
   return (
     <Container>
       <Title>견적 요청하기</Title>
@@ -52,7 +68,7 @@ const PlannerEstimate = () => {
             <CompanyName>{plannerInfo ? plannerInfo.company.name : ''}</CompanyName>
             <Description>견적 요청이 아닌 웨딩 계약서는 플래너에게 따로 요청해주세요.</Description>
           </div>
-          <PButton width="107px" height="44px">
+          <PButton width="107px" height="44px" onClick={handleChat}>
             1:1 문의하기
           </PButton>
         </FlexContainer>

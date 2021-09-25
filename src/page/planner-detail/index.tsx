@@ -4,12 +4,11 @@ import CompanyInfo from './CompanyInfo';
 import Detail from './Detail';
 import PartnerInfo from './PartnerInfo';
 import PlannerInfo from './PlannerInfo';
-import QuestionAnswer from './QuestionAnswer';
 import ReviewList from './ReviewList';
 import Summary from './Summary';
 import { useRouteMatch } from 'react-router';
 import { useQuery } from 'react-query';
-import { Planner, fetchPlanner } from '../../api/Planner';
+import { Planner, fetchPlanner, fetchPlannerPartners } from '../../api/Planner';
 
 interface routeProps {
   id: string;
@@ -27,9 +26,8 @@ const PlannerDetail = () => {
       <Detail plannerInfo={plannerInfo} />
       <PlannerInfo plannerInfo={plannerInfo} />
       <CompanyInfo companyInfo={plannerInfo.company} />
-      <PartnerInfo />
-      <ReviewList />
-      <QuestionAnswer />
+      <PartnerInfo plannerId={plannerId} />
+      <ReviewList plannerId={plannerId} />
     </Container>
   ) : (
     <>Loading</>

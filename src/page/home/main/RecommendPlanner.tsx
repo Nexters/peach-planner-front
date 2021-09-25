@@ -6,10 +6,10 @@ import styled from 'styled-components';
 import Slick, { Settings } from 'react-slick';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { fetchPlanners } from '../../../api/Planner';
+import { fetchRecommendedPlanners } from '../../../api/Planner';
 
 const RecommendPlanner = () => {
-  const { data: planners } = useQuery(['planners'], fetchPlanners);
+  const { data: planners } = useQuery(['planners'], fetchRecommendedPlanners);
   const [slider, setSlider] = useState<Slick>();
   const [slickSettings, setSlickSettings] = useState<Settings>({
     draggable: false,
@@ -20,7 +20,6 @@ const RecommendPlanner = () => {
     variableWidth: true,
     arrows: false
   });
-  
 
   return (
     <FlexDiv margin={'64px 0 0 0'} direction="column">
@@ -42,7 +41,7 @@ const RecommendPlanner = () => {
       >
         <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
           {planners ? (
-            planners.map((planner) => {
+            planners.content.map((planner) => {
               return (
                 <PlannerCard
                   key={planner.id}

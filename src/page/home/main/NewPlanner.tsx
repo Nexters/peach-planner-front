@@ -41,7 +41,7 @@ const NewPlanner = () => {
       >
         <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
           {planners ? (
-            planners.map((planner) => {
+            planners.content.map((planner) => {
               return (
                 <PlannerCard
                   key={planner.id}

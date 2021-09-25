@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { Planner } from 'src/api/Planner';
 import Container from './Container';
 import Review from './Review';
 
@@ -8,8 +9,12 @@ export interface ReviewData {
   detail: String;
 }
 
-const ReviewList = () => {
-  const REVIEW_COUNT: number = 24;
+interface ReviewProps {
+  plannerInfo: Planner;
+}
+
+const ReviewList: FC<ReviewProps> = ({ plannerInfo }) => {
+  const REVIEW_COUNT: number = plannerInfo.reviews;
   const REVIEW_DATA: ReviewData[] = [
     { name: 'Alice', date: '2021년 6월 12일', detail: '너무 친절하시고 좋았습니다!' },
     {
@@ -26,9 +31,10 @@ const ReviewList = () => {
 
   return (
     <Container title={`리뷰 (${REVIEW_COUNT})`}>
-      {REVIEW_DATA.map((data, i) => (
+      {REVIEW_DATA.slice(0, -1).map((data, i) => (
         <Review data={data} key={i} />
       ))}
+      {REVIEW_DATA.length > 0 && <Review data={REVIEW_DATA[REVIEW_DATA.length - 1]} noLine />}
     </Container>
   );
 };

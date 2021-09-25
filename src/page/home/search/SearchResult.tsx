@@ -4,8 +4,14 @@ import { useQuery } from 'react-query';
 import { fetchPlanners } from '../../../api/Planner';
 import styled from 'styled-components';
 
-const SearchResult = () => {
-  const { data: planners } = useQuery(['planners'], fetchPlanners);
+interface Props {
+  location: string;
+  support: string[];
+}
+
+const SearchResult = ({ location, support }: Props) => {
+  const supportInfos = support.join();
+  const { data: planners } = useQuery(['planners', { location, supportInfos }], fetchPlanners);
 
   return (
     <FlexDiv justify="flex-start" align="start" width="880px" margin={'0'} direction="column">
@@ -22,7 +28,7 @@ const SearchResult = () => {
       </select>
       <SearchResultList>
         {planners ? (
-          planners.map((planner) => {
+          planners.content.map((planner) => {
             return (
               <PlannerCard
                 key={planner.id}

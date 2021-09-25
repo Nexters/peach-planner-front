@@ -6,15 +6,15 @@ import ArrowDown from '../assets/svg/ic_arrow_down.svg';
 
 interface Props {
   title: string;
+  margin: string;
 }
 
-const Accordion: FC<Props> = ({ title, children }) => {
-  const [isOpen, setOpen] = useState(false);
+const Accordion: FC<Props> = ({ title, margin, children }) => {
+  const [isOpen, setOpen] = useState(true);
 
   return (
-    <Container>
+    <Container margin={margin}>
       <AccordionTitle onClick={() => setOpen(!isOpen)}>
-        <HorizontalLine></HorizontalLine>
         <TitleContainer>
           <Title>{title}</Title>
           <Image src={isOpen ? ArrowDown : ArrowUp}></Image>
@@ -27,17 +27,24 @@ const Accordion: FC<Props> = ({ title, children }) => {
 
 export default Accordion;
 
-const Container = styled.div`
+interface ContainerProps {
+  margin: string;
+}
+
+const Container = styled.div<ContainerProps>`
+  margin: ${(props: ContainerProps) => props.margin};
   width: 200px;
 `;
 
 const AccordionTitle = styled.div`
   cursor: pointer;
+  height: 32px;
 `;
 
 const TitleContainer = styled.div`
   display: felx;
   justify-content: space-between;
+  border-top: solid 1px #212529;
 `;
 
 const Title = styled.div`
@@ -46,6 +53,8 @@ const Title = styled.div`
   font-size: 14px;
   line-height: 20px;
   font-weight: bold;
+  margin-top: 6px;
+  margin-bottom: 6px;
 `;
 
 interface AccordionProps {

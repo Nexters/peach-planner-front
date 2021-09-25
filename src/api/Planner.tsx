@@ -44,6 +44,17 @@ interface AdditionalProp {
   primaryImage: string;
 }
 
+export interface PickRequest {
+  targetCategoryType: string;
+  targetId: number;
+}
+
+interface PickResponse {
+  body: any;
+  statusCode: string;
+  statusCodeValue: number;
+}
+
 export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
   const { data } = await axios.get<PagedPlanner>('/planners', { params });
@@ -61,11 +72,11 @@ export const fetchPlanner = async (plannerId: string) => {
   return data;
 };
 
-export interface User {
-  name?: string;
-  nickName?: string;
-  userName: string;
-  password: string;
-  type?: 'USER' | 'PLANNER';
-  loginType?: 'BASIC' | 'KAKAO' | 'FACEBOOK';
-}
+export const pickPlanner = async (data: PickRequest) => {
+  const { data: response } = await axios.post<PickResponse>('/pick', data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  });
+  return response.statusCode;
+};

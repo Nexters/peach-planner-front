@@ -41,6 +41,7 @@ const SearchResult = ({ location, support }: Props) => {
                 organization={planner.company.name}
                 region={planner.locations.join(',')}
                 id={planner.id}
+                isPicked={false}
               ></PlannerCard>
             );
           })

@@ -2,9 +2,12 @@ import heart from '../assets/svg/ic_heart.svg';
 import review from '../assets/svg/ic_review.svg';
 import blog from '../assets/svg/ic_blog.svg';
 import instagram from '../assets/svg/ic_instagram.svg';
+import EmptyHeart from '../assets/svg/ic_heart_line.svg';
 import { FlexDiv } from './style/style';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { pickPlanner, PickRequest } from 'src/api/Planner';
+import { useMutation } from 'react-query';
 
 interface PlannerProps {
   size: string;
@@ -16,9 +19,13 @@ interface PlannerProps {
   organization: string;
   region: string;
   id: number;
+  isPicked: boolean;
 }
 
 const PlannerCard = (props: PlannerProps) => {
+  const { mutate, isLoading } = useMutation(pickPlanner, {
+    onSuccess: (data) => {}
+  });
   const history = useHistory();
 
   const handlePlannerClick = () => {
@@ -26,9 +33,23 @@ const PlannerCard = (props: PlannerProps) => {
     history.push(`/planner/${plannerId}`);
   };
 
+  const handlePickClick = () => {
+    const plannerId = props.id;
+    const request: PickRequest = {
+      targetId: plannerId,
+      targetCategoryType: 'PLANNER'
+    };
+    mutate(request);
+  };
+
   return (
     <FlexDiv width={props.size} direction="column" margin={props.margin}>
-      <PlannerImage src={props.imagePath} height={props.size} onClick={handlePlannerClick} />
+      <PlannerImageContainer>
+        <PlannerImage src={props.imagePath} height={props.size} onClick={handlePlannerClick} />
+        <PickBox onClick={handlePickClick}>
+          <EmptyPickIcon src={EmptyHeart}></EmptyPickIcon>
+        </PickBox>
+      </PlannerImageContainer>
       <FlexDiv justify="flex-start" align="start" width={props.size} margin={'0'} direction="column">
         <FlexDiv justify="flex-start" margin={'13px 0 0 0'}>
           <HeartIcon src={heart}></HeartIcon>
@@ -58,6 +79,10 @@ const PlannerCard = (props: PlannerProps) => {
 
 export default PlannerCard;
 
+const PlannerImageContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
 interface PlannerImageProps {
   src: string;
   height: string;
@@ -68,6 +93,27 @@ const PlannerImage = styled.img.attrs((props: PlannerImageProps) => ({ src: prop
   width: 100%;
   border-radius: 10px;
   cursor: pointer; 
+  position: relative;
+`;
+
+const PickBox = styled.div`
+  height: 32px;
+  width: 32px;
+  opacity: 0.3;
+  border-radius: 3px;
+  background-color: #212529;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  margin-top: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+`;
+
+const EmptyPickIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+  height: 26px;
+  width: 26px;
 `;
 
 interface ImageProps {

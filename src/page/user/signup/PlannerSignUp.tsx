@@ -4,8 +4,8 @@ import PButton from 'src/component/PButton';
 import HorizontalLine from 'src/component/HorizontalLine';
 import { FlexDiv, Content, Title } from 'src/component/style/style';
 import { useHistory } from 'react-router-dom';
-import { User } from 'src/api/Planner';
 import axios from 'axios';
+import { User } from 'src/interface';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;

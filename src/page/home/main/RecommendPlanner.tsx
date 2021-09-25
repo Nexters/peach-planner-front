@@ -54,6 +54,7 @@ const RecommendPlanner = () => {
                   organization={planner.company.name}
                   region={planner.locations.join(',')}
                   id={planner.id}
+                  isPicked={false}
                 ></PlannerCard>
               );
             })

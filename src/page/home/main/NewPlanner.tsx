@@ -15,7 +15,7 @@ const NewPlanner = () => {
     draggable: false,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 1,
+    slidesToScroll: 4,
     infinite: true,
     variableWidth: true,
     arrows: false

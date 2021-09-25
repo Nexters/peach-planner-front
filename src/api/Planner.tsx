@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { QueryFunctionContext } from 'react-query';
 
-interface PagedPlanner {
+export interface PagedPlanner {
   content: Planner[];
   size: number;
   totalElements: number;
@@ -75,6 +75,12 @@ export interface Partners {
 export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
   const { data } = await axios.get<PagedPlanner>('/planners', { params });
+  return data;
+};
+
+export const fetchPopularPlanners = async ({ queryKey }: QueryFunctionContext) => {
+  const [_key, params] = queryKey;
+  const { data } = await axios.get<PagedPlanner>('/planners/popular');
   return data;
 };
 

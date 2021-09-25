@@ -1,8 +1,9 @@
 import { FlexDiv, Title } from '../../../component/style/style';
 import PlannerCard from '../../../component/PlannerCard';
 import { useQuery } from 'react-query';
-import { fetchPlanners } from '../../../api/Planner';
+import { fetchPlanners, fetchPopularPlanners, PagedPlanner } from '../../../api/Planner';
 import styled from 'styled-components';
+import { useLocation } from 'react-router';
 
 interface Props {
   location: string;
@@ -10,8 +11,14 @@ interface Props {
 }
 
 const SearchResult = ({ location, support }: Props) => {
+  const hookLocation = useLocation();
+  const sortingParam = new URLSearchParams(hookLocation.search).get('sort');
   const supportInfos = support.join();
-  const { data: planners } = useQuery(['planners', { location, supportInfos }], fetchPlanners);
+  const getPlanners = sortingParam === 'popular' ? fetchPopularPlanners : fetchPlanners;
+  const { data: planners } = useQuery(
+    ['planners', { location, supportInfos, isNew: sortingParam === 'new' }],
+    getPlanners
+  );
 
   return (
     <FlexDiv justify="flex-start" align="start" width="880px" margin={'0'} direction="column">

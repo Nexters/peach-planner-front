@@ -1,8 +1,8 @@
 import { FlexDiv } from '../../../component/style/style';
 import MainTop from './MainTop';
 import NewPlanner from './NewPlanner';
+import RecommendedPlanner from './RecommendPlanner';
 import PopularPlanner from './PopularPlanner';
-import RecommendPlanner from './RecommendPlanner';
 import RecommendPost from './RecommendPost';
 
 const Main = () => {
@@ -11,8 +11,8 @@ const Main = () => {
       <FlexDiv margin={'0'} width="1100px" direction="column">
         <MainTop />
         <NewPlanner />
+        <RecommendedPlanner />
         <PopularPlanner />
-        <RecommendPlanner />
         <RecommendPost />
       </FlexDiv>
     </FlexDiv>

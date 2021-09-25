@@ -7,9 +7,10 @@ import RightArrow from '../../../assets/svg/ic_arrow_right.svg';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { fetchPlanners } from '../../../api/Planner';
+import { Link } from 'react-router-dom';
 
 const NewPlanner = () => {
-  const { data: planners } = useQuery(['planners'], fetchPlanners);
+  const { data: planners } = useQuery(['newPlanners', { isNew: true }], fetchPlanners);
   const [slider, setSlider] = useState<Slick>();
   const [slickSettings, setSlickSettings] = useState<Settings>({
     draggable: false,
@@ -26,7 +27,9 @@ const NewPlanner = () => {
       <FlexDiv height={'56px'} justify="space-between" margin={'0 0 8px 0'}>
         <Title>신규 플래너</Title>
         <FlexDiv justify="flex-end">
-          <More>더 보기</More>
+          <More>
+            <StyledLink to="/search?sort=new">더 보기</StyledLink>
+          </More>
           <ArrowButton src={LeftArrow} onClick={slider?.slickPrev} margin="0 8px 0 0"></ArrowButton>
           <ArrowButton src={RightArrow} onClick={slider?.slickNext} margin="0"></ArrowButton>
         </FlexDiv>
@@ -68,6 +71,13 @@ const NewPlanner = () => {
 };
 
 export default NewPlanner;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #495057;
+  font-size: 13px;
+  line-height: 19px;
+`;
 
 const Slider = styled(Slick)`
   .slick-initialized slick-slider {

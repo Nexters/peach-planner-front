@@ -22,6 +22,7 @@ import { RecoilRoot } from 'recoil';
 import { setAxiosDefaults } from './api';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import CompanyDetail from './page/company-detail/CompanyDetail';
+import ScrollToTop from './component/ScrollToTop';
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => {
                     <Main />
                   </Route>
                   <Route path="/search">
+                    <ScrollToTop />
                     <Search />
                   </Route>
                   <Route path="/planner/:id">

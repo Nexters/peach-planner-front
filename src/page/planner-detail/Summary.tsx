@@ -87,11 +87,11 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
             </HeartContainer>
           </NameContainer>
           <CompanyName>{COMPANY_NAME}</CompanyName>
-          <HorizontalLine color="#dee2e6" top="12px" bottom="15px" />
+          <HorizontalLine height="0.1px" color="#dee2e6" top="12px" bottom="15px" />
 
           <BoldGray>플래너 한줄소개</BoldGray>
           <OneLine>{ONE_LINE_SUMMARY}</OneLine>
-          <HorizontalLine top="36px" bottom="11px" />
+          <HorizontalLine height="0.1px" color="#dee2e6" top="36px" bottom="11px" />
 
           {EXTERNAL_LINKS != null && (
             <>
@@ -195,7 +195,7 @@ const CompanyName = styled.div`
 `;
 
 const BoldGray = styled.div`
-  margin-bottom: 4px;
+  margin-bottom: 10px;
   font-size: 13px;
   color: #868e96;
 `;
@@ -204,7 +204,7 @@ const SocialIcon = styled.div`
   display: flex;
   margin-bottom: 20px;
 
-  svg + svg {
+  a + a {
     margin-left: 9px;
   }
 `;

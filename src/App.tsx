@@ -1,4 +1,4 @@
-import { BrowserRouter, HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Main from './page/home/main';
 import PlannerDetail from './page/planner-detail';
 import PlannerEstimate from './page/planner-estimate/PlannerEstimate';
@@ -18,6 +18,7 @@ import ChatContainer from './page/chat/Chat';
 import { isBrowser } from 'react-device-detect';
 import Mobile from './page/mobile';
 import { RecoilRoot } from 'recoil';
+import Kakao from './page/user/OAuth/Kakao';
 
 import { setAxiosDefaults } from './api';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -41,48 +42,49 @@ const App = () => {
           <ThemeProvider theme={theme}>
             <GlobalStyle />
             <BrowserRouter basename={process.env.PUBLIC_URL}>
-              <Router>
-                <Header />
-                <Switch>
-                  <Route exact path="/">
-                    <Main />
-                  </Route>
-                  <Route path="/search">
-                    <Search />
-                  </Route>
-                  <Route path="/planner/:id">
-                    <PlannerDetail />
-                  </Route>
-                  <Route path="/login">
-                    <Login />
-                  </Route>
-                  <Route path="/estimate">
-                    <PlannerEstimate />
-                  </Route>
-                  <Route path="/userPage">
-                    <UserPage />
-                  </Route>
-                  <Route path="/plannerPage">
-                    <PlannerPage />
-                  </Route>
-                  <Route path="/editProfile">
-                    <Profile isUpdate={true} />
-                  </Route>
-                  <Route path="/chats">
-                    <ChatContainer />
-                  </Route>
-                  <Route path="/detail">
-                    <PlannerDetail />
-                  </Route>
-                  <Route path="/plannerSignUp">
-                    <PlannerSignUp></PlannerSignUp>
-                  </Route>
-                  <Route path="/signUp">
-                    <UserSignUp></UserSignUp>
-                  </Route>
-                </Switch>
-                <Footer />
-              </Router>
+              <Header />
+              <Switch>
+                <Route exact path="/">
+                  <Main />
+                </Route>
+                <Route path="/search">
+                  <Search />
+                </Route>
+                <Route path="/planner/:id">
+                  <PlannerDetail />
+                </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path="/estimate">
+                  <PlannerEstimate />
+                </Route>
+                <Route path="/userPage">
+                  <UserPage />
+                </Route>
+                <Route path="/plannerPage">
+                  <PlannerPage />
+                </Route>
+                <Route path="/editProfile">
+                  <Profile isUpdate={true} />
+                </Route>
+                <Route path="/chats">
+                  <ChatContainer />
+                </Route>
+                <Route path="/detail">
+                  <PlannerDetail />
+                </Route>
+                <Route path="/plannerSignUp">
+                  <PlannerSignUp></PlannerSignUp>
+                </Route>
+                <Route path="/signUp">
+                  <UserSignUp></UserSignUp>
+                </Route>
+                <Route path="/api/auth/login/kakao">
+                  <Kakao />
+                </Route>
+              </Switch>
+              <Footer />
             </BrowserRouter>
           </ThemeProvider>
         </QueryClientProvider>

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { User } from 'src/api/Planner';
 import { FlexDiv, Title } from 'src/component/style/style';
 import { usePeachTokenState } from 'src/atoms/AuthStatus';
+import { KAKAO_AUTH_URL } from '../OAuth/OAuth';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -135,7 +136,9 @@ const Login = () => {
         </FlexDiv>
         <FlexDiv justify="space-around">
           <LogInButton background="#02C73C"></LogInButton>
-          <LogInButton background="#FFF000"></LogInButton>
+          <a href={KAKAO_AUTH_URL}>
+            <LogInButton background="#FFF000"></LogInButton>
+          </a>
           <LogInButton background="#3C5997"></LogInButton>
           <LogInButton background="transparent" box="border-box" border="1px solid #DEE2E6"></LogInButton>
         </FlexDiv>

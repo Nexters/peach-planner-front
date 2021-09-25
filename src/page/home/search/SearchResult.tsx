@@ -24,7 +24,7 @@ const SearchResult = ({ location, support }: Props) => {
     <FlexDiv justify="flex-start" align="start" width="880px" margin={'0'} direction="column">
       <FlexDiv align="start" height="56px" margin={'0'} direction="column">
         <Title height={'24px'} width={'auto'} fontSize={'16px'} lineHeight={'24px'} margin={'0'}>
-          전체
+          {sortingParam ? (sortingParam === 'new' ? '신규 플래너' : '인기 플래너') : '전체'}
         </Title>
       </FlexDiv>
       <select name="select" id="select">

@@ -9,7 +9,35 @@ import axios from 'axios';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
-const phoneRegExp = /^\d{3}\d{3,4}\d{4}$/;
+const phoneRegExp = /^\d{3}-\d{3,4}-\d{4}$/;
+
+const autoHypenPhone = (num: string) => {
+  num = num.replace(/[^0-9]/g, '');
+  let tmp = '';
+  if (num.length < 4) {
+    return num;
+  } else if (num.length < 7) {
+    tmp += num.substr(0, 3);
+    tmp += '-';
+    tmp += num.substr(3);
+    return tmp;
+  } else if (num.length < 11) {
+    tmp += num.substr(0, 3);
+    tmp += '-';
+    tmp += num.substr(3, 3);
+    tmp += '-';
+    tmp += num.substr(6);
+    return tmp;
+  } else {
+    tmp += num.substr(0, 3);
+    tmp += '-';
+    tmp += num.substr(3, 4);
+    tmp += '-';
+    tmp += num.substr(7);
+    return tmp;
+  }
+  return num;
+};
 
 const PlannerSignUp = () => {
   const history = useHistory();
@@ -74,7 +102,7 @@ const PlannerSignUp = () => {
   };
 
   const handlePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value);
+    setPhone(autoHypenPhone(e.target.value));
   };
 
   const handleSignUp = () => {
@@ -116,6 +144,7 @@ const PlannerSignUp = () => {
         name,
         userName: email,
         password,
+        tel: phone,
         type: 'PLANNER'
       });
     }

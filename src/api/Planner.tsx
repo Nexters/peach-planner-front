@@ -84,6 +84,7 @@ export interface User {
   nickName?: string;
   userName: string;
   password: string;
+  tel?: string;
   type?: 'USER' | 'PLANNER';
   loginType?: 'BASIC' | 'KAKAO' | 'FACEBOOK';
 }

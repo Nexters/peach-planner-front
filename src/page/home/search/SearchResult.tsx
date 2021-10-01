@@ -45,7 +45,7 @@ const SearchResult = ({ location, support }: Props) => {
                 heartCount={planner.likes}
                 reviewCount={24}
                 name={planner.name}
-                organization={planner.company.name}
+                organization={planner.company?.name}
                 region={planner.locations.join(',')}
                 id={planner.id}
                 isPicked={false}

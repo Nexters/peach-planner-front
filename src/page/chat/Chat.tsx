@@ -54,7 +54,7 @@ const ChatContainer = () => {
   const me = React.useRef<User>();
   
   useEffect(() => {
-    // client.activate();
+    client.activate();
     fetchMe().then(user => { 
       console.log(user);
       me.current = user;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PButton from 'src/component/PButton';
 import HorizontalLine from 'src/component/HorizontalLine';
 import { FlexDiv, Content, Title } from 'src/component/style/style';
@@ -9,7 +9,35 @@ import { User } from 'src/interface';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
-const phoneRegExp = /^\d{3}\d{3,4}\d{4}$/;
+const phoneRegExp = /^\d{3}-\d{3,4}-\d{4}$/;
+
+const autoHypenPhone = (num: string) => {
+  num = num.replace(/[^0-9]/g, '');
+  let tmp = '';
+  if (num.length < 4) {
+    return num;
+  } else if (num.length < 7) {
+    tmp += num.substr(0, 3);
+    tmp += '-';
+    tmp += num.substr(3);
+    return tmp;
+  } else if (num.length < 11) {
+    tmp += num.substr(0, 3);
+    tmp += '-';
+    tmp += num.substr(3, 3);
+    tmp += '-';
+    tmp += num.substr(6);
+    return tmp;
+  } else {
+    tmp += num.substr(0, 3);
+    tmp += '-';
+    tmp += num.substr(3, 4);
+    tmp += '-';
+    tmp += num.substr(7);
+    return tmp;
+  }
+  return num;
+};
 
 const PlannerSignUp = () => {
   const history = useHistory();
@@ -74,7 +102,7 @@ const PlannerSignUp = () => {
   };
 
   const handlePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value);
+    setPhone(autoHypenPhone(e.target.value));
   };
 
   const handleSignUp = () => {
@@ -115,8 +143,11 @@ const PlannerSignUp = () => {
       signup({
         name,
         userName: email,
+        email,
         password,
-        type: 'PLANNER'
+        type: 'PLANNER',
+        tel: phone,
+        nickName: name
       });
     }
   };
@@ -134,7 +165,7 @@ const PlannerSignUp = () => {
     const res = await axios.post('/auth/login', data);
     localStorage.setItem('accessToken', res.data.accessToken);
     localStorage.setItem('refreshToken', res.data.refreshToken);
-    history.push('/');
+    history.push('/editProfile');
     window.location.reload();
     alert('회원가입 및 로그인이 완료되었습니다.');
     // axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
@@ -212,20 +243,56 @@ const PlannerSignUp = () => {
 
         <HorizontalLine top="40px" bottom="40px" />
         <Span>피치플래너 서비스 이용악관에 동의해주세요.</Span>
-        <FlexDiv margin="15px 0 0 0">
-          <CheckBox checked={checkAll} id="checkAll" onChange={handleCheckAll} />
-          <Label>전체동의</Label>
+
+        <FlexDiv margin="15px 0 0 0" justify="flex-start">
+          <label>
+            <CheckBoxContainer>
+              <HiddenCheckBox type="checkbox" id="checkAll" checked={checkAll} onChange={handleCheckAll} />
+              <StyledCheckBox checked={checkAll} big>
+                <Icon viewBox="0 0 24 24">
+                  <polyline points="19 7, 10 17, 5 12" strokeLinecap="round" strokeLinejoin="round" />
+                </Icon>
+              </StyledCheckBox>
+            </CheckBoxContainer>
+            <Label bold>전체동의</Label>
+          </label>
         </FlexDiv>
+
         <HorizontalLine top="40px" bottom="40px" />
 
-        <FlexDiv margin="0">
-          <CheckBox checked={agreeTerms} id="checkAll" onChange={handleCheckTerms} />
-          <Label>[필수] 피치플래너 이용약관 동의</Label>
+        <FlexDiv margin="0" justify="flex-start">
+          <label>
+            <CheckBoxContainer>
+              <HiddenCheckBox type="checkbox" id="agreeTerms" checked={agreeTerms} onChange={handleCheckTerms} />
+              <StyledCheckBox checked={agreeTerms}>
+                <Icon viewBox="0 0 24 24">
+                  <polyline points="19 7, 10 17, 5 12" strokeLinecap="round" strokeLinejoin="round" />
+                </Icon>
+              </StyledCheckBox>
+            </CheckBoxContainer>
+            <Label chk>[필수] 피치플래너 이용약관 동의</Label>
+          </label>
         </FlexDiv>
-        <FlexDiv margin="15px 0 43px 0">
-          <CheckBox checked={agreePrivacy} id="checkAll" onChange={handleCheckPrivacy} />
-          <Label>[필수] 개인정보 처리방침 동의</Label>
+
+        <FlexDiv margin="15px 0 43px 0" justify="flex-start">
+          <label>
+            <CheckBoxContainer>
+              <HiddenCheckBox type="checkbox" id="agreePrivacy" checked={agreePrivacy} onChange={handleCheckPrivacy} />
+              <StyledCheckBox checked={agreePrivacy}>
+                <Icon viewBox="0 0 24 24">
+                  <polyline points="19 7, 10 17, 5 12" strokeLinecap="round" strokeLinejoin="round" />
+                </Icon>
+              </StyledCheckBox>
+            </CheckBoxContainer>
+            <Label chk>[필수] 개인정보 처리방침 동의</Label>
+          </label>
         </FlexDiv>
+
+        {/* <Styled onClick={() => setAgreeTerms(!agreeTerms)}>
+          <input type="checkbox" checked={agreeTerms} />
+          <label></label>
+        </Styled> */}
+
         <PButton color="pink" width="100%" height="33px" fontSize="12px" padding="0" onClick={handleSignUp}>
           가입 완료하기
         </PButton>
@@ -246,12 +313,14 @@ const Span = styled.span`
   line-height: 20px;
 `;
 
-const Label = styled.label`
+const Label = styled.label<{ bold?: boolean; chk?: boolean }>`
   flex: 1;
   font-size: 14px;
-  color: #495057;
+  font-weight: ${(props) => props.bold && 'bold'};
+  color: ${(props) => (props.bold ? '#212529' : '#495057')};
   line-height: 20px;
   margin-bottom: 5.5px;
+  margin-left: ${(props) => (props.chk ? '16px' : props.bold ? '7.5px' : '0')};
   &:not(:first-child) {
     margin-top: 4px;
   }
@@ -270,47 +339,41 @@ const Input = styled.input.attrs((props) => ({
   font-size: 13px;
 `;
 
-const ViewCheckBox = styled.div`
+const CheckBoxContainer = styled.div`
   display: inline-block;
-  width: 25px;
-  height: 25px;
-  border-radius: 3px;
-  border: 1px solid #ced4da;
-  background-color: transparent;
-  vertical-align: top;
-  cursor: pointer;
+  vertical-align: middle;
 `;
 
-const RealCheckBox = styled.input.attrs({ type: 'checkbox' })`
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
+const HiddenCheckBox = styled.input<{ checked?: boolean }>`
+  border: 0;
   clip: rect(0 0 0 0);
-  &:checked + ${ViewCheckBox} {
-    background-color: red;
-    &::before {
-      content: '';
-      width: 10px;
-      height: 4px;
-      margin: auto;
-      border: solid #ced4da;
-      border-width: 0 0 2px 2px;
-      transform: rotate(-45deg);
-    }
-  }
+  clippath: inset(50%);
+  width: 0;
+  height: 0;
+  margin: 0px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
 `;
 
-const CheckBox = styled.input.attrs({ type: 'checkbox' })`
-  width: 25px;
-  height: 25px;
-  background-color: red;
-  &:checked {
-    background-color: red;
-    border: 10px solid red;
-    &::before {
-      border: 1px solid #ced4da;
-      border-radius: 3px;
-    }
+const Icon = styled.svg`
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+`;
+
+const StyledCheckBox = styled.div<{ checked?: boolean; big?: boolean }>`
+  display: inline-block;
+  width: ${(props) => (props.big ? '33px' : '24px')};
+  height: ${(props) => (props.big ? '33px' : '24px')};
+  box-sizing: border-box;
+  background: ${(props) => (props.checked ? '#E64980' : 'transparent')};
+  border: ${(props) => (props.checked ? '1px solid #E64980' : '1px solid #CED4DA')};
+  border-radius: 3px;
+  transition: all 150ms;
+  ${Icon} {
+    visibility: ${(props) => (props.checked ? 'visible' : 'hidden')};
   }
 `;

@@ -97,12 +97,14 @@ const Header = () => {
 
 export default Header;
 
-const Container = styled.div`
-  width: 1110px;
+const Container = styled.header`
+  width: 1140px;
+  height: 70px;
   margin: 0 auto;
   padding: 20px 0 18px 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const InnerContainer = styled.div``;

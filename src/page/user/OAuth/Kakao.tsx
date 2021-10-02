@@ -16,8 +16,10 @@ const Kakao = () => {
       .post<any>(`/auth/login/kakao`, { authorizationCode: code, redirectUrl: url }, config)
       .then((res) => {
         const ACCESS_TOKEN = res.data.accessToken;
-        localStorage.setItem('token', ACCESS_TOKEN);
+        localStorage.setItem('accessToken', ACCESS_TOKEN);
         history.replace('/');
+        window.location.reload();
+        alert('로그인이 완료되었습니다.');
       })
       .catch((err) => {
         alert('로그인에 실패하였습니다.');

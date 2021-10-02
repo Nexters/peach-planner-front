@@ -221,6 +221,9 @@ const Label = styled.label`
   color: #495057;
   line-height: 20px;
   margin-bottom: 5.5px;
+  &:not(:first-child) {
+    margin-top: 4px;
+  }
 `;
 
 const Input = styled.input.attrs((props) => ({

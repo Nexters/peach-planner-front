@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { fetchPlanners, fetchPopularPlanners, PagedPlanner } from '../../../api/Planner';
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
+import { useState } from 'react';
 
 interface Props {
   location: string;
@@ -15,8 +16,9 @@ const SearchResult = ({ location, support }: Props) => {
   const sortingParam = new URLSearchParams(hookLocation.search).get('sort');
   const supportInfos = support.join();
   const getPlanners = sortingParam === 'popular' ? fetchPopularPlanners : fetchPlanners;
+  const [sort, setSort] = useState('');
   const { data: planners } = useQuery(
-    ['planners', { location, supportInfos, isNew: sortingParam === 'new' }],
+    ['planners', { location, supportInfos, isNew: sortingParam === 'new', sort }],
     getPlanners
   );
 
@@ -27,11 +29,10 @@ const SearchResult = ({ location, support }: Props) => {
           {sortingParam ? (sortingParam === 'new' ? '신규 플래너' : '인기 플래너') : '전체'}
         </Title>
       </FlexDiv>
-      <select name="select" id="select">
-        <option value="최신순">최신순</option>
-        <option value="인기순">인기순</option>
-        <option value="리뷰순">리뷰순</option>
-        <option value="커밍순">커밍순</option>
+      <select name="select" id="select" onChange={(e) => setSort(e.target.value)}>
+        <option value="createdDate">최신순</option>
+        <option value="pick">인기순</option>
+        <option value="review">리뷰순</option>
       </select>
       <SearchResultList>
         {planners ? (

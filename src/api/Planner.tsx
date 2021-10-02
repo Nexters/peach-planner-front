@@ -45,17 +45,6 @@ interface AdditionalProp {
   name: string;
   primaryImage: string;
 }
-
-export interface PickRequest {
-  targetCategoryType: string;
-  targetId: number;
-}
-
-interface PickResponse {
-  body: any;
-  statusCode: string;
-  statusCodeValue: number;
-}
 export interface PartnerInfo {
   id: number;
   location: string;
@@ -93,15 +82,6 @@ export const fetchRecommendedPlanners = async ({ queryKey }: QueryFunctionContex
 export const fetchPlanner = async (plannerId: string) => {
   const { data } = await axios.get<Planner>(`/planners/${plannerId}`);
   return data;
-};
-
-export const pickPlanner = async (data: PickRequest) => {
-  const { data: response } = await axios.post<PickResponse>('/pick', data, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-    }
-  });
-  return response.statusCode;
 };
 
 export const fetchPlannerPartners = async (plannerId: string) => {

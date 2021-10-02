@@ -6,8 +6,9 @@ import EmptyHeart from '../assets/svg/ic_heart_line.svg';
 import { FlexDiv } from './style/style';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { pickPlanner, PickRequest } from 'src/api/Planner';
 import { useMutation } from 'react-query';
+import { usePeachTokenState } from 'src/atoms/AuthStatus';
+import { pick, PickRequest } from 'src/api/Pick';
 
 interface PlannerProps {
   size: string;
@@ -23,9 +24,10 @@ interface PlannerProps {
 }
 
 const PlannerCard = (props: PlannerProps) => {
-  const { mutate, isLoading } = useMutation(pickPlanner, {
+  const { mutate, isLoading } = useMutation(pick, {
     onSuccess: (data) => {}
   });
+  const tokenState = usePeachTokenState();
   const history = useHistory();
 
   const handlePlannerClick = () => {
@@ -42,13 +44,22 @@ const PlannerCard = (props: PlannerProps) => {
     mutate(request);
   };
 
+  const splitRegion = (origin: string) => {
+    const regions = origin.split(',');
+    return regions.length > 3 ? `${regions[0]}, ${regions[1]}, ${regions[2]}, ...` : origin;
+  };
+
   return (
     <FlexDiv width={props.size} direction="column" margin={props.margin}>
       <PlannerImageContainer>
         <PlannerImage src={props.imagePath} height={props.size} onClick={handlePlannerClick} />
-        <PickBox onClick={handlePickClick}>
-          <EmptyPickIcon src={EmptyHeart}></EmptyPickIcon>
-        </PickBox>
+        {tokenState[0] ? (
+          <PickBox onClick={handlePickClick}>
+            <EmptyPickIcon src={EmptyHeart}></EmptyPickIcon>
+          </PickBox>
+        ) : (
+          <></>
+        )}
       </PlannerImageContainer>
       <FlexDiv justify="flex-start" align="start" width={props.size} margin={'0'} direction="column">
         <FlexDiv justify="flex-start" margin={'13px 0 0 0'}>
@@ -66,7 +77,7 @@ const PlannerCard = (props: PlannerProps) => {
         </FlexDiv>
         <FlexDiv justify="flex-start" margin={'8px 0 0 0'}>
           <DetailTitle>지역</DetailTitle>
-          <DetailContent>{props.region}</DetailContent>
+          <DetailContent>{splitRegion(props.region)}</DetailContent>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv justify="flex-start" margin={'12px 0 0 0'}>

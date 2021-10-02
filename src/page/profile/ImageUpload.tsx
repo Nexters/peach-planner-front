@@ -37,7 +37,7 @@ const ImageUpload = ({ id, previewImage, setPreviewImage, setImageFile }: ImageU
         <Image src={previewImage ? previewImage : AddPhoto}></Image>
       </Label>
       <Content height={'36px'} width={'auto'} color={'#868E96'} fontSize={'12px'} lineHeight={'18px'} margin={'0'}>
-        권장 크기 : 00 x 00 <br></br> jpg,jpeg,gif,png,bmp 형식의 정지 이미지만 등록됩니다.
+        권장 크기 : 00 x 00 <br></br> jpg,jpeg,gif,png,bmp 형식의 이미지만 등록됩니다.
       </Content>
     </>
   );

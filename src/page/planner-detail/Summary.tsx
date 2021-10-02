@@ -9,7 +9,7 @@ import { ReactComponent as Blog } from '../../assets/svg/ic_blog.svg';
 import ImageModal from './ImageModal';
 import { Planner } from '../../api/Planner';
 import DefaultImage from '../../assets/svg/img_photo_defult.svg';
-import { PickReq, pick } from 'src/api/Pick';
+import { PickRequest, pick } from 'src/api/Pick';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 
@@ -40,7 +40,7 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
 
   const pickPlanner = () => {
     const plannerId = plannerInfo.id;
-    pick({ targetCategoryType: 'PLANNER', targetId: plannerId } as PickReq);
+    pick({ targetCategoryType: 'PLANNER', targetId: plannerId } as PickRequest);
   };
 
   const handleChat = () => {

@@ -337,6 +337,7 @@ const Input = styled.input.attrs((props) => ({
   color: #adb5bd;
   font-family: SpoqaHanSans;
   font-size: 13px;
+  padding: 10.5px 11.5px;
 `;
 
 const CheckBoxContainer = styled.div`

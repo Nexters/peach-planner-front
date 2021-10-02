@@ -4,7 +4,23 @@ import SearchCheckBox from './SearchCheckBox';
 import SearchSideBarRegion from './SearchSideBarRegion';
 
 const regions = ['전체', '서울', '경기', '인천', '부산', '강원', '전라', '경상', '대구', '충청', '대전', '제주'];
-const checkBox = ['동행', '비동행', '방문상담', '메시지상담'];
+const checkBox = [{
+  name: '동행',
+  enumValue: 'Accompany',
+}, {
+  name: '비동행',
+  enumValue: 'NotAccompany',
+}, {
+  name: '방문상담',
+  enumValue: 'DoorCounseling',
+}, {
+  name: '메시지상담',
+  enumValue: 'MessageCounseling',
+}];
+interface supportType {
+  name: '동행' | '비동행' | '방문상담' | '메시지상담';
+  enumValue: 'Accompany' | 'NotAccompany' | 'DoorCounseling' | 'MessageCounseling';
+}
 
 interface Props {
   location: string;
@@ -36,7 +52,7 @@ const SearchSideBar = ({ location, changeLocation, support, changeSupport }: Pro
       <Accordion title="기타" margin="16px">
         {checkBox.map((value, index) => {
           return (
-            <SearchCheckBox key={index} name={value} support={support} changeSupport={changeSupport}></SearchCheckBox>
+            <SearchCheckBox key={index} name={value.name} enumValue={value.enumValue} support={support} changeSupport={changeSupport}></SearchCheckBox>
           );
         })}
       </Accordion>

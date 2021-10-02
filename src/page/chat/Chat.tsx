@@ -8,7 +8,7 @@ import { ChatRoom, ChatRoomParticipant, fetchChatRoomParticipant, fetchChatRooms
 import { ChatMessage, ChatMessageReq, fetchChatMessages, sendMessage } from 'src/api/ChatMessage';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Client, Message, IFrame, ActivationState } from '@stomp/stompjs';
+import { Client, Message, IFrame, ActivationState, StompSocketState } from '@stomp/stompjs';
 import { useMemo } from 'react';
 import { fetchMe, User } from 'src/api/Login';
 
@@ -55,8 +55,7 @@ const ChatContainer = () => {
   
   useEffect(() => {
     client.activate();
-    fetchMe().then(user => { 
-      console.log(user);
+    fetchMe().then(user => {
       me.current = user;
     });
   }, []);
@@ -90,7 +89,7 @@ const ChatContainer = () => {
       });
     };
 
-    if (client.state === ActivationState.ACTIVE) {
+    if (client.state === ActivationState.ACTIVE && client.webSocket?.readyState === StompSocketState.OPEN) {
       subscribeRooms();
     }
     if (client.state === ActivationState.INACTIVE) {

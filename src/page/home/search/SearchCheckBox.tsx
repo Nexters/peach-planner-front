@@ -7,20 +7,21 @@ import { Content, FlexDiv } from '../../../component/style/style';
 
 interface Props {
   name: string;
+  enumValue: string;
   support: string[];
   changeSupport: (data: string[]) => void;
 }
 
-const SearchCheckBox = ({ name, support, changeSupport }: Props) => {
+const SearchCheckBox = ({ name, enumValue, support, changeSupport }: Props) => {
   const [isChecking, setIsChecking] = useState(true);
 
   const handleClick = () => {
     setIsChecking(!isChecking);
     if (isChecking) {
-      const supports = support.concat(name);
+      const supports = support.concat(enumValue);
       changeSupport(supports);
     } else {
-      const supports = support.filter((value) => value !== name);
+      const supports = support.filter((value) => value !== enumValue);
       changeSupport(supports);
     }
   };

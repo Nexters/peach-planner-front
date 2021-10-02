@@ -15,7 +15,7 @@ const Footer = () => {
 
 export default Footer;
 
-const Container = styled.div`
+const Container = styled.footer`
   margin-top: 100px;
   padding: 35px 10%;
   border-top: 1px solid;

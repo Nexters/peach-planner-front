@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { QueryFunctionContext } from 'react-query';
 
-interface PagedPlanner {
+export interface PagedPlanner {
   content: Planner[];
   size: number;
   totalElements: number;
@@ -46,6 +46,16 @@ interface AdditionalProp {
   primaryImage: string;
 }
 
+export interface PickRequest {
+  targetCategoryType: string;
+  targetId: number;
+}
+
+interface PickResponse {
+  body: any;
+  statusCode: string;
+  statusCodeValue: number;
+}
 export interface PartnerInfo {
   id: number;
   location: string;
@@ -68,6 +78,12 @@ export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
   return data;
 };
 
+export const fetchPopularPlanners = async ({ queryKey }: QueryFunctionContext) => {
+  const [_key, params] = queryKey;
+  const { data } = await axios.get<PagedPlanner>('/planners/popular');
+  return data;
+};
+
 export const fetchRecommendedPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
   const { data } = await axios.get<PagedPlanner>('/planners/recommended');
@@ -79,14 +95,14 @@ export const fetchPlanner = async (plannerId: string) => {
   return data;
 };
 
-export interface User {
-  name?: string;
-  nickName?: string;
-  userName: string;
-  password: string;
-  type?: 'USER' | 'PLANNER';
-  loginType?: 'BASIC' | 'KAKAO' | 'FACEBOOK';
-}
+export const pickPlanner = async (data: PickRequest) => {
+  const { data: response } = await axios.post<PickResponse>('/pick', data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  });
+  return response.statusCode;
+};
 
 export const fetchPlannerPartners = async (plannerId: string) => {
   const { data } = await axios.get<Partners>(`/planners/${plannerId}/partners`);

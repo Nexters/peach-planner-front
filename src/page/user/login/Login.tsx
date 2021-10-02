@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { User } from 'src/api/Planner';
 import { FlexDiv, Title } from 'src/component/style/style';
 import { usePeachTokenState } from 'src/atoms/AuthStatus';
 import { KAKAO_AUTH_URL } from '../OAuth/OAuth';
+import { User } from 'src/interface';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;

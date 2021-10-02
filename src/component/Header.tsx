@@ -61,7 +61,7 @@ const Header = () => {
             </MenuBody>
             <MenuBottom>
               <Menu>
-                <MenuName onClick={logout}>로그 아웃</MenuName>
+                <MenuName onClick={logout}>로그아웃</MenuName>
               </Menu>
             </MenuBottom>
           </DropdownContainer>

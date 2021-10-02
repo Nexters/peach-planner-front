@@ -27,7 +27,7 @@ const PlannerDetail = () => {
       <PlannerInfo plannerInfo={plannerInfo} />
       <CompanyInfo companyInfo={plannerInfo.company} />
       <PartnerInfo plannerId={plannerId} />
-      <ReviewList plannerInfo={plannerInfo} />
+      <ReviewList plannerId={plannerId} />
     </Container>
   ) : (
     <>Loading</>

@@ -22,6 +22,9 @@ const SearchResult = ({ location, support }: Props) => {
     getPlanners
   );
 
+  console.log(planners);
+  console.log(sort);
+
   return (
     <FlexDiv justify="flex-start" align="start" width="880px" margin={'0'} direction="column">
       <FlexDiv align="start" height="56px" margin={'0'} direction="column">
@@ -30,9 +33,9 @@ const SearchResult = ({ location, support }: Props) => {
         </Title>
       </FlexDiv>
       <select name="select" id="select" onChange={(e) => setSort(e.target.value)}>
-        <option value="createdDate">최신순</option>
-        <option value="pick">인기순</option>
-        <option value="review">리뷰순</option>
+        <option value="createdDate,DESC">최신순</option>
+        <option value="pick,DESC">인기순</option>
+        <option value="review,DESC">리뷰순</option>
       </select>
       <SearchResultList>
         {planners ? (
@@ -44,7 +47,7 @@ const SearchResult = ({ location, support }: Props) => {
                 size={'206px'}
                 imagePath={planner.images[0]}
                 heartCount={planner.likes}
-                reviewCount={24}
+                reviewCount={planner.reviews}
                 name={planner.name}
                 organization={planner.company?.name}
                 region={planner.locations.join(',')}

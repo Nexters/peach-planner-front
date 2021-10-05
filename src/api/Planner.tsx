@@ -61,6 +61,12 @@ export interface Partners {
   STUDIO: PartnerInfo[];
 }
 
+export interface RecommnededPlanners {
+  description: string;
+  imgUrl: string;
+  plannerName: string;
+}
+
 export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
   const { data } = await axios.get<PagedPlanner>('/planners', { params });
@@ -75,7 +81,7 @@ export const fetchPopularPlanners = async ({ queryKey }: QueryFunctionContext) =
 
 export const fetchRecommendedPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
-  const { data } = await axios.get<PagedPlanner>('/planners/recommended');
+  const { data } = await axios.get<RecommnededPlanners[]>('/planners/recommended');
   return data;
 };
 

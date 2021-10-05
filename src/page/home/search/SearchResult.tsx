@@ -22,9 +22,6 @@ const SearchResult = ({ location, support }: Props) => {
     getPlanners
   );
 
-  console.log(planners);
-  console.log(sort);
-
   return (
     <FlexDiv justify="flex-start" align="start" width="880px" margin={'0'} direction="column">
       <FlexDiv align="start" height="56px" margin={'0'} direction="column">

@@ -65,6 +65,7 @@ export interface RecommnededPlanners {
   description: string;
   imgUrl: string;
   plannerName: string;
+  fontColor: string;
 }
 
 export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {

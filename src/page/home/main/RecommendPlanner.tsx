@@ -10,6 +10,8 @@ import planner3 from './dummy/planner3.png';
 const RecommendedPlanner = () => {
   const { data: planners } = useQuery(['recommendedPlanners'], fetchRecommendedPlanners);
 
+  console.log(planners);
+
   return (
     <FlexDiv margin={'54px 0 0 0'} direction="column">
       <FlexDiv height={'56px'} justify="between" margin={'0 0 40px 0'}>
@@ -20,18 +22,35 @@ const RecommendedPlanner = () => {
           planners.map((planner, index) => {
             return (
               <PlannerCard key={index}>
-                <Image src={planner1}></Image>
-                <Description>
-                  {planner.description.split('\\n').map((line, index) => {
-                    return (
-                      <span>
-                        {line}
-                        <br />
-                      </span>
-                    );
-                  })}
-                </Description>
-                <PlannerName>{planner.plannerName} 플래너</PlannerName>
+                <Image src={planner.imgUrl}></Image>
+                {planner.fontColor === 'WHITE' ? (
+                  <WhiteDescription>
+                    {planner.description.split('\\n').map((line, index) => {
+                      return (
+                        <span>
+                          {line}
+                          <br />
+                        </span>
+                      );
+                    })}
+                  </WhiteDescription>
+                ) : (
+                  <Description>
+                    {planner.description.split('\\n').map((line, index) => {
+                      return (
+                        <span>
+                          {line}
+                          <br />
+                        </span>
+                      );
+                    })}
+                  </Description>
+                )}
+                {planner.fontColor === 'WHITE' ? (
+                  <WhitePlannerName>{planner.plannerName} 플래너</WhitePlannerName>
+                ) : (
+                  <PlannerName>{planner.plannerName} 플래너</PlannerName>
+                )}
               </PlannerCard>
             );
           })
@@ -91,10 +110,39 @@ const Description = styled.div`
   margin-left: 20px;
 `;
 
+const WhiteDescription = styled.div`
+  height: 48px;
+  width: 167px;
+  color: #ffffff;
+  font-family: SpoqaHanSans;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  white-space: pre-wrap;
+  margin-top: 30px;
+  margin-left: 20px;
+`;
+
 const PlannerName = styled.div`
   height: 18px;
   width: 240px;
   color: #000000;
+  font-family: SpoqaHanSans;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0;
+  position: absolute;
+  line-height: 18px;
+  margin-left: 20px;
+  margin-top: 86px;
+`;
+
+const WhitePlannerName = styled.div`
+  height: 18px;
+  width: 240px;
+  color: #ffffff;
   font-family: SpoqaHanSans;
   font-size: 12px;
   font-weight: bold;

@@ -2,15 +2,20 @@ import { FlexDiv, Content } from '../../component/style/style';
 import LineAndTitle from './LindAndTitle';
 import styled from 'styled-components';
 import PlannerInputTitle from './PlannerInputTitle';
+import { PlannerRequest } from 'src/api/Planner';
 
-const MyProfile = () => {
+interface Props {
+  handleDescription: (e: any) => void;
+}
+
+const MyProfile = ({ handleDescription }: Props) => {
   return (
     <FlexDiv width="632px" margin="0 0 72px 0" direction="column" justify="flex-start" align="start">
       <LineAndTitle title="내 프로필"></LineAndTitle>
       <PlannerInputTitle name="플래너 한줄 소개" margin="20px 0 8px 0"></PlannerInputTitle>
-      <Input></Input>
+      <Input name="summary" onChange={handleDescription}></Input>
       <PlannerInputTitle name="플래너 소개" margin="24px 0 8px 0"></PlannerInputTitle>
-      <TextArea></TextArea>
+      <TextArea name="description" onChange={handleDescription}></TextArea>
     </FlexDiv>
   );
 };

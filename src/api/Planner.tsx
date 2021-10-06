@@ -94,3 +94,72 @@ export const fetchPlannerPartners = async (plannerId: string) => {
   const { data } = await axios.get<Partners>(`/planners/${plannerId}/partners`);
   return data;
 };
+
+export interface PlannerRequest {
+  affiliatedCompanyInfoDTO: {
+    affiliatedCompanyId: number;
+  };
+  affiliatedDressCompanyDTOList: [
+    {
+      commonAffiliateCompanyDTO: {
+        companyName: string;
+        description: string;
+        location: string;
+        primaryImageUrl: string;
+        tel: string;
+        type: string;
+      };
+    }
+  ];
+  affiliatedMakeupCompanyDTOList: [
+    {
+      commonAffiliateCompanyDTO: {
+        companyName: string;
+        description: string;
+        location: string;
+        primaryImageUrl: string;
+        tel: string;
+        type: string;
+      };
+    }
+  ];
+  affiliatedStudioCompanyDTOList: [
+    {
+      commonAffiliateCompanyDTO: {
+        companyName: string;
+        description: string;
+        location: string;
+        primaryImageUrl: string;
+        tel: string;
+        type: string;
+      };
+    }
+  ];
+  areaInfoDTO: {
+    locationList: string[];
+  };
+  myProfileDTO: {
+    description: string;
+    summary: string;
+  };
+  snsInfoDTO: {
+    externalLinks: {
+      blogLink: string;
+      facebookLink: string;
+      instagramLink: string;
+    };
+    webSiteUrl: string;
+  };
+  supportInfoDTO: {
+    supportInfoList: string[];
+  };
+}
+
+export const updateProfile = async (plannerRequest: PlannerRequest) => {
+  const { data } = await axios.post(`planners`, plannerRequest, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  });
+  return data;
+};

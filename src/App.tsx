@@ -73,7 +73,8 @@ const App = () => {
                     <PlannerPage />
                   </Route>
                   <Route path="/editProfile">
-                    <Profile isUpdate={true} />
+                    <ScrollToTop />
+                    <Profile isUpdate={false} />
                   </Route>
                   <Route path="/chats">
                     <ChatContainer />

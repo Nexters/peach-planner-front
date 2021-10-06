@@ -35,7 +35,7 @@ const Header = () => {
     right = (
       <InnerContainer>
         <ProfileContainer>
-          <NotiImage src={NotiDefault}></NotiImage>
+          {/* <NotiImage src={NotiDefault}></NotiImage> */}
           <ProfileBox onClick={handleClickProfile}>
             <ProfileImage src={DefaultProfileImage}></ProfileImage>
             <DropdownImage src={DownArrowImage}></DropdownImage>

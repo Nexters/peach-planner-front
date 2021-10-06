@@ -6,31 +6,45 @@ import styled from 'styled-components';
 import HorizontalLine from 'src/component/HorizontalLine';
 import ImageUpload from './ImageUpload';
 import Organization from './Organization';
+import { SupportStore } from '.';
+import { upload } from 'src/api/Image';
 
 interface Props {
   id: string;
   name: string;
   margin: string;
+  handleStores: (store: SupportStore) => void;
 }
+
 interface OrganizationInformation {
   name: string;
   previewImage: string;
   imageFile: any;
 }
 
-const AssociateOrganization = ({ id, name, margin }: Props) => {
+const AssociateOrganization = ({ id, name, margin, handleStores }: Props) => {
   const [organizationName, setOrganizationName] = useState('');
   const [previewImage, setPreviewImage] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [organizations, setOrganizations] = useState<OrganizationInformation[]>([]);
 
-  const registOrganization = () => {
+  const registOrganization = async () => {
+    if (!organizationName || organizations.length >= 10) return;
+
+    const store: SupportStore = {
+      name: organizationName,
+      previewImage: previewImage,
+      imageUrl: ''
+    };
     const organization = {
       name: organizationName,
       previewImage: previewImage,
       imageFile: imageFile
     };
+    const response = await upload(imageFile);
+    console.dir(response);
     setOrganizations(organizations?.concat(organization));
+    handleStores(store);
   };
 
   const handleChangeOrganizationName = (e: any) => {

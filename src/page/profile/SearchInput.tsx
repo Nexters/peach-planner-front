@@ -5,12 +5,13 @@ interface Props {
   height: string;
   width: string;
   placeholder?: string;
+  handleInput: (e: any) => void;
 }
 
-const SearchInput = ({ height, width, placeholder }: Props) => {
+const SearchInput = ({ height, width, placeholder, handleInput }: Props) => {
   return (
     <SearchBox>
-      <Input height={height} width={width} placeholder={placeholder}></Input>
+      <Input height={height} width={width} placeholder={placeholder} onChange={handleInput}></Input>
       <SearchIcon src={SearchIconSvg} />
     </SearchBox>
   );

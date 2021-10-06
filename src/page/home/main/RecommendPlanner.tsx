@@ -1,16 +1,10 @@
 import { useQuery } from 'react-query';
 import { fetchRecommendedPlanners } from 'src/api/Planner';
 import styled from 'styled-components';
-import { convertToObject } from 'typescript';
 import { FlexDiv } from '../../../component/style/style';
-import planner1 from './dummy/planner1.png';
-import planner2 from './dummy/planner2.png';
-import planner3 from './dummy/planner3.png';
 
 const RecommendedPlanner = () => {
   const { data: planners } = useQuery(['recommendedPlanners'], fetchRecommendedPlanners);
-
-  console.log(planners);
 
   return (
     <FlexDiv margin={'54px 0 0 0'} direction="column">

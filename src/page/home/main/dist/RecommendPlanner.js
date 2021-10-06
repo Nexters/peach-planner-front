@@ -10,7 +10,6 @@ var styled_components_1 = require("styled-components");
 var style_1 = require("../../../component/style/style");
 var RecommendedPlanner = function () {
     var planners = react_query_1.useQuery(['recommendedPlanners'], Planner_1.fetchRecommendedPlanners).data;
-    console.log(planners);
     return (React.createElement(style_1.FlexDiv, { margin: '54px 0 0 0', direction: "column" },
         React.createElement(style_1.FlexDiv, { height: '56px', justify: "between", margin: '0 0 40px 0' },
             React.createElement(Title, null, "\uCD94\uCC9C \uD50C\uB798\uB108")),

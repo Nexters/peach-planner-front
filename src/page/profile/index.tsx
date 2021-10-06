@@ -100,12 +100,6 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     // mutate(request);
   };
 
-  useEffect(() => {
-    console.log(`스튜디오: ${studios}`);
-    console.log(`드레스: ${dresses}`);
-    console.log(`메이크업: ${makeUps}`);
-  });
-
   return (
     <Container>
       <InnerContainer>

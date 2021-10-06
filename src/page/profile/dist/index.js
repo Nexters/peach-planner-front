@@ -82,11 +82,6 @@ var Profile = function (_a) {
     var handleSubmit = function () {
         // mutate(request);
     };
-    react_1.useEffect(function () {
-        console.log("\uC2A4\uD29C\uB514\uC624: " + studios);
-        console.log("\uB4DC\uB808\uC2A4: " + dresses);
-        console.log("\uBA54\uC774\uD06C\uC5C5: " + makeUps);
-    });
     return (React.createElement(Container, null,
         React.createElement(InnerContainer, null,
             React.createElement(ProfileHeader_1["default"], { isUpdate: isUpdate })),

@@ -159,7 +159,9 @@ const Login = () => {
       </LogInButton>
 
       <FlexDiv>
-        <Span weight="normal">플래너이신가요?</Span>
+        <Span weight="normal" margin="0 5px 0 0">
+          플래너이신가요?
+        </Span>
         <Span
           color="#E64980"
           weight="normal"
@@ -168,7 +170,7 @@ const Login = () => {
             '/plannerSignUp';
           }}
         >
-          플래너 등록
+          플래너 가입
         </Span>
       </FlexDiv>
     </FlexDiv>

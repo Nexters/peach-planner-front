@@ -2,8 +2,11 @@ import styled from 'styled-components';
 import { Content, FlexDiv } from '../../component/style/style';
 import LineAndTitle from './LindAndTitle';
 import SnsSite from './SnsSite';
+interface Props {
+  handleSns: (e: any) => void;
+}
 
-const SnsSetting = () => {
+const SnsSetting = ({ handleSns }: Props) => {
   return (
     <FlexDiv width="632px" margin="0 0 72px 0" direction="column" justify="flex-start" align="start">
       <LineAndTitle title="SNS 설정" content="연결된 SNS는 웨딩플래너 페이지에 노출됩니다."></LineAndTitle>
@@ -17,10 +20,28 @@ const SnsSetting = () => {
       >
         웹 사이트
       </Content>
-      <Input></Input>
-      <SnsSite title="인스타그램" url="https://www.instagram.com/" margin="16px 0 0 0"></SnsSite>
-      <SnsSite title="페이스북" url="http://facebook.com/" margin="24px 0 0 0"></SnsSite>
-      <SnsSite title="블로그" url="https://blog.naver.com/" margin="24px 0 0 0"></SnsSite>
+      <Input name="webUrl" onChange={handleSns}></Input>
+      <SnsSite
+        title="인스타그램"
+        url="https://www.instagram.com/"
+        margin="16px 0 0 0"
+        inputName="instagramUrl"
+        handleSns={handleSns}
+      ></SnsSite>
+      <SnsSite
+        title="페이스북"
+        url="http://facebook.com/"
+        margin="24px 0 0 0"
+        inputName="facebookUrl"
+        handleSns={handleSns}
+      ></SnsSite>
+      <SnsSite
+        title="블로그"
+        url="https://blog.naver.com/"
+        margin="24px 0 0 0"
+        inputName="blogUrl"
+        handleSns={handleSns}
+      ></SnsSite>
     </FlexDiv>
   );
 };

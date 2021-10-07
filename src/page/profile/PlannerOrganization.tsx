@@ -5,7 +5,11 @@ import OrganizationRegisterModal from './OrganizationRegisterModal';
 import { useState } from 'react';
 import SearchInput from './SearchInput';
 
-const PlannerOrganization = () => {
+interface Props {
+  handleOrgName: (e: any) => void;
+}
+
+const PlannerOrganization = ({ handleOrgName }: Props) => {
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const openImageModal = () => setShowImageModal(true);
   const closeImageModal = () => {
@@ -40,7 +44,12 @@ const PlannerOrganization = () => {
       >
         웨딩업체 이름
       </Content>
-      <SearchInput height="41px" width="421px" placeholder="웨딩 업체 이름을 입력해주세요."></SearchInput>
+      <SearchInput
+        height="41px"
+        width="421px"
+        placeholder="웨딩 업체 이름을 입력해주세요."
+        handleInput={handleOrgName}
+      ></SearchInput>
       <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-start" align="start">
         <SideText text="업체가 등록되어 있지 않으신가요?" colorText="업체 등록하기" onClick={openImageModal}></SideText>
         <OrganizationRegisterModal showImageModal={showImageModal} closeImageModal={closeImageModal} />

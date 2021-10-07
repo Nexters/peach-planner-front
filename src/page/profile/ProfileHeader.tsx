@@ -1,6 +1,8 @@
 import { ProfileProps } from '.';
 import { FlexDiv, Title } from '../../component/style/style';
 import PButton from '../../component/PButton';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const ProfileHeader = ({ isUpdate }: ProfileProps) => {
   return (
@@ -14,7 +16,9 @@ const ProfileHeader = ({ isUpdate }: ProfileProps) => {
             프로필 돌아가기
           </PButton>
         ) : (
-          <></>
+          <BackButton>
+            <StyledLink to="/">다음에 할게요</StyledLink>
+          </BackButton>
         )}
       </FlexDiv>
     </FlexDiv>
@@ -22,3 +26,23 @@ const ProfileHeader = ({ isUpdate }: ProfileProps) => {
 };
 
 export default ProfileHeader;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #495057;
+  font-size: 13px;
+  line-height: 19px;
+`;
+
+const BackButton = styled.div`
+  height: 20px;
+  width: 81px;
+  color: #000000;
+  font-family: SpoqaHanSans;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 20px;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+`;

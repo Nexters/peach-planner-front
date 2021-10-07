@@ -6,11 +6,12 @@ interface Props {
   content: string;
   img: string;
   tag: string[];
+  blogUrl: string;
 }
 
-const SmallRecommendPost = ({ title, content, img, tag }: Props) => {
+const SmallRecommendPost = ({ title, content, img, tag, blogUrl }: Props) => {
   return (
-    <FlexDiv margin={'0 0 56px 0'} width={'414px'} justify="space-between" align="start" direction="row">
+    <PostBox onClick={(e) => (window.location.href = blogUrl)}>
       <FlexDiv margin={'0'} justify-content="flex-start" align="start" direction="column">
         <Title>{title}</Title>
         <Content>{content}</Content>
@@ -24,11 +25,21 @@ const SmallRecommendPost = ({ title, content, img, tag }: Props) => {
         </FlexDiv>
       </FlexDiv>
       <Image src={img}></Image>
-    </FlexDiv>
+    </PostBox>
   );
 };
 
 export default SmallRecommendPost;
+
+const PostBox = styled.div`
+  margin: 0 0 56px 0;
+  width: 414px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-direction: row;
+  cursor: pointer;
+`;
 
 const Tag = styled.div`
   box-sizing: border-box;

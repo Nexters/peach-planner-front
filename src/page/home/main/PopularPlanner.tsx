@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { fetchPopularPlanners } from '../../../api/Planner';
 import { Link } from 'react-router-dom';
+import { createNumericLiteral } from 'typescript';
 
 const PopularPlanner = () => {
   const { data: planners } = useQuery(['popularPlanners'], fetchPopularPlanners);
@@ -21,6 +22,8 @@ const PopularPlanner = () => {
     variableWidth: true,
     arrows: false
   });
+
+  
 
   return (
     <FlexDiv margin={'64px 0 0 0'} direction="column">
@@ -52,7 +55,7 @@ const PopularPlanner = () => {
                   size={'254px'}
                   imagePath={planner.images[0]}
                   heartCount={planner.likes}
-                  reviewCount={24}
+                  reviewCount={planner.reviews}
                   name={planner.name}
                   organization={planner.company?.name}
                   region={planner.locations.join(',')}

@@ -8,10 +8,9 @@ import { ChatRoom, ChatRoomParticipant, fetchChatRoomParticipant, fetchChatRooms
 import { ChatMessage, ChatMessageReq, fetchChatMessages, sendMessage } from 'src/api/ChatMessage';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Client, Message, IFrame, ActivationState } from '@stomp/stompjs';
+import { Client, Message, IFrame, ActivationState, StompSocketState } from '@stomp/stompjs';
 import { useMemo } from 'react';
-import { fetchMe, User } from 'src/api/Login';
-
+import { User, getUser } from 'src/api/User';
 
 const client = new Client({
   brokerURL: 'ws://api.peachplanner.com/websocket',
@@ -24,7 +23,7 @@ const client = new Client({
   heartbeatOutgoing: 4000,
   onConnect: (receipt: IFrame) => {
     console.log(receipt.body);
-  },
+  }
 });
 const subscribeIds = new Set();
 
@@ -32,81 +31,77 @@ interface ChatMessageModel {
   id: number;
   sender: string;
   senderId: number;
-  messageType: "SYSTEM_START" | "NORMAL" | "SYSTEM_END";
-  senderType: "SYSTEM" | "USER" | "PLANNER";
+  messageType: 'SYSTEM_START' | 'NORMAL' | 'SYSTEM_END';
+  senderType: 'SYSTEM' | 'USER' | 'PLANNER';
   message: string;
   dateTime: string;
 }
 
-
 const ChatContainer = () => {
   const [selected, setSelected] = React.useState(-1);
   const { data: rooms } = useQuery(['rooms'], fetchChatRooms);
+  const { data: user } = useQuery(['getUser'], getUser);
   const currentRoom = React.useRef<ChatRoom>({} as ChatRoom);
-  const [typingMessage, setTypingMessage] = React.useState("");
+  const [typingMessage, setTypingMessage] = React.useState('');
 
-
-  const chatRoomParticipant = React.useRef<{[key: string]: string}>()
+  const chatRoomParticipant = React.useRef<{ [key: string]: string }>();
   const [chatMessages, setChatMessages] = React.useState<ChatMessageModel[]>([]);
 
   const messagesEndRef = React.useRef<null | HTMLDivElement>(null);
 
   const me = React.useRef<User>();
-  
+
   useEffect(() => {
     client.activate();
-    fetchMe().then(user => { 
-      console.log(user);
+    if (user) {
       me.current = user;
-    });
-  }, []);
+    }
+  }, [user]);
 
   useEffect(() => {
     const subscribeRooms = () => {
-      rooms?.forEach((room) => {  
+      rooms?.forEach((room) => {
         if (subscribeIds.has(room.id)) return;
-  
-  
+
         if (client.state === ActivationState.ACTIVE) {
           client.subscribe(`/topic/chat/${room.id}`, (message: IFrame) => {
             console.log(currentRoom.current.id);
             if (currentRoom.current.id === room.id) {
               const chatMessage = JSON.parse(message.body) as ChatMessage;
-              setChatMessages(draft => [...draft, {
-                id: chatMessage.id,
-                sender: chatRoomParticipant.current?.[chatMessage.senderId],
-                senderId: chatMessage.senderId,
-                messageType: chatMessage.messageType,
-                senderType: chatMessage.senderType,
-                message: chatMessage.message,
-                dateTime: chatMessage.dateTime,
-              } as ChatMessageModel]);
+              setChatMessages((draft) => [
+                ...draft,
+                {
+                  id: chatMessage.id,
+                  sender: chatRoomParticipant.current?.[chatMessage.senderId],
+                  senderId: chatMessage.senderId,
+                  messageType: chatMessage.messageType,
+                  senderType: chatMessage.senderType,
+                  message: chatMessage.message,
+                  dateTime: chatMessage.dateTime
+                } as ChatMessageModel
+              ]);
               console.log(chatMessages);
             }
           });
         }
-  
+
         subscribeIds.add(room.id);
       });
     };
 
-    if (client.state === ActivationState.ACTIVE) {
+    if (client.state === ActivationState.ACTIVE && client.webSocket?.readyState === StompSocketState.OPEN) {
       subscribeRooms();
     }
     if (client.state === ActivationState.INACTIVE) {
       client.onConnect = (receipt: IFrame) => {
         subscribeRooms();
-      }
+      };
     }
-
   }, [rooms]);
 
-
-  
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages]);
-
 
   return (
     <Container>
@@ -119,7 +114,7 @@ const ChatContainer = () => {
           </Cell>
           <Cell width="65%">
             <Title height="20px" width="auto" fontSize="14px" lineHeight="20px" padding="24px 0 24px 16px">
-              { currentRoom.current.roomName }
+              {currentRoom.current.roomName}
             </Title>
           </Cell>
         </Row>
@@ -127,106 +122,148 @@ const ChatContainer = () => {
         <Row height="60vh">
           <Cell width="35%">
             <CellContent>
-              {rooms ? rooms.map((room, index) => {
-                  return <ChatCard selected={selected === index} onClick={() => {
-                    setSelected(index);
-                    currentRoom.current = rooms[index];
-                
-                    (async () => {
-                      await Promise.all([
-                        fetchChatMessages(currentRoom.current.id),
-                        fetchChatRoomParticipant(currentRoom.current.id)
-                      ]).then(([messages, roomParticipants]) => {
-                        setChatMessages(messages.map((message) => {
-                          return {
-                            id: message.id,
-                            sender: roomParticipants[message.senderId],
-                            senderId: message.senderId,
-                            messageType: message.messageType,
-                            senderType: message.senderType,
-                            message: message.message,
-                            dateTime: message.dateTime,
-                          } as ChatMessageModel;
-                        }));
-                        chatRoomParticipant.current = roomParticipants;
-                      });
-                    })();
-                  }}>
-                    <ChatProfileImg src={shape} />
-                    <ChatProfileText>
-                      <ChatProfileLine>
-                        <ChatProfileName>{room.roomName}</ChatProfileName>
-                        <ChatLastMessageDate>{(new Date(room.lastMessageDateTime)).toDateString()}</ChatLastMessageDate>
-                      </ChatProfileLine>
-                      <ChatLastMessage>
-                        {room.lastMessage}
-                      </ChatLastMessage>
-                    </ChatProfileText>
-                  </ChatCard>
-                }) : <></>}
+              {rooms ? (
+                rooms.map((room, index) => {
+                  return (
+                    <ChatCard
+                      selected={selected === index}
+                      onClick={() => {
+                        setSelected(index);
+                        currentRoom.current = rooms[index];
+
+                        (async () => {
+                          await Promise.all([
+                            fetchChatMessages(currentRoom.current.id),
+                            fetchChatRoomParticipant(currentRoom.current.id)
+                          ]).then(([messages, roomParticipants]) => {
+                            setChatMessages(
+                              messages.map((message) => {
+                                return {
+                                  id: message.id,
+                                  sender: roomParticipants[message.senderId],
+                                  senderId: message.senderId,
+                                  messageType: message.messageType,
+                                  senderType: message.senderType,
+                                  message: message.message,
+                                  dateTime: message.dateTime
+                                } as ChatMessageModel;
+                              })
+                            );
+                            chatRoomParticipant.current = roomParticipants;
+                          });
+                        })();
+                      }}
+                    >
+                      <ChatProfileImg src={shape} />
+                      <ChatProfileText>
+                        <ChatProfileLine>
+                          <ChatProfileName>{room.roomName}</ChatProfileName>
+                          <ChatLastMessageDate>{new Date(room.lastMessageDateTime).toDateString()}</ChatLastMessageDate>
+                        </ChatProfileLine>
+                        <ChatLastMessage>{room.lastMessage}</ChatLastMessage>
+                      </ChatProfileText>
+                    </ChatCard>
+                  );
+                })
+              ) : (
+                <></>
+              )}
             </CellContent>
           </Cell>
           <Cell width="65%">
             <CellContent>
-              {chatMessages && chatMessages.length > 0 ? <ChatMessageDate>{new Date(chatMessages[0].dateTime).toLocaleDateString("ko-KR")}</ChatMessageDate> : <></> }
-              {chatMessages ? chatMessages.map((message) => {
-                if (message.messageType === "SYSTEM_START") {
-                  return <SystemMessageDiv>
-                    <SystemMessage>{message.message}</SystemMessage>
-                  </SystemMessageDiv>;
-                }
+              {chatMessages && chatMessages.length > 0 ? (
+                <ChatMessageDate>{new Date(chatMessages[0].dateTime).toLocaleDateString('ko-KR')}</ChatMessageDate>
+              ) : (
+                <></>
+              )}
+              {chatMessages ? (
+                chatMessages.map((message) => {
+                  if (message.messageType === 'SYSTEM_START') {
+                    return (
+                      <SystemMessageDiv>
+                        <SystemMessage>{message.message}</SystemMessage>
+                      </SystemMessageDiv>
+                    );
+                  }
 
-                if (message.messageType === "SYSTEM_END") {
-                  return <SystemMessageDiv>
-                    <SystemMessage>{message.message}</SystemMessage>
-                    <a href="/">
-                      <SystemMessageLink>플래너 리뷰 작성하기</SystemMessageLink>
-                    </a>
-                  </SystemMessageDiv>;
-                }
+                  if (message.messageType === 'SYSTEM_END') {
+                    return (
+                      <SystemMessageDiv>
+                        <SystemMessage>{message.message}</SystemMessage>
+                        <a href="/">
+                          <SystemMessageLink>플래너 리뷰 작성하기</SystemMessageLink>
+                        </a>
+                      </SystemMessageDiv>
+                    );
+                  }
 
-                if (me.current?.id === message.senderId) {
-                  return <MyChatMessageDiv>
-                  <MyChatMessageCard>
-                    <MyChatMessageTitle>
-                      <ChatMessageProfileName>{message.sender}</ChatMessageProfileName>
-                      <ChatMessageProfileDatetime>{new Date(message.dateTime).toLocaleTimeString("ko-KR", { hour12: true, hour: '2-digit', minute: '2-digit' } )}</ChatMessageProfileDatetime>
-                    </MyChatMessageTitle>
-                    <MyChatMessageText>{message.message}</MyChatMessageText>
-                  </MyChatMessageCard>
-                  <ChatMessageProfileImg src={shape} />
-                </MyChatMessageDiv>;
-                }
+                  if (me.current?.id === message.senderId) {
+                    return (
+                      <MyChatMessageDiv>
+                        <MyChatMessageCard>
+                          <MyChatMessageTitle>
+                            <ChatMessageProfileName>{message.sender}</ChatMessageProfileName>
+                            <ChatMessageProfileDatetime>
+                              {new Date(message.dateTime).toLocaleTimeString('ko-KR', {
+                                hour12: true,
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </ChatMessageProfileDatetime>
+                          </MyChatMessageTitle>
+                          <MyChatMessageText>{message.message}</MyChatMessageText>
+                        </MyChatMessageCard>
+                        <ChatMessageProfileImg src={shape} />
+                      </MyChatMessageDiv>
+                    );
+                  }
 
-
-                return <ChatMessageDiv>
-                  <ChatMessageProfileImg src={shape} />
-                  <ChatMessageCard>
-                    <ChatMessageTitle>
-                      <ChatMessageProfileName>{message.sender}</ChatMessageProfileName>
-                      <ChatMessageProfileDatetime>{new Date(message.dateTime).toLocaleTimeString("ko-KR", { hour12: true, hour: '2-digit', minute: '2-digit' } )}</ChatMessageProfileDatetime>
-                    </ChatMessageTitle>
-                    <ChatMessageText>{message.message}</ChatMessageText>
-                  </ChatMessageCard>
-                </ChatMessageDiv>
-              }): <></> }
-              <div ref={messagesEndRef}/>
+                  return (
+                    <ChatMessageDiv>
+                      <ChatMessageProfileImg src={shape} />
+                      <ChatMessageCard>
+                        <ChatMessageTitle>
+                          <ChatMessageProfileName>{message.sender}</ChatMessageProfileName>
+                          <ChatMessageProfileDatetime>
+                            {new Date(message.dateTime).toLocaleTimeString('ko-KR', {
+                              hour12: true,
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </ChatMessageProfileDatetime>
+                        </ChatMessageTitle>
+                        <ChatMessageText>{message.message}</ChatMessageText>
+                      </ChatMessageCard>
+                    </ChatMessageDiv>
+                  );
+                })
+              ) : (
+                <></>
+              )}
+              <div ref={messagesEndRef} />
             </CellContent>
             <ChatMessageBoxDiv>
               <ChatMessageClipDiv>
                 <FontAwesomeIconDiv icon={faPaperclip}></FontAwesomeIconDiv>
               </ChatMessageClipDiv>
-              <ChatMessageInputForm onSubmit={(e) => {
-                e.preventDefault();
+              <ChatMessageInputForm
+                onSubmit={(e) => {
+                  e.preventDefault();
 
-                sendMessage({
-                  roomId: currentRoom.current.id,
-                  message: typingMessage,
-                } as ChatMessageReq);
-                setTypingMessage(""); 
-                return false;} 
-              }>
-                <ChatMessageInput placeholder="메시지를 입력하세요." value={typingMessage} onChange={(e) => setTypingMessage(e.target.value)}></ChatMessageInput>
+                  sendMessage({
+                    roomId: currentRoom.current.id,
+                    message: typingMessage
+                  } as ChatMessageReq);
+                  setTypingMessage('');
+                  return false;
+                }}
+              >
+                <ChatMessageInput
+                  placeholder="메시지를 입력하세요."
+                  value={typingMessage}
+                  onChange={(e) => setTypingMessage(e.target.value)}
+                ></ChatMessageInput>
               </ChatMessageInputForm>
             </ChatMessageBoxDiv>
           </Cell>
@@ -285,7 +322,7 @@ const CellContent = styled.div`
   max-height: 500px;
   flex-direction: column;
   padding-bottom: 24px;
-  
+
   &::-webkit-scrollbar {
     width: 4px;
   }
@@ -298,7 +335,7 @@ const CellContent = styled.div`
     border-radius: 10px;
     box-shadow: inset 0px 0px 5px white;
   }
-`
+`;
 
 interface ChatCardProps {
   selected?: boolean;
@@ -443,13 +480,13 @@ const ChatMessageInput = styled.input.attrs({ type: 'text' })`
   letter-spacing: 0;
   line-height: 24px;
   ::placeholder {
-    color: #868E96;
+    color: #868e96;
   }
 `;
 
 const FontAwesomeIconDiv = styled(FontAwesomeIcon)`
   padding: 16px;
-  background-color: #DDDDDDDD;
+  background-color: #dddddddd;
   border-radius: 10px;
 `;
 

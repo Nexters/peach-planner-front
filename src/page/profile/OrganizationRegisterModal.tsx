@@ -111,7 +111,12 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
             >
               위치
             </Content>
-            <SearchInput height="41px" width="341px" placeholder="위치를 입력해주세요."></SearchInput>
+            <SearchInput
+              height="41px"
+              width="341px"
+              placeholder="위치를 입력해주세요."
+              handleInput={handleChangeOrganizationName}
+            ></SearchInput>
             <Content
               height={'20px'}
               width={'auto'}
@@ -135,7 +140,12 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
             >
               대표사진 등록
             </Content>
-            <ImageUpload id="modal" previewImage={previewImage} setImageFile={changeImageFile} setPreviewImage={changePreviewImage}></ImageUpload>
+            <ImageUpload
+              id="modal"
+              previewImage={previewImage}
+              setImageFile={changeImageFile}
+              setPreviewImage={changePreviewImage}
+            ></ImageUpload>
           </FlexDiv>
         </FlexDiv>
         <FlexDiv margin="16px 0 0 0" justify="flex-start" align="start">

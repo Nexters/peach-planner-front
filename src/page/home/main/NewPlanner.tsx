@@ -52,7 +52,7 @@ const NewPlanner = () => {
                   size={'254px'}
                   imagePath={planner.images[0]}
                   heartCount={planner.likes}
-                  reviewCount={24}
+                  reviewCount={planner.reviews}
                   name={planner.name}
                   organization={planner.company?.name}
                   region={planner.locations.join(',')}

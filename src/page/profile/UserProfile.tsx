@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Content, FlexDiv, Title } from '../../component/style/style';
 import PButton from '../../component/PButton';
-import AccountDefault from '../../../src/assets/svg/ic_account_default.svg';
+import AccountDefault from '../../assets/svg/ic_logo.svg';
 import { useState } from 'react';
 
 const userProps = {

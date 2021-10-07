@@ -7,7 +7,7 @@ exports.__esModule = true;
 var styled_components_1 = require("styled-components");
 var style_1 = require("../../component/style/style");
 var PButton_1 = require("../../component/PButton");
-var ic_account_default_svg_1 = require("../../../src/assets/svg/ic_account_default.svg");
+var ic_logo_svg_1 = require("../../assets/svg/ic_logo.svg");
 var react_1 = require("react");
 var userProps = {
     name: '홍길동',
@@ -37,7 +37,7 @@ var UserProfile = function () {
         React.createElement(Box, null,
             React.createElement(style_1.FlexDiv, { margin: "0", direction: "column" },
                 React.createElement(ProfileImageBox, null,
-                    React.createElement(ProfileImage, { src: previewImage ? previewImage : ic_account_default_svg_1["default"] }),
+                    React.createElement(ProfileImage, { src: previewImage ? previewImage : ic_logo_svg_1["default"] }),
                     React.createElement(Input, { id: "profile-image-file", type: "file", onChange: handleFile }),
                     React.createElement(Label, { htmlFor: "profile-image-file" },
                         React.createElement(EditIcon, null))),

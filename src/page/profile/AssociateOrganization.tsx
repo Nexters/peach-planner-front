@@ -31,18 +31,17 @@ const AssociateOrganization = ({ id, name, margin, handleStores }: Props) => {
   const registOrganization = async () => {
     if (!organizationName || organizations.length >= 10) return;
 
-    const store: SupportStore = {
-      name: organizationName,
-      previewImage: previewImage,
-      imageUrl: ''
-    };
     const organization = {
       name: organizationName,
       previewImage: previewImage,
       imageFile: imageFile
     };
-    const response = await upload(imageFile);
-    console.dir(response);
+    const s3ImageUrl = await upload(imageFile);
+    const store: SupportStore = {
+      name: organizationName,
+      previewImage: previewImage,
+      imageUrl: s3ImageUrl
+    };
     setOrganizations(organizations?.concat(organization));
     handleStores(store);
   };

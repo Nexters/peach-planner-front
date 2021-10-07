@@ -96,46 +96,22 @@ export const fetchPlannerPartners = async (plannerId: string) => {
   return data;
 };
 
+export interface AffiliatedCompany {
+  companyName: string;
+  description: string;
+  location: string;
+  primaryImageUrl: string;
+  tel: string;
+  type: string;
+}
+
 export interface PlannerRequest {
   affiliatedCompanyInfoDTO: {
     affiliatedCompanyId: number;
   };
-  affiliatedDressCompanyDTOList: [
-    {
-      commonAffiliateCompanyDTO: {
-        companyName: string;
-        description: string;
-        location: string;
-        primaryImageUrl: string;
-        tel: string;
-        type: string;
-      };
-    }
-  ];
-  affiliatedMakeupCompanyDTOList: [
-    {
-      commonAffiliateCompanyDTO: {
-        companyName: string;
-        description: string;
-        location: string;
-        primaryImageUrl: string;
-        tel: string;
-        type: string;
-      };
-    }
-  ];
-  affiliatedStudioCompanyDTOList: [
-    {
-      commonAffiliateCompanyDTO: {
-        companyName: string;
-        description: string;
-        location: string;
-        primaryImageUrl: string;
-        tel: string;
-        type: string;
-      };
-    }
-  ];
+  affiliatedDressCompanyDTOList: AffiliatedCompany[];
+  affiliatedMakeupCompanyDTOList: AffiliatedCompany[];
+  affiliatedStudioCompanyDTOList: AffiliatedCompany[];
   areaInfoDTO: {
     locationList: string[];
   };

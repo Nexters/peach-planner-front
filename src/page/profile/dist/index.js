@@ -79,8 +79,61 @@ var Profile = function (_a) {
         makeUps.push(makeUp);
         setMakeUps(makeUps);
     };
-    var handleSubmit = function () {
-        // mutate(request);
+    var handleRegister = function () {
+        var affilicatedDress = dresses.map(function (dress) {
+            return {
+                companyName: dress.name,
+                description: '',
+                location: '',
+                primaryImageUrl: dress.imageUrl,
+                tel: '',
+                type: ''
+            };
+        });
+        var affilicatedStudios = studios.map(function (studio) {
+            return {
+                companyName: studio.name,
+                description: '',
+                location: '',
+                primaryImageUrl: studio.imageUrl,
+                tel: '',
+                type: ''
+            };
+        });
+        var affilicatedMakeUps = makeUps.map(function (makeUp) {
+            return {
+                companyName: makeUp.name,
+                description: '',
+                location: '',
+                primaryImageUrl: makeUp.imageUrl,
+                tel: '',
+                type: ''
+            };
+        });
+        var request = {
+            affiliatedCompanyInfoDTO: {
+                affiliatedCompanyId: 1
+            },
+            affiliatedDressCompanyDTOList: affilicatedDress,
+            affiliatedStudioCompanyDTOList: affilicatedStudios,
+            affiliatedMakeupCompanyDTOList: affilicatedMakeUps,
+            areaInfoDTO: {
+                locationList: regions
+            },
+            myProfileDTO: description,
+            snsInfoDTO: {
+                externalLinks: {
+                    blogLink: sns.blogUrl,
+                    facebookLink: sns.facebookUrl,
+                    instagramLink: sns.instagramUrl
+                },
+                webSiteUrl: sns.webUrl
+            },
+            supportInfoDTO: {
+                supportInfoList: offers
+            }
+        };
+        mutate(request);
     };
     return (React.createElement(Container, null,
         React.createElement(InnerContainer, null,
@@ -99,7 +152,7 @@ var Profile = function (_a) {
                 React.createElement(AssociateOrganization_1["default"], { id: "dress", name: "\uB4DC\uB808\uC2A4", margin: "0 0 72px 0", handleStores: handleDress }),
                 React.createElement(AssociateOrganization_1["default"], { id: "makeup", name: "\uBA54\uC774\uD06C\uC5C5", margin: "0 0 24px 0", handleStores: handleMakeUp }),
                 React.createElement(style_1.FlexDiv, { direction: "row", margin: "0 0 320px 48px", justify: "flex-start" },
-                    React.createElement(PButton_1["default"], { color: "pink", fontSize: "14px", height: "40px", width: "312px", fontWeight: "bold" }, isUpdate ? '수정하기' : '등록하기'))))));
+                    React.createElement(PButton_1["default"], { color: "pink", fontSize: "14px", height: "40px", width: "312px", fontWeight: "bold", onClick: handleRegister }, isUpdate ? '수정하기' : '등록하기'))))));
 };
 exports["default"] = Profile;
 var Container = styled_components_1["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  margin: 16px auto;\n"], ["\n  margin: 16px auto;\n"])));

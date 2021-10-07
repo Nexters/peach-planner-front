@@ -56,17 +56,12 @@ var AssociateOrganization = function (_a) {
     var _d = react_1.useState(null), imageFile = _d[0], setImageFile = _d[1];
     var _e = react_1.useState([]), organizations = _e[0], setOrganizations = _e[1];
     var registOrganization = function () { return __awaiter(void 0, void 0, void 0, function () {
-        var store, organization, response;
+        var organization, s3ImageUrl, store;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!organizationName || organizations.length >= 10)
                         return [2 /*return*/];
-                    store = {
-                        name: organizationName,
-                        previewImage: previewImage,
-                        imageUrl: ''
-                    };
                     organization = {
                         name: organizationName,
                         previewImage: previewImage,
@@ -74,8 +69,12 @@ var AssociateOrganization = function (_a) {
                     };
                     return [4 /*yield*/, Image_1.upload(imageFile)];
                 case 1:
-                    response = _a.sent();
-                    console.dir(response);
+                    s3ImageUrl = _a.sent();
+                    store = {
+                        name: organizationName,
+                        previewImage: previewImage,
+                        imageUrl: s3ImageUrl
+                    };
                     setOrganizations(organizations === null || organizations === void 0 ? void 0 : organizations.concat(organization));
                     handleStores(store);
                     return [2 /*return*/];

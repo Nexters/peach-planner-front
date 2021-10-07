@@ -12,7 +12,7 @@ import UserCertification from './UserCertification';
 import UserProfile from './UserProfile';
 import { useMutation, useQuery } from 'react-query';
 import { getUser } from 'src/api/User';
-import { PlannerRequest, updateProfile } from 'src/api/Planner';
+import { AffiliatedCompany, PlannerRequest, updateProfile } from 'src/api/Planner';
 import { useEffect, useState } from 'react';
 
 export interface ProfileProps {
@@ -96,8 +96,62 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     setMakeUps(makeUps);
   };
 
-  const handleSubmit = () => {
-    // mutate(request);
+  const handleRegister = () => {
+    const affilicatedDress: AffiliatedCompany[] = dresses.map((dress) => {
+      return {
+        companyName: dress.name,
+        description: '',
+        location: '',
+        primaryImageUrl: dress.imageUrl,
+        tel: '',
+        type: ''
+      };
+    });
+    const affilicatedStudios: AffiliatedCompany[] = studios.map((studio) => {
+      return {
+        companyName: studio.name,
+        description: '',
+        location: '',
+        primaryImageUrl: studio.imageUrl,
+        tel: '',
+        type: ''
+      };
+    });
+    const affilicatedMakeUps: AffiliatedCompany[] = makeUps.map((makeUp) => {
+      return {
+        companyName: makeUp.name,
+        description: '',
+        location: '',
+        primaryImageUrl: makeUp.imageUrl,
+        tel: '',
+        type: ''
+      };
+    });
+
+    const request: PlannerRequest = {
+      affiliatedCompanyInfoDTO: {
+        affiliatedCompanyId: 1
+      },
+      affiliatedDressCompanyDTOList: affilicatedDress,
+      affiliatedStudioCompanyDTOList: affilicatedStudios,
+      affiliatedMakeupCompanyDTOList: affilicatedMakeUps,
+      areaInfoDTO: {
+        locationList: regions
+      },
+      myProfileDTO: description,
+      snsInfoDTO: {
+        externalLinks: {
+          blogLink: sns.blogUrl,
+          facebookLink: sns.facebookUrl,
+          instagramLink: sns.instagramUrl
+        },
+        webSiteUrl: sns.webUrl
+      },
+      supportInfoDTO: {
+        supportInfoList: offers
+      }
+    };
+    mutate(request);
   };
 
   return (
@@ -135,7 +189,14 @@ const Profile = ({ isUpdate }: ProfileProps) => {
             handleStores={handleMakeUp}
           ></AssociateOrganization>
           <FlexDiv direction="row" margin="0 0 320px 48px" justify="flex-start">
-            <PButton color="pink" fontSize="14px" height="40px" width="312px" fontWeight="bold">
+            <PButton
+              color="pink"
+              fontSize="14px"
+              height="40px"
+              width="312px"
+              fontWeight="bold"
+              onClick={handleRegister}
+            >
               {isUpdate ? '수정하기' : '등록하기'}
             </PButton>
           </FlexDiv>

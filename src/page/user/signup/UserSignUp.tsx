@@ -92,7 +92,7 @@ const UserSignUp = () => {
   };
 
   return (
-    <FlexDiv direction={'column'}>
+    <FlexDiv direction={'column'} height={'700px'} justify={'flex-start'}>
       <Title color={'#212529'} height={'24px'} fontSize={'18px'} lineHeight={'27px'} margin={'40px 0 24px'}>
         회원가입{' '}
       </Title>
@@ -169,23 +169,23 @@ const UserSignUp = () => {
           </PButton>
           <Span margin="16px auto">또는</Span>
 
-          <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'0'}>
+          {/* <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'0'}>
             네이버 가입하기
-          </PButton>
+          </PButton> */}
           <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'15px 0'}>
             카카오 가입하기
           </PButton>
-          <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'0'}>
+          {/* <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'0'}>
             페이스북 가입하기
           </PButton>
           <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'15px 0'}>
             구글 가입하기
-          </PButton>
+          </PButton> */}
 
           <FlexDiv>
-            <Span>플래너이신가요? </Span>
+            <Span margin="0 5px 0 0">플래너이신가요? </Span>
             <Span color="#E64980" cursor="pointer" onClick={() => history.push('/plannerSignUp')}>
-              플래너 등록
+              플래너 가입
             </Span>
           </FlexDiv>
         </FlexDiv>

@@ -1,4 +1,4 @@
-import { BrowserRouter, HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Main from './page/home/main';
 import PlannerDetail from './page/planner-detail';
 import PlannerEstimate from './page/planner-estimate/PlannerEstimate';
@@ -43,54 +43,52 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={theme}>
             <GlobalStyle />
-            <BrowserRouter basename={process.env.PUBLIC_URL}>
-              <Router>
-                <Header />
-                <Switch>
-                  <Route exact path="/">
-                    <Main />
-                  </Route>
-                  <Route path="/search">
-                    <ScrollToTop />
-                    <Search />
-                  </Route>
-                  <Route path="/planner/:id">
-                    <PlannerDetail />
-                  </Route>
-                  <Route path="/company/:id">
-                    <CompanyDetail />
-                  </Route>
-                  <Route path="/login">
-                    <Login />
-                  </Route>
-                  <Route path="/estimate/:id">
-                    <PlannerEstimate />
-                  </Route>
-                  <Route path="/userPage">
-                    <UserPage />
-                  </Route>
-                  <Route path="/plannerPage">
-                    <PlannerPage />
-                  </Route>
-                  <Route path="/editProfile">
-                    <Profile isUpdate={true} />
-                  </Route>
-                  <Route path="/chats">
-                    <ChatContainer />
-                  </Route>
-                  <Route path="/plannerSignUp">
-                    <PlannerSignUp></PlannerSignUp>
-                  </Route>
-                  <Route path="/signUp">
-                    <UserSignUp></UserSignUp>
-                  </Route>
-                  <Route path="/api/auth/login/kakao">
-                    <Kakao />
-                  </Route>
-                </Switch>
-                <Footer />
-              </Router>
-            </BrowserRouter>
+            <Router>
+              <Header />
+              <Switch>
+                <Route exact path="/">
+                  <Main />
+                </Route>
+                <Route path="/search">
+                  <ScrollToTop />
+                  <Search />
+                </Route>
+                <Route path="/planner/:id">
+                  <PlannerDetail />
+                </Route>
+                <Route path="/company/:id">
+                  <CompanyDetail />
+                </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path="/estimate/:id">
+                  <PlannerEstimate />
+                </Route>
+                <Route path="/userPage">
+                  <UserPage />
+                </Route>
+                <Route path="/plannerPage">
+                  <PlannerPage />
+                </Route>
+                <Route path="/editProfile">
+                  <Profile isUpdate={true} />
+                </Route>
+                <Route path="/chats">
+                  <ChatContainer />
+                </Route>
+                <Route path="/plannerSignUp">
+                  <PlannerSignUp></PlannerSignUp>
+                </Route>
+                <Route path="/signUp">
+                  <UserSignUp></UserSignUp>
+                </Route>
+                <Route path="/api/auth/login/kakao">
+                  <Kakao />
+                </Route>
+              </Switch>
+              <Footer />
+            </Router>
           </ThemeProvider>
         </QueryClientProvider>
       </RecoilRoot>

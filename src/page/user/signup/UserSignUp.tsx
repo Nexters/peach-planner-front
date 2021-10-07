@@ -5,6 +5,7 @@ import axios from 'axios';
 import PButton from 'src/component/PButton';
 import { FlexDiv, Content, Title } from 'src/component/style/style';
 import { User } from 'src/interface';
+import { KAKAO_AUTH_URL } from '../OAuth/OAuth';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -92,104 +93,108 @@ const UserSignUp = () => {
   };
 
   return (
-    <FlexDiv direction={'column'}>
+    <FlexDiv direction={'column'} height={'700px'} justify={'flex-start'}>
       <Title color={'#212529'} height={'24px'} fontSize={'18px'} lineHeight={'27px'} margin={'40px 0 24px'}>
         회원가입{' '}
       </Title>
 
-      <form onSubmit={handleSignUp}>
-        <FlexDiv justify="flex-start" align="flex-start" direction="column" width="undefined">
-          <Label>이메일</Label>
-          <Input
-            name="email"
-            value={email}
-            placeholder="이메일을 입력해 주세요."
-            type="text"
-            id="inputEmail"
-            onChange={handleInput}
-          />
-          {!isValidEmail && (
-            <Content color="#E03131" fontSize="12px" height="18px" width="undefined" lineHeight="18px">
-              이메일 형식이 유효하지 않습니다.
-            </Content>
-          )}
+      <FlexDiv justify="flex-start" align="flex-start" direction="column" width="undefined">
+        <form onSubmit={handleSignUp}>
+          <FlexDiv justify="flex-start" align="flex-start" direction="column" width="undefined">
+            <Label>이메일</Label>
+            <Input
+              name="email"
+              value={email}
+              placeholder="이메일을 입력해 주세요."
+              type="text"
+              id="inputEmail"
+              onChange={handleInput}
+            />
+            {!isValidEmail && (
+              <Content color="#E03131" fontSize="12px" height="18px" width="undefined" lineHeight="18px">
+                이메일 형식이 유효하지 않습니다.
+              </Content>
+            )}
 
-          <Label>비밀번호</Label>
-          <Input
-            name="password"
-            value={password}
-            placeholder="비밀번호를 입력해 주세요."
-            type="password"
-            id="inputPassword"
-            onChange={handleInput}
-          />
-          {!isValidPassword && (
-            <Content color="#E03131" fontSize="12px" height="18px" width="162px" lineHeight="18px">
-              비밀번호가 일치하지 않습니다.
-            </Content>
-          )}
+            <Label>비밀번호</Label>
+            <Input
+              name="password"
+              value={password}
+              placeholder="비밀번호를 입력해 주세요."
+              type="password"
+              id="inputPassword"
+              onChange={handleInput}
+            />
+            {!isValidPassword && (
+              <Content color="#E03131" fontSize="12px" height="18px" width="162px" lineHeight="18px">
+                비밀번호가 일치하지 않습니다.
+              </Content>
+            )}
 
-          <Label>비밀번호 확인</Label>
-          <Input
-            name="passwordConfirm"
-            value={passwordConfirm}
-            placeholder="비밀번호를 한번 더 입력해 주세요."
-            type="password"
-            id="inputPassword"
-            onChange={handleInput}
-          />
-          {!isValidPassword && (
-            <Content color="#E03131" fontSize="12px" height="18px" width="162px" lineHeight="18px">
-              비밀번호가 일치하지 않습니다.
-            </Content>
-          )}
+            <Label>비밀번호 확인</Label>
+            <Input
+              name="passwordConfirm"
+              value={passwordConfirm}
+              placeholder="비밀번호를 한번 더 입력해 주세요."
+              type="password"
+              id="inputPassword"
+              onChange={handleInput}
+            />
+            {!isValidPassword && (
+              <Content color="#E03131" fontSize="12px" height="18px" width="162px" lineHeight="18px">
+                비밀번호가 일치하지 않습니다.
+              </Content>
+            )}
 
-          <Label>이름</Label>
-          <Input
-            name="name"
-            value={name}
-            placeholder="이름을 입력해 주세요."
-            type="text"
-            id="inputName"
-            onChange={handleInput}
-          />
+            <Label>이름</Label>
+            <Input
+              name="name"
+              value={name}
+              placeholder="이름을 입력해 주세요."
+              type="text"
+              id="inputName"
+              onChange={handleInput}
+            />
 
-          <Label>닉네임</Label>
-          <Input
-            name="nickName"
-            value={nickName}
-            placeholder="닉네임을 입력해 주세요."
-            type="text"
-            id="inputName"
-            onChange={handleInput}
-          />
+            <Label>닉네임</Label>
+            <Input
+              name="nickName"
+              value={nickName}
+              placeholder="닉네임을 입력해 주세요."
+              type="text"
+              id="inputName"
+              onChange={handleInput}
+            />
 
-          <PButton color="pink" width="100%" height="33px" fontSize="12px" padding="0" margin={'15px 0 0'}>
-            가입하기
-          </PButton>
-          <Span margin="16px auto">또는</Span>
+            <PButton color="pink" width="100%" height="33px" fontSize="12px" padding="0" margin={'15px 0 0'}>
+              가입하기
+            </PButton>
+          </FlexDiv>
+        </form>
+        <Span margin="16px auto">또는</Span>
 
-          <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'0'}>
+        {/* <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'0'}>
             네이버 가입하기
-          </PButton>
+          </PButton> */}
+        <a href={KAKAO_AUTH_URL}>
           <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'15px 0'}>
             카카오 가입하기
           </PButton>
-          <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'0'}>
+        </a>
+        {/* <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'0'}>
             페이스북 가입하기
           </PButton>
           <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'15px 0'}>
             구글 가입하기
-          </PButton>
+          </PButton> */}
 
-          <FlexDiv>
-            <Span>플래너이신가요? </Span>
-            <Span color="#E64980" cursor="pointer" onClick={() => history.push('/plannerSignUp')}>
-              플래너 등록
-            </Span>
-          </FlexDiv>
+        <FlexDiv>
+          <Span margin="0 5px 0 0">플래너이신가요? </Span>
+          <Span color="#E64980" cursor="pointer" onClick={() => history.push('/plannerSignUp')}>
+            플래너 가입
+          </Span>
         </FlexDiv>
-      </form>
+      </FlexDiv>
     </FlexDiv>
   );
 };

@@ -8,9 +8,12 @@ import DefaultProfileImage from '../assets/svg/ic_account_default.svg';
 import DownArrowImage from '../assets/svg/ic_arrow_down.svg';
 import NotiDefault from '../assets/svg/ic_noti_default.svg';
 import HorizontalLine from './HorizontalLine';
+import { getUser } from 'src/api/User';
+import { useQuery } from 'react-query';
 
 const Header = () => {
   let history = useHistory();
+  const { data: user } = useQuery(['getUser'], getUser);
   const handleSignUp = () => history.push('/signUp');
   const [peachTokenState] = usePeachTokenState();
   const [isClickedProfile, setIsClickedProfile] = useState(false);
@@ -28,6 +31,16 @@ const Header = () => {
 
   const handleClickNoti = () => {
     setIsAlart(!isAlart);
+  };
+
+  const handleMyPage = () => {
+    if (user?.userType === 'USER') {
+      history.push(`/userPage`);
+    } else {
+      history.push(`/plannerPage`);
+    }
+    setIsClickedProfile(false);
+    return;
   };
 
   let right;
@@ -50,7 +63,7 @@ const Header = () => {
             </MenuTop>
             <MenuBody>
               <Menu>
-                <MenuName>내 페이지</MenuName>
+                <MenuName onClick={handleMyPage}>내 페이지</MenuName>
               </Menu>
               <Menu>
                 <MenuName>프로필 관리</MenuName>

@@ -24,13 +24,13 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
 
   const PLANNER_NAME = plannerInfo.name;
   const COMPANY_NAME = plannerInfo.company.name;
-  const HEART_COUNT = plannerInfo.likes;
   const ONE_LINE_SUMMARY = plannerInfo.summary;
   const EXTERNAL_LINKS = plannerInfo.externalLinks;
   const IMAGES = plannerInfo.images;
 
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const [selected, setSelected] = useState<boolean>(false);
+  const [heartCount, setHeartCount] = useState<number>(plannerInfo.likes);
 
   const openImageModal = () => setShowImageModal(true);
   const closeImageModal = () => setShowImageModal(false);
@@ -43,6 +43,11 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
   const pickPlanner = () => {
     const plannerId = plannerInfo.id;
     pick({ targetCategoryType: 'PLANNER', targetId: plannerId, toBePick: !selected } as PickRequest);
+    if (selected) {
+      setHeartCount((heart) => heart - 1);
+    } else {
+      setHeartCount((heart) => heart + 1);
+    }
     setSelected((selected) => !selected);
   };
 
@@ -86,7 +91,7 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
             <BoldTitle size={20}>{PLANNER_NAME} 플래너</BoldTitle>
             <HeartContainer>
               <Heart />
-              {HEART_COUNT}
+              {heartCount}
             </HeartContainer>
           </NameContainer>
           <CompanyName>{COMPANY_NAME}</CompanyName>

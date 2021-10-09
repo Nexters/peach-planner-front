@@ -30,7 +30,15 @@ const UserInfoIcon: FC<UserInfoIconProps> = ({ imgSrc, title, detail, buttonText
           </>
         )}
         {buttonText && (
-          <PButton fontSize="12px" height="31px" width="83px" padding="5.5px" onClick={onButtonClick}>
+          <PButton
+            fontSize="12px"
+            height="31px"
+            width="83px"
+            padding="5.5px"
+            otherBgColor="#f1f3f5"
+            border="none"
+            onClick={onButtonClick}
+          >
             {buttonText}
           </PButton>
         )}

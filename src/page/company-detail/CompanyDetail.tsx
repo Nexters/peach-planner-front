@@ -68,17 +68,23 @@ const CompanyDetail = () => {
           <Vertical>{companyInfo.tel}</Vertical>
         </InformationElement>
       </Information>
-      <ImageOuterContainer>
-        <ImageContainer>
-          <BigImage src={companyInfo.images[0]} />
-          <ImageWrapper>
-            <SmallImage src={companyInfo.images[1]} />
-            <SmallImage src={companyInfo.images[2]} />
-          </ImageWrapper>
-        </ImageContainer>
-        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={companyInfo.images} />
-        <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>
-      </ImageOuterContainer>
+      {companyInfo.images.length != 0 && (
+        <ImageOuterContainer>
+          <ImageContainer>
+            <BigImage src={companyInfo.images[0]} />
+            <ImageWrapper>
+              <SmallImage src={companyInfo.images[1]} />
+              <SmallImage src={companyInfo.images[2]} />
+            </ImageWrapper>
+          </ImageContainer>
+          <ImageModal
+            showImageModal={showImageModal}
+            closeImageModal={closeImageModal}
+            imageList={companyInfo.images}
+          />
+          <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>
+        </ImageOuterContainer>
+      )}
       {companyInfo.summary && <Container title="업체 정보">{companyInfo.summary}</Container>}{' '}
     </OuterContainer>
   ) : (

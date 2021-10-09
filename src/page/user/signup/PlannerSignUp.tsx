@@ -320,7 +320,7 @@ const Label = styled.label<{ bold?: boolean; chk?: boolean }>`
   color: ${(props) => (props.bold ? '#212529' : '#495057')};
   line-height: 20px;
   margin-bottom: 5.5px;
-  margin-left: ${(props) => (props.chk ? '16px' : props.bold ? '7.5px' : '0')};
+  margin-left: ${(props) => (props.chk ? '5px' : props.bold ? '10px' : '0')};
   &:not(:first-child) {
     margin-top: 4px;
   }
@@ -367,8 +367,8 @@ const Icon = styled.svg`
 
 const StyledCheckBox = styled.div<{ checked?: boolean; big?: boolean }>`
   display: inline-block;
-  width: ${(props) => (props.big ? '33px' : '24px')};
-  height: ${(props) => (props.big ? '33px' : '24px')};
+  width: ${(props) => (props.big ? '24px' : '18px')};
+  height: ${(props) => (props.big ? '24px' : '18px')};
   box-sizing: border-box;
   background: ${(props) => (props.checked ? '#E64980' : 'transparent')};
   border: ${(props) => (props.checked ? '1px solid #E64980' : '1px solid #CED4DA')};

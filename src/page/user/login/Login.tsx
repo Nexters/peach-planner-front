@@ -241,6 +241,19 @@ const LogInButton = styled.button<Props>`
     display: flex;
     align-items: center;
     justify-content: center;
+    :hover {
+      background-color: #f8d756;
+    }
+  }
+  :nth-child(5) {
+    :hover {
+      background-color: #c2255c;
+    }
+  }
+  :nth-child(6) {
+    :hover {
+      background-color: #ced4da;
+    }
   }
 `;
 

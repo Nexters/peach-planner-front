@@ -39,7 +39,8 @@ const PlannerCard = (props: PlannerProps) => {
     const plannerId = props.id;
     const request: PickRequest = {
       targetId: plannerId,
-      targetCategoryType: 'PLANNER'
+      targetCategoryType: 'PLANNER',
+      toBePick: true
     };
     mutate(request);
   };

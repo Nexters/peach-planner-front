@@ -8,20 +8,16 @@ interface DetailProps {
 }
 
 const Detail: FC<DetailProps> = ({ plannerInfo }) => {
-  const DETAIL_LIST = plannerInfo.locations;
-  const SUPPORT_INFO = plannerInfo.supportInfos;
+  const list = plannerInfo.locations.concat(plannerInfo.supportInfos);
 
   return (
     <Container title="플래너가 담당해요">
       <InnerContainer>
-        {DETAIL_LIST.map((detail, i) => (
+        {list.map((detail, i) => (
           <DetailItem key={i}>
-            <Check /> {detail}
-          </DetailItem>
-        ))}
-        {SUPPORT_INFO.map((detail, i) => (
-          <DetailItem key={i}>
-            <Check /> {detail}
+            <Wrap>
+              <Check /> {detail}
+            </Wrap>
           </DetailItem>
         ))}
       </InnerContainer>
@@ -32,11 +28,15 @@ const Detail: FC<DetailProps> = ({ plannerInfo }) => {
 export default Detail;
 
 const InnerContainer = styled.div`
-  margin-top: 13px;
-  display: flex;
+  // margin-top: 13px;
 `;
 
 const DetailItem = styled.span`
   margin-right: 8px;
+  display: inline-block;
+`;
+
+const Wrap = styled.div`
   display: flex;
+  line-height: 24px;
 `;

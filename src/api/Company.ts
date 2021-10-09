@@ -7,6 +7,8 @@ export interface Company {
   location: string;
   certificated: null | boolean;
   profilePath: string;
+  images: string[];
+  summary: string | null;
 }
 
 export const fetchCompany = async (companyId: string) => {

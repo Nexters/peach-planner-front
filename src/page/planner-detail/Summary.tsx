@@ -12,6 +12,8 @@ import DefaultImage from '../../assets/svg/img_photo_defult.svg';
 import { PickRequest, pick } from 'src/api/Pick';
 import { useHistory } from 'react-router';
 import axios from 'axios';
+import EmptyHeart from '../../assets/svg/ic_heart_black.svg';
+import FullHeart from '../../assets/svg/ic_heart.svg';
 
 interface SummaryProps {
   plannerInfo: Planner;
@@ -28,10 +30,10 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
   const IMAGES = plannerInfo.images;
 
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
+  const [selected, setSelected] = useState<boolean>(false);
+
   const openImageModal = () => setShowImageModal(true);
-  const closeImageModal = () => {
-    setShowImageModal(false);
-  };
+  const closeImageModal = () => setShowImageModal(false);
 
   const handleEstimateClick = () => {
     const plannerId = plannerInfo.id;
@@ -40,7 +42,8 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
 
   const pickPlanner = () => {
     const plannerId = plannerInfo.id;
-    pick({ targetCategoryType: 'PLANNER', targetId: plannerId } as PickRequest);
+    pick({ targetCategoryType: 'PLANNER', targetId: plannerId, toBePick: !selected } as PickRequest);
+    setSelected((selected) => !selected);
   };
 
   const handleChat = () => {
@@ -111,8 +114,15 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
             견적 요청하기
           </PButton>
           <ButtonContainer>
-            <PButton onClick={handleChat}>1:1 문의하기</PButton>
-            <PButton onClick={pickPlanner}>찜하기</PButton>
+            <PButton onClick={handleChat} otherBgColor="#f1f3f5" border="none">
+              1:1 문의하기
+            </PButton>
+            <PButton onClick={pickPlanner} otherBgColor="#f1f3f5" border="none">
+              <Vertical>
+                <img src={selected ? FullHeart : EmptyHeart} />
+              </Vertical>{' '}
+              <Vertical>찜하기</Vertical>
+            </PButton>
           </ButtonContainer>
         </InnerContainer>
       </InformationContainer>
@@ -154,7 +164,7 @@ const ShowImageButton = styled.button`
   height: 31px;
   padding: 0px;
   font-size: 12px;
-  border: 1px solid #adb5bd;
+  border: none;
   background-color: white;
   position: absolute;
   bottom: 0;
@@ -220,4 +230,9 @@ const ButtonContainer = styled.div`
   button + button {
     margin-left: 13px;
   }
+`;
+
+const Vertical = styled.div`
+  vertical-align: middle;
+  display: inline-block;
 `;

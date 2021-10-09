@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useRouteMatch } from 'react-router';
+import { useHistory, useRouteMatch } from 'react-router';
 import { useQuery } from 'react-query';
-import { fetchCompany } from '../../api/Company';
+import { Company, fetchCompany } from '../../api/Company';
 import { PickRequest, pick } from 'src/api/Pick';
 import PButton from 'src/component/PButton';
 import EmptyHeart from '../../assets/svg/ic_heart_black.svg';
@@ -11,19 +11,37 @@ import Map from '../../assets/svg/ic_map.svg';
 import Call from '../../assets/svg/ic_call.svg';
 import ImageModal from '../planner-detail/ImageModal';
 import Container from '../planner-detail/Container';
+import axios from 'axios';
 
 interface routeProps {
   id: string;
 }
 
 const CompanyDetail = () => {
+  const [companyInfo, setCompanyInfo] = useState<Company | null>(null);
+  const history = useHistory();
   const { params } = useRouteMatch<routeProps>();
   const companyId = params.id;
 
-  const { data: companyInfo, error } = useQuery(['company', companyId], () => fetchCompany(companyId));
+  // const { data: companyInfo, error } = useQuery(['company', companyId], () => fetchCompany(companyId));
 
   const [selected, setSelected] = useState<boolean>(false);
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
+
+  const fetchCompany = () => {
+    axios
+      .get(`/companies/${companyId}`)
+      .then((response) => {
+        setCompanyInfo({ ...response.data });
+      })
+      .catch((err) => {
+        history.push('/');
+      });
+  };
+
+  useEffect(() => {
+    fetchCompany();
+  }, []);
 
   const pickCompany = () => {
     pick({ targetCategoryType: 'COMPANY', targetId: parseInt(companyId), toBePick: !selected } as PickRequest);
@@ -88,7 +106,7 @@ const CompanyDetail = () => {
       {companyInfo.summary && <Container title="업체 정보">{companyInfo.summary}</Container>}{' '}
     </OuterContainer>
   ) : (
-    <>Loading</>
+    <></>
   );
 };
 

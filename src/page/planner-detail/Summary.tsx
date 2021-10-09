@@ -23,7 +23,7 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
   const history = useHistory();
 
   const PLANNER_NAME = plannerInfo.name;
-  const COMPANY_NAME = plannerInfo.company.name;
+  const COMPANY_NAME = plannerInfo.company ? plannerInfo.company.name : '';
   const ONE_LINE_SUMMARY = plannerInfo.summary;
   const EXTERNAL_LINKS = plannerInfo.externalLinks;
   const IMAGES = plannerInfo.images;

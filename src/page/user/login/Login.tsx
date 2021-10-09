@@ -6,6 +6,7 @@ import { FlexDiv, Title, Content } from 'src/component/style/style';
 import { usePeachTokenState } from 'src/atoms/AuthStatus';
 import { KAKAO_AUTH_URL } from '../OAuth/OAuth';
 import { User } from 'src/interface';
+import logo from '../../../assets/img/ic_share_kakao.png';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -112,48 +113,47 @@ const Login = () => {
             </Content>
           )}
 
-          <LogInButton radius="6px" width="312px" height="40px" type="submit" margin="16px 0 0 0">
+          <LogInButton radius="3px" width="312px" height="40px" type="submit" margin="16px 0 0 0">
             로그인
           </LogInButton>
         </FlexDiv>
       </form>
 
-      <FlexDiv margin="8px 0 40px 0" justify="flex-end" width={'313px'}>
+      <FlexDiv margin="8px 0 20px 0" justify="flex-end" width={'313px'}>
         <Span weight="normal" cursor="pointer">
           이메일
         </Span>
-        {' / '}
+        <div style={{ width: '4px', height: '4px', margin: '0 5px', backgroundColor: '#ced4da' }}></div>
         <Span weight="normal" cursor="pointer">
           비밀번호 찾기
         </Span>
       </FlexDiv>
 
-      <FlexDiv margin="0 0 16px 0">
-        <Span weight="normal">SNS 계정으로 로그인</Span>
+      <FlexDiv margin="0">
+        <Span weight="normal">또는</Span>
       </FlexDiv>
-      <FlexDiv justify="space-around" width={'313px'}>
-        <LogInButton background="#02C73C"></LogInButton>
-        <a href={KAKAO_AUTH_URL}>
-          <LogInButton background="#FFF000"></LogInButton>
-        </a>
-        <LogInButton background="#3C5997"></LogInButton>
-        <LogInButton background="transparent" box="border-box" border="1px solid #DEE2E6"></LogInButton>
-      </FlexDiv>
+      <a href={KAKAO_AUTH_URL} style={{ textDecoration: 'none' }}>
+        <LogInButton radius="3px" background="#FFF000" border="none" width="312px" height="40px" margin="13px 0 10px">
+          <Image src={logo} />
+          <Span color="#000" cursor="pointer">
+            카카오로 로그인
+          </Span>
+        </LogInButton>
+      </a>
 
       <LogInButton
-        radius="6px"
-        background="transparent"
-        border="1px solid #E64980"
-        color="#E64980"
+        radius="3px"
+        background="#f1f3f5"
+        border="none"
         width="312px"
         height="40px"
-        margin="39.5px 0 17.5px"
+        margin="0 0 17.5px"
         onClick={() => history.push('/signUp')}
       >
-        <Span color="#E64980" weight="normal" cursor="pointer">
+        <Span color="#000" weight="normal" cursor="pointer">
           계정이 없으신가요?{' '}
         </Span>
-        <Span color="#E64980" cursor="pointer">
+        <Span color="#000" cursor="pointer">
           회원가입 하기
         </Span>
       </LogInButton>
@@ -164,7 +164,6 @@ const Login = () => {
         </Span>
         <Span
           color="#E64980"
-          weight="normal"
           cursor="pointer"
           onClick={() => {
             '/plannerSignUp';
@@ -238,6 +237,11 @@ const LogInButton = styled.button<Props>`
   box-sizing: ${(props: Props) => props.box || 'border-box'};
   cursor: pointer;
   margin: ${(props: Props) => props.margin || '0'};
+  :nth-child(1) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const Label = styled.label`
@@ -249,4 +253,14 @@ const Label = styled.label`
   &:not(:first-child) {
     margin-top: 4px;
   }
+`;
+
+interface ImageProps {
+  src: string;
+}
+
+const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+  width: 20px;
+  height: 20px;
+  margin-right: 6.7px;
 `;

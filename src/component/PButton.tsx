@@ -9,6 +9,8 @@ interface PBUttonProps {
   fontWeight?: string;
   padding?: string;
   border?: string;
+  margin?: string;
+  otherBgColor?: string;
   onClick?: () => void;
 }
 
@@ -20,7 +22,9 @@ const PButton: FC<PBUttonProps> = ({
   fontWeight,
   padding = '11px',
   border,
+  margin,
   children,
+  otherBgColor,
   onClick
 }) => {
   return (
@@ -32,6 +36,8 @@ const PButton: FC<PBUttonProps> = ({
       fontWeidght={fontWeight}
       padding={padding}
       border={border}
+      margin={margin}
+      otherBgColor={otherBgColor}
       onClick={onClick}
     >
       {children}
@@ -48,6 +54,8 @@ export const Button = styled.button<{
   fontSize: string;
   fontWeidght: string | undefined;
   border: string | undefined;
+  margin: string | undefined;
+  otherBgColor: string | undefined;
 }>`
   cursor: pointer;
   border-radius: 3px;
@@ -56,7 +64,9 @@ export const Button = styled.button<{
   padding: ${({ padding }) => padding};
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeidght }) => fontWeidght};
-  background-color: ${({ color }) => (color == 'pink' ? '#E64980' : 'white')};
+  background-color: ${({ otherBgColor, color }) =>
+    otherBgColor ? otherBgColor : color == 'pink' ? '#E64980' : 'white'};
   color: ${({ color }) => (color == 'pink' ? 'white' : 'black')};
   border: ${({ border, color }) => (border ? border : color == 'pink' ? 'none' : '1px solid #adb5bd')};
+  margin: ${({ margin }) => margin};
 `;

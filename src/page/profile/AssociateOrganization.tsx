@@ -1,23 +1,62 @@
 import { useState } from 'react';
 import { Content, FlexDiv } from '../../component/style/style';
 import LineAndTitle from './LindAndTitle';
-import AddPhoto from '../../assets/svg/ic_addphoto.svg';
 import PButton from '../../component/PButton';
-import SideText from './SideText';
-import OrganizationRegisterModal from './OrganizationRegisterModal';
 import styled from 'styled-components';
+import HorizontalLine from 'src/component/HorizontalLine';
+import ImageUpload from './ImageUpload';
+import Organization from './Organization';
+import { SupportStore } from '.';
+import { upload } from 'src/api/Image';
 
 interface Props {
+  id: string;
   name: string;
   margin: string;
+  handleStores: (store: SupportStore) => void;
 }
 
-const AssociateOrganization = ({ name, margin }: Props) => {
-  const [showImageModal, setShowImageModal] = useState<boolean>(false);
-  const openImageModal = () => setShowImageModal(true);
-  const closeImageModal = () => {
-    setShowImageModal(false);
-    console.log('close');
+interface OrganizationInformation {
+  name: string;
+  previewImage: string;
+  imageFile: any;
+}
+
+const AssociateOrganization = ({ id, name, margin, handleStores }: Props) => {
+  const [organizationName, setOrganizationName] = useState('');
+  const [previewImage, setPreviewImage] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+  const [organizations, setOrganizations] = useState<OrganizationInformation[]>([]);
+
+  const registOrganization = async () => {
+    if (!organizationName || organizations.length >= 10) return;
+
+    const organization = {
+      name: organizationName,
+      previewImage: previewImage,
+      imageFile: imageFile
+    };
+    const s3ImageUrl = await upload(imageFile);
+    const store: SupportStore = {
+      name: organizationName,
+      previewImage: previewImage,
+      imageUrl: s3ImageUrl
+    };
+    setOrganizations(organizations?.concat(organization));
+    handleStores(store);
+  };
+
+  const handleChangeOrganizationName = (e: any) => {
+    const value = e.target.value;
+    setOrganizationName(value);
+  };
+
+  const changePreviewImage = (image: string) => {
+    setPreviewImage(image);
+  };
+
+  const changeImageFile = (imageFile: any) => {
+    setImageFile(imageFile);
   };
 
   return (
@@ -33,7 +72,7 @@ const AssociateOrganization = ({ name, margin }: Props) => {
       >
         {`${name} 업체 이름`}
       </Content>
-      <Input></Input>
+      <Input value={organizationName} onChange={handleChangeOrganizationName}></Input>
       <Content
         height={'24px'}
         width={'auto'}
@@ -44,49 +83,34 @@ const AssociateOrganization = ({ name, margin }: Props) => {
       >
         {`${name} 업체 사진`}
       </Content>
-      <Image src={AddPhoto}></Image>
-      <Content
-        height={'36px'}
-        width={'auto'}
-        color={'#868E96'}
-        fontSize={'12px'}
-        lineHeight={'18px'}
-        margin={'13px 0 12px 0'}
-      >
-        권장 크기 : 00 x 00 <br></br> jpg,jpeg,gif,png,bmp 형식의 정지 이미지만 등록됩니다.
-      </Content>
+      <ImageUpload
+        id={id}
+        previewImage={previewImage}
+        setPreviewImage={changePreviewImage}
+        setImageFile={changeImageFile}
+      ></ImageUpload>
       <HorizontalLine color="#dee2e6"></HorizontalLine>
       <FlexDiv margin="15px 0 72px 0" direction="row" justify="space-between" align="start">
-        <PButton color="black" fontSize="14px" height="45px" width="126px" onClick={openImageModal}>
+        <PButton color="black" fontSize="14px" height="45px" width="126px" onClick={registOrganization}>
           업체 등록하기
         </PButton>
-        <OrganizationRegisterModal showImageModal={showImageModal} closeImageModal={closeImageModal} />
-        <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-end" align="start">
-          <SideText text="소속업체의 제휴업체를 불러올 수 있어요." colorText="제휴업체 불러오기"></SideText>
-        </FlexDiv>
+        <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-end" align="start"></FlexDiv>
       </FlexDiv>
-      <HorizontalLine></HorizontalLine>
+      <OrganizationLists>
+        {organizations ? (
+          organizations.map((organization, index) => {
+            return <Organization key={index} name={organization.name} image={organization.previewImage}></Organization>;
+          })
+        ) : (
+          <></>
+        )}
+      </OrganizationLists>
+      <HorizontalLine color="#868E96"></HorizontalLine>
     </FlexDiv>
   );
 };
 
 export default AssociateOrganization;
-
-const HorizontalLine = styled.hr`
-  height: 1px;
-  width: 632px;
-  background-color: #ced4da;
-`;
-
-interface ImageProps {
-  src: string;
-}
-
-const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
-  height: 93px;
-  width: 93px;
-  margin: 0px 0px 16px 0;
-`;
 
 const Input = styled.input`
   box-sizing: border-box;
@@ -100,4 +124,10 @@ const Input = styled.input`
     color: ADB5BD;
     font-size: 13px;
   }
+`;
+
+const OrganizationLists = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row wrap;
 `;

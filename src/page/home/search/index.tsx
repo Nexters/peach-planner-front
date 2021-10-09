@@ -1,14 +1,30 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import SearchResult from './SearchResult';
 import SearchSideBar from './SearchSideBar';
 
-
 const Search = () => {
+  const [location, setLocation] = useState('');
+  const [support, setSupport] = useState<string[]>([]);
+
+  const changeLocation = (location: string) => {
+    setLocation(location);
+  };
+
+  const changeSupport = (support: string[]) => {
+    setSupport(support);
+  };
+
   return (
     <Container>
       <InnerContainer>
-        <SearchSideBar />
-        <SearchResult />
+        <SearchSideBar
+          location={location}
+          changeLocation={changeLocation}
+          support={support}
+          changeSupport={changeSupport}
+        />
+        <SearchResult location={location} support={support}/>
       </InnerContainer>
     </Container>
   );

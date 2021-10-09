@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import BoldTitle from '../../component/BoldTitle';
 import HorizontalLine from '../../component/HorizontalLine';
@@ -7,27 +7,78 @@ import { ReactComponent as Heart } from '../../assets/svg/ic_heart.svg';
 import { ReactComponent as Instagram } from '../../assets/svg/ic_instagram.svg';
 import { ReactComponent as Blog } from '../../assets/svg/ic_blog.svg';
 import ImageModal from './ImageModal';
+import { Planner } from '../../api/Planner';
+import DefaultImage from '../../assets/svg/img_photo_defult.svg';
+import { PickRequest, pick } from 'src/api/Pick';
+import { useHistory } from 'react-router';
+import axios from 'axios';
+import EmptyHeart from '../../assets/svg/ic_heart_black.svg';
+import FullHeart from '../../assets/svg/ic_heart.svg';
 
-const Summary = () => {
-  const PLANNER_NAME = '이윤경';
-  const COMPANY_NAME = '아이니웨딩';
-  const HEART_COUNT = 12;
-  const ONE_LINE = '당신의 웨딩로망을 서포트합니다 :)';
+interface SummaryProps {
+  plannerInfo: Planner;
+}
+
+const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
+  const history = useHistory();
+
+  const PLANNER_NAME = plannerInfo.name;
+  const COMPANY_NAME = plannerInfo.company.name;
+  const HEART_COUNT = plannerInfo.likes;
+  const ONE_LINE_SUMMARY = plannerInfo.summary;
+  const EXTERNAL_LINKS = plannerInfo.externalLinks;
+  const IMAGES = plannerInfo.images;
 
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
+  const [selected, setSelected] = useState<boolean>(false);
+
   const openImageModal = () => setShowImageModal(true);
-  const closeImageModal = () => {
-    setShowImageModal(false);
-    console.log('close');
+  const closeImageModal = () => setShowImageModal(false);
+
+  const handleEstimateClick = () => {
+    const plannerId = plannerInfo.id;
+    history.push(`/estimate/${plannerId}`);
+  };
+
+  const pickPlanner = () => {
+    const plannerId = plannerInfo.id;
+    pick({ targetCategoryType: 'PLANNER', targetId: plannerId, toBePick: !selected } as PickRequest);
+    setSelected((selected) => !selected);
+  };
+
+  const handleChat = () => {
+    axios
+      .post(
+        `/chat/rooms/${plannerInfo.id}`,
+        {},
+        { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+      )
+      .then((res) => {
+        if (res.status == 200) {
+          history.push('/chats');
+        }
+      });
   };
 
   return (
     <Container>
       <ImageContainer>
-        <PButton width="97px" height="31px" fontSize="12px" padding="0" onClick={openImageModal}>
-          사진 모두 보기
-        </PButton>
-        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} />
+        <ImageWrapper>
+          {IMAGES.slice(0, 2).map((image, i) => (
+            <Image src={image} key={i} />
+          ))}
+          {IMAGES.length == 0 && <Image src={DefaultImage} />}
+          {IMAGES.length <= 1 && <Image src={DefaultImage} />}
+        </ImageWrapper>
+        <ImageWrapper>
+          {IMAGES.slice(2, 4).map((image, i) => (
+            <Image src={image} key={i} />
+          ))}
+          {IMAGES.length <= 2 && <Image src={DefaultImage} />}
+          {IMAGES.length <= 3 && <Image src={DefaultImage} />}
+        </ImageWrapper>
+        {IMAGES.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}
+        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={IMAGES} />
       </ImageContainer>
       <InformationContainer>
         <InnerContainer>
@@ -39,22 +90,39 @@ const Summary = () => {
             </HeartContainer>
           </NameContainer>
           <CompanyName>{COMPANY_NAME}</CompanyName>
-          <HorizontalLine color="#dee2e6" top="12px" bottom="15px" />
+          <HorizontalLine height="0.1px" color="#dee2e6" top="12px" bottom="15px" />
 
           <BoldGray>플래너 한줄소개</BoldGray>
-          <OneLine>{ONE_LINE}</OneLine>
-          <HorizontalLine top="36px" bottom="11px" />
+          <OneLine>{ONE_LINE_SUMMARY}</OneLine>
+          <HorizontalLine height="0.1px" color="#dee2e6" top="36px" bottom="11px" />
 
-          <BoldGray>소셜미디어</BoldGray>
-          <SocialIcon>
-            <Instagram />
-            <Blog />
-          </SocialIcon>
+          {EXTERNAL_LINKS != null && (
+            <>
+              <BoldGray>소셜미디어</BoldGray>
+              <SocialIcon>
+                <a href={EXTERNAL_LINKS.instagramLink} target="_blank">
+                  <Instagram />
+                </a>
+                <a href={EXTERNAL_LINKS.blogLink} target="_blank">
+                  <Blog />
+                </a>
+              </SocialIcon>
+            </>
+          )}
 
-          <PButton color="pink">견적 요청하기</PButton>
+          <PButton color="pink" onClick={handleEstimateClick}>
+            견적 요청하기
+          </PButton>
           <ButtonContainer>
-            <PButton>1:1 문의하기</PButton>
-            <PButton>찜하기</PButton>
+            <PButton onClick={handleChat} otherBgColor="#f1f3f5" border="none">
+              1:1 문의하기
+            </PButton>
+            <PButton onClick={pickPlanner} otherBgColor="#f1f3f5" border="none">
+              <Vertical>
+                <img src={selected ? FullHeart : EmptyHeart} />
+              </Vertical>{' '}
+              <Vertical>찜하기</Vertical>
+            </PButton>
           </ButtonContainer>
         </InnerContainer>
       </InformationContainer>
@@ -70,8 +138,38 @@ const Container = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  background-color: #e9ecef;
+  // background-color: #e9ecef;
   flex: 1;
+  position: relative;
+`;
+
+const ImageWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+  & + & {
+    margin-top: 8px;
+  }
+`;
+
+const Image = styled.img`
+  width: 211px;
+  height: 211px;
+  border-radius: 10px;
+`;
+
+const ShowImageButton = styled.button`
+  cursor: pointer;
+  border-radius: 3px;
+  width: 97px;
+  height: 31px;
+  padding: 0px;
+  font-size: 12px;
+  border: none;
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 19.5px;
 `;
 
 const InformationContainer = styled.div`
@@ -107,7 +205,7 @@ const CompanyName = styled.div`
 `;
 
 const BoldGray = styled.div`
-  margin-bottom: 4px;
+  margin-bottom: 10px;
   font-size: 13px;
   color: #868e96;
 `;
@@ -116,7 +214,7 @@ const SocialIcon = styled.div`
   display: flex;
   margin-bottom: 20px;
 
-  svg + svg {
+  a + a {
     margin-left: 9px;
   }
 `;
@@ -132,4 +230,9 @@ const ButtonContainer = styled.div`
   button + button {
     margin-left: 13px;
   }
+`;
+
+const Vertical = styled.div`
+  vertical-align: middle;
+  display: inline-block;
 `;

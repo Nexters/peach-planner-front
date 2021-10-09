@@ -19,7 +19,7 @@ const UserCertification = () => {
         >
           계정 설정에서 연락처와 이메일 인증이 가능합니다.
         </Content>
-        <Certification name="연락처" isCertificated={true}></Certification>
+        <Certification name="연락처" isCertificated={false}></Certification>
         <Certification name="이메일" isCertificated={false}></Certification>
       </Box>
     </FlexDiv>

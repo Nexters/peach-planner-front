@@ -9,7 +9,7 @@ interface Props {
 const LineAndTitle = ({ title, content }: Props) => {
   return (
     <>
-      <HorizontalLine color="#dee2e6"></HorizontalLine>
+      <HorizontalLine color="#868E96"></HorizontalLine>
       <Title height={'27px'} width={'430px'} fontSize={'18px'} lineHeight={'27px'} margin={'12px 0 0 0'}>
         {title}
       </Title>

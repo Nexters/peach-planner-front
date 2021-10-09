@@ -5,15 +5,18 @@ import { ReactComponent as Heart } from '../assets/svg/ic_heart.svg';
 import { ReactComponent as Review } from '../assets/svg/ic_review.svg';
 
 interface UserInfoIconProps {
+  imgSrc: string;
   title: string;
   detail?: string;
   buttonText?: string;
+  likeCount?: number;
+  onButtonClick?: () => void;
 }
 
-const UserInfoIcon: FC<UserInfoIconProps> = ({ title, detail, buttonText }) => {
+const UserInfoIcon: FC<UserInfoIconProps> = ({ imgSrc, title, detail, buttonText, likeCount, onButtonClick }) => {
   return (
     <Container>
-      <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs33kicMrwTO3bQTdskuUlvJRK9JAgmaGjZw&usqp=CAU" />
+      <Image src={imgSrc} />
 
       <InnerContainer>
         <Title detail={detail}>{title}</Title>
@@ -21,13 +24,21 @@ const UserInfoIcon: FC<UserInfoIconProps> = ({ title, detail, buttonText }) => {
           <>
             <Detail>{detail}</Detail>
             <IconContainer>
-              <Heart /> 12
+              <Heart /> {likeCount}
               <Review /> 24
             </IconContainer>
           </>
         )}
         {buttonText && (
-          <PButton fontSize="12px" height="31px" width="83px" padding="5.5px">
+          <PButton
+            fontSize="12px"
+            height="31px"
+            width="83px"
+            padding="5.5px"
+            otherBgColor="#f1f3f5"
+            border="none"
+            onClick={onButtonClick}
+          >
             {buttonText}
           </PButton>
         )}
@@ -61,10 +72,11 @@ const Title = styled.div<{ detail: string | undefined }>`
 const Detail = styled.div`
   font-size: 16px;
   color: #495057;
+  margin-top: 15px;
 `;
 
 const IconContainer = styled.div`
-  margin-top: 9px;
+  margin-top: 15px;
   display: flex;
   font-size: 14px;
 

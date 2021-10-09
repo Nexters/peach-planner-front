@@ -2,24 +2,21 @@ import styled from 'styled-components';
 import Slick, { Settings } from 'react-slick';
 import { FlexDiv } from '../../../component/style/style';
 import PlannerCard from '../../../component/PlannerCard';
-import dummy1 from './dummy/img_wedding_1.png';
-import dummy2 from './dummy/img_wedding_2.png';
-import dummy3 from './dummy/img_wedding_3.png';
-import dummy4 from './dummy/img_wedding_4.png';
 import LeftArrow from '../../../assets/svg/ic_arrow_left.svg';
 import RightArrow from '../../../assets/svg/ic_arrow_right.svg';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { fetchPlanners } from '../../../api/Planner';
+import { Link } from 'react-router-dom';
 
 const NewPlanner = () => {
-  const { data: planners } = useQuery(['planners'], fetchPlanners);
+  const { data: planners } = useQuery(['newPlanners', { isNew: true }], fetchPlanners);
   const [slider, setSlider] = useState<Slick>();
   const [slickSettings, setSlickSettings] = useState<Settings>({
     draggable: false,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 1,
+    slidesToScroll: 4,
     infinite: true,
     variableWidth: true,
     arrows: false
@@ -30,7 +27,9 @@ const NewPlanner = () => {
       <FlexDiv height={'56px'} justify="space-between" margin={'0 0 8px 0'}>
         <Title>신규 플래너</Title>
         <FlexDiv justify="flex-end">
-          <More>더 보기</More>
+          <More>
+            <StyledLink to="/search?sort=new">더 보기</StyledLink>
+          </More>
           <ArrowButton src={LeftArrow} onClick={slider?.slickPrev} margin="0 8px 0 0"></ArrowButton>
           <ArrowButton src={RightArrow} onClick={slider?.slickNext} margin="0"></ArrowButton>
         </FlexDiv>
@@ -45,110 +44,26 @@ const NewPlanner = () => {
       >
         <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
           {planners ? (
-            planners.map((planner) => {
+            planners.content.map((planner) => {
               return (
                 <PlannerCard
                   key={planner.id}
                   margin={'0 28px 0 0'}
                   size={'254px'}
-                  imagePath={dummy1}
+                  imagePath={planner.images[0]}
                   heartCount={planner.likes}
-                  reviewCount={24}
+                  reviewCount={planner.reviews}
                   name={planner.name}
-                  organization={planner.company.name}
+                  organization={planner.company?.name}
                   region={planner.locations.join(',')}
-                ></PlannerCard>
+                  id={planner.id}
+                  isPicked={false}
+                />
               );
             })
           ) : (
             <>loading...</>
           )}
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy1}
-            heartCount={12}
-            reviewCount={24}
-            name={'송영주'}
-            organization={'아이니웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy2}
-            heartCount={12}
-            reviewCount={24}
-            name={'이윤정'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy3}
-            heartCount={12}
-            reviewCount={24}
-            name={'정화진'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy4}
-            heartCount={12}
-            reviewCount={24}
-            name={'성시란'}
-            organization={'르웨딩플랜'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy1}
-            heartCount={12}
-            reviewCount={24}
-            name={'송영주'}
-            organization={'아이니웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy2}
-            heartCount={12}
-            reviewCount={24}
-            name={'이윤정'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy3}
-            heartCount={12}
-            reviewCount={24}
-            name={'정화진'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy4}
-            heartCount={12}
-            reviewCount={24}
-            name={'성시란'}
-            organization={'르웨딩플랜'}
-            region={'서울,경기'}
-          ></PlannerCard>
         </Slider>
       </FlexDiv>
     </FlexDiv>
@@ -156,6 +71,13 @@ const NewPlanner = () => {
 };
 
 export default NewPlanner;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #495057;
+  font-size: 13px;
+  line-height: 19px;
+`;
 
 const Slider = styled(Slick)`
   .slick-initialized slick-slider {

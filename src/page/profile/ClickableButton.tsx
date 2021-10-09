@@ -3,13 +3,21 @@ import styled from 'styled-components';
 import { Content } from '../../component/style/style';
 
 interface Props {
+  items: string[];
+  handleItems: (items: string[]) => void;
   content: string;
 }
 
-const ClickableButton = ({ content }: Props) => {
+const ClickableButton = ({ items, handleItems, content }: Props) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
+    if (!isClicked) {
+      handleItems(items.concat(content));
+    } else {
+      const removedItems = items.filter((item) => item !== content);
+      handleItems(removedItems);
+    }
     setIsClicked(!isClicked);
   };
 

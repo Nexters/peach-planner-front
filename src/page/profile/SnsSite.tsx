@@ -5,9 +5,11 @@ interface Props {
   title: string;
   url: string;
   margin: string;
+  inputName: string;
+  handleSns: (e: any) => void;
 }
 
-const SnsSite = ({ title, url, margin }: Props) => {
+const SnsSite = ({ title, url, margin, inputName, handleSns }: Props) => {
   return (
     <FlexDiv margin={margin} align="start" direction="column">
       <Content
@@ -31,7 +33,7 @@ const SnsSite = ({ title, url, margin }: Props) => {
         >
           {url}
         </Content>
-        <Input></Input>
+        <Input name={inputName} onChange={handleSns}></Input>
       </FlexDiv>
     </FlexDiv>
   );

@@ -1,200 +1,148 @@
-import { FlexDiv } from '../../../component/style/style';
-import PlannerCard from '../../../component/PlannerCard';
-import dummy5 from './dummy/img_wedding_5.png';
-import dummy6 from './dummy/img_wedding_6.png';
-import dummy7 from './dummy/img_wedding_7.png';
-import dummy8 from './dummy/img_wedding_8.png';
-import LeftArrow from '../../../assets/svg/ic_arrow_left.svg';
-import RightArrow from '../../../assets/svg/ic_arrow_right.svg';
-import styled from 'styled-components';
-import Slick, { Settings } from 'react-slick';
-import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { fetchPlanners } from '../../../api/Planner';
+import { fetchRecommendedPlanners } from 'src/api/Planner';
+import styled from 'styled-components';
+import { FlexDiv } from '../../../component/style/style';
 
-const RecommendPlanner = () => {
-  const { data: planners } = useQuery(['planners'], fetchPlanners);
-  const [slider, setSlider] = useState<Slick>();
-  const [slickSettings, setSlickSettings] = useState<Settings>({
-    draggable: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    infinite: true,
-    variableWidth: true,
-    arrows: false
-  });
+const RecommendedPlanner = () => {
+  const { data: planners } = useQuery(['recommendedPlanners'], fetchRecommendedPlanners);
 
   return (
-    <FlexDiv margin={'64px 0 0 0'} direction="column">
-      <FlexDiv height={'56px'} justify="between" margin={'0 0 8px 0'}>
+    <FlexDiv margin={'54px 0 0 0'} direction="column">
+      <FlexDiv height={'56px'} justify="between" margin={'0 0 40px 0'}>
         <Title>추천 플래너</Title>
-        <FlexDiv justify="flex-end">
-          <More>더 보기</More>
-          <ArrowButton src={LeftArrow} onClick={slider?.slickPrev} margin="0 8px 0 0"></ArrowButton>
-          <ArrowButton src={RightArrow} onClick={slider?.slickNext} margin="0"></ArrowButton>
-        </FlexDiv>
       </FlexDiv>
-      <FlexDiv
-        justify="flex-start"
-        align="start"
-        direction="row"
-        margin="0"
-        width="1100px"
-        style={{ overflow: 'hidden' }}
-      >
-        <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
-          {planners ? (
-            planners.map((planner) => {
-              return (
-                <PlannerCard
-                  key={planner.id}
-                  margin={'0 28px 0 0'}
-                  size={'254px'}
-                  imagePath={dummy5}
-                  heartCount={planner.likes}
-                  reviewCount={24}
-                  name={planner.name}
-                  organization={planner.company.name}
-                  region={planner.locations.join(',')}
-                ></PlannerCard>
-              );
-            })
-          ) : (
-            <>loading...</>
-          )}
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy5}
-            heartCount={12}
-            reviewCount={24}
-            name={'송영주'}
-            organization={'아이니웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy6}
-            heartCount={12}
-            reviewCount={24}
-            name={'이윤정'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy7}
-            heartCount={12}
-            reviewCount={24}
-            name={'정화진'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy8}
-            heartCount={12}
-            reviewCount={24}
-            name={'성시란'}
-            organization={'르웨딩플랜'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy5}
-            heartCount={12}
-            reviewCount={24}
-            name={'송영주'}
-            organization={'아이니웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy6}
-            heartCount={12}
-            reviewCount={24}
-            name={'이윤정'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy7}
-            heartCount={12}
-            reviewCount={24}
-            name={'정화진'}
-            organization={'베리굿웨딩'}
-            region={'서울,경기'}
-          ></PlannerCard>
-          <PlannerCard
-            margin={'0 28px 0 0'}
-            size={'254px'}
-            imagePath={dummy8}
-            heartCount={12}
-            reviewCount={24}
-            name={'성시란'}
-            organization={'르웨딩플랜'}
-            region={'서울,경기'}
-          ></PlannerCard>
-        </Slider>
+      <FlexDiv margin={'0'} justify="flex-start" direction="row">
+        {planners ? (
+          planners.map((planner, index) => {
+            return (
+              <PlannerCard key={index}>
+                <Image src={planner.imgUrl}></Image>
+                {planner.fontColor === 'WHITE' ? (
+                  <WhiteDescription>
+                    {planner.description.split('\\n').map((line, index) => {
+                      return (
+                        <span>
+                          {line}
+                          <br />
+                        </span>
+                      );
+                    })}
+                  </WhiteDescription>
+                ) : (
+                  <Description>
+                    {planner.description.split('\\n').map((line, index) => {
+                      return (
+                        <span>
+                          {line}
+                          <br />
+                        </span>
+                      );
+                    })}
+                  </Description>
+                )}
+                {planner.fontColor === 'WHITE' ? (
+                  <WhitePlannerName>{planner.plannerName} 플래너</WhitePlannerName>
+                ) : (
+                  <PlannerName>{planner.plannerName} 플래너</PlannerName>
+                )}
+              </PlannerCard>
+            );
+          })
+        ) : (
+          <></>
+        )}
       </FlexDiv>
     </FlexDiv>
   );
 };
 
-export default RecommendPlanner;
+export default RecommendedPlanner;
+
+interface ImageProps {
+  src: string;
+}
+
+const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+  height: 198px;
+  width: 352px;
+  margin: 0 22px 0 0;
+  border-radius: 10px;
+  position: absolute;
+`;
 
 const Title = styled.div`
-  width: 200px;
+  height: 29px;
+  width: auto;
   color: #000000;
   font-size: 20px;
   font-weight: bold;
   letter-spacing: 0;
+  line-height: 29px;
+  margin: 0 0 14px 0;
 `;
 
-interface ImageProps {
-  src: string;
-  margin: string;
-}
-
-const ArrowButton = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
-  margin: ${(props: ImageProps) => props.margin};
-  height: 24px;
-  width: 24px;
+const PlannerCard = styled.div`
+  disply: flex;
+  height: 198px;
+  width: 352px;
+  margin: 0 22px 0 0;
   cursor: pointer;
 `;
 
-const More = styled.div`
-  height: 19px;
-  font-size: 13px;
-  line-height: 19px;
-  margin: 0 16px 0 0;
-  border-bottom: 1px solid;
-  cursor: pointer;
+const Description = styled.div`
+  height: 48px;
+  width: 167px;
+  color: #000000;
+  font-family: SpoqaHanSans;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  white-space: pre-wrap;
+  margin-top: 30px;
+  margin-left: 20px;
 `;
 
-const Slider = styled(Slick)`
-  .slick-initialized slick-slider {
-    overflow: hidden;
-    flex: 1;
-    max-width: 1100px !important;
-  }
+const WhiteDescription = styled.div`
+  height: 48px;
+  width: 167px;
+  color: #ffffff;
+  font-family: SpoqaHanSans;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  white-space: pre-wrap;
+  margin-top: 30px;
+  margin-left: 20px;
+`;
 
-  .slick-track {
-    display: flex;
-    width: 1100px;
-    overflow: hidden;
-  }
-  .slick-list {
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-  }
+const PlannerName = styled.div`
+  height: 18px;
+  width: 240px;
+  color: #000000;
+  font-family: SpoqaHanSans;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0;
+  position: absolute;
+  line-height: 18px;
+  margin-left: 20px;
+  margin-top: 86px;
+`;
+
+const WhitePlannerName = styled.div`
+  height: 18px;
+  width: 240px;
+  color: #ffffff;
+  font-family: SpoqaHanSans;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0;
+  position: absolute;
+  line-height: 18px;
+  margin-left: 20px;
+  margin-top: 86px;
 `;

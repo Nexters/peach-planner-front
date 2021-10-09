@@ -187,7 +187,7 @@ const PlannerSignUp = () => {
   };
 
   return (
-    <FlexDiv direction="column">
+    <FlexDiv direction="column" height={'700px'} justify={'flex-start'}>
       <Title color={'#212529'} height={'24px'} fontSize={'18px'} lineHeight={'27px'} margin={'40px 0 24px'}>
         웨딩플래너 가입하기{' '}
       </Title>
@@ -241,7 +241,7 @@ const PlannerSignUp = () => {
           onChange={handlePhone}
         />
 
-        <HorizontalLine top="40px" bottom="40px" />
+        <HorizontalLine top="20px" bottom="16px" />
         <Span>피치플래너 서비스 이용악관에 동의해주세요.</Span>
 
         <FlexDiv margin="15px 0 0 0" justify="flex-start">
@@ -258,7 +258,7 @@ const PlannerSignUp = () => {
           </label>
         </FlexDiv>
 
-        <HorizontalLine top="40px" bottom="40px" />
+        <HorizontalLine top="21px" bottom="10px" />
 
         <FlexDiv margin="0" justify="flex-start">
           <label>
@@ -293,7 +293,7 @@ const PlannerSignUp = () => {
           <label></label>
         </Styled> */}
 
-        <PButton color="pink" width="100%" height="33px" fontSize="12px" padding="0" onClick={handleSignUp}>
+        <PButton color="pink" width="100%" height="40px" fontSize="12px" padding="0" onClick={handleSignUp}>
           가입 완료하기
         </PButton>
       </FlexDiv>

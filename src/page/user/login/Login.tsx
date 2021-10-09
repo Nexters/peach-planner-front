@@ -166,7 +166,7 @@ const Login = () => {
           color="#E64980"
           cursor="pointer"
           onClick={() => {
-            '/plannerSignUp';
+            history.push('/plannerSignUp');
           }}
         >
           플래너 가입

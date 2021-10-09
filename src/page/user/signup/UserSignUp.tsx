@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -6,6 +6,8 @@ import PButton from 'src/component/PButton';
 import { FlexDiv, Content, Title } from 'src/component/style/style';
 import { User } from 'src/interface';
 import { KAKAO_AUTH_URL } from '../OAuth/OAuth';
+import HorizontalLine from 'src/component/HorizontalLine';
+import logo from '../../../assets/img/ic_share_kakao.png';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -22,6 +24,41 @@ const UserSignUp = () => {
     nickName: ''
   });
   const { email, password, passwordConfirm, name, nickName } = inputs;
+  const [checkAll, setCheckAll] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [agreePrivacy, setAgreePrivacy] = useState(false);
+
+  useEffect(() => {
+    if (checkAll) {
+      setAgreeTerms(true);
+      setAgreePrivacy(true);
+    } else {
+      if (agreeTerms && agreePrivacy) {
+        setAgreeTerms(false);
+        setAgreePrivacy(false);
+      }
+    }
+  }, [checkAll]);
+
+  useEffect(() => {
+    if (!agreeTerms || !agreePrivacy) {
+      setCheckAll(false);
+    } else {
+      setCheckAll(true);
+    }
+  }, [agreeTerms, agreePrivacy]);
+
+  const handleCheckAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckAll(!checkAll);
+  };
+
+  const handleCheckTerms = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAgreeTerms(!agreeTerms);
+  };
+
+  const handleCheckPrivacy = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAgreePrivacy(!agreePrivacy);
+  };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -47,6 +84,14 @@ const UserSignUp = () => {
       alert('이름을 입력해주세요.');
     } else if (!nickName) {
       alert('닉네임을 입력해주세요.');
+    } else if (!agreeTerms) {
+      alert('이용약관에 동의해주세요.');
+      setIsValidPassword(true);
+      setIsValidEmail(true);
+    } else if (!agreePrivacy) {
+      alert('개인정보 처리방침에 동의해주세요.');
+      setIsValidPassword(true);
+      setIsValidEmail(true);
     } else {
       signup({
         name,
@@ -93,7 +138,7 @@ const UserSignUp = () => {
   };
 
   return (
-    <FlexDiv direction={'column'} height={'700px'} justify={'flex-start'}>
+    <FlexDiv direction={'column'} justify={'flex-start'}>
       <Title color={'#212529'} height={'24px'} fontSize={'18px'} lineHeight={'27px'} margin={'40px 0 24px'}>
         회원가입{' '}
       </Title>
@@ -166,34 +211,73 @@ const UserSignUp = () => {
               onChange={handleInput}
             />
 
-            <PButton color="pink" width="100%" height="33px" fontSize="12px" padding="0" margin={'15px 0 0'}>
+            <HorizontalLine top="20px" bottom="16px" />
+            <Span>피치플래너 서비스 이용악관에 동의해주세요.</Span>
+
+            <FlexDiv margin="15px 0 0 0" justify="flex-start">
+              <label>
+                <CheckBoxContainer>
+                  <HiddenCheckBox type="checkbox" id="checkAll" checked={checkAll} onChange={handleCheckAll} />
+                  <StyledCheckBox checked={checkAll} big>
+                    <Icon viewBox="0 0 24 24">
+                      <polyline points="19 7, 10 17, 5 12" strokeLinecap="round" strokeLinejoin="round" />
+                    </Icon>
+                  </StyledCheckBox>
+                </CheckBoxContainer>
+                <Label bold>전체동의</Label>
+              </label>
+            </FlexDiv>
+
+            <HorizontalLine top="21px" bottom="10px" />
+
+            <FlexDiv margin="0" justify="flex-start">
+              <label>
+                <CheckBoxContainer>
+                  <HiddenCheckBox type="checkbox" id="agreeTerms" checked={agreeTerms} onChange={handleCheckTerms} />
+                  <StyledCheckBox checked={agreeTerms}>
+                    <Icon viewBox="0 0 24 24">
+                      <polyline points="19 7, 10 17, 5 12" strokeLinecap="round" strokeLinejoin="round" />
+                    </Icon>
+                  </StyledCheckBox>
+                </CheckBoxContainer>
+                <Label chk>[필수] 피치플래너 이용약관 동의</Label>
+              </label>
+            </FlexDiv>
+
+            <FlexDiv margin="15px 0 0" justify="flex-start">
+              <label>
+                <CheckBoxContainer>
+                  <HiddenCheckBox
+                    type="checkbox"
+                    id="agreePrivacy"
+                    checked={agreePrivacy}
+                    onChange={handleCheckPrivacy}
+                  />
+                  <StyledCheckBox checked={agreePrivacy}>
+                    <Icon viewBox="0 0 24 24">
+                      <polyline points="19 7, 10 17, 5 12" strokeLinecap="round" strokeLinejoin="round" />
+                    </Icon>
+                  </StyledCheckBox>
+                </CheckBoxContainer>
+                <Label chk>[필수] 개인정보 처리방침 동의</Label>
+              </label>
+            </FlexDiv>
+
+            <PButton color="pink" width="100%" height="40px" fontSize="12px" padding="0" margin={'20px 0 0'}>
               가입하기
             </PButton>
           </FlexDiv>
         </form>
-        <Span margin="16px auto">또는</Span>
+        <Span margin="10px auto 13px">또는</Span>
 
-        {/* <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'0'}>
-            네이버 가입하기
-          </PButton> */}
-        <a href={KAKAO_AUTH_URL}>
-          <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'15px 0'}>
-            카카오 가입하기
-          </PButton>
+        <a href={KAKAO_AUTH_URL} style={{ textDecoration: 'none' }}>
+          <KakaoButton>
+            <Image src={logo} />
+            <Span color="#000" cursor="pointer">
+              카카오로 가입하기
+            </Span>
+          </KakaoButton>
         </a>
-        {/* <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'0'}>
-            페이스북 가입하기
-          </PButton>
-          <PButton color="#212529" width="313px" height="40px" fontSize="13px" padding="0" margin={'15px 0'}>
-            구글 가입하기
-          </PButton> */}
-
-        <FlexDiv>
-          <Span margin="0 5px 0 0">플래너이신가요? </Span>
-          <Span color="#E64980" cursor="pointer" onClick={() => history.push('/plannerSignUp')}>
-            플래너 가입
-          </Span>
-        </FlexDiv>
       </FlexDiv>
     </FlexDiv>
   );
@@ -220,17 +304,6 @@ const Span = styled.span<SpanProps>`
   cursor: ${(props: SpanProps) => props.cursor || 'default'};
 `;
 
-const Label = styled.label`
-  flex: 1;
-  font-size: 14px;
-  color: #495057;
-  line-height: 20px;
-  margin-bottom: 5.5px;
-  &:not(:first-child) {
-    margin-top: 4px;
-  }
-`;
-
 const Input = styled.input.attrs((props) => ({
   type: props.type || 'text'
 }))`
@@ -243,4 +316,82 @@ const Input = styled.input.attrs((props) => ({
   font-family: SpoqaHanSans;
   font-size: 13px;
   padding: 10.5px 11.5px;
+`;
+
+const CheckBoxContainer = styled.div`
+  display: inline-block;
+  vertical-align: middle;
+`;
+
+const HiddenCheckBox = styled.input<{ checked?: boolean }>`
+  border: 0;
+  clip: rect(0 0 0 0);
+  clippath: inset(50%);
+  width: 0;
+  height: 0;
+  margin: 0px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+`;
+
+const Icon = styled.svg`
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+`;
+
+const StyledCheckBox = styled.div<{ checked?: boolean; big?: boolean }>`
+  display: inline-block;
+  width: ${(props) => (props.big ? '24px' : '18px')};
+  height: ${(props) => (props.big ? '24px' : '18px')};
+  box-sizing: border-box;
+  background: ${(props) => (props.checked ? '#E64980' : 'transparent')};
+  border: ${(props) => (props.checked ? '1px solid #E64980' : '1px solid #CED4DA')};
+  border-radius: 3px;
+  transition: all 150ms;
+  ${Icon} {
+    visibility: ${(props) => (props.checked ? 'visible' : 'hidden')};
+  }
+`;
+
+const Label = styled.label<{ bold?: boolean; chk?: boolean }>`
+  flex: 1;
+  font-size: 14px;
+  font-weight: ${(props) => props.bold && 'bold'};
+  color: ${(props) => (props.bold ? '#212529' : '#495057')};
+  line-height: 20px;
+  margin-bottom: 5.5px;
+  margin-left: ${(props) => (props.chk ? '5px' : props.bold ? '10px' : '0')};
+  &:not(:first-child) {
+    margin-top: 4px;
+  }
+`;
+
+interface ImageProps {
+  src: string;
+}
+
+const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+  width: 20px;
+  height: 20px;
+  margin-right: 6.7px;
+  cursor: pointer;
+`;
+
+const KakaoButton = styled.button`
+  width: 312px;
+  height: 40px;
+  border-radius: 3px;
+  background-color: #fce750;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
 `;

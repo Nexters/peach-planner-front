@@ -6,7 +6,7 @@ import PartnerInfo from './PartnerInfo';
 import PlannerInfo from './PlannerInfo';
 import ReviewList from './ReviewList';
 import Summary from './Summary';
-import { useRouteMatch } from 'react-router';
+import { useHistory, useRouteMatch } from 'react-router';
 import { useQuery } from 'react-query';
 import { Planner, fetchPlanner, fetchPlannerPartners } from '../../api/Planner';
 
@@ -15,10 +15,14 @@ interface routeProps {
 }
 
 const PlannerDetail = () => {
+  const history = useHistory();
   const { params } = useRouteMatch<routeProps>();
   const plannerId = params.id;
 
   const { data: plannerInfo } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
+  // if (plannerInfo == undefined) {
+  //   history.push('/');
+  // }
 
   return plannerInfo ? (
     <Container>
@@ -30,7 +34,7 @@ const PlannerDetail = () => {
       <ReviewList plannerId={plannerId} />
     </Container>
   ) : (
-    <>Loading</>
+    <Container>해당 플래너 정보가 없습니다. </Container>
   );
 };
 

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Main from './page/home/main';
 import PlannerDetail from './page/planner-detail';
 import PlannerEstimate from './page/planner-estimate/PlannerEstimate';
@@ -22,6 +22,7 @@ import Kakao from './page/user/OAuth/Kakao';
 
 import { setAxiosDefaults } from './api';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { UserPrivateRoute, PlannerPrivateRoute, PublicOnlyRoute } from './routes';
 import CompanyDetail from './page/company-detail/CompanyDetail';
 import ScrollToTop from './component/ScrollToTop';
 
@@ -34,7 +35,7 @@ const App = () => {
     return (
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Mobile></Mobile>
+        <Mobile />
       </ThemeProvider>
     );
   } else {
@@ -59,32 +60,35 @@ const App = () => {
                 <Route path="/company/:id">
                   <CompanyDetail />
                 </Route>
-                <Route path="/login">
+                <PublicOnlyRoute path="/login">
                   <Login />
-                </Route>
-                <Route path="/estimate/:id">
+                </PublicOnlyRoute>
+                <UserPrivateRoute path="/estimate/:id">
                   <PlannerEstimate />
-                </Route>
-                <Route path="/userPage">
+                </UserPrivateRoute>
+                <UserPrivateRoute path="/userPage">
                   <UserPage />
-                </Route>
-                <Route path="/plannerPage">
+                </UserPrivateRoute>
+                <PlannerPrivateRoute path="/plannerPage">
                   <PlannerPage />
-                </Route>
-                <Route path="/editProfile">
+                </PlannerPrivateRoute>
+                <PlannerPrivateRoute path="/editProfile">
                   <Profile isUpdate={true} />
-                </Route>
-                <Route path="/chats">
+                </PlannerPrivateRoute>
+                <UserPrivateRoute path="/chats">
                   <ChatContainer />
-                </Route>
-                <Route path="/plannerSignUp">
-                  <PlannerSignUp></PlannerSignUp>
-                </Route>
-                <Route path="/signUp">
-                  <UserSignUp></UserSignUp>
-                </Route>
+                </UserPrivateRoute>
+                <PublicOnlyRoute path="/plannerSignUp">
+                  <PlannerSignUp />
+                </PublicOnlyRoute>
+                <PublicOnlyRoute path="/signUp">
+                  <UserSignUp />
+                </PublicOnlyRoute>
                 <Route path="/api/auth/login/kakao">
                   <Kakao />
+                </Route>
+                <Route>
+                  <Redirect to="/" />
                 </Route>
               </Switch>
               <Footer />

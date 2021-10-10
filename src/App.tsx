@@ -25,6 +25,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { UserPrivateRoute, PlannerPrivateRoute, PublicOnlyRoute } from './routes';
 import CompanyDetail from './page/company-detail/CompanyDetail';
 import ScrollToTop from './component/ScrollToTop';
+import { TermsOfUse } from './page/signup-detail/TermsOfUse';
+import { PrivacyPolicy } from './page/signup-detail/PrivacyPolicy';
 
 const queryClient = new QueryClient();
 
@@ -84,6 +86,12 @@ const App = () => {
                 <PublicOnlyRoute path="/signUp">
                   <UserSignUp />
                 </PublicOnlyRoute>
+                <Route path="/termsOfUse">
+                  <TermsOfUse />
+                </Route>
+                <Route path="/privacyPolicy">
+                  <PrivacyPolicy />
+                </Route>
                 <Route path="/api/auth/login/kakao">
                   <Kakao />
                 </Route>

@@ -189,7 +189,7 @@ const PlannerSignUp = () => {
   return (
     <FlexDiv direction="column" height={'700px'} justify={'flex-start'}>
       <Title color={'#212529'} height={'24px'} fontSize={'18px'} lineHeight={'27px'} margin={'40px 0 24px'}>
-        웨딩플래너 가입하기{' '}
+        웨딩플래너 가입하기
       </Title>
 
       <FlexDiv justify="flex-start" align="flex-start" direction="column" width="undefined">
@@ -270,7 +270,12 @@ const PlannerSignUp = () => {
                 </Icon>
               </StyledCheckBox>
             </CheckBoxContainer>
-            <Label chk>[필수] 피치플래너 이용약관 동의</Label>
+            <Label chk>
+              [필수] 피치플래너 이용약관 동의{' '}
+              <Underline href="/termsOfUse" target="_blank">
+                보기
+              </Underline>
+            </Label>
           </label>
         </FlexDiv>
 
@@ -284,7 +289,12 @@ const PlannerSignUp = () => {
                 </Icon>
               </StyledCheckBox>
             </CheckBoxContainer>
-            <Label chk>[필수] 개인정보 처리방침 동의</Label>
+            <Label chk>
+              [필수] 개인정보 처리방침 동의{' '}
+              <Underline href="/privacyPolicy" target="_blank">
+                보기
+              </Underline>
+            </Label>
           </label>
         </FlexDiv>
 
@@ -323,6 +333,12 @@ const Label = styled.label<{ bold?: boolean; chk?: boolean }>`
   &:not(:first-child) {
     margin-top: 4px;
   }
+`;
+
+const Underline = styled.a`
+  text-decoration: underline;
+  cursor: pointer;
+  color: #495057;
 `;
 
 const Input = styled.input.attrs((props) => ({

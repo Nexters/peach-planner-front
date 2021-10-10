@@ -240,7 +240,12 @@ const UserSignUp = () => {
                     </Icon>
                   </StyledCheckBox>
                 </CheckBoxContainer>
-                <Label chk>[필수] 피치플래너 이용약관 동의</Label>
+                <Label chk>
+                  [필수] 피치플래너 이용약관 동의{' '}
+                  <Underline href="/termsOfUse" target="_blank">
+                    보기
+                  </Underline>
+                </Label>
               </label>
             </FlexDiv>
 
@@ -259,7 +264,12 @@ const UserSignUp = () => {
                     </Icon>
                   </StyledCheckBox>
                 </CheckBoxContainer>
-                <Label chk>[필수] 개인정보 처리방침 동의</Label>
+                <Label chk>
+                  [필수] 개인정보 처리방침 동의{' '}
+                  <Underline href="/privacyPolicy" target="_blank">
+                    보기
+                  </Underline>
+                </Label>
               </label>
             </FlexDiv>
 
@@ -392,4 +402,10 @@ const KakaoButton = styled.button`
   font-weight: bold;
   color: #000;
   cursor: pointer;
+`;
+
+const Underline = styled.a`
+  text-decoration: underline;
+  cursor: pointer;
+  color: #495057;
 `;

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import { BigTitle, SmallTitle, Description } from './SignupDetailStyles';
 import { SignupDetailTemplate } from './SignupDetailTemplate';
 
 interface TermsOfUseTextType {
@@ -255,18 +255,3 @@ export const TermsOfUse = () => {
     </SignupDetailTemplate>
   );
 };
-
-const BigTitle = styled.div`
-  font-size: 18px;
-  margin-top: 40px;
-`;
-
-const SmallTitle = styled.div`
-  font-size: 15px;
-  margin: 30px 0 10px 0;
-`;
-
-const Description = styled.div`
-  font-size: 12px;
-  line-height: 20px;
-`;

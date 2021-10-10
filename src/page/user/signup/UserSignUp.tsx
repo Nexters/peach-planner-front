@@ -140,7 +140,7 @@ const UserSignUp = () => {
   return (
     <FlexDiv direction={'column'} justify={'flex-start'}>
       <Title color={'#212529'} height={'24px'} fontSize={'18px'} lineHeight={'27px'} margin={'40px 0 24px'}>
-        회원가입{' '}
+        회원가입
       </Title>
 
       <FlexDiv justify="flex-start" align="flex-start" direction="column" width="undefined">
@@ -240,7 +240,12 @@ const UserSignUp = () => {
                     </Icon>
                   </StyledCheckBox>
                 </CheckBoxContainer>
-                <Label chk>[필수] 피치플래너 이용약관 동의</Label>
+                <Label chk>
+                  [필수] 피치플래너 이용약관 동의{' '}
+                  <Underline href="/termsOfUse" target="_blank">
+                    보기
+                  </Underline>
+                </Label>
               </label>
             </FlexDiv>
 
@@ -259,7 +264,12 @@ const UserSignUp = () => {
                     </Icon>
                   </StyledCheckBox>
                 </CheckBoxContainer>
-                <Label chk>[필수] 개인정보 처리방침 동의</Label>
+                <Label chk>
+                  [필수] 개인정보 처리방침 동의{' '}
+                  <Underline href="/privacyPolicy" target="_blank">
+                    보기
+                  </Underline>
+                </Label>
               </label>
             </FlexDiv>
 
@@ -295,7 +305,6 @@ const Span = styled.span<SpanProps>`
   height: 19px;
   width: auto;
   color: ${(props: SpanProps) => props.color || '#868e96'};
-  font-family: SpoqaHanSans;
   font-size: 13px;
   letter-spacing: 0;
   line-height: 19px;
@@ -313,7 +322,6 @@ const Input = styled.input.attrs((props) => ({
   border: 1px solid #ced4da;
   border-radius: 3px;
   color: #adb5bd;
-  font-family: SpoqaHanSans;
   font-size: 13px;
   padding: 10.5px 11.5px;
 `;
@@ -394,4 +402,10 @@ const KakaoButton = styled.button`
   font-weight: bold;
   color: #000;
   cursor: pointer;
+`;
+
+const Underline = styled.a`
+  text-decoration: underline;
+  cursor: pointer;
+  color: #495057;
 `;

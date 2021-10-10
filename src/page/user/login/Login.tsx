@@ -196,7 +196,6 @@ const Span = styled.span<Props>`
   height: 20px;
   width: auto;
   color: ${(props: Props) => props.color || '#495057'};
-  font-family: SpoqaHanSans;
   letter-spacing: 0;
   line-height: 19px;
   text-align: center;
@@ -215,7 +214,6 @@ const Input = styled.input.attrs((props) => ({
   border: 1px solid #ced4da;
   border-radius: 3px;
   color: #adb5bd;
-  font-family: SpoqaHanSans;
   font-size: 13px;
   padding: 10.5px 11.5px;
 `;
@@ -228,7 +226,6 @@ const LogInButton = styled.button<Props>`
   outline: none;
   border: ${(props: Props) => props.border || 'none'}; // 1px solid #e64980;
   color: ${(props: Props) => props.color || '#ffffff'}; //#e64980
-  font-family: SpoqaHanSans;
   font-size: 14px;
   font-weight: bold;
   letter-spacing: 0;

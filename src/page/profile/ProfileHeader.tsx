@@ -38,7 +38,6 @@ const BackButton = styled.div`
   height: 20px;
   width: 81px;
   color: #000000;
-  font-family: SpoqaHanSans;
   font-size: 14px;
   letter-spacing: 0;
   line-height: 20px;

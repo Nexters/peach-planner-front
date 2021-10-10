@@ -368,7 +368,6 @@ const ChatProfileText = styled.div`
 
 const ChatProfileName = styled.p`
   color: #000000;
-  font-family: SpoqaHanSans;
   font-size: 13px;
   letter-spacing: 0;
   line-height: 19px;
@@ -378,7 +377,6 @@ const ChatProfileName = styled.p`
 const ChatLastMessageDate = styled.p`
   height: 17px;
   color: #868e96;
-  font-family: SpoqaHanSans;
   font-size: 11px;
   letter-spacing: 0;
   line-height: 17px;
@@ -389,7 +387,6 @@ const ChatLastMessage = styled.p`
   width: 19rem;
   height: 38px;
   color: #868e96;
-  font-family: SpoqaHanSans;
   font-size: 13px;
   letter-spacing: 0;
   line-height: 19px;
@@ -399,7 +396,6 @@ const ChatMessageDate = styled.p`
   padding: 20px 40px 20px 40px;
   height: 18px;
   color: #495057;
-  font-family: SpoqaHanSans;
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 0;
@@ -418,7 +414,6 @@ const SystemMessage = styled.p`
   padding: 11px 0 11px 12px;
   height: 18px;
   color: #868e96;
-  font-family: SpoqaHanSans;
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 0;
@@ -441,7 +436,6 @@ const ChatMessageTitle = styled.div`
 
 const ChatMessageProfileName = styled.p`
   color: #000000;
-  font-family: SpoqaHanSans;
   font-size: 13px;
   font-weight: bold;
   letter-spacing: 0;
@@ -475,7 +469,6 @@ const ChatMessageInput = styled.input.attrs({ type: 'text' })`
   border: 1px solid #495057;
   border-radius: 3px;
   box-sizing: border-box;
-  font-family: SpoqaHanSans;
   font-size: 14px;
   letter-spacing: 0;
   line-height: 24px;
@@ -505,7 +498,6 @@ const ChatMessageProfileDatetime = styled.p`
 
   height: 15px;
   color: #495057;
-  font-family: SpoqaHanSans;
   font-size: 10px;
   letter-spacing: 0;
   line-height: 15px;
@@ -515,7 +507,6 @@ const ChatMessageText = styled.pre`
   padding-left: 4px;
   padding-right: 4px;
   color: #000000;
-  font-family: SpoqaHanSans;
   font-size: 13px;
   letter-spacing: 0;
   line-height: 19px;
@@ -526,7 +517,6 @@ const ChatMessageCard = styled.div``;
 const SystemMessageLink = styled.p`
   padding: 0 0 11px 12px;
   color: #212529;
-  font-family: SpoqaHanSans;
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 0;

@@ -93,7 +93,6 @@ const Description = styled.div`
   height: 48px;
   width: 167px;
   color: #000000;
-  font-family: SpoqaHanSans;
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 0;
@@ -108,7 +107,6 @@ const WhiteDescription = styled.div`
   height: 48px;
   width: 167px;
   color: #ffffff;
-  font-family: SpoqaHanSans;
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 0;
@@ -123,7 +121,6 @@ const PlannerName = styled.div`
   height: 18px;
   width: 240px;
   color: #000000;
-  font-family: SpoqaHanSans;
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 0;
@@ -137,7 +134,6 @@ const WhitePlannerName = styled.div`
   height: 18px;
   width: 240px;
   color: #ffffff;
-  font-family: SpoqaHanSans;
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 0;

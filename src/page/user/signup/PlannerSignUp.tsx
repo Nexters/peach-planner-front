@@ -307,7 +307,6 @@ const Span = styled.span`
   height: 20px;
   width: auto;
   color: #212529;
-  font-family: SpoqaHanSans;
   font-size: 14px;
   letter-spacing: 0;
   line-height: 20px;
@@ -335,7 +334,6 @@ const Input = styled.input.attrs((props) => ({
   border: 1px solid #ced4da;
   border-radius: 3px;
   color: #adb5bd;
-  font-family: SpoqaHanSans;
   font-size: 13px;
   padding: 10.5px 11.5px;
 `;

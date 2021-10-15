@@ -13,7 +13,7 @@ import { useMemo } from 'react';
 import { User, getUser } from 'src/api/User';
 
 const client = new Client({
-  brokerURL: 'ws://api.peachplanner.com/websocket',
+  brokerURL: 'wss://api.peachplanner.com/websocket',
   connectHeaders: {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`
   },

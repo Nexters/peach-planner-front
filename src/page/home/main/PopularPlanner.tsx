@@ -23,8 +23,6 @@ const PopularPlanner = () => {
     arrows: false
   });
 
-  
-
   return (
     <FlexDiv margin={'64px 0 0 0'} direction="column">
       <FlexDiv height={'56px'} justify="between" margin={'0 0 8px 0'}>
@@ -65,7 +63,7 @@ const PopularPlanner = () => {
               );
             })
           ) : (
-            <>loading...</>
+            <></>
           )}
         </Slider>
       </FlexDiv>

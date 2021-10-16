@@ -54,7 +54,7 @@ const SearchResult = ({ location, support }: Props) => {
             );
           })
         ) : (
-          <>loading...</>
+          <></>
         )}
       </SearchResultList>
     </FlexDiv>

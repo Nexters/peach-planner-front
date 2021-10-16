@@ -14,11 +14,16 @@ var SearchInput_1 = require("./SearchInput");
 var HorizontalLine_1 = require("src/component/HorizontalLine");
 var ImageUpload_1 = require("./ImageUpload");
 var react_1 = require("react");
+var react_query_1 = require("react-query");
+var Company_1 = require("src/api/Company");
 var OrganizationRegisterModal = function (_a) {
     var showImageModal = _a.showImageModal, closeImageModal = _a.closeImageModal;
-    var _b = react_1.useState(''), organizationName = _b[0], setOrganizationName = _b[1];
-    var _c = react_1.useState(''), previewImage = _c[0], setPreviewImage = _c[1];
-    var _d = react_1.useState(null), imageFile = _d[0], setImageFile = _d[1];
+    var _b = react_query_1.useMutation(Company_1.registerCompany, {
+        onSuccess: function (data) { }
+    }), mutate = _b.mutate, isLoading = _b.isLoading;
+    var _c = react_1.useState(''), organizationName = _c[0], setOrganizationName = _c[1];
+    var _d = react_1.useState(''), previewImage = _d[0], setPreviewImage = _d[1];
+    var _e = react_1.useState(null), imageFile = _e[0], setImageFile = _e[1];
     var handleChangeOrganizationName = function (e) {
         var value = e.target.value;
         setOrganizationName(value);

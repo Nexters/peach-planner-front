@@ -12,8 +12,11 @@ var PButton_1 = require("./PButton");
 var AuthStatus_1 = require("src/atoms/AuthStatus");
 var ic_account_default_svg_1 = require("../assets/svg/ic_account_default.svg");
 var ic_arrow_down_svg_1 = require("../assets/svg/ic_arrow_down.svg");
+var User_1 = require("src/api/User");
+var react_query_1 = require("react-query");
 var Header = function () {
     var history = react_router_dom_1.useHistory();
+    var user = react_query_1.useQuery(['getUser'], User_1.getUser).data;
     var handleSignUp = function () { return history.push('/signUp'); };
     var peachTokenState = AuthStatus_1.usePeachTokenState()[0];
     var _a = react_1.useState(false), isClickedProfile = _a[0], setIsClickedProfile = _a[1];
@@ -30,6 +33,16 @@ var Header = function () {
     var handleClickNoti = function () {
         setIsAlart(!isAlart);
     };
+    var handleMyPage = function () {
+        if ((user === null || user === void 0 ? void 0 : user.userType) === 'USER') {
+            history.push("/userPage");
+        }
+        else {
+            history.push("/plannerPage");
+        }
+        setIsClickedProfile(false);
+        return;
+    };
     var right;
     if (isLogin) {
         right = (react_1["default"].createElement(InnerContainer, null,
@@ -43,7 +56,7 @@ var Header = function () {
                         react_1["default"].createElement(DropdownMessage, null, "\uBA54\uC2DC\uC9C0"))),
                 react_1["default"].createElement(MenuBody, null,
                     react_1["default"].createElement(Menu, null,
-                        react_1["default"].createElement(MenuName, null, "\uB0B4 \uD398\uC774\uC9C0")),
+                        react_1["default"].createElement(MenuName, { onClick: handleMyPage }, "\uB0B4 \uD398\uC774\uC9C0")),
                     react_1["default"].createElement(Menu, null,
                         react_1["default"].createElement(MenuName, null, "\uD504\uB85C\uD544 \uAD00\uB9AC")),
                     react_1["default"].createElement(Menu, null,
@@ -72,7 +85,7 @@ var ProfileContainer = styled_components_1["default"].div(templateObject_3 || (t
 var StyledLink = styled_components_1["default"](react_router_dom_1.Link)(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  text-decoration: none;\n  color: #495057;\n  font-size: 13px;\n  line-height: 19px;\n"], ["\n  text-decoration: none;\n  color: #495057;\n  font-size: 13px;\n  line-height: 19px;\n"])));
 var LeftLink = styled_components_1["default"](StyledLink)(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  margin-left: 35px;\n"], ["\n  margin-left: 35px;\n"])));
 var RightLink = styled_components_1["default"](StyledLink)(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  margin-right: 32px;\n"], ["\n  margin-right: 32px;\n"])));
-var DropdownContainer = styled_components_1["default"].div(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  position: absolute;\n  margin: 10px 0 0 0;\n  height: auto;\n  width: 234px;\n  border-radius: 6px;\n  background-color: #ffffff;\n  box-shadow: 0 2px 4px 0 #adb5bd;\n"], ["\n  position: absolute;\n  margin: 10px 0 0 0;\n  height: auto;\n  width: 234px;\n  border-radius: 6px;\n  background-color: #ffffff;\n  box-shadow: 0 2px 4px 0 #adb5bd;\n"])));
+var DropdownContainer = styled_components_1["default"].div(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  position: absolute;\n  margin: 10px 0 0 0;\n  height: auto;\n  width: 234px;\n  border-radius: 6px;\n  background-color: #ffffff;\n  box-shadow: 0 2px 4px 0 #adb5bd;\n  z-index: 1;\n"], ["\n  position: absolute;\n  margin: 10px 0 0 0;\n  height: auto;\n  width: 234px;\n  border-radius: 6px;\n  background-color: #ffffff;\n  box-shadow: 0 2px 4px 0 #adb5bd;\n  z-index: 1;\n"])));
 var ProfileBox = styled_components_1["default"].div(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  box-sizing: border-box;\n  border-radius: 30px;\n  height: 41px;\n  width: 91px;\n  border: 1px solid #dee2e6;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  cursor: pointer;\n"], ["\n  box-sizing: border-box;\n  border-radius: 30px;\n  height: 41px;\n  width: 91px;\n  border: 1px solid #dee2e6;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  cursor: pointer;\n"])));
 var ProfileImage = styled_components_1["default"].img.attrs(function (props) { return ({ src: props.src }); })(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n  height: 32px;\n  width: 32px;\n  margin: 0 0 0 7px;\n"], ["\n  height: 32px;\n  width: 32px;\n  margin: 0 0 0 7px;\n"])));
 var DropdownImage = styled_components_1["default"].img.attrs(function (props) { return ({ src: props.src }); })(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n  height: 24px;\n  width: 24px;\n  margin: 0 10px 0 0;\n"], ["\n  height: 24px;\n  width: 24px;\n  margin: 0 10px 0 0;\n"])));

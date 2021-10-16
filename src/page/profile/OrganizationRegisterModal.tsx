@@ -7,6 +7,8 @@ import SearchInput from './SearchInput';
 import HorizontalLine from 'src/component/HorizontalLine';
 import ImageUpload from './ImageUpload';
 import { useState } from 'react';
+import { useMutation } from 'react-query';
+import { registerCompany } from 'src/api/Company';
 
 interface ImageModalProps {
   showImageModal: boolean;
@@ -14,6 +16,9 @@ interface ImageModalProps {
 }
 
 const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageModalProps) => {
+    const { mutate, isLoading } = useMutation(registerCompany, {
+      onSuccess: (data) => {}
+    });
   const [organizationName, setOrganizationName] = useState('');
   const [previewImage, setPreviewImage] = useState('');
   const [imageFile, setImageFile] = useState(null);

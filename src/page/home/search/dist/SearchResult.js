@@ -29,7 +29,7 @@ var SearchResult = function (_a) {
         React.createElement(SearchResultList, null, planners ? (planners.content.map(function (planner) {
             var _a;
             return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 12px 32px 0', size: '206px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, isPicked: false }));
-        })) : (React.createElement(React.Fragment, null, "loading...")))));
+        })) : (React.createElement(React.Fragment, null)))));
 };
 exports["default"] = SearchResult;
 var SearchResultList = styled_components_1["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  margin: 16px 0 32px 0;\n  flex-wrap: wrap;\n"], ["\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  margin: 16px 0 32px 0;\n  flex-wrap: wrap;\n"])));

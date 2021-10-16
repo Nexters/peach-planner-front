@@ -5,7 +5,7 @@ import AssociateOrganization from './AssociateOrganization';
 import MyProfile from './MyProfile';
 import PlannerArea from './PlannerArea';
 import PlannerOfferList from './PlannerOfferList';
-import PlannerOrganization from './PlannerOrganization';
+import PlannerCompany from './PlannerCompany';
 import ProfileHeader from './ProfileHeader';
 import SnsSetting from './SnsSetting';
 import UserCertification from './UserCertification';
@@ -14,6 +14,7 @@ import { useMutation, useQuery } from 'react-query';
 import { getUser } from 'src/api/User';
 import { AffiliatedCompany, PlannerRequest, updateProfile } from 'src/api/Planner';
 import { useEffect, useState } from 'react';
+import { Company } from 'src/api/Company';
 
 export interface ProfileProps {
   isUpdate: boolean;
@@ -37,7 +38,7 @@ export interface SupportStore {
 }
 
 const Profile = ({ isUpdate }: ProfileProps) => {
-  const { data: user } = useQuery(['getUser'], getUser);
+  const { data: user } = useQuery(['user'], getUser);
   const { mutate, isLoading } = useMutation(updateProfile, {
     onSuccess: (data) => {}
   });
@@ -45,7 +46,8 @@ const Profile = ({ isUpdate }: ProfileProps) => {
   const [sns, setSns] = useState<Sns>({ webUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' });
   const [regions, setRegions] = useState<string[]>([]);
   const [offers, setOffers] = useState<string[]>([]);
-  const [orgName, setOrgName] = useState('');
+  const [company, setCompany] = useState<Company>();
+  const [inputCompanyName, setInputCompanyName] = useState('');
   const [studios, setStudios] = useState<SupportStore[]>([]);
   const [dresses, setDresses] = useState<SupportStore[]>([]);
   const [makeUps, setMakeUps] = useState<SupportStore[]>([]);
@@ -76,9 +78,18 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     setOffers(selectedOffers);
   };
 
-  const handleOrgName = (e: any) => {
-    const value = e.target.value;
-    setOrgName(value);
+  const handleCompany = (company: Company) => {
+    setCompany(company);
+  };
+
+  const handleCompanyName = (e: any) => {
+    let value;
+    if (typeof e !== 'string') {
+      value = e.target.value;
+    } else {
+      value = e;
+    }
+    setInputCompanyName(value);
   };
 
   const handleStudio = (studio: SupportStore) => {
@@ -104,7 +115,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
         location: '',
         primaryImageUrl: dress.imageUrl,
         tel: '',
-        type: ''
+        type: 'DRESS'
       };
     });
     const affilicatedStudios: AffiliatedCompany[] = studios.map((studio) => {
@@ -114,7 +125,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
         location: '',
         primaryImageUrl: studio.imageUrl,
         tel: '',
-        type: ''
+        type: 'STUDIO'
       };
     });
     const affilicatedMakeUps: AffiliatedCompany[] = makeUps.map((makeUp) => {
@@ -130,7 +141,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
 
     const request: PlannerRequest = {
       affiliatedCompanyInfoDTO: {
-        affiliatedCompanyId: 1
+        affiliatedCompanyId: company?.id!!
       },
       affiliatedDressCompanyDTOList: affilicatedDress,
       affiliatedStudioCompanyDTOList: affilicatedStudios,
@@ -161,15 +172,20 @@ const Profile = ({ isUpdate }: ProfileProps) => {
       </InnerContainer>
       <InnerContainer>
         <FlexDiv width="310px" height="auto" justify="flex-start" align="start" direction="column" margin="0 105px 0 0">
-          <UserProfile></UserProfile>
-          <UserCertification></UserCertification>
+          <UserProfile name={user?.name} type={user?.userType}></UserProfile>
+          {/* TODO 인증 기능 없어서 주석 처리*/}
+          {/* <UserCertification></UserCertification> */}
         </FlexDiv>
         <FlexDiv direction="column" margin="0" width="990px">
           <MyProfile handleDescription={handleDescription}></MyProfile>
           <SnsSetting handleSns={handleSns}></SnsSetting>
           <PlannerArea regions={regions} handleRegions={handleRegions}></PlannerArea>
           <PlannerOfferList offers={offers} handleOffers={handleOffers}></PlannerOfferList>
-          <PlannerOrganization handleOrgName={handleOrgName}></PlannerOrganization>
+          <PlannerCompany
+            companyName={inputCompanyName}
+            handleCompanyName={handleCompanyName}
+            handleCompanyItem={handleCompany}
+          ></PlannerCompany>
           <AssociateOrganization
             id="studio"
             name="스튜디오"

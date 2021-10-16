@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { usePeachTokenState } from 'src/atoms/AuthStatus';
 import { pick, PickRequest } from 'src/api/Pick';
+import PhotoDefault from '../assets/svg/img_photo_default.svg';
 
 interface PlannerProps {
   size: string;
@@ -53,7 +54,11 @@ const PlannerCard = (props: PlannerProps) => {
   return (
     <FlexDiv width={props.size} direction="column" margin={props.margin}>
       <PlannerImageContainer>
-        <PlannerImage src={props.imagePath} height={props.size} onClick={handlePlannerClick} />
+        <PlannerImage
+          src={props.imagePath ? props.imagePath : PhotoDefault}
+          height={props.size}
+          onClick={handlePlannerClick}
+        />
         {tokenState[0] ? (
           <PickBox onClick={handlePickClick}>
             <EmptyPickIcon src={EmptyHeart}></EmptyPickIcon>

@@ -150,6 +150,7 @@ const DropdownContainer = styled.div`
   border-radius: 6px;
   background-color: #ffffff;
   box-shadow: 0 2px 4px 0 #adb5bd;
+  z-index: 1;
 `;
 
 const ProfileBox = styled.div`

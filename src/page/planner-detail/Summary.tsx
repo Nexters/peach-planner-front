@@ -8,7 +8,7 @@ import { ReactComponent as Instagram } from '../../assets/svg/ic_instagram.svg';
 import { ReactComponent as Blog } from '../../assets/svg/ic_blog.svg';
 import ImageModal from './ImageModal';
 import { Planner } from '../../api/Planner';
-import DefaultImage from '../../assets/svg/img_photo_defult.svg';
+import DefaultImage from '../../assets/svg/img_photo_default.svg';
 import { PickRequest, pick } from 'src/api/Pick';
 import { useHistory } from 'react-router';
 import axios from 'axios';

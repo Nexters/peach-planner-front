@@ -1,15 +1,21 @@
 import styled from 'styled-components';
 import { Content, FlexDiv, Title } from '../../component/style/style';
 import PButton from '../../component/PButton';
-import AccountDefault from '../../assets/svg/ic_logo.svg';
+import AccountDefault from '../../assets/svg/ic_account_default.svg';
+import EditImage from '../../assets/svg/ic_changephoto.svg';
 import { useState } from 'react';
+
+interface Props {
+  name: string | undefined;
+  type: string | undefined;
+}
 
 const userProps = {
   name: '홍길동',
   type: '플래너'
 };
 
-const UserProfile = () => {
+const UserProfile = ({ name, type }: Props) => {
   const [previewImage, setPreviewImage] = useState('');
   const [imageFile, setImageFile] = useState(null);
 
@@ -41,11 +47,11 @@ const UserProfile = () => {
             <ProfileImage src={previewImage ? previewImage : AccountDefault}></ProfileImage>
             <Input id="profile-image-file" type="file" onChange={handleFile}></Input>
             <Label htmlFor="profile-image-file">
-              <EditIcon></EditIcon>
+              <EditIcon src={EditImage}></EditIcon>
             </Label>
           </ProfileImageBox>
           <Title height={'27px'} width={'auto'} fontSize={'18px'} lineHeight={'27px'} margin={'24px 0 7px 0'}>
-            {userProps.name}
+            {name ? name : ''}
           </Title>
           <TypeBox>
             <Content
@@ -56,7 +62,7 @@ const UserProfile = () => {
               lineHeight={'19px'}
               margin={'2px 4px 2px 4px'}
             >
-              {userProps.type}
+              {type === 'USER' ? '유저' : '플래너'}
             </Content>
           </TypeBox>
           <FlexDiv margin="18px 0 0 0" direction="column">

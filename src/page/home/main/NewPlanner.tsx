@@ -4,6 +4,7 @@ import { FlexDiv } from '../../../component/style/style';
 import PlannerCard from '../../../component/PlannerCard';
 import LeftArrow from '../../../assets/svg/ic_arrow_left.svg';
 import RightArrow from '../../../assets/svg/ic_arrow_right.svg';
+
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { fetchPlanners } from '../../../api/Planner';
@@ -62,7 +63,7 @@ const NewPlanner = () => {
               );
             })
           ) : (
-            <>loading...</>
+            <></>
           )}
         </Slider>
       </FlexDiv>

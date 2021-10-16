@@ -7,15 +7,17 @@ exports.__esModule = true;
 var styled_components_1 = require("styled-components");
 var style_1 = require("../../component/style/style");
 var PButton_1 = require("../../component/PButton");
-var ic_logo_svg_1 = require("../../assets/svg/ic_logo.svg");
+var ic_account_default_svg_1 = require("../../assets/svg/ic_account_default.svg");
+var ic_changephoto_svg_1 = require("../../assets/svg/ic_changephoto.svg");
 var react_1 = require("react");
 var userProps = {
     name: '홍길동',
     type: '플래너'
 };
-var UserProfile = function () {
-    var _a = react_1.useState(''), previewImage = _a[0], setPreviewImage = _a[1];
-    var _b = react_1.useState(null), imageFile = _b[0], setImageFile = _b[1];
+var UserProfile = function (_a) {
+    var name = _a.name, type = _a.type;
+    var _b = react_1.useState(''), previewImage = _b[0], setPreviewImage = _b[1];
+    var _c = react_1.useState(null), imageFile = _c[0], setImageFile = _c[1];
     var handleFile = function (e) {
         var file = e.target.files[0];
         if (file) {
@@ -37,13 +39,13 @@ var UserProfile = function () {
         React.createElement(Box, null,
             React.createElement(style_1.FlexDiv, { margin: "0", direction: "column" },
                 React.createElement(ProfileImageBox, null,
-                    React.createElement(ProfileImage, { src: previewImage ? previewImage : ic_logo_svg_1["default"] }),
+                    React.createElement(ProfileImage, { src: previewImage ? previewImage : ic_account_default_svg_1["default"] }),
                     React.createElement(Input, { id: "profile-image-file", type: "file", onChange: handleFile }),
                     React.createElement(Label, { htmlFor: "profile-image-file" },
-                        React.createElement(EditIcon, null))),
-                React.createElement(style_1.Title, { height: '27px', width: 'auto', fontSize: '18px', lineHeight: '27px', margin: '24px 0 7px 0' }, userProps.name),
+                        React.createElement(EditIcon, { src: ic_changephoto_svg_1["default"] }))),
+                React.createElement(style_1.Title, { height: '27px', width: 'auto', fontSize: '18px', lineHeight: '27px', margin: '24px 0 7px 0' }, name ? name : ''),
                 React.createElement(TypeBox, null,
-                    React.createElement(style_1.Content, { height: '19px', width: 'auto', color: '#D6336C', fontSize: '13px', lineHeight: '19px', margin: '2px 4px 2px 4px' }, userProps.type)),
+                    React.createElement(style_1.Content, { height: '19px', width: 'auto', color: '#D6336C', fontSize: '13px', lineHeight: '19px', margin: '2px 4px 2px 4px' }, type === 'USER' ? '유저' : '플래너')),
                 React.createElement(style_1.FlexDiv, { margin: "18px 0 0 0", direction: "column" },
                     React.createElement(PButton_1["default"], { fontSize: "14px", height: "41px", width: "98px" }, "\uACC4\uC815 \uC124\uC815"))))));
 };

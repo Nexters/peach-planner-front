@@ -19,9 +19,9 @@ const RecommendedPlanner = () => {
                 <Image src={planner.imgUrl}></Image>
                 {planner.fontColor === 'WHITE' ? (
                   <WhiteDescription>
-                    {planner.description.split('\\n').map((line, index) => {
+                    {planner.description?.split('\\n').map((line, index) => {
                       return (
-                        <span>
+                        <span key={index}>
                           {line}
                           <br />
                         </span>
@@ -30,9 +30,9 @@ const RecommendedPlanner = () => {
                   </WhiteDescription>
                 ) : (
                   <Description>
-                    {planner.description.split('\\n').map((line, index) => {
+                    {planner.description?.split('\\n').map((line, index) => {
                       return (
-                        <span>
+                        <span key={index}>
                           {line}
                           <br />
                         </span>

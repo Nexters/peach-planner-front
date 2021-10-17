@@ -35,7 +35,7 @@ var SearchResult = function (_a) {
             React.createElement("option", { value: "review,DESC" }, "\uB9AC\uBDF0\uC21C")),
         React.createElement(SearchResultList, null, planners ? (planners.content.map(function (planner, index) {
             var _a;
-            return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 12px 32px 0', size: '206px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, isPicked: false }));
+            return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 12px 32px 0', size: '206px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, isPicked: false, blogLink: planner.externalLinks.blogLink, instagramLink: planner.externalLinks.instagramLink, facebookLink: planner.externalLinks.facebookLink }));
         })) : (React.createElement(React.Fragment, null)))));
 };
 exports["default"] = SearchResult;

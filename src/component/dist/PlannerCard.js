@@ -39,6 +39,9 @@ var PlannerCard = function (props) {
         var regions = origin.split(',');
         return regions.length > 3 ? regions[0] + ", " + regions[1] + ", " + regions[2] + ", ..." : origin;
     };
+    var handleClick = function (url) {
+        window.location.href = url;
+    };
     return (React.createElement(style_1.FlexDiv, { width: props.size, direction: "column", margin: props.margin },
         React.createElement(PlannerImageContainer, null,
             React.createElement(PlannerImage, { src: props.imagePath ? props.imagePath : img_photo_default_svg_1["default"], height: props.size, onClick: handlePlannerClick }),
@@ -59,8 +62,8 @@ var PlannerCard = function (props) {
                 React.createElement(DetailTitle, null, "\uC9C0\uC5ED"),
                 React.createElement(DetailContent, null, splitRegion(props.region)))),
         React.createElement(style_1.FlexDiv, { justify: "flex-start", margin: '12px 0 0 0' },
-            React.createElement(SnsIcon, { src: ic_instagram_svg_1["default"] }),
-            React.createElement(SnsIcon, { src: ic_blog_svg_1["default"] }))));
+            props.instagramLink ? (React.createElement(SnsIcon, { src: ic_instagram_svg_1["default"], onClick: function () { return handleClick(props.instagramLink); } })) : (React.createElement(React.Fragment, null)),
+            props.blogLink ? React.createElement(SnsIcon, { src: ic_blog_svg_1["default"], onClick: function () { return handleClick(props.blogLink); } }) : React.createElement(React.Fragment, null))));
 };
 exports["default"] = PlannerCard;
 var PlannerImageContainer = styled_components_1["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  justify-content: flex-end;\n"], ["\n  display: flex;\n  justify-content: flex-end;\n"])));
@@ -69,7 +72,7 @@ var PickBox = styled_components_1["default"].div(templateObject_3 || (templateOb
 var EmptyPickIcon = styled_components_1["default"].img.attrs(function (props) { return ({ src: props.src }); })(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  height: 26px;\n  width: 26px;\n"], ["\n  height: 26px;\n  width: 26px;\n"])));
 var HeartIcon = styled_components_1["default"].img.attrs(function (props) { return ({ src: props.src }); })(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  height: 13.29px;\n  width: 14.43px;\n  margin: 0 4px 0 0;\n"], ["\n  height: 13.29px;\n  width: 14.43px;\n  margin: 0 4px 0 0;\n"])));
 var ReviewIcon = styled_components_1["default"].img.attrs(function (props) { return ({ src: props.src }); })(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  height: 16px;\n  width: 16px;\n  margin: 0 4px 0 16px;\n"], ["\n  height: 16px;\n  width: 16px;\n  margin: 0 4px 0 16px;\n"])));
-var SnsIcon = styled_components_1["default"].img.attrs(function (props) { return ({ src: props.src }); })(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  height: 20px;\n  width: 20px;\n  margin: 0 8px 0 0;\n"], ["\n  height: 20px;\n  width: 20px;\n  margin: 0 8px 0 0;\n"])));
+var SnsIcon = styled_components_1["default"].img.attrs(function (props) { return ({ src: props.src }); })(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  height: 20px;\n  width: 20px;\n  margin: 0 8px 0 0;\n  cursor: pointer;\n"], ["\n  height: 20px;\n  width: 20px;\n  margin: 0 8px 0 0;\n  cursor: pointer;\n"])));
 var Title = styled_components_1["default"].div(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  height: 24px;\n  width: auto;\n  color: #000000;\n  font-size: 16px;\n  font-weight: bold;\n  letter-spacing: 0;\n  line-height: 24px;\n  cursor: pointer;\n"], ["\n  height: 24px;\n  width: auto;\n  color: #000000;\n  font-size: 16px;\n  font-weight: bold;\n  letter-spacing: 0;\n  line-height: 24px;\n  cursor: pointer;\n"])));
 var Count = styled_components_1["default"].span(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n  height: 18px;\n  width: auto;\n  color: #868e96;\n  font-size: 12px;\n  line-height: 18px;\n"], ["\n  height: 18px;\n  width: auto;\n  color: #868e96;\n  font-size: 12px;\n  line-height: 18px;\n"])));
 var DetailTitle = styled_components_1["default"].span(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n  height: 20px;\n  width: 56px;\n  color: #868e96;\n  font-size: 14px;\n  line-height: 20px;\n"], ["\n  height: 20px;\n  width: 56px;\n  color: #868e96;\n  font-size: 14px;\n  line-height: 20px;\n"])));

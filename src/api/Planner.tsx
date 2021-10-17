@@ -15,6 +15,7 @@ export interface Planner {
   externalLinks: {
     blogLink: string;
     instagramLink: string;
+    facebookLink: string;
   };
   likes: number;
   reviews: number;

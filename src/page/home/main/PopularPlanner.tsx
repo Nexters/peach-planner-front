@@ -59,6 +59,9 @@ const PopularPlanner = () => {
                   region={planner.locations.join(',')}
                   id={planner.id}
                   isPicked={false}
+                  blogLink={planner.externalLinks.blogLink}
+                  instagramLink={planner.externalLinks.instagramLink}
+                  facebookLink={planner.externalLinks.facebookLink}
                 ></PlannerCard>
               );
             })

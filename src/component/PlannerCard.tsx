@@ -22,6 +22,9 @@ interface PlannerProps {
   region: string;
   id: number;
   isPicked: boolean;
+  facebookLink?: string;
+  blogLink?: string;
+  instagramLink?: string;
 }
 
 const PlannerCard = (props: PlannerProps) => {
@@ -49,6 +52,10 @@ const PlannerCard = (props: PlannerProps) => {
   const splitRegion = (origin: string) => {
     const regions = origin.split(',');
     return regions.length > 3 ? `${regions[0]}, ${regions[1]}, ${regions[2]}, ...` : origin;
+  };
+
+  const handleClick = (url: string) => {
+    window.location.href = url;
   };
 
   return (
@@ -87,8 +94,12 @@ const PlannerCard = (props: PlannerProps) => {
         </FlexDiv>
       </FlexDiv>
       <FlexDiv justify="flex-start" margin={'12px 0 0 0'}>
-        <SnsIcon src={instagram}></SnsIcon>
-        <SnsIcon src={blog}></SnsIcon>
+        {props.instagramLink ? (
+          <SnsIcon src={instagram} onClick={() => handleClick(props.instagramLink!!)}></SnsIcon>
+        ) : (
+          <></>
+        )}
+        {props.blogLink ? <SnsIcon src={blog} onClick={() => handleClick(props.blogLink!!)}></SnsIcon> : <></>}
       </FlexDiv>
     </FlexDiv>
   );
@@ -153,6 +164,7 @@ const SnsIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   height: 20px;
   width: 20px;
   margin: 0 8px 0 0;
+  cursor: pointer;
 `;
 
 const Title = styled.div`

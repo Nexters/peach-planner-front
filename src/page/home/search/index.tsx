@@ -24,7 +24,7 @@ const Search = () => {
           support={support}
           changeSupport={changeSupport}
         />
-        <SearchResult location={location} support={support}/>
+        <SearchResult location={location} support={support} />
       </InnerContainer>
     </Container>
   );

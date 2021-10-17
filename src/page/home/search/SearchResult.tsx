@@ -1,10 +1,11 @@
 import { FlexDiv, Title } from '../../../component/style/style';
 import PlannerCard from '../../../component/PlannerCard';
 import { useQuery } from 'react-query';
-import { fetchPlanners, fetchPopularPlanners, PagedPlanner } from '../../../api/Planner';
+import { fetchPlanners, fetchPopularPlanners } from '../../../api/Planner';
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
 import { useState } from 'react';
+import { useSelectedSortingState } from 'src/atoms/SelectStatus';
 
 interface Props {
   location: string;
@@ -17,10 +18,17 @@ const SearchResult = ({ location, support }: Props) => {
   const supportInfos = support.join();
   const getPlanners = sortingParam === 'popular' ? fetchPopularPlanners : fetchPlanners;
   const [sort, setSort] = useState('');
+  const [selectedSortingState, setSelectedSortingState] = useSelectedSortingState();
   const { data: planners } = useQuery(
     ['planners', { location, supportInfos, isNew: sortingParam === 'new', sort }],
     getPlanners
   );
+
+  const handleChange = (e: any) => {
+    const value = e.target.value;
+    setSort(value);
+    setSelectedSortingState(value);
+  };
 
   return (
     <FlexDiv justify="flex-start" align="start" width="880px" margin={'0'} direction="column">
@@ -29,14 +37,14 @@ const SearchResult = ({ location, support }: Props) => {
           {sortingParam ? (sortingParam === 'new' ? '신규 플래너' : '인기 플래너') : '전체'}
         </Title>
       </FlexDiv>
-      <select name="select" id="select" onChange={(e) => setSort(e.target.value)}>
+      <select name="select" id="select" onChange={handleChange} value={selectedSortingState}>
         <option value="createdDate,DESC">최신순</option>
         <option value="pick,DESC">인기순</option>
         <option value="review,DESC">리뷰순</option>
       </select>
       <SearchResultList>
         {planners ? (
-          planners.content.map((planner) => {
+          planners.content.map((planner, index) => {
             return (
               <PlannerCard
                 key={planner.id}

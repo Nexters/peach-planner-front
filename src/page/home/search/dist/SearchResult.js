@@ -11,6 +11,7 @@ var Planner_1 = require("../../../api/Planner");
 var styled_components_1 = require("styled-components");
 var react_router_1 = require("react-router");
 var react_1 = require("react");
+var SelectStatus_1 = require("src/atoms/SelectStatus");
 var SearchResult = function (_a) {
     var location = _a.location, support = _a.support;
     var hookLocation = react_router_1.useLocation();
@@ -18,15 +19,21 @@ var SearchResult = function (_a) {
     var supportInfos = support.join();
     var getPlanners = sortingParam === 'popular' ? Planner_1.fetchPopularPlanners : Planner_1.fetchPlanners;
     var _b = react_1.useState(''), sort = _b[0], setSort = _b[1];
+    var _c = SelectStatus_1.useSelectedSortingState(), selectedSortingState = _c[0], setSelectedSortingState = _c[1];
     var planners = react_query_1.useQuery(['planners', { location: location, supportInfos: supportInfos, isNew: sortingParam === 'new', sort: sort }], getPlanners).data;
+    var handleChange = function (e) {
+        var value = e.target.value;
+        setSort(value);
+        setSelectedSortingState(value);
+    };
     return (React.createElement(style_1.FlexDiv, { justify: "flex-start", align: "start", width: "880px", margin: '0', direction: "column" },
         React.createElement(style_1.FlexDiv, { align: "start", height: "56px", margin: '0', direction: "column" },
             React.createElement(style_1.Title, { height: '24px', width: 'auto', fontSize: '16px', lineHeight: '24px', margin: '0' }, sortingParam ? (sortingParam === 'new' ? '신규 플래너' : '인기 플래너') : '전체')),
-        React.createElement("select", { name: "select", id: "select", onChange: function (e) { return setSort(e.target.value); } },
+        React.createElement("select", { name: "select", id: "select", onChange: handleChange, value: selectedSortingState },
             React.createElement("option", { value: "createdDate,DESC" }, "\uCD5C\uC2E0\uC21C"),
             React.createElement("option", { value: "pick,DESC" }, "\uC778\uAE30\uC21C"),
             React.createElement("option", { value: "review,DESC" }, "\uB9AC\uBDF0\uC21C")),
-        React.createElement(SearchResultList, null, planners ? (planners.content.map(function (planner) {
+        React.createElement(SearchResultList, null, planners ? (planners.content.map(function (planner, index) {
             var _a;
             return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 12px 32px 0', size: '206px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, isPicked: false }));
         })) : (React.createElement(React.Fragment, null)))));

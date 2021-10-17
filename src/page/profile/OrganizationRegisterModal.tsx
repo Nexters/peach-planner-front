@@ -16,16 +16,49 @@ interface ImageModalProps {
 }
 
 const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageModalProps) => {
-    const { mutate, isLoading } = useMutation(registerCompany, {
-      onSuccess: (data) => {}
-    });
+  const { mutate, isLoading } = useMutation(registerCompany, {
+    onSuccess: (data) => {}
+  });
   const [organizationName, setOrganizationName] = useState('');
+  const [locaiton, setLocation] = useState('');
+  const [description, setDescription] = useState('');
+  const [phoneFirst, setPhoneFirst] = useState('');
+  const [phoneMiddle, setPhoneMiddle] = useState('');
+  const [phoneLast, setPhoneLast] = useState('');
   const [previewImage, setPreviewImage] = useState('');
   const [imageFile, setImageFile] = useState(null);
+
+  const handleRegisterCompany = () => {};
 
   const handleChangeOrganizationName = (e: any) => {
     const value = e.target.value;
     setOrganizationName(value);
+  };
+
+  const handleLocation = (e: any) => {
+    const value = e.target.value;
+    setLocation(value);
+  };
+
+  const handleDescription = (e: any) => {
+    const value = e.target.value;
+    console.log(value);
+    setDescription(value);
+  };
+
+  const handleFirst = (e: any) => {
+    const value = e.target.value;
+    setPhoneFirst(value);
+  };
+
+  const handleMiddle = (e: any) => {
+    const value = e.target.value;
+    setPhoneMiddle(value);
+  };
+
+  const handleLast = (e: any) => {
+    const value = e.target.value;
+    setPhoneLast(value);
   };
 
   const changePreviewImage = (image: string) => {
@@ -70,7 +103,12 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
             >
               업체 이름
             </Content>
-            <Input height="41px" width="341px" placeholder="업체 이름을 입력해주세요."></Input>
+            <Input
+              height="41px"
+              width="341px"
+              placeholder="업체 이름을 입력해주세요."
+              onChange={handleChangeOrganizationName}
+            ></Input>
             <Content
               height={'20px'}
               width={'auto'}
@@ -82,7 +120,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
               대표 전화번호
             </Content>
             <FlexDiv margin="0 0 0 0" justify="flex-start" direction="row">
-              <Input height="41px" width="51px" placeholder="010"></Input>
+              <Input height="41px" width="51px" placeholder="010" onChange={handleFirst}></Input>
               <Content
                 height={'16px'}
                 width={'auto'}
@@ -93,7 +131,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
               >
                 -
               </Content>
-              <Input height="41px" width="60px" placeholder="1234"></Input>
+              <Input height="41px" width="60px" placeholder="1234" onChange={handleMiddle}></Input>
               <Content
                 height={'16px'}
                 width={'auto'}
@@ -104,7 +142,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
               >
                 -
               </Content>
-              <Input height="41px" width="60px" placeholder="1234"></Input>
+              <Input height="41px" width="60px" placeholder="1234" onChange={handleLast}></Input>
             </FlexDiv>
             <Content
               height={'20px'}
@@ -120,7 +158,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
               height="41px"
               width="341px"
               placeholder="위치를 입력해주세요."
-              handleInput={handleChangeOrganizationName}
+              handleInput={handleLocation}
             ></SearchInput>
             <Content
               height={'20px'}
@@ -132,7 +170,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
             >
               업체 소개
             </Content>
-            <TextArea placeholder="업체 소개를 입력해주세요."></TextArea>
+            <TextArea placeholder="업체 소개를 입력해주세요." onChange={handleDescription}></TextArea>
           </FlexDiv>
           <FlexDiv margin="0" height="400px" justify="flex-start" align="start" direction="column">
             <Content

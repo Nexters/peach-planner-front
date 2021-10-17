@@ -22,11 +22,38 @@ var OrganizationRegisterModal = function (_a) {
         onSuccess: function (data) { }
     }), mutate = _b.mutate, isLoading = _b.isLoading;
     var _c = react_1.useState(''), organizationName = _c[0], setOrganizationName = _c[1];
-    var _d = react_1.useState(''), previewImage = _d[0], setPreviewImage = _d[1];
-    var _e = react_1.useState(null), imageFile = _e[0], setImageFile = _e[1];
+    var _d = react_1.useState(''), locaiton = _d[0], setLocation = _d[1];
+    var _e = react_1.useState(''), description = _e[0], setDescription = _e[1];
+    var _f = react_1.useState(''), phoneFirst = _f[0], setPhoneFirst = _f[1];
+    var _g = react_1.useState(''), phoneMiddle = _g[0], setPhoneMiddle = _g[1];
+    var _h = react_1.useState(''), phoneLast = _h[0], setPhoneLast = _h[1];
+    var _j = react_1.useState(''), previewImage = _j[0], setPreviewImage = _j[1];
+    var _k = react_1.useState(null), imageFile = _k[0], setImageFile = _k[1];
+    var handleRegisterCompany = function () { };
     var handleChangeOrganizationName = function (e) {
         var value = e.target.value;
         setOrganizationName(value);
+    };
+    var handleLocation = function (e) {
+        var value = e.target.value;
+        setLocation(value);
+    };
+    var handleDescription = function (e) {
+        var value = e.target.value;
+        console.log(value);
+        setDescription(value);
+    };
+    var handleFirst = function (e) {
+        var value = e.target.value;
+        setPhoneFirst(value);
+    };
+    var handleMiddle = function (e) {
+        var value = e.target.value;
+        setPhoneMiddle(value);
+    };
+    var handleLast = function (e) {
+        var value = e.target.value;
+        setPhoneLast(value);
     };
     var changePreviewImage = function (image) {
         setPreviewImage(image);
@@ -45,18 +72,18 @@ var OrganizationRegisterModal = function (_a) {
             React.createElement(style_1.FlexDiv, { margin: "0", justify: "space-between" },
                 React.createElement(style_1.FlexDiv, { margin: "0 31px 0 0", justify: "flex-start", align: "start", direction: "column" },
                     React.createElement(style_1.Content, { height: '20px', width: 'auto', color: '#495057', fontSize: '14px', lineHeight: '20px', margin: '0 0 6px 0' }, "\uC5C5\uCCB4 \uC774\uB984"),
-                    React.createElement(Input, { height: "41px", width: "341px", placeholder: "\uC5C5\uCCB4 \uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694." }),
+                    React.createElement(Input, { height: "41px", width: "341px", placeholder: "\uC5C5\uCCB4 \uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.", onChange: handleChangeOrganizationName }),
                     React.createElement(style_1.Content, { height: '20px', width: 'auto', color: '#495057', fontSize: '14px', lineHeight: '20px', margin: '16px 0 6px 0' }, "\uB300\uD45C \uC804\uD654\uBC88\uD638"),
                     React.createElement(style_1.FlexDiv, { margin: "0 0 0 0", justify: "flex-start", direction: "row" },
-                        React.createElement(Input, { height: "41px", width: "51px", placeholder: "010" }),
+                        React.createElement(Input, { height: "41px", width: "51px", placeholder: "010", onChange: handleFirst }),
                         React.createElement(style_1.Content, { height: '16px', width: 'auto', color: '#ADB5BD', fontSize: '13px', lineHeight: '16px', margin: '0px 6px 0 6px' }, "-"),
-                        React.createElement(Input, { height: "41px", width: "60px", placeholder: "1234" }),
+                        React.createElement(Input, { height: "41px", width: "60px", placeholder: "1234", onChange: handleMiddle }),
                         React.createElement(style_1.Content, { height: '16px', width: 'auto', color: '#ADB5BD', fontSize: '13px', lineHeight: '16px', margin: '0px 6px 0 6px' }, "-"),
-                        React.createElement(Input, { height: "41px", width: "60px", placeholder: "1234" })),
+                        React.createElement(Input, { height: "41px", width: "60px", placeholder: "1234", onChange: handleLast })),
                     React.createElement(style_1.Content, { height: '20px', width: 'auto', color: '#495057', fontSize: '14px', lineHeight: '20px', margin: '16px 0 6px 0' }, "\uC704\uCE58"),
-                    React.createElement(SearchInput_1["default"], { height: "41px", width: "341px", placeholder: "\uC704\uCE58\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.", handleInput: handleChangeOrganizationName }),
+                    React.createElement(SearchInput_1["default"], { height: "41px", width: "341px", placeholder: "\uC704\uCE58\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.", handleInput: handleLocation }),
                     React.createElement(style_1.Content, { height: '20px', width: 'auto', color: '#495057', fontSize: '14px', lineHeight: '20px', margin: '16px 0 6px 0' }, "\uC5C5\uCCB4 \uC18C\uAC1C"),
-                    React.createElement(exports.TextArea, { placeholder: "\uC5C5\uCCB4 \uC18C\uAC1C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694." })),
+                    React.createElement(exports.TextArea, { placeholder: "\uC5C5\uCCB4 \uC18C\uAC1C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.", onChange: handleDescription })),
                 React.createElement(style_1.FlexDiv, { margin: "0", height: "400px", justify: "flex-start", align: "start", direction: "column" },
                     React.createElement(style_1.Content, { height: '20px', width: 'auto', color: '#495057', fontSize: '14px', lineHeight: '20px', margin: '0' }, "\uB300\uD45C\uC0AC\uC9C4 \uB4F1\uB85D"),
                     React.createElement(ImageUpload_1["default"], { id: "modal", previewImage: previewImage, setImageFile: changeImageFile, setPreviewImage: changePreviewImage }))),

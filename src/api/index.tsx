@@ -31,10 +31,20 @@ export const setAxiosDefaults = () => {
       if (status === 401) {
         if (!isTokenRefreshing) {
           isTokenRefreshing = true;
+          const accessToken = localStorage.getItem('accessToken');
           const refreshToken = localStorage.getItem('refreshToken');
-          const { data } = await axios.post('/auth/token/refresh', {
-            refreshToken: refreshToken
-          });
+          const config = {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          };
+          const { data } = await axios.post(
+            '/auth/token/refresh',
+            {
+              refreshToken: refreshToken
+            },
+            config
+          );
           const { accessToken: newAccessToken, refreshToken: newRefreshToken } = data;
           localStorage.setItem('accessToken', newAccessToken);
           localStorage.setItem('refreshToken', newRefreshToken);

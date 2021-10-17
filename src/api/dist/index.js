@@ -56,7 +56,7 @@ exports.setAxiosDefaults = function () {
     axios_1["default"].interceptors.response.use(function (response) {
         return response;
     }, function (error) { return __awaiter(void 0, void 0, void 0, function () {
-        var config, status, originalRequest, refreshToken, data, newAccessToken, newRefreshToken, retryOriginalRequest;
+        var config, status, originalRequest, accessToken, refreshToken, config_1, data, newAccessToken, newRefreshToken, retryOriginalRequest;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -65,10 +65,16 @@ exports.setAxiosDefaults = function () {
                     if (!(status === 401)) return [3 /*break*/, 3];
                     if (!!isTokenRefreshing) return [3 /*break*/, 2];
                     isTokenRefreshing = true;
+                    accessToken = localStorage.getItem('accessToken');
                     refreshToken = localStorage.getItem('refreshToken');
+                    config_1 = {
+                        headers: {
+                            Authorization: "Bearer " + accessToken
+                        }
+                    };
                     return [4 /*yield*/, axios_1["default"].post('/auth/token/refresh', {
                             refreshToken: refreshToken
-                        })];
+                        }, config_1)];
                 case 1:
                     data = (_a.sent()).data;
                     newAccessToken = data.accessToken, newRefreshToken = data.refreshToken;

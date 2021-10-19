@@ -7,7 +7,7 @@ exports.__esModule = true;
 var style_1 = require("../../component/style/style");
 var SideText_1 = require("./SideText");
 var HorizontalLine_1 = require("../../component/HorizontalLine");
-var OrganizationRegisterModal_1 = require("./OrganizationRegisterModal");
+var CompanyRegisterModal_1 = require("./CompanyRegisterModal");
 var react_1 = require("react");
 var SearchInput_1 = require("./SearchInput");
 var Company_1 = require("src/api/Company");
@@ -39,7 +39,7 @@ var PlannerCompany = function (_a) {
                 })) : (React.createElement(React.Fragment, null)))))) : (React.createElement(React.Fragment, null)),
         React.createElement(style_1.FlexDiv, { margin: "8px 0 0 0", direction: "row", justify: "flex-start", align: "start" },
             React.createElement(SideText_1["default"], { text: "\uC5C5\uCCB4\uAC00 \uB4F1\uB85D\uB418\uC5B4 \uC788\uC9C0 \uC54A\uC73C\uC2E0\uAC00\uC694?", colorText: "\uC5C5\uCCB4 \uB4F1\uB85D\uD558\uAE30", onClick: openImageModal }),
-            React.createElement(OrganizationRegisterModal_1["default"], { showImageModal: showImageModal, closeImageModal: closeImageModal }))));
+            React.createElement(CompanyRegisterModal_1["default"], { showImageModal: showImageModal, closeImageModal: closeImageModal }))));
 };
 exports["default"] = PlannerCompany;
 var Container = styled_components_1["default"].div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n"], ["\n  display: flex;\n"])));

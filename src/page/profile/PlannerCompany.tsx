@@ -1,7 +1,7 @@
 import { Content, FlexDiv, Title } from '../../component/style/style';
 import SideText from './SideText';
 import HorizontalLine from '../../component/HorizontalLine';
-import OrganizationRegisterModal from './OrganizationRegisterModal';
+import CompanyRegisterModal from './CompanyRegisterModal';
 import { useState } from 'react';
 import SearchInput from './SearchInput';
 import { Company, fetchCompanies } from 'src/api/Company';
@@ -96,7 +96,7 @@ const PlannerCompany = ({ companyName, handleCompanyName, handleCompanyItem }: P
       )}
       <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-start" align="start">
         <SideText text="업체가 등록되어 있지 않으신가요?" colorText="업체 등록하기" onClick={openImageModal}></SideText>
-        <OrganizationRegisterModal showImageModal={showImageModal} closeImageModal={closeImageModal} />
+        <CompanyRegisterModal showImageModal={showImageModal} closeImageModal={closeImageModal} />
       </FlexDiv>
     </FlexDiv>
   );

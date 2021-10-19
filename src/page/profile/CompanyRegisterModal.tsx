@@ -8,19 +8,22 @@ import HorizontalLine from 'src/component/HorizontalLine';
 import ImageUpload from './ImageUpload';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-import { registerCompany } from 'src/api/Company';
+import { CompanyRequest, registerCompany } from 'src/api/Company';
+import { upload } from 'src/api/Image';
 
 interface ImageModalProps {
   showImageModal: boolean;
   closeImageModal(): void;
 }
 
-const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageModalProps) => {
+const CompanyRegisterModal = ({ showImageModal, closeImageModal }: ImageModalProps) => {
   const { mutate, isLoading } = useMutation(registerCompany, {
-    onSuccess: (data) => {}
+    onSuccess: (data) => {
+      closeImageModal();
+    }
   });
-  const [organizationName, setOrganizationName] = useState('');
-  const [locaiton, setLocation] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [region, setRegion] = useState('');
   const [description, setDescription] = useState('');
   const [phoneFirst, setPhoneFirst] = useState('');
   const [phoneMiddle, setPhoneMiddle] = useState('');
@@ -28,16 +31,41 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
   const [previewImage, setPreviewImage] = useState('');
   const [imageFile, setImageFile] = useState(null);
 
-  const handleRegisterCompany = () => {};
-
-  const handleChangeOrganizationName = (e: any) => {
-    const value = e.target.value;
-    setOrganizationName(value);
+  const validateInput = () => {
+    return (
+      phoneFirst.length === 3 &&
+      phoneMiddle.length === 4 &&
+      phoneLast.length === 4 &&
+      companyName.length > 0 &&
+      region.length > 0 &&
+      description.length > 0 &&
+      imageFile
+    );
   };
 
-  const handleLocation = (e: any) => {
+  const handleRegisterCompany = async () => {
+    if (!validateInput()) return;
+    const s3ImageUrl = await upload(imageFile);
+    const tel = phoneFirst + '-' + phoneMiddle + '-' + phoneLast;
+    const companyRequest: CompanyRequest = {
+      location: region,
+      name: companyName,
+      profilePath: s3ImageUrl,
+      tel: tel,
+      summary: description,
+      images: [s3ImageUrl]
+    };
+    mutate(companyRequest);
+  };
+
+  const handleChangeCompanyName = (e: any) => {
     const value = e.target.value;
-    setLocation(value);
+    setCompanyName(value);
+  };
+
+  const handleRegion = (e: any) => {
+    const value = e.target.value;
+    setRegion(value);
   };
 
   const handleDescription = (e: any) => {
@@ -107,7 +135,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
               height="41px"
               width="341px"
               placeholder="업체 이름을 입력해주세요."
-              onChange={handleChangeOrganizationName}
+              onChange={handleChangeCompanyName}
             ></Input>
             <Content
               height={'20px'}
@@ -120,7 +148,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
               대표 전화번호
             </Content>
             <FlexDiv margin="0 0 0 0" justify="flex-start" direction="row">
-              <Input height="41px" width="51px" placeholder="010" onChange={handleFirst}></Input>
+              <Input height="41px" width="51px" placeholder="010" onChange={handleFirst} maxLength={3}></Input>
               <Content
                 height={'16px'}
                 width={'auto'}
@@ -131,7 +159,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
               >
                 -
               </Content>
-              <Input height="41px" width="60px" placeholder="1234" onChange={handleMiddle}></Input>
+              <Input height="41px" width="60px" placeholder="1234" onChange={handleMiddle} maxLength={4}></Input>
               <Content
                 height={'16px'}
                 width={'auto'}
@@ -142,7 +170,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
               >
                 -
               </Content>
-              <Input height="41px" width="60px" placeholder="1234" onChange={handleLast}></Input>
+              <Input height="41px" width="60px" placeholder="1234" onChange={handleLast} maxLength={4}></Input>
             </FlexDiv>
             <Content
               height={'20px'}
@@ -158,7 +186,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
               height="41px"
               width="341px"
               placeholder="위치를 입력해주세요."
-              handleInput={handleLocation}
+              handleInput={handleRegion}
             ></SearchInput>
             <Content
               height={'20px'}
@@ -192,7 +220,14 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
           </FlexDiv>
         </FlexDiv>
         <FlexDiv margin="16px 0 0 0" justify="flex-start" align="start">
-          <PButton color="pink" fontSize="14px" height="40px" width="341px" fontWeight="bold">
+          <PButton
+            color="pink"
+            fontSize="14px"
+            height="40px"
+            width="341px"
+            fontWeight="bold"
+            onClick={handleRegisterCompany}
+          >
             등록하기
           </PButton>
         </FlexDiv>
@@ -201,7 +236,7 @@ const OrganizationRegisterModal = ({ showImageModal, closeImageModal }: ImageMod
   );
 };
 
-export default OrganizationRegisterModal;
+export default CompanyRegisterModal;
 
 const StyledPopup = styled(Popup)`
   &-overlay {

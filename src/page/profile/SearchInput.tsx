@@ -8,12 +8,20 @@ interface Props {
   handleInput: (e: any) => void;
   onFocus?: () => void;
   value?: string;
+
 }
 
 const SearchInput = ({ height, width, placeholder, handleInput, onFocus, value }: Props) => {
   return (
     <SearchBox>
-      <Input height={height} width={width} placeholder={placeholder} onChange={handleInput} onFocus={onFocus} value={value}></Input>
+      <Input
+        height={height}
+        width={width}
+        placeholder={placeholder}
+        onChange={handleInput}
+        onFocus={onFocus}
+        value={value}
+      ></Input>
       <SearchIcon src={SearchIconSvg} />
     </SearchBox>
   );

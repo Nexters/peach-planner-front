@@ -2,7 +2,7 @@ import { Content, FlexDiv, Title } from '../../component/style/style';
 import SideText from './SideText';
 import HorizontalLine from '../../component/HorizontalLine';
 import CompanyRegisterModal from './CompanyRegisterModal';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SearchInput from './SearchInput';
 import { Company, fetchCompanies } from 'src/api/Company';
 import { useQuery } from 'react-query';
@@ -15,8 +15,31 @@ interface Props {
   handleCompanyItem: (company: Company) => void;
 }
 
+function useOutsideAlerter(ref: any, setFocused: any) {
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event: any) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setFocused(false);
+        // alert('You clicked outside of me!');
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [ref]);
+}
+
 const PlannerCompany = ({ companyName, handleCompanyName, handleCompanyItem }: Props) => {
   const [focused, setFocused] = useState(false);
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setFocused);
   const { data } = useQuery(['companies', companyName], fetchCompanies, { enabled: focused });
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
@@ -54,46 +77,48 @@ const PlannerCompany = ({ companyName, handleCompanyName, handleCompanyItem }: P
       >
         웨딩업체 이름
       </Content>
-      <SearchInput
-        height="41px"
-        width="421px"
-        placeholder="웨딩 업체 이름을 입력해주세요."
-        handleInput={handleCompanyName}
-        onFocus={onFocus}
-        value={companyName}
-      ></SearchInput>
-      {focused ? (
-        <Container>
-          <CompanyContainer>
-            <CompanyInnerContainer>
-              {data ? (
-                data.companies.map((company) => {
-                  return (
-                    <CompanyItem
-                      key={company.id}
-                      id={company.id}
-                      tel={company.tel}
-                      location={company.location}
-                      certificated={company.certificated}
-                      profilePath={company.profilePath}
-                      name={company.name}
-                      images={company.images}
-                      summary={company.summary}
-                      handleInput={handleCompanyItem}
-                      handleCompanyName={handleCompanyName}
-                      handleClick={onBlur}
-                    ></CompanyItem>
-                  );
-                })
-              ) : (
-                <></>
-              )}
-            </CompanyInnerContainer>
-          </CompanyContainer>
-        </Container>
-      ) : (
-        <></>
-      )}
+      <SearchContainer ref={wrapperRef}>
+        <SearchInput
+          height="41px"
+          width="421px"
+          placeholder="웨딩 업체 이름을 입력해주세요."
+          handleInput={handleCompanyName}
+          onFocus={onFocus}
+          value={companyName}
+        ></SearchInput>
+        {focused ? (
+          <Container ref={wrapperRef}>
+            <CompanyContainer>
+              <CompanyInnerContainer>
+                {data ? (
+                  data.companies.map((company) => {
+                    return (
+                      <CompanyItem
+                        key={company.id}
+                        id={company.id}
+                        tel={company.tel}
+                        location={company.location}
+                        certificated={company.certificated}
+                        profilePath={company.profilePath}
+                        name={company.name}
+                        images={company.images}
+                        summary={company.summary}
+                        handleInput={handleCompanyItem}
+                        handleCompanyName={handleCompanyName}
+                        handleClick={onBlur}
+                      ></CompanyItem>
+                    );
+                  })
+                ) : (
+                  <></>
+                )}
+              </CompanyInnerContainer>
+            </CompanyContainer>
+          </Container>
+        ) : (
+          <></>
+        )}
+      </SearchContainer>
       <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-start" align="start">
         <SideText text="업체가 등록되어 있지 않으신가요?" colorText="업체 등록하기" onClick={openImageModal}></SideText>
         <CompanyRegisterModal showImageModal={showImageModal} closeImageModal={closeImageModal} />
@@ -123,3 +148,5 @@ const CompanyInnerContainer = styled.div`
   margin-top: 10px;
   margin-left: 10px;
 `;
+
+const SearchContainer = styled.div``;

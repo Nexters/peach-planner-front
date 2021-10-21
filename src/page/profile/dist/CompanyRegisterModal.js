@@ -111,7 +111,6 @@ var CompanyRegisterModal = function (_a) {
     };
     var handleDescription = function (e) {
         var value = e.target.value;
-        console.log(value);
         setDescription(value);
     };
     var handleFirst = function (e) {

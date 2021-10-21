@@ -70,7 +70,6 @@ const CompanyRegisterModal = ({ showImageModal, closeImageModal }: ImageModalPro
 
   const handleDescription = (e: any) => {
     const value = e.target.value;
-    console.log(value);
     setDescription(value);
   };
 

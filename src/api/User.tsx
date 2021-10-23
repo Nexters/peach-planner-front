@@ -42,3 +42,15 @@ export const EditUserInfo = async (reqBody: EditInfo) => {
   });
   return data;
 };
+
+export interface FindInfo {
+  name?: string;
+  tel?: string;
+  userName?: string;
+}
+
+export const FindUser = async (reqBody: FindInfo) => {
+  const { data } = await axios.patch(`/users/me`, reqBody);
+  return data;
+};
+// /auth/find

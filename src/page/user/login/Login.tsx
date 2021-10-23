@@ -120,13 +120,18 @@ const Login = () => {
       </form>
 
       <FlexDiv margin="8px 0 20px 0" justify="flex-end" width={'313px'}>
-        <Span weight="normal" cursor="pointer">
-          이메일
-        </Span>
-        <div style={{ width: '4px', height: '4px', margin: '0 5px', backgroundColor: '#ced4da' }}></div>
-        <Span weight="normal" cursor="pointer">
-          비밀번호 찾기
-        </Span>
+        <div
+          style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+          onClick={() => history.push('/findEmail')}
+        >
+          <Span weight="normal" cursor="pointer">
+            이메일
+          </Span>
+          <div style={{ width: '4px', height: '4px', margin: '0 5px', backgroundColor: '#ced4da' }}></div>
+          <Span weight="normal" cursor="pointer">
+            비밀번호 찾기
+          </Span>
+        </div>
       </FlexDiv>
 
       <FlexDiv margin="0">

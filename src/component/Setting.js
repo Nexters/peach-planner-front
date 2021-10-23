@@ -1,20 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as $ from './MyPageItemView.js';
-import { getUser, EditUserInfo } from 'src/api/User';
+import { getUser, getUserTest, EditUserInfo } from 'src/api/User';
 import { useQuery } from 'react-query';
 
 const Setting = () => {
-  const { data: user } = useQuery(['getUser'], getUser);
+  // const { data: user } = useQuery(['getUser'], getUser);
+  const [user, setUser] = useState(null);
   const [focus, setFocus] = useState(false);
   const [originalNick, setOriginalNick] = useState('');
   const [nickName, setNickName] = useState('');
   const inputRef = useRef('');
 
   useEffect(() => {
-    setOriginalNick(user.nickName);
+    getUserTest()
+      .then((data) => {
+        setUser(data);
+      })
+      .catch((err) => {
+        console.log(err, 'err');
+      });
   }, []);
-
-  useEffect(() => {}, [originalNick]);
 
   useEffect(() => {
     if (focus) {

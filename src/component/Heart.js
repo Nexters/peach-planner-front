@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import img1 from '../images/img_wedding_1.png';
 import img2 from '../images/img_wedding_2.png';
 import img3 from '../images/img_wedding_3.png';
@@ -7,6 +7,7 @@ import img5 from '../images/img_wedding_5.png';
 import img6 from '../images/img_wedding_8.png';
 import { Card, CardImg, More, MyPageItemSpan } from './MyPageItemView';
 import { FlexDiv } from './style/style';
+import { GetPick } from 'src/api/Pick';
 
 const Cards = [
   {
@@ -42,6 +43,18 @@ const Cards = [
 ];
 
 const Heart = () => {
+  const [hearts, setHearts] = useState([]);
+
+  useEffect(() => {
+    GetPick()
+      .then((data) => {
+        setHearts(data);
+      })
+      .catch((err) => {
+        console.log(err, 'err');
+      });
+  }, []);
+
   return (
     <FlexDiv direction="column">
       <FlexDiv justify="space-between">

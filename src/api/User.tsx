@@ -16,3 +16,41 @@ export const getUser = async ({ queryKey }: QueryFunctionContext) => {
   });
   return data;
 };
+
+export const getUserTest = async () => {
+  const { data } = await axios.get(`/users/me`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  });
+  return data;
+};
+
+export interface EditInfo {
+  email?: string;
+  nickName?: string;
+  originalPassword?: string;
+  password?: string;
+  tel?: string;
+}
+
+export const EditUserInfo = async (reqBody: EditInfo) => {
+  const { data } = await axios.patch(`/users/me`, reqBody, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  });
+  return data;
+};
+
+export interface FindInfo {
+  name?: string;
+  tel?: string;
+  userName?: string;
+}
+
+export const FindUser = async (reqBody: FindInfo) => {
+  const { data } = await axios.patch(`/users/me`, reqBody);
+  return data;
+};
+// /auth/find

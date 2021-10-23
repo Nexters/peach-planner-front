@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+const config = {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+  }
+};
+
 export interface PickRequest {
   targetCategoryType: 'PLANNER' | 'COMPANY';
   targetId: number;
@@ -14,4 +20,9 @@ export const pick = async (pickReq: PickRequest) => {
       }
     })
     .then((data) => console.log(data));
+};
+
+export const GetPick = async () => {
+  const { data } = await axios.get(`pick`, config);
+  return data;
 };

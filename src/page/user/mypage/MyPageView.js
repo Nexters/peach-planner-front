@@ -77,4 +77,5 @@ export const SideMenuItem = styled.li`
   line-height: 17px;
   margin: 12px 0;
   cursor: pointer;
+  list-style: none;
 `;

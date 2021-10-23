@@ -2,24 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { FlexDiv, ProfileDiv, ProfileImgBox, MyPageSpan, SideMenuDiv, Line, SideMenuItem } from './MyPageView';
 import Heart from '../../../component/Heart';
 import Estimate from '../../../component/Estimate';
+import Setting from 'src/component/Setting';
+import { getUser } from 'src/api/User';
+import { useQuery } from 'react-query';
 
 const sideMenuItem = [
   {
-    name: '나의 하트',
+    name: '찜목록',
     value: 'heart'
   },
   {
     name: '나의 견적서',
     value: 'estimate'
   },
-  {
-    name: '1:1 문의',
-    value: 'question'
-  },
-  {
-    name: '프로필 관리',
-    value: 'profile'
-  },
+  // {
+  //   name: '1:1 문의',
+  //   value: 'question'
+  // },
+  // {
+  //   name: '프로필 관리',
+  //   value: 'profile'
+  // },
   {
     name: '계정 설정',
     value: 'setting'
@@ -27,20 +30,25 @@ const sideMenuItem = [
 ];
 
 const UserPage = () => {
+  const { data: user } = useQuery(['getUser'], getUser);
   const [selectedItem, setSelectedItem] = useState('');
+
+  useEffect(() => {
+    console.log(user, 'useruseruseruseruser');
+  }, []);
 
   const handleSideMenuItem = (item) => {
     setSelectedItem(item);
   };
 
   return (
-    <FlexDiv justify="flex-start">
+    <FlexDiv justify="center">
       <FlexDiv justify="flex-start" direction="column" width="500px">
         <ProfileDiv>
           <ProfileImgBox></ProfileImgBox>
-          <MyPageSpan color="#212529">홍길동</MyPageSpan>
+          <MyPageSpan color="#212529">{user?.name}</MyPageSpan>
           <MyPageSpan color="#868E96" weight="normal" size="12px">
-            example@gmail.com
+            {user?.email}
           </MyPageSpan>
         </ProfileDiv>
         <SideMenuDiv>
@@ -62,6 +70,7 @@ const UserPage = () => {
         )}
         {selectedItem === 'heart' && <Heart />}
         {selectedItem === 'estimate' && <Estimate />}
+        {selectedItem === 'setting' && <Setting />}
       </FlexDiv>
     </FlexDiv>
   );

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const MyPageItemSpan = styled.span`
   height: 19px;
@@ -140,4 +140,121 @@ export const EnterpriseDiv = styled.div`
   align-items: flex-start;
   justify-content: center;
   padding: 26px;
+`;
+
+export const SettingTitle = styled.span`
+  height: 24px;
+  font-family: SpoqaHanSans;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #495057;
+`;
+
+export const SettingLabel = styled.label`
+  height: 24px;
+  font-family: SpoqaHanSans;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #495057;
+  margin: 16px 0 8px;
+`;
+
+export const SettingInfoBox = styled.div`
+  width: 279px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 3px;
+  border: ${(props) => props.focus && '1px solid #e64980'};
+  background-color: ${(props) => (props.focus ? 'transparent' : '#ced4da')};
+  display: flex;
+  align-items: center;
+  :nth-child(1) {
+    margin-right: 10px;
+  }
+`;
+
+export const SettingInfo = styled.span`
+  font-family: SpoqaHanSans;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #495057;
+  :nth-child(2) {
+    margin: 8px 0 19px;
+  }
+`;
+
+export const SettingButtonText = styled.span`
+  font-family: SpoqaHanSans;
+  font-size: 13px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #212529;
+`;
+
+export const SettingButton = styled.button`
+  width: ${(props) => (props.w ? props.w : '105')}px;
+  height: 40px;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  background-color: ${(props) => (props.c ? props.c : '#f1f3f5')};
+  cursor: pointer;
+  margin-right: 5px;
+  ${(props) =>
+    props.c &&
+    css`
+      ${SettingButtonText} {
+        color: #ffffff;
+      }
+    `}
+`;
+
+export const SettingBox = styled.div`
+  padding: 8px 0 40px;
+  border-top: 1px solid #e9ecef;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  :nth-child(1) {
+    height: 336px;
+  }
+  :nth-child(2) {
+    height: 201px;
+  }
+`;
+
+export const ImgBox = styled.div`
+  width: 64px;
+  height: 64px;
+  background-color: #dee2e6;
+  margin: 10px 0 15px;
+  border-radius: 100%;
+`;
+
+export const Input = styled.input.attrs((props) => ({
+  type: props.type
+}))`
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
 `;

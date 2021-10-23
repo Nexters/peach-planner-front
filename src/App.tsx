@@ -19,6 +19,8 @@ import { isBrowser } from 'react-device-detect';
 import Mobile from './page/mobile';
 import { RecoilRoot } from 'recoil';
 import Kakao from './page/user/OAuth/Kakao';
+import FindEmail from './page/user/findUser/FindEmail';
+import ResetPw from './page/user/findUser/ResetPw';
 
 import { setAxiosDefaults } from './api';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -94,6 +96,12 @@ const App = () => {
                 </Route>
                 <Route path="/api/auth/login/kakao">
                   <Kakao />
+                </Route>
+                <Route path="/findEmail">
+                  <FindEmail />
+                </Route>
+                <Route path="/resetPw">
+                  <ResetPw />
                 </Route>
                 <Route>
                   <Redirect to="/" />

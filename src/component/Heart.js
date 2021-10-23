@@ -48,7 +48,8 @@ const Heart = () => {
   useEffect(() => {
     GetPick()
       .then((data) => {
-        setHearts(data);
+        console.log(data, '찜 목록');
+        setHearts(data.pickLists);
       })
       .catch((err) => {
         console.log(err, 'err');
@@ -61,20 +62,21 @@ const Heart = () => {
         <MyPageItemSpan margin={'0 0 25px'}>찜 목록</MyPageItemSpan>
         <More>더보기</More>
       </FlexDiv>
-      <FlexDiv justify="space-between">
-        {Cards.map((card, idx) => {
-          return (
-            <Card key={idx}>
-              <CardImg src={card.img} />
-              <MyPageItemSpan size="13px" color="#000000">
-                {card.planner}
-              </MyPageItemSpan>
-              <MyPageItemSpan size="12px" color="#868E96">
-                {card.company}
-              </MyPageItemSpan>
-            </Card>
-          );
-        })}
+      <FlexDiv justify="flex-start">
+        {hearts.length > 0 &&
+          hearts.map((heart, idx) => {
+            return (
+              <Card key={idx} margin={'0 20px 0 0'}>
+                <CardImg src={heart?.imageUrlPath} width={'200px'} height={'200px'} />
+                <MyPageItemSpan size="13px" color="#000000">
+                  {heart?.name}
+                </MyPageItemSpan>
+                <MyPageItemSpan size="12px" color="#868E96">
+                  {heart?.subName}
+                </MyPageItemSpan>
+              </Card>
+            );
+          })}
       </FlexDiv>
     </FlexDiv>
   );

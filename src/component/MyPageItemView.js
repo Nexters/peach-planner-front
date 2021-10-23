@@ -82,7 +82,7 @@ export const Card = styled.div`
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  margin: 0 16px;
+  margin: ${(props) => props.margin || '0 16px'};
 `;
 
 export const More = styled.span`

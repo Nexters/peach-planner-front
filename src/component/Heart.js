@@ -1,46 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import img1 from '../images/img_wedding_1.png';
-import img2 from '../images/img_wedding_2.png';
-import img3 from '../images/img_wedding_3.png';
-import img4 from '../images/img_wedding_4.png';
-import img5 from '../images/img_wedding_5.png';
-import img6 from '../images/img_wedding_8.png';
+import styled from 'styled-components';
 import { Card, CardImg, More, MyPageItemSpan } from './MyPageItemView';
 import { FlexDiv } from './style/style';
 import { GetPick } from 'src/api/Pick';
-
-const Cards = [
-  {
-    img: img1,
-    planner: '송영주 플래너',
-    company: '아이니웨딩'
-  },
-  {
-    img: img2,
-    planner: '이윤경 플래너',
-    company: '베리굿웨딩'
-  },
-  {
-    img: img3,
-    planner: '정화진 플래너',
-    company: '베리굿웨딩'
-  },
-  {
-    img: img4,
-    planner: '성시란 플래너',
-    company: '르웨딩플랜'
-  },
-  {
-    img: img5,
-    planner: '마이퍼스트레이디',
-    company: '스튜디오'
-  },
-  {
-    img: img6,
-    planner: '루나',
-    company: '스튜디오'
-  }
-];
 
 const Heart = () => {
   const [hearts, setHearts] = useState([]);
@@ -48,7 +10,6 @@ const Heart = () => {
   useEffect(() => {
     GetPick()
       .then((data) => {
-        console.log(data, '찜 목록');
         setHearts(data.pickLists);
       })
       .catch((err) => {
@@ -62,7 +23,7 @@ const Heart = () => {
         <MyPageItemSpan margin={'0 0 25px'}>찜 목록</MyPageItemSpan>
         <More>더보기</More>
       </FlexDiv>
-      <FlexDiv justify="flex-start">
+      <CardContainer>
         {hearts.length > 0 &&
           hearts.map((heart, idx) => {
             return (
@@ -77,9 +38,14 @@ const Heart = () => {
               </Card>
             );
           })}
-      </FlexDiv>
+      </CardContainer>
     </FlexDiv>
   );
 };
 
 export default Heart;
+
+const CardContainer = styled(FlexDiv)`
+  justify-content: flex-start;
+  flex-wrap: wrap;
+`;

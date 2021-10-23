@@ -8,7 +8,6 @@ const Setting = () => {
   // const { data: user } = useQuery(['getUser'], getUser);
   const [user, setUser] = useState(null);
   const [focus, setFocus] = useState(false);
-  const [originalNick, setOriginalNick] = useState('');
   const [nickName, setNickName] = useState('');
   const inputRef = useRef('');
   const history = useHistory();
@@ -29,6 +28,10 @@ const Setting = () => {
     }
   }, [focus]);
 
+  useEffect(() => {
+    setFocus(false);
+  }, [user]);
+
   const handleFocus = () => {
     setFocus(!focus);
   };
@@ -40,9 +43,8 @@ const Setting = () => {
   const editInfo = () => {
     if (nickName) {
       EditUserInfo({ nickName })
-        .then((res) => {
-          setFocus(false);
-          setOriginalNick(res.nickName);
+        .then((data) => {
+          setUser(data);
         })
         .catch((err) => {
           console.log(err, 'err');

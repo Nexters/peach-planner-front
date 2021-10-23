@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import * as $ from './MyPageItemView.js';
 import { getUser, getUserTest, EditUserInfo } from 'src/api/User';
 import { useQuery } from 'react-query';
+import { Link, useHistory } from 'react-router-dom';
 
 const Setting = () => {
   // const { data: user } = useQuery(['getUser'], getUser);
@@ -10,6 +11,7 @@ const Setting = () => {
   const [originalNick, setOriginalNick] = useState('');
   const [nickName, setNickName] = useState('');
   const inputRef = useRef('');
+  const history = useHistory();
 
   useEffect(() => {
     getUserTest()
@@ -68,7 +70,7 @@ const Setting = () => {
               {focus ? (
                 <$.Input name="nickname" onChange={onChangeInput} value={nickName} ref={inputRef} />
               ) : (
-                <>{originalNick}</>
+                <>{user?.nickName}</>
               )}
             </$.SettingInfo>
           </$.SettingInfoBox>
@@ -109,7 +111,7 @@ const Setting = () => {
       <$.SettingBox>
         <$.SettingTitle>비밀번호</$.SettingTitle>
         <$.SettingInfo>피치플래너 로그인 시 사용하는 비밀번호를 변경할 수 있습니다.</$.SettingInfo>
-        <$.SettingButton>
+        <$.SettingButton onClick={() => history.push('/resetPw')}>
           <$.SettingButtonText>비밀번호 변경</$.SettingButtonText>
         </$.SettingButton>
       </$.SettingBox>

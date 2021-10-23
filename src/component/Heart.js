@@ -58,7 +58,7 @@ const Heart = () => {
   return (
     <FlexDiv direction="column">
       <FlexDiv justify="space-between">
-        <MyPageItemSpan>나의 하트</MyPageItemSpan>
+        <MyPageItemSpan margin={'0 0 25px'}>찜 목록</MyPageItemSpan>
         <More>더보기</More>
       </FlexDiv>
       <FlexDiv justify="space-between">

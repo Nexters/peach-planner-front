@@ -116,16 +116,16 @@ var Profile = function (_a) {
                 location: '',
                 primaryImageUrl: makeUp.imageUrl,
                 tel: '',
-                type: ''
+                type: 'MAKEUP'
             };
         });
         var request = {
             affiliatedCompanyInfoDTO: {
                 affiliatedCompanyId: company === null || company === void 0 ? void 0 : company.id
             },
-            affiliatedDressCompanyDTOList: affilicatedDress,
-            affiliatedStudioCompanyDTOList: affilicatedStudios,
-            affiliatedMakeupCompanyDTOList: affilicatedMakeUps,
+            affiliatedDressCompanyList: affilicatedDress,
+            affiliatedStudioCompanyList: affilicatedStudios,
+            affiliatedMakeupCompanyList: affilicatedMakeUps,
             areaInfoDTO: {
                 locationList: regions
             },

@@ -135,7 +135,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
         location: '',
         primaryImageUrl: makeUp.imageUrl,
         tel: '',
-        type: ''
+        type: 'MAKEUP'
       };
     });
 
@@ -143,9 +143,9 @@ const Profile = ({ isUpdate }: ProfileProps) => {
       affiliatedCompanyInfoDTO: {
         affiliatedCompanyId: company?.id!!
       },
-      affiliatedDressCompanyDTOList: affilicatedDress,
-      affiliatedStudioCompanyDTOList: affilicatedStudios,
-      affiliatedMakeupCompanyDTOList: affilicatedMakeUps,
+      affiliatedDressCompanyList: affilicatedDress,
+      affiliatedStudioCompanyList: affilicatedStudios,
+      affiliatedMakeupCompanyList: affilicatedMakeUps,
       areaInfoDTO: {
         locationList: regions
       },

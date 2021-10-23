@@ -110,9 +110,9 @@ export interface PlannerRequest {
   affiliatedCompanyInfoDTO: {
     affiliatedCompanyId: number;
   };
-  affiliatedDressCompanyDTOList: AffiliatedCompany[];
-  affiliatedMakeupCompanyDTOList: AffiliatedCompany[];
-  affiliatedStudioCompanyDTOList: AffiliatedCompany[];
+  affiliatedDressCompanyList: AffiliatedCompany[];
+  affiliatedMakeupCompanyList: AffiliatedCompany[];
+  affiliatedStudioCompanyList: AffiliatedCompany[];
   areaInfoDTO: {
     locationList: string[];
   };

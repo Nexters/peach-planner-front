@@ -21,7 +21,6 @@ const Heart = () => {
     <FlexDiv direction="column">
       <FlexDiv justify="space-between">
         <MyPageItemSpan margin={'0 0 25px'}>찜 목록</MyPageItemSpan>
-        <More>더보기</More>
       </FlexDiv>
       <CardContainer>
         {hearts.length > 0 &&

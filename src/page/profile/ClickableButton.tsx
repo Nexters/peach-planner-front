@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { Offer } from '.';
 import { Content } from '../../component/style/style';
 
 interface Props {
-  items: string[];
-  handleItems: (items: string[]) => void;
-  content: string;
+  items: Offer[];
+  handleItems: (items: Offer[]) => void;
+  content: Offer;
 }
 
 const ClickableButton = ({ items, handleItems, content }: Props) => {
@@ -36,7 +37,7 @@ const ClickableButton = ({ items, handleItems, content }: Props) => {
           lineHeight={'32px'}
           margin={'9px 20px 9px 20px'}
         >
-          {content}
+          {content.display}
         </Content>
       </Circle>
     </>

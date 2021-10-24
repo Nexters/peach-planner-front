@@ -139,7 +139,7 @@ var Profile = function (_a) {
                 webSiteUrl: sns.webUrl
             },
             supportInfoDTO: {
-                supportInfoList: offers
+                supportInfoList: offers.map(function (value) { return value.value; })
             }
         };
         mutate(request);

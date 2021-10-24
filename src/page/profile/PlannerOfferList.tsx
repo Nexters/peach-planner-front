@@ -1,14 +1,23 @@
+import { Offer } from '.';
 import { FlexDiv } from '../../component/style/style';
 import ClickableButton from './ClickableButton';
 import LineAndTitle from './LindAndTitle';
 
 interface Props {
-  offers: string[];
-  handleOffers: (offers: string[]) => void;
+  offers: Offer[];
+  handleOffers: (offers: Offer[]) => void;
 }
-const offerFirsts = ['동행하는 플래너에요', '비동행하는 플래너에요', '모바일청첩장을 제공해요'];
-const offerSeconds = ['모바일청첩장을 제공하지 않아요', '제휴웨딩홀이 있어요', '메시지 상담이 가능해요'];
-const offerThirds = ['방문 상담이 가능해요'];
+const offerFirsts: Offer[] = [
+  { value: 'Accompany', display: '동행하는 플래너에요' },
+  { value: 'NotAccompany', display: '비동행하는 플래너에요' },
+  { value: 'MobileWeddingCard', display: '모바일청첩장을 제공해요' }
+];
+const offerSeconds: Offer[] = [
+  { value: 'NotMobileWeddingCard', display: '모바일청첩장을 제공하지 않아요' },
+  { value: 'AffiliateWeddingHall', display: '제휴웨딩홀이 있어요' },
+  { value: 'MessageCounseling', display: '메시지 상담이 가능해요' }
+];
+const offerThirds: Offer[] = [{ value: 'DoorCounseling', display: '방문 상담이 가능해요' }];
 
 const PlannerOfferList = ({ offers, handleOffers }: Props) => {
   return (

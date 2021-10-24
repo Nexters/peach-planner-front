@@ -37,6 +37,11 @@ export interface SupportStore {
   imageUrl: string;
 }
 
+export interface Offer {
+  value: string;
+  display: string;
+}
+
 const Profile = ({ isUpdate }: ProfileProps) => {
   const { data: user } = useQuery(['user'], getUser);
   const { mutate, isLoading } = useMutation(updateProfile, {
@@ -45,7 +50,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
   const [description, setDescription] = useState<PlannerDescription>({ summary: '', description: '' });
   const [sns, setSns] = useState<Sns>({ webUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' });
   const [regions, setRegions] = useState<string[]>([]);
-  const [offers, setOffers] = useState<string[]>([]);
+  const [offers, setOffers] = useState<Offer[]>([]);
   const [company, setCompany] = useState<Company>();
   const [inputCompanyName, setInputCompanyName] = useState('');
   const [studios, setStudios] = useState<SupportStore[]>([]);
@@ -74,7 +79,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     setRegions(selectedRegions);
   };
 
-  const handleOffers = (selectedOffers: string[]) => {
+  const handleOffers = (selectedOffers: Offer[]) => {
     setOffers(selectedOffers);
   };
 
@@ -159,7 +164,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
         webSiteUrl: sns.webUrl
       },
       supportInfoDTO: {
-        supportInfoList: offers
+        supportInfoList: offers.map((value) => value.value)
       }
     };
     mutate(request);

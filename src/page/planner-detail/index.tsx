@@ -40,7 +40,7 @@ const PlannerDetail = () => {
 
   return plannerInfo ? (
     <Container>
-      <Summary plannerInfo={plannerInfo} />
+      <Summary plannerInfo={plannerInfo} setPlannerInfo={setPlannerInfo} />
       <Detail plannerInfo={plannerInfo} />
       <PlannerInfo plannerInfo={plannerInfo} />
       {plannerInfo.company && <CompanyInfo companyInfo={plannerInfo.company} />}

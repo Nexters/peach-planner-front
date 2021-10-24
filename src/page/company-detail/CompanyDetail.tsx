@@ -9,6 +9,8 @@ import EmptyHeart from '../../assets/svg/ic_heart_black.svg';
 import FullHeart from '../../assets/svg/ic_heart.svg';
 import Map from '../../assets/svg/ic_map.svg';
 import Call from '../../assets/svg/ic_call.svg';
+import DefaultBigImage from '../../assets/svg/img_defult_wedding.svg';
+import DefaultImage from '../../assets/svg/img_photo_default.svg';
 import ImageModal from '../planner-detail/ImageModal';
 import Container from '../planner-detail/Container';
 import axios from 'axios';
@@ -86,24 +88,21 @@ const CompanyDetail = () => {
           <Vertical>{companyInfo.tel}</Vertical>
         </InformationElement>
       </Information>
-      {companyInfo.images.length != 0 && (
-        <ImageOuterContainer>
-          <ImageContainer>
-            <BigImage src={companyInfo.images[0]} />
-            <ImageWrapper>
-              <SmallImage src={companyInfo.images[1]} />
-              <SmallImage src={companyInfo.images[2]} />
-            </ImageWrapper>
-          </ImageContainer>
-          <ImageModal
-            showImageModal={showImageModal}
-            closeImageModal={closeImageModal}
-            imageList={companyInfo.images}
-          />
-          <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>
-        </ImageOuterContainer>
-      )}
-      {companyInfo.summary && <Container title="업체 정보">{companyInfo.summary}</Container>}{' '}
+      <ImageOuterContainer>
+        <ImageContainer>
+          {companyInfo.images.length == 0 ? <img src={DefaultBigImage} /> : <BigImage src={companyInfo.images[0]} />}
+          <ImageWrapper>
+            {companyInfo.images.slice(1, 3).map((image, i) => (
+              <SmallImage src={image} key={i} />
+            ))}
+            {companyInfo.images.length <= 1 && <Image src={DefaultImage} />}
+            {companyInfo.images.length <= 2 && <Image src={DefaultImage} />}
+          </ImageWrapper>
+        </ImageContainer>
+        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={companyInfo.images} />
+        {companyInfo.images.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}
+      </ImageOuterContainer>
+      <Container title="업체 정보">{companyInfo.summary ? companyInfo.summary : '업체 정보가 없습니다.'}</Container>
     </OuterContainer>
   ) : (
     <></>
@@ -119,6 +118,7 @@ const OuterContainer = styled.div`
 
 const ImageOuterContainer = styled.div`
   position: relative;
+  margin-bottom: 40px;
 `;
 
 const TopContainer = styled.div`
@@ -190,4 +190,13 @@ const SmallImage = styled.img`
   // height: 211px;
   // flex: 1;
   border-radius: 10px;
+`;
+
+const Image = styled.img`
+  width: 211px;
+  height: 211px;
+  border-radius: 10px;
+  & + & {
+    margin-top: 8px;
+  }
 `;

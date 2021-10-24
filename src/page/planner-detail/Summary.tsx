@@ -18,20 +18,16 @@ import { checkAuth } from 'src/routes/checkAuth';
 
 interface SummaryProps {
   plannerInfo: Planner;
+  setPlannerInfo: React.Dispatch<React.SetStateAction<Planner | null>>;
 }
 
-const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
+const Summary: FC<SummaryProps> = ({ plannerInfo, setPlannerInfo }) => {
   const history = useHistory();
-
-  const PLANNER_NAME = plannerInfo.name;
-  const COMPANY_NAME = plannerInfo.company ? plannerInfo.company.name : '';
-  const ONE_LINE_SUMMARY = plannerInfo.summary;
-  const EXTERNAL_LINKS = plannerInfo.externalLinks;
-  const IMAGES = plannerInfo.images;
+  const { name: plannerName, summary, externalLinks, images } = plannerInfo;
+  const companyName = plannerInfo.company ? plannerInfo.company.name : '';
 
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const [selected, setSelected] = useState<boolean>(false);
-  const [heartCount, setHeartCount] = useState<number>(plannerInfo.likes);
 
   const openImageModal = () => setShowImageModal(true);
   const closeImageModal = () => setShowImageModal(false);
@@ -54,9 +50,9 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
     const plannerId = plannerInfo.id;
     pick({ targetCategoryType: 'PLANNER', targetId: plannerId, toBePick: !selected } as PickRequest);
     if (selected) {
-      setHeartCount((heart) => heart - 1);
+      setPlannerInfo({ ...plannerInfo, likes: plannerInfo.likes - 1 });
     } else {
-      setHeartCount((heart) => heart + 1);
+      setPlannerInfo({ ...plannerInfo, likes: plannerInfo.likes + 1 });
     }
     setSelected((selected) => !selected);
   };
@@ -80,46 +76,46 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
     <Container>
       <ImageContainer>
         <ImageWrapper>
-          {IMAGES.slice(0, 2).map((image, i) => (
+          {images.slice(0, 2).map((image, i) => (
             <Image src={image} key={i} />
           ))}
-          {IMAGES.length == 0 && <Image src={DefaultImage} />}
-          {IMAGES.length <= 1 && <Image src={DefaultImage} />}
+          {images.length == 0 && <Image src={DefaultImage} />}
+          {images.length <= 1 && <Image src={DefaultImage} />}
         </ImageWrapper>
         <ImageWrapper>
-          {IMAGES.slice(2, 4).map((image, i) => (
+          {images.slice(2, 4).map((image, i) => (
             <Image src={image} key={i} />
           ))}
-          {IMAGES.length <= 2 && <Image src={DefaultImage} />}
-          {IMAGES.length <= 3 && <Image src={DefaultImage} />}
+          {images.length <= 2 && <Image src={DefaultImage} />}
+          {images.length <= 3 && <Image src={DefaultImage} />}
         </ImageWrapper>
-        {IMAGES.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}
-        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={IMAGES} />
+        {images.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}
+        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={images} />
       </ImageContainer>
       <InformationContainer>
         <InnerContainer>
           <NameContainer>
-            <BoldTitle size={20}>{PLANNER_NAME} 플래너</BoldTitle>
+            <BoldTitle size={20}>{plannerName} 플래너</BoldTitle>
             <HeartContainer>
               <Heart />
-              {heartCount}
+              {plannerInfo.likes}
             </HeartContainer>
           </NameContainer>
-          <CompanyName>{COMPANY_NAME}</CompanyName>
+          <CompanyName>{companyName}</CompanyName>
           <HorizontalLine height="0.1px" color="#dee2e6" top="12px" bottom="15px" />
 
           <BoldGray>플래너 한줄소개</BoldGray>
-          <OneLine>{ONE_LINE_SUMMARY}</OneLine>
+          <OneLine>{summary}</OneLine>
           <HorizontalLine height="0.1px" color="#dee2e6" top="36px" bottom="11px" />
 
-          {EXTERNAL_LINKS != null && (
+          {externalLinks != null && (
             <>
               <BoldGray>소셜미디어</BoldGray>
               <SocialIcon>
-                <a href={EXTERNAL_LINKS.instagramLink} target="_blank">
+                <a href={externalLinks.instagramLink} target="_blank">
                   <Instagram />
                 </a>
-                <a href={EXTERNAL_LINKS.blogLink} target="_blank">
+                <a href={externalLinks.blogLink} target="_blank">
                   <Blog />
                 </a>
               </SocialIcon>

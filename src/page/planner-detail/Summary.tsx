@@ -14,6 +14,7 @@ import { useHistory } from 'react-router';
 import axios from 'axios';
 import EmptyHeart from '../../assets/svg/ic_heart_black.svg';
 import FullHeart from '../../assets/svg/ic_heart.svg';
+import { checkAuth } from 'src/routes/checkAuth';
 
 interface SummaryProps {
   plannerInfo: Planner;
@@ -40,7 +41,16 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
     history.push(`/estimate/${plannerId}`);
   };
 
+  const handleNoneUser = () => {
+    const auth = checkAuth();
+    if (!auth) {
+      history.push('/login');
+      return;
+    }
+  };
+
   const pickPlanner = () => {
+    handleNoneUser();
     const plannerId = plannerInfo.id;
     pick({ targetCategoryType: 'PLANNER', targetId: plannerId, toBePick: !selected } as PickRequest);
     if (selected) {
@@ -52,6 +62,7 @@ const Summary: FC<SummaryProps> = ({ plannerInfo }) => {
   };
 
   const handleChat = () => {
+    handleNoneUser();
     axios
       .post(
         `/chat/rooms/${plannerInfo.id}`,

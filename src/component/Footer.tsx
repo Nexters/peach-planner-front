@@ -6,7 +6,15 @@ const Footer = () => {
     <Container>
       <Image src={logo} />
       <BottomContainer>
-        <Item>이용약관 | 개인정보처리방침</Item>
+        <Item>
+          <TermsPolicy href="/termsOfUse" target="_blank">
+            이용약관
+          </TermsPolicy>
+          {'  '}|{' '}
+          <TermsPolicy href="/privacyPolicy" target="_blank">
+            개인정보처리방침
+          </TermsPolicy>
+        </Item>
         <Item>COPYRIGHT© Peachplanner ALL RIGHT RESERVED</Item>
       </BottomContainer>
     </Container>
@@ -31,6 +39,7 @@ const BottomContainer = styled.div`
 const Item = styled.div`
   color: #343a40;
   font-size: 14px;
+  color: #868e96;
 `;
 
 interface ImageProps {
@@ -42,4 +51,10 @@ const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   width: 140.58px;
   margin: 0;
   border-radius: 10px;
+`;
+
+const TermsPolicy = styled.a`
+  text-decoration: none;
+  cursor: pointer;
+  color: #868e96;
 `;

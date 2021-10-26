@@ -15,6 +15,7 @@ import { getUser } from 'src/api/User';
 import { AffiliatedCompany, PlannerRequest, updateProfile } from 'src/api/Planner';
 import { useEffect, useState } from 'react';
 import { Company } from 'src/api/Company';
+import { useHistory } from 'react-router';
 
 export interface ProfileProps {
   isUpdate: boolean;
@@ -37,20 +38,24 @@ export interface SupportStore {
   imageUrl: string;
 }
 
-export interface Offer {
+export interface Item {
   value: string;
   display: string;
 }
 
 const Profile = ({ isUpdate }: ProfileProps) => {
   const { data: user } = useQuery(['user'], getUser);
+  const history = useHistory();
   const { mutate, isLoading } = useMutation(updateProfile, {
-    onSuccess: (data) => {}
+    onSuccess: (data) => {
+      alert(`프로필 ${isUpdate ? '수정' : '등록'}이 완료되었습니다.`);
+      history.push('/');
+    }
   });
   const [description, setDescription] = useState<PlannerDescription>({ summary: '', description: '' });
   const [sns, setSns] = useState<Sns>({ webUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' });
-  const [regions, setRegions] = useState<string[]>([]);
-  const [offers, setOffers] = useState<Offer[]>([]);
+  const [regions, setRegions] = useState<Item[]>([]);
+  const [offers, setOffers] = useState<Item[]>([]);
   const [company, setCompany] = useState<Company>();
   const [inputCompanyName, setInputCompanyName] = useState('');
   const [studios, setStudios] = useState<SupportStore[]>([]);
@@ -75,11 +80,11 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     });
   };
 
-  const handleRegions = (selectedRegions: string[]) => {
+  const handleRegions = (selectedRegions: Item[]) => {
     setRegions(selectedRegions);
   };
 
-  const handleOffers = (selectedOffers: Offer[]) => {
+  const handleOffers = (selectedOffers: Item[]) => {
     setOffers(selectedOffers);
   };
 
@@ -113,6 +118,10 @@ const Profile = ({ isUpdate }: ProfileProps) => {
   };
 
   const handleRegister = () => {
+    if (description.description === '' || description.summary === '') {
+      alert('플래너 한줄 소개와 플래너 소개는 필수 값 입니다.');
+      return;
+    }
     const affilicatedDress: AffiliatedCompany[] = dresses.map((dress) => {
       return {
         companyName: dress.name,
@@ -152,7 +161,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
       affiliatedStudioCompanyList: affilicatedStudios,
       affiliatedMakeupCompanyList: affilicatedMakeUps,
       areaInfoDTO: {
-        locationList: regions
+        locationList: regions.map((value) => value.display)
       },
       myProfileDTO: description,
       snsInfoDTO: {

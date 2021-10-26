@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Offer } from '.';
+import { Item } from '.';
 import { Content } from '../../component/style/style';
 
 interface Props {
-  items: Offer[];
-  handleItems: (items: Offer[]) => void;
-  content: Offer;
+  items: Item[];
+  handleItems: (items: Item[]) => void;
+  content: Item;
 }
 
 const ClickableButton = ({ items, handleItems, content }: Props) => {

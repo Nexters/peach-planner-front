@@ -52,6 +52,7 @@ const App = () => {
               <Header />
               <Switch>
                 <Route exact path="/">
+                  <ScrollToTop />
                   <Main />
                 </Route>
                 <Route path="/search">

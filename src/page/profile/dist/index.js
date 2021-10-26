@@ -30,11 +30,16 @@ var react_query_1 = require("react-query");
 var User_1 = require("src/api/User");
 var Planner_1 = require("src/api/Planner");
 var react_1 = require("react");
+var react_router_1 = require("react-router");
 var Profile = function (_a) {
     var isUpdate = _a.isUpdate;
     var user = react_query_1.useQuery(['user'], User_1.getUser).data;
+    var history = react_router_1.useHistory();
     var _b = react_query_1.useMutation(Planner_1.updateProfile, {
-        onSuccess: function (data) { }
+        onSuccess: function (data) {
+            alert("\uD504\uB85C\uD544 " + (isUpdate ? '수정' : '등록') + "\uC774 \uC644\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4.");
+            history.push('/');
+        }
     }), mutate = _b.mutate, isLoading = _b.isLoading;
     var _c = react_1.useState({ summary: '', description: '' }), description = _c[0], setDescription = _c[1];
     var _d = react_1.useState({ webUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' }), sns = _d[0], setSns = _d[1];
@@ -89,6 +94,10 @@ var Profile = function (_a) {
         setMakeUps(makeUps);
     };
     var handleRegister = function () {
+        if (description.description === '' || description.summary === '') {
+            alert('플래너 한줄 소개와 플래너 소개는 필수 값 입니다.');
+            return;
+        }
         var affilicatedDress = dresses.map(function (dress) {
             return {
                 companyName: dress.name,
@@ -127,7 +136,7 @@ var Profile = function (_a) {
             affiliatedStudioCompanyList: affilicatedStudios,
             affiliatedMakeupCompanyList: affilicatedMakeUps,
             areaInfoDTO: {
-                locationList: regions
+                locationList: regions.map(function (value) { return value.display; })
             },
             myProfileDTO: description,
             snsInfoDTO: {

@@ -16,12 +16,12 @@ var User_1 = require("src/api/User");
 var react_query_1 = require("react-query");
 var Header = function () {
     var history = react_router_dom_1.useHistory();
-    var user = react_query_1.useQuery(['getUser'], User_1.getUser).data;
     var handleSignUp = function () { return history.push('/signUp'); };
     var peachTokenState = AuthStatus_1.usePeachTokenState()[0];
     var _a = react_1.useState(false), isClickedProfile = _a[0], setIsClickedProfile = _a[1];
     var _b = react_1.useState(false), isAlart = _b[0], setIsAlart = _b[1];
     var isLogin = peachTokenState ? true : false;
+    var user = react_query_1.useQuery(['getUser'], User_1.getUser, { enabled: isLogin }).data;
     var logout = function () {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
@@ -34,13 +34,19 @@ var Header = function () {
         setIsAlart(!isAlart);
     };
     var handleMyPage = function () {
-        if ((user === null || user === void 0 ? void 0 : user.userType) === 'USER') {
-            history.push("/userPage");
-        }
-        else {
-            history.push("/plannerPage");
-        }
-        setIsClickedProfile(false);
+        User_1.getUserTest()
+            .then(function (res) {
+            if (res.userType === 'USER') {
+                history.push("/userPage");
+            }
+            else {
+                history.push("/plannerPage");
+            }
+            setIsClickedProfile(false);
+        })["catch"](function (err) {
+            console.log(err, 'err');
+            setIsClickedProfile(false);
+        });
         return;
     };
     var right;

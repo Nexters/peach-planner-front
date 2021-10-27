@@ -13,12 +13,12 @@ import { useQuery } from 'react-query';
 
 const Header = () => {
   let history = useHistory();
-  const { data: user } = useQuery(['getUser'], getUser);
   const handleSignUp = () => history.push('/signUp');
   const [peachTokenState] = usePeachTokenState();
   const [isClickedProfile, setIsClickedProfile] = useState(false);
   const [isAlart, setIsAlart] = useState(false);
   const isLogin = peachTokenState ? true : false;
+  const { data: user } = useQuery(['getUser'], getUser, { enabled: isLogin });
   const logout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');

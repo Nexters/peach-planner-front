@@ -3,10 +3,12 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { FlexDiv, Title, Content } from 'src/component/style/style';
-import { usePeachTokenState } from 'src/atoms/AuthStatus';
+import { usePeachTokenState, useUserTypeState } from 'src/atoms/AuthStatus';
 import { KAKAO_AUTH_URL } from '../OAuth/OAuth';
 import { User } from 'src/interface';
 import logo from '../../../assets/img/ic_share_kakao.png';
+import { useMutation } from 'react-query';
+import { getUser } from 'src/api/User';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -14,6 +16,7 @@ const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#
 const Login = () => {
   const history = useHistory();
   const [, setPeachTokenState] = usePeachTokenState();
+  const [, setUserTypeState] = useUserTypeState();
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [inputs, setInputs] = useState({
@@ -55,6 +58,8 @@ const Login = () => {
     const refreshToken = res.data.refreshToken;
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
+    const user = await getUser();
+    setUserTypeState(user.userType ? user.userType : 'USER');
     history.push('/');
     alert('로그인되었습니다.');
     const expireTime = Date.parse(res.data.expireDateTime);

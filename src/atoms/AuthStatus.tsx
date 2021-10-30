@@ -8,3 +8,12 @@ const peachTokenState = atom<string | null>({
 export function usePeachTokenState() {
   return useRecoilState(peachTokenState);
 }
+
+const userTypeState = atom<string | null>({
+  key: 'userType',
+  default: 'USER'
+});
+
+export function useUserTypeState() {
+  return useRecoilState(userTypeState);
+}

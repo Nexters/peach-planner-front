@@ -20,7 +20,8 @@ var PlannerCard = function (props) {
     var _a = react_query_1.useMutation(Pick_1.pick, {
         onSuccess: function (data) { }
     }), mutate = _a.mutate, isLoading = _a.isLoading;
-    var tokenState = AuthStatus_1.usePeachTokenState();
+    var userState = AuthStatus_1.useUserTypeState();
+    // const
     var history = react_router_dom_1.useHistory();
     var handlePlannerClick = function () {
         var plannerId = props.id;
@@ -45,7 +46,7 @@ var PlannerCard = function (props) {
     return (React.createElement(style_1.FlexDiv, { width: props.size, direction: "column", margin: props.margin },
         React.createElement(PlannerImageContainer, null,
             React.createElement(PlannerImage, { src: props.imagePath ? props.imagePath : img_photo_default_svg_1["default"], height: props.size, onClick: handlePlannerClick }),
-            tokenState[0] ? (React.createElement(PickBox, { onClick: handlePickClick },
+            userState[0] && userState[0] === 'USER' ? (React.createElement(PickBox, { onClick: handlePickClick },
                 React.createElement(EmptyPickIcon, { src: ic_heart_line_svg_1["default"] }))) : (React.createElement(React.Fragment, null))),
         React.createElement(style_1.FlexDiv, { justify: "flex-start", align: "start", width: props.size, margin: '0', direction: "column" },
             React.createElement(style_1.FlexDiv, { justify: "flex-start", margin: '13px 0 0 0' },

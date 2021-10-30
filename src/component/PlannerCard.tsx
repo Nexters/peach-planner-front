@@ -7,7 +7,7 @@ import { FlexDiv } from './style/style';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import { usePeachTokenState } from 'src/atoms/AuthStatus';
+import { usePeachTokenState, useUserTypeState } from 'src/atoms/AuthStatus';
 import { pick, PickRequest } from 'src/api/Pick';
 import PhotoDefault from '../assets/svg/img_photo_default.svg';
 
@@ -31,7 +31,8 @@ const PlannerCard = (props: PlannerProps) => {
   const { mutate, isLoading } = useMutation(pick, {
     onSuccess: (data) => {}
   });
-  const tokenState = usePeachTokenState();
+  const userState = useUserTypeState();
+  // const
   const history = useHistory();
 
   const handlePlannerClick = () => {
@@ -66,7 +67,7 @@ const PlannerCard = (props: PlannerProps) => {
           height={props.size}
           onClick={handlePlannerClick}
         />
-        {tokenState[0] ? (
+        {userState[0] && userState[0] === 'USER' ? (
           <PickBox onClick={handlePickClick}>
             <EmptyPickIcon src={EmptyHeart}></EmptyPickIcon>
           </PickBox>

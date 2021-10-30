@@ -18,10 +18,12 @@ var Header = function () {
     var history = react_router_dom_1.useHistory();
     var handleSignUp = function () { return history.push('/signUp'); };
     var peachTokenState = AuthStatus_1.usePeachTokenState()[0];
-    var _a = react_1.useState(false), isClickedProfile = _a[0], setIsClickedProfile = _a[1];
-    var _b = react_1.useState(false), isAlart = _b[0], setIsAlart = _b[1];
+    var _a = AuthStatus_1.useUserTypeState(), setUserTypeState = _a[1];
+    var _b = react_1.useState(false), isClickedProfile = _b[0], setIsClickedProfile = _b[1];
+    var _c = react_1.useState(false), isAlart = _c[0], setIsAlart = _c[1];
     var isLogin = peachTokenState ? true : false;
     var user = react_query_1.useQuery(['getUser'], User_1.getUser, { enabled: isLogin }).data;
+    setUserTypeState((user === null || user === void 0 ? void 0 : user.userType) ? user === null || user === void 0 ? void 0 : user.userType : 'USER');
     var logout = function () {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');

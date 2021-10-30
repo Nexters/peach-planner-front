@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { ReactComponent as Logo } from '../assets/svg/logo_peachplanner.svg';
 import PButton from './PButton';
-import { usePeachTokenState } from 'src/atoms/AuthStatus';
+import { usePeachTokenState, useUserTypeState } from 'src/atoms/AuthStatus';
 import DefaultProfileImage from '../assets/svg/ic_account_default.svg';
 import DownArrowImage from '../assets/svg/ic_arrow_down.svg';
 import NotiDefault from '../assets/svg/ic_noti_default.svg';
@@ -15,10 +15,12 @@ const Header = () => {
   let history = useHistory();
   const handleSignUp = () => history.push('/signUp');
   const [peachTokenState] = usePeachTokenState();
+  const [, setUserTypeState] = useUserTypeState();
   const [isClickedProfile, setIsClickedProfile] = useState(false);
   const [isAlart, setIsAlart] = useState(false);
   const isLogin = peachTokenState ? true : false;
   const { data: user } = useQuery(['getUser'], getUser, { enabled: isLogin });
+  setUserTypeState(user?.userType ? user?.userType : 'USER');
   const logout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');

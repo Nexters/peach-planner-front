@@ -7,8 +7,7 @@ export interface User {
   userType?: string;
 }
 
-export const getUser = async ({ queryKey }: QueryFunctionContext) => {
-  const [_key, params] = queryKey;
+export const getUser = async () => {
   const { data } = await axios.get<User>(`/users/me`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`

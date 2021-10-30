@@ -36,25 +36,62 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getUser = void 0;
+exports.FindUser = exports.EditUserInfo = exports.getUserTest = exports.getUser = void 0;
 var axios_1 = require("axios");
-exports.getUser = function (_a) {
-    var queryKey = _a.queryKey;
-    return __awaiter(void 0, void 0, void 0, function () {
-        var _key, params, data;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    _key = queryKey[0], params = queryKey[1];
-                    return [4 /*yield*/, axios_1["default"].get("/users/me", {
-                            headers: {
-                                Authorization: "Bearer " + localStorage.getItem('accessToken')
-                            }
-                        })];
-                case 1:
-                    data = (_b.sent()).data;
-                    return [2 /*return*/, data];
-            }
-        });
+exports.getUser = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, axios_1["default"].get("/users/me", {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('accessToken')
+                    }
+                })];
+            case 1:
+                data = (_a.sent()).data;
+                return [2 /*return*/, data];
+        }
     });
-};
+}); };
+exports.getUserTest = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, axios_1["default"].get("/users/me", {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('accessToken')
+                    }
+                })];
+            case 1:
+                data = (_a.sent()).data;
+                return [2 /*return*/, data];
+        }
+    });
+}); };
+exports.EditUserInfo = function (reqBody) { return __awaiter(void 0, void 0, void 0, function () {
+    var data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, axios_1["default"].patch("/users/me", reqBody, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('accessToken')
+                    }
+                })];
+            case 1:
+                data = (_a.sent()).data;
+                return [2 /*return*/, data];
+        }
+    });
+}); };
+exports.FindUser = function (reqBody) { return __awaiter(void 0, void 0, void 0, function () {
+    var data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, axios_1["default"].patch("/users/me", reqBody)];
+            case 1:
+                data = (_a.sent()).data;
+                return [2 /*return*/, data];
+        }
+    });
+}); };
+// /auth/find

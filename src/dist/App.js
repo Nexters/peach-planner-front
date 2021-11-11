@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+exports.queryClient = void 0;
 var react_router_dom_1 = require("react-router-dom");
 var main_1 = require("./page/home/main");
 var planner_detail_1 = require("./page/planner-detail");
@@ -30,7 +31,7 @@ var CompanyDetail_1 = require("./page/company-detail/CompanyDetail");
 var ScrollToTop_1 = require("./component/ScrollToTop");
 var TermsOfUse_1 = require("./page/signup-detail/TermsOfUse");
 var PrivacyPolicy_1 = require("./page/signup-detail/PrivacyPolicy");
-var queryClient = new react_query_1.QueryClient();
+exports.queryClient = new react_query_1.QueryClient();
 var App = function () {
     api_1.setAxiosDefaults();
     if (!react_device_detect_1.isBrowser) {
@@ -40,7 +41,7 @@ var App = function () {
     }
     else {
         return (React.createElement(recoil_1.RecoilRoot, null,
-            React.createElement(react_query_1.QueryClientProvider, { client: queryClient },
+            React.createElement(react_query_1.QueryClientProvider, { client: exports.queryClient },
                 React.createElement(styled_components_1.ThemeProvider, { theme: theme_1["default"] },
                     React.createElement(globalStyle_1["default"], null),
                     React.createElement(react_router_dom_1.BrowserRouter, null,

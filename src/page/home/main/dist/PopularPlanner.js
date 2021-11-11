@@ -25,7 +25,10 @@ var react_1 = require("react");
 var react_query_1 = require("react-query");
 var Planner_1 = require("../../../api/Planner");
 var react_router_dom_1 = require("react-router-dom");
+var Pick_1 = require("src/api/Pick");
+var App_1 = require("src/App");
 var PopularPlanner = function () {
+    var history = react_router_dom_1.useHistory();
     var planners = react_query_1.useQuery(['popularPlanners'], Planner_1.fetchPopularPlanners).data;
     var _a = react_1.useState(), slider = _a[0], setSlider = _a[1];
     var _b = react_1.useState({
@@ -37,6 +40,16 @@ var PopularPlanner = function () {
         variableWidth: true,
         arrows: false
     }), slickSettings = _b[0], setSlickSettings = _b[1];
+    var _c = react_query_1.useMutation(Pick_1.pick, {
+        onSuccess: function (data) {
+            App_1.queryClient.invalidateQueries(['popularPlanners']);
+        },
+        onError: function (error) {
+            if (error.response.status === 401) {
+                history.push('/login');
+            }
+        }
+    }), mutate = _c.mutate, isLoading = _c.isLoading;
     return (React.createElement(style_1.FlexDiv, { margin: '64px 0 0 0', direction: "column" },
         React.createElement(style_1.FlexDiv, { height: '56px', justify: "between", margin: '0 0 8px 0' },
             React.createElement(Title, null, "\uC778\uAE30 \uD50C\uB798\uB108"),
@@ -48,7 +61,7 @@ var PopularPlanner = function () {
         React.createElement(style_1.FlexDiv, { justify: "flex-start", align: "start", direction: "row", margin: "0", width: "1100px", style: { overflow: 'hidden' } },
             React.createElement(Slider, __assign({}, slickSettings, { ref: function (ref) { return setSlider(ref); } }), planners ? (planners.content.map(function (planner) {
                 var _a;
-                return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 28px 0 0', size: '254px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, isPicked: false, blogLink: planner.externalLinks.blogLink, instagramLink: planner.externalLinks.instagramLink, facebookLink: planner.externalLinks.facebookLink }));
+                return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 28px 0 0', size: '254px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, blogLink: planner.externalLinks.blogLink, instagramLink: planner.externalLinks.instagramLink, facebookLink: planner.externalLinks.facebookLink, mutate: mutate }));
             })) : (React.createElement(React.Fragment, null))))));
 };
 exports["default"] = PopularPlanner;

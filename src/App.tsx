@@ -30,7 +30,7 @@ import ScrollToTop from './component/ScrollToTop';
 import { TermsOfUse } from './page/signup-detail/TermsOfUse';
 import { PrivacyPolicy } from './page/signup-detail/PrivacyPolicy';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 const App = () => {
   setAxiosDefaults();

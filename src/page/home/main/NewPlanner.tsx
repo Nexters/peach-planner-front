@@ -6,11 +6,14 @@ import LeftArrow from '../../../assets/svg/ic_arrow_left.svg';
 import RightArrow from '../../../assets/svg/ic_arrow_right.svg';
 
 import { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { fetchPlanners } from '../../../api/Planner';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { pick } from 'src/api/Pick';
+import { queryClient } from 'src/App';
 
 const NewPlanner = () => {
+  const history = useHistory();
   const { data: planners } = useQuery(['newPlanners', { isNew: true }], fetchPlanners);
   const [slider, setSlider] = useState<Slick>();
   const [slickSettings, setSlickSettings] = useState<Settings>({
@@ -21,6 +24,16 @@ const NewPlanner = () => {
     infinite: true,
     variableWidth: true,
     arrows: false
+  });
+  const { mutate, isLoading } = useMutation(pick, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['newPlanners']);
+    },
+    onError: (error: any) => {
+      if (error.response.status === 401) {
+        history.push('/login');
+      }
+    }
   });
 
   return (
@@ -58,10 +71,10 @@ const NewPlanner = () => {
                   organization={planner.company?.name}
                   region={planner.locations.join(',')}
                   id={planner.id}
-                  isPicked={false}
                   blogLink={planner.externalLinks.blogLink}
                   instagramLink={planner.externalLinks.instagramLink}
                   facebookLink={planner.externalLinks.facebookLink}
+                  mutate={mutate}
                 />
               );
             })

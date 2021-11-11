@@ -1,11 +1,13 @@
 import { FlexDiv, Title } from '../../../component/style/style';
 import PlannerCard from '../../../component/PlannerCard';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { fetchPlanners, fetchPopularPlanners } from '../../../api/Planner';
 import styled from 'styled-components';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { useState } from 'react';
 import { useSelectedSortingState } from 'src/atoms/SelectStatus';
+import { pick } from 'src/api/Pick';
+import { queryClient } from 'src/App';
 
 interface Props {
   location: string;
@@ -13,6 +15,7 @@ interface Props {
 }
 
 const SearchResult = ({ location, support }: Props) => {
+  const history = useHistory();
   const hookLocation = useLocation();
   const sortingParam = new URLSearchParams(hookLocation.search).get('sort');
   const supportInfos = support.join();
@@ -20,9 +23,20 @@ const SearchResult = ({ location, support }: Props) => {
   const [sort, setSort] = useState('');
   const [selectedSortingState, setSelectedSortingState] = useSelectedSortingState();
   const { data: planners } = useQuery(
-    ['planners', { location, supportInfos, isNew: sortingParam === 'new', sort }],
+    ['searchPlanners', { location, supportInfos, isNew: sortingParam === 'new', sort }],
     getPlanners
   );
+
+  const { mutate, isLoading } = useMutation(pick, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['searchPlanners']);
+    },
+    onError: (error: any) => {
+      if (error.response.status === 401) {
+        history.push('/login');
+      }
+    }
+  });
 
   const handleChange = (e: any) => {
     const value = e.target.value;
@@ -57,10 +71,10 @@ const SearchResult = ({ location, support }: Props) => {
                 organization={planner.company?.name}
                 region={planner.locations.join(',')}
                 id={planner.id}
-                isPicked={false}
                 blogLink={planner.externalLinks.blogLink}
                 instagramLink={planner.externalLinks.instagramLink}
                 facebookLink={planner.externalLinks.facebookLink}
+                mutate={mutate}
               ></PlannerCard>
             );
           })

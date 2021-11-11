@@ -12,15 +12,28 @@ var styled_components_1 = require("styled-components");
 var react_router_1 = require("react-router");
 var react_1 = require("react");
 var SelectStatus_1 = require("src/atoms/SelectStatus");
+var Pick_1 = require("src/api/Pick");
+var App_1 = require("src/App");
 var SearchResult = function (_a) {
     var location = _a.location, support = _a.support;
+    var history = react_router_1.useHistory();
     var hookLocation = react_router_1.useLocation();
     var sortingParam = new URLSearchParams(hookLocation.search).get('sort');
     var supportInfos = support.join();
     var getPlanners = sortingParam === 'popular' ? Planner_1.fetchPopularPlanners : Planner_1.fetchPlanners;
     var _b = react_1.useState(''), sort = _b[0], setSort = _b[1];
     var _c = SelectStatus_1.useSelectedSortingState(), selectedSortingState = _c[0], setSelectedSortingState = _c[1];
-    var planners = react_query_1.useQuery(['planners', { location: location, supportInfos: supportInfos, isNew: sortingParam === 'new', sort: sort }], getPlanners).data;
+    var planners = react_query_1.useQuery(['searchPlanners', { location: location, supportInfos: supportInfos, isNew: sortingParam === 'new', sort: sort }], getPlanners).data;
+    var _d = react_query_1.useMutation(Pick_1.pick, {
+        onSuccess: function (data) {
+            App_1.queryClient.invalidateQueries(['searchPlanners']);
+        },
+        onError: function (error) {
+            if (error.response.status === 401) {
+                history.push('/login');
+            }
+        }
+    }), mutate = _d.mutate, isLoading = _d.isLoading;
     var handleChange = function (e) {
         var value = e.target.value;
         setSort(value);
@@ -35,7 +48,7 @@ var SearchResult = function (_a) {
             React.createElement("option", { value: "review,DESC" }, "\uB9AC\uBDF0\uC21C")),
         React.createElement(SearchResultList, null, planners ? (planners.content.map(function (planner, index) {
             var _a;
-            return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 12px 32px 0', size: '206px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, isPicked: false, blogLink: planner.externalLinks.blogLink, instagramLink: planner.externalLinks.instagramLink, facebookLink: planner.externalLinks.facebookLink }));
+            return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 12px 32px 0', size: '206px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, blogLink: planner.externalLinks.blogLink, instagramLink: planner.externalLinks.instagramLink, facebookLink: planner.externalLinks.facebookLink, mutate: mutate }));
         })) : (React.createElement(React.Fragment, null)))));
 };
 exports["default"] = SearchResult;

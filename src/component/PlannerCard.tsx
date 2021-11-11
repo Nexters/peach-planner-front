@@ -3,13 +3,15 @@ import review from '../assets/svg/ic_review.svg';
 import blog from '../assets/svg/ic_blog.svg';
 import instagram from '../assets/svg/ic_instagram.svg';
 import EmptyHeart from '../assets/svg/ic_heart_line.svg';
+import FillHeart from '../assets/svg/ic_heart_fill.svg';
 import { FlexDiv } from './style/style';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { QueryClient, useMutation } from 'react-query';
 import { usePeachTokenState, useUserTypeState } from 'src/atoms/AuthStatus';
 import { pick, PickRequest } from 'src/api/Pick';
 import PhotoDefault from '../assets/svg/img_photo_default.svg';
+import { useState } from 'react';
 
 interface PlannerProps {
   size: string;
@@ -21,19 +23,16 @@ interface PlannerProps {
   organization: string;
   region: string;
   id: number;
-  isPicked: boolean;
   facebookLink?: string;
   blogLink?: string;
   instagramLink?: string;
+  mutate: (data: any) => any;
 }
 
 const PlannerCard = (props: PlannerProps) => {
-  const { mutate, isLoading } = useMutation(pick, {
-    onSuccess: (data) => {}
-  });
-  const userState = useUserTypeState();
-  // const
   const history = useHistory();
+  const [isClickedHeart, setIsClickedHeart] = useState(false);
+  const userState = useUserTypeState();
 
   const handlePlannerClick = () => {
     const plannerId = props.id;
@@ -45,9 +44,10 @@ const PlannerCard = (props: PlannerProps) => {
     const request: PickRequest = {
       targetId: plannerId,
       targetCategoryType: 'PLANNER',
-      toBePick: true
+      toBePick: !isClickedHeart
     };
-    mutate(request);
+    setIsClickedHeart(!isClickedHeart);
+    props.mutate(request);
   };
 
   const splitRegion = (origin: string) => {
@@ -69,7 +69,7 @@ const PlannerCard = (props: PlannerProps) => {
         />
         {userState[0] && userState[0] === 'USER' ? (
           <PickBox onClick={handlePickClick}>
-            <EmptyPickIcon src={EmptyHeart}></EmptyPickIcon>
+            {isClickedHeart ? <PickIcon src={FillHeart}></PickIcon> : <PickIcon src={EmptyHeart}></PickIcon>}
           </PickBox>
         ) : (
           <></>
@@ -128,9 +128,9 @@ const PlannerImage = styled.img.attrs((props: PlannerImageProps) => ({ src: prop
 const PickBox = styled.div`
   height: 32px;
   width: 32px;
-  opacity: 0.3;
+  background-color: rgba(0, 0, 0, 0.3);
   border-radius: 3px;
-  background-color: #212529;
+  /* background-color: #212529; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,7 +140,7 @@ const PickBox = styled.div`
   cursor: pointer;
 `;
 
-const EmptyPickIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const PickIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   height: 26px;
   width: 26px;
 `;

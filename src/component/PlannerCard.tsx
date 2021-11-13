@@ -26,6 +26,7 @@ interface PlannerProps {
   facebookLink?: string;
   blogLink?: string;
   instagramLink?: string;
+  postLiked?: boolean;
   mutate: (data: any) => any;
 }
 
@@ -44,9 +45,8 @@ const PlannerCard = (props: PlannerProps) => {
     const request: PickRequest = {
       targetId: plannerId,
       targetCategoryType: 'PLANNER',
-      toBePick: !isClickedHeart
+      toBePick: !props.postLiked
     };
-    setIsClickedHeart(!isClickedHeart);
     props.mutate(request);
   };
 
@@ -69,7 +69,7 @@ const PlannerCard = (props: PlannerProps) => {
         />
         {userState[0] && userState[0] === 'USER' ? (
           <PickBox onClick={handlePickClick}>
-            {isClickedHeart ? <PickIcon src={FillHeart}></PickIcon> : <PickIcon src={EmptyHeart}></PickIcon>}
+            {props.postLiked ? <PickIcon src={FillHeart}></PickIcon> : <PickIcon src={EmptyHeart}></PickIcon>}
           </PickBox>
         ) : (
           <></>

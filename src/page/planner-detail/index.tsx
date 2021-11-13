@@ -25,7 +25,11 @@ const PlannerDetail = () => {
 
   const fetchPlanner = () => {
     axios
-      .get(`/planners/${plannerId}`)
+      .get(`/planners/${plannerId}`, {
+        headers: {
+          Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``,
+        } 
+      })
       .then((response) => {
         setPlannerInfo({ ...response.data });
       })

@@ -3,19 +3,33 @@ import styled, { css } from 'styled-components';
 import PButton from 'src/component/PButton';
 import { FlexDiv, Content, Title } from 'src/component/style/style';
 import { useHistory } from 'react-router-dom';
+import { FindEmail } from 'src/api/User';
 
-const FindEmail = () => {
+const FindEmailPage = () => {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [check, setCheck] = useState(false);
+  const [exist, setExist] = useState(false);
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const handleCheck = () => {
-    setCheck(!check);
-    return; //기연님 api 붙이기
+  const handleCheck = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    FindEmail(email)
+      .then((res) => {
+        if (res.exist) {
+          setExist(true);
+        } else {
+          setExist(false);
+        }
+        setCheck(!check);
+      })
+      .catch((err) => {
+        console.log(err, 'err');
+      });
+    return;
   };
 
   return (
@@ -27,8 +41,8 @@ const FindEmail = () => {
 
       {check ? (
         <FlexDiv justify="flex-start" align="center" direction="column" width={'312px'}>
-          <Email>abc@example.com</Email>
-          <Span>가입하신 이메일이 존재합니다.</Span>
+          <Email>{email}</Email>
+          <Span>{exist ? '가입하신 이메일이 존재합니다.' : '가입하신 이메일이 존재하지 않습니다.'}</Span>
           <PButton
             color="pink"
             width="100%"
@@ -40,20 +54,22 @@ const FindEmail = () => {
           >
             로그인하기
           </PButton>
-          <PButton
-            otherBgColor="#f1f3f5"
-            width="100%"
-            height="40px"
-            fontSize="12px"
-            padding="0"
-            border="none"
-            onClick={() => history.push('/resetPw')}
-          >
-            비밀번호 재설정하기
-          </PButton>
+          {exist && (
+            <PButton
+              otherBgColor="#f1f3f5"
+              width="100%"
+              height="40px"
+              fontSize="12px"
+              padding="0"
+              border="none"
+              onClick={() => history.push('/resetPw')}
+            >
+              비밀번호 재설정하기
+            </PButton>
+          )}
         </FlexDiv>
       ) : (
-        <form>
+        <form onSubmit={handleCheck}>
           <FlexDiv justify="flex-start" align="flex-start" direction="column" width="undefined">
             <Label>이메일</Label>
             <Input
@@ -64,15 +80,7 @@ const FindEmail = () => {
               onChange={handleEmail}
             />
 
-            <PButton
-              color="pink"
-              width="100%"
-              height="40px"
-              fontSize="12px"
-              padding="0"
-              onClick={handleCheck}
-              margin={'36px 0 0 '}
-            >
+            <PButton color="pink" width="100%" height="40px" fontSize="12px" padding="0" margin={'36px 0 0 '}>
               가입여부 확인
             </PButton>
           </FlexDiv>
@@ -82,7 +90,7 @@ const FindEmail = () => {
   );
 };
 
-export default FindEmail;
+export default FindEmailPage;
 
 const Span = styled.span`
   height: 21px;

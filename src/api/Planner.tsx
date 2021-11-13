@@ -29,6 +29,7 @@ export interface Planner {
   };
   summary: string;
   supportInfos: string[];
+  postLiked: boolean;
 }
 
 export interface Company {
@@ -71,13 +72,22 @@ export interface RecommnededPlanners {
 
 export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
-  const { data } = await axios.get<PagedPlanner>('/planners', { params });
+  const { data } = await axios.get<PagedPlanner>('/planners', { 
+    params, 
+    headers: {
+      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``,
+    } 
+  });
   return data;
 };
 
 export const fetchPopularPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
-  const { data } = await axios.get<PagedPlanner>('/planners/popular');
+  const { data } = await axios.get<PagedPlanner>('/planners/popular', {
+    headers: {
+      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``,
+    },
+  });
   return data;
 };
 
@@ -88,7 +98,11 @@ export const fetchRecommendedPlanners = async ({ queryKey }: QueryFunctionContex
 };
 
 export const fetchPlanner = async (plannerId: string) => {
-  const { data } = await axios.get<Planner>(`/planners/${plannerId}`);
+  const { data } = await axios.get<Planner>(`/planners/${plannerId}`, {
+    headers: {
+      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``,
+    }
+  });
   return data;
 };
 

@@ -52,4 +52,18 @@ export const FindUser = async (reqBody: FindInfo) => {
   const { data } = await axios.patch(`/users/me`, reqBody);
   return data;
 };
-// /auth/find
+
+export const FindEmail = async (email: string) => {
+  const { data } = await axios.post(`/auth/find/email?email=${email}`);
+  return data;
+};
+
+interface newPwInfo {
+  originalPassword: string;
+  updatePassword: string;
+}
+
+export const ResetPw = async (userId: string, reqBody: newPwInfo) => {
+  const { data } = await axios.patch(`/auth/users/${userId}/pw`, reqBody);
+  return data;
+};

@@ -3,10 +3,11 @@ import styled, { css } from 'styled-components';
 import PButton from 'src/component/PButton';
 import { FlexDiv, Content, Title } from 'src/component/style/style';
 import { useHistory } from 'react-router-dom';
+import { ResetPw } from 'src/api/User';
 
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
-const ResetPw = () => {
+const ResetPwPage = () => {
   const history = useHistory();
   const [inputs, setInputs] = useState({ password: '', passwordConfirm: '' });
   const { password, passwordConfirm } = inputs;
@@ -29,6 +30,13 @@ const ResetPw = () => {
     } else if (password !== passwordConfirm) {
       setIsValidPassword(false);
     } else {
+      // ResetPw('test1@naver.com', { originalPassword: password, updatePassword: passwordConfirm })
+      //   .then((res) => {
+      //     console.log(res, 'gggssdfsdf');
+      //   })
+      //   .catch((err) => {
+      //     console.log(err, 'err');
+      //   });
       return;
     }
     return;
@@ -82,7 +90,7 @@ const ResetPw = () => {
   );
 };
 
-export default ResetPw;
+export default ResetPwPage;
 
 const Span = styled.span`
   height: 21px;

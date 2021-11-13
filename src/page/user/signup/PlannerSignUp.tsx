@@ -9,35 +9,35 @@ import { User } from 'src/interface';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
-const phoneRegExp = /^\d{3}-\d{3,4}-\d{4}$/;
+// const phoneRegExp = /^\d{3}-\d{3,4}-\d{4}$/;
 
-const autoHypenPhone = (num: string) => {
-  num = num.replace(/[^0-9]/g, '');
-  let tmp = '';
-  if (num.length < 4) {
-    return num;
-  } else if (num.length < 7) {
-    tmp += num.substr(0, 3);
-    tmp += '-';
-    tmp += num.substr(3);
-    return tmp;
-  } else if (num.length < 11) {
-    tmp += num.substr(0, 3);
-    tmp += '-';
-    tmp += num.substr(3, 3);
-    tmp += '-';
-    tmp += num.substr(6);
-    return tmp;
-  } else {
-    tmp += num.substr(0, 3);
-    tmp += '-';
-    tmp += num.substr(3, 4);
-    tmp += '-';
-    tmp += num.substr(7);
-    return tmp;
-  }
-  return num;
-};
+// const autoHypenPhone = (num: string) => {
+//   num = num.replace(/[^0-9]/g, '');
+//   let tmp = '';
+//   if (num.length < 4) {
+//     return num;
+//   } else if (num.length < 7) {
+//     tmp += num.substr(0, 3);
+//     tmp += '-';
+//     tmp += num.substr(3);
+//     return tmp;
+//   } else if (num.length < 11) {
+//     tmp += num.substr(0, 3);
+//     tmp += '-';
+//     tmp += num.substr(3, 3);
+//     tmp += '-';
+//     tmp += num.substr(6);
+//     return tmp;
+//   } else {
+//     tmp += num.substr(0, 3);
+//     tmp += '-';
+//     tmp += num.substr(3, 4);
+//     tmp += '-';
+//     tmp += num.substr(7);
+//     return tmp;
+//   }
+//   return num;
+// };
 
 const PlannerSignUp = () => {
   const history = useHistory();
@@ -49,7 +49,7 @@ const PlannerSignUp = () => {
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [name, setName] = useState('');
   const [checkAll, setCheckAll] = useState(false);
-  const [phone, setPhone] = useState('');
+  // const [phone, setPhone] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [agreePrivacy, setAgreePrivacy] = useState(false);
 
@@ -101,9 +101,9 @@ const PlannerSignUp = () => {
     setAgreePrivacy(!agreePrivacy);
   };
 
-  const handlePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(autoHypenPhone(e.target.value));
-  };
+  // const handlePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPhone(autoHypenPhone(e.target.value));
+  // };
 
   const handleSignUp = () => {
     if (!email) {
@@ -123,14 +123,6 @@ const PlannerSignUp = () => {
       alert('이름을 입력해주세요.');
       setIsValidPassword(true);
       setIsValidEmail(true);
-    } else if (!phone) {
-      alert('핸드폰 번호를 입력해주세요.');
-      setIsValidPassword(true);
-      setIsValidEmail(true);
-    } else if (phone.match(phoneRegExp) === null) {
-      alert('핸드폰 번호를 올바른 형식으로 입력해주세요.');
-      setIsValidPassword(true);
-      setIsValidEmail(true);
     } else if (!agreeTerms) {
       alert('이용약관에 동의해주세요.');
       setIsValidPassword(true);
@@ -146,7 +138,7 @@ const PlannerSignUp = () => {
         email,
         password,
         type: 'PLANNER',
-        tel: phone,
+        // tel: phone,
         nickName: name
       });
     }
@@ -165,10 +157,9 @@ const PlannerSignUp = () => {
     const res = await axios.post('/auth/login', data);
     localStorage.setItem('accessToken', res.data.accessToken);
     localStorage.setItem('refreshToken', res.data.refreshToken);
-    history.push('/editProfile');
+    history.push('/registerProfile');
     window.location.reload();
     alert('회원가입 및 로그인이 완료되었습니다.');
-    // axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
     // const expireTime = Date.parse(res.data.expireDateTime);
     // setTimeout(refreshToken, expireTime - 60000);
   };
@@ -232,14 +223,14 @@ const PlannerSignUp = () => {
         <Label>이름</Label>
         <Input value={name} placeholder="이름을 입력해 주세요." type="text" id="inputName" onChange={handleName} />
 
-        <Label>휴대폰인증</Label>
+        {/* <Label>휴대폰인증</Label>
         <Input
           value={phone}
           placeholder="휴대폰 번호를 입력해주세요."
           type="text"
           id="inputPhone"
           onChange={handlePhone}
-        />
+        /> */}
 
         <HorizontalLine top="20px" bottom="16px" />
         <Span>피치플래너 서비스 이용악관에 동의해주세요.</Span>

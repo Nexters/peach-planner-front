@@ -77,6 +77,9 @@ const App = () => {
                 <PlannerPrivateRoute path="/plannerPage">
                   <PlannerPage />
                 </PlannerPrivateRoute>
+                <PlannerPrivateRoute path="/registerProfile">
+                  <Profile isUpdate={false} />
+                </PlannerPrivateRoute>
                 <PlannerPrivateRoute path="/editProfile">
                   <Profile isUpdate={true} />
                 </PlannerPrivateRoute>

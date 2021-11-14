@@ -74,6 +74,7 @@ const SearchResult = ({ location, support }: Props) => {
                 blogLink={planner.externalLinks.blogLink}
                 instagramLink={planner.externalLinks.instagramLink}
                 facebookLink={planner.externalLinks.facebookLink}
+                postLiked={planner.postLiked}
                 mutate={mutate}
               ></PlannerCard>
             );

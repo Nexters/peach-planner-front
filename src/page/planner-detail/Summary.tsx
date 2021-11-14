@@ -27,7 +27,6 @@ const Summary: FC<SummaryProps> = ({ plannerInfo, setPlannerInfo }) => {
   const companyName = plannerInfo.company ? plannerInfo.company.name : '';
 
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
-  const [selected, setSelected] = useState<boolean>(false);
 
   const openImageModal = () => setShowImageModal(true);
   const closeImageModal = () => setShowImageModal(false);
@@ -48,13 +47,12 @@ const Summary: FC<SummaryProps> = ({ plannerInfo, setPlannerInfo }) => {
   const pickPlanner = () => {
     handleNoneUser();
     const plannerId = plannerInfo.id;
-    pick({ targetCategoryType: 'PLANNER', targetId: plannerId, toBePick: !selected } as PickRequest);
-    if (selected) {
-      setPlannerInfo({ ...plannerInfo, likes: plannerInfo.likes - 1 });
+    pick({ targetCategoryType: 'PLANNER', targetId: plannerId, toBePick: !plannerInfo.postLiked } as PickRequest);
+    if (plannerInfo.postLiked) {
+      setPlannerInfo({ ...plannerInfo, likes: plannerInfo.likes - 1, postLiked: !plannerInfo.postLiked });
     } else {
-      setPlannerInfo({ ...plannerInfo, likes: plannerInfo.likes + 1 });
+      setPlannerInfo({ ...plannerInfo, likes: plannerInfo.likes + 1, postLiked: !plannerInfo.postLiked });
     }
-    setSelected((selected) => !selected);
   };
 
   const handleChat = () => {
@@ -131,7 +129,7 @@ const Summary: FC<SummaryProps> = ({ plannerInfo, setPlannerInfo }) => {
             </PButton>
             <PButton onClick={pickPlanner} otherBgColor="#f1f3f5" border="none">
               <Vertical>
-                <img src={selected ? FullHeart : EmptyHeart} />
+                <img src={plannerInfo.postLiked ? FullHeart : EmptyHeart} />
               </Vertical>{' '}
               <Vertical>찜하기</Vertical>
             </PButton>

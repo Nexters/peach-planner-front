@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as $ from './MyPageItemView.js';
-import { getUser, getUserTest, EditUserInfo } from 'src/api/User';
+import { getUser, getUserTest, EditUserInfo, DeleteUser } from 'src/api/User';
 import { useQuery } from 'react-query';
 import { Link, useHistory } from 'react-router-dom';
 import { ReactComponent as LeftArrow } from '../assets/svg/ic_arrow_left.svg';
@@ -88,6 +88,15 @@ const Setting = () => {
         });
     }
     return;
+  };
+
+  const handleDelete = () => {
+    DeleteUser();
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    history.push('/');
+    window.location.reload();
+    alert('회원탈퇴가 완료되었습니다.');
   };
 
   return (
@@ -181,7 +190,7 @@ const Setting = () => {
             </$.SettingButton>
           </$.SettingBox>
           <$.SettingBox>
-            <$.SettingButton>
+            <$.SettingButton onClick={handleDelete}>
               <$.SettingButtonText>회원 탈퇴</$.SettingButtonText>
             </$.SettingButton>
           </$.SettingBox>

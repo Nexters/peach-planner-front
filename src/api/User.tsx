@@ -67,3 +67,11 @@ export const ResetPw = async (userId: string, reqBody: newPwInfo) => {
   const { data } = await axios.patch(`/auth/users/${userId}/pw`, reqBody);
   return data;
 };
+
+export const DeleteUser = async () => {
+  await axios.delete(`/auth/resign`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  });
+};

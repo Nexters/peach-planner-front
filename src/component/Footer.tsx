@@ -4,19 +4,21 @@ import styled from 'styled-components';
 const Footer = () => {
   return (
     <Container>
-      <Image src={logo} />
-      <BottomContainer>
-        <Item>
-          <TermsPolicy href="/termsOfUse" target="_blank">
-            이용약관
-          </TermsPolicy>
-          {'  '}|{' '}
-          <TermsPolicy href="/privacyPolicy" target="_blank">
-            개인정보처리방침
-          </TermsPolicy>
-        </Item>
-        <Item>COPYRIGHT© Peachplanner ALL RIGHT RESERVED</Item>
-      </BottomContainer>
+      <InnerContainer>
+        <Image src={logo} />
+        <BottomContainer>
+          <Item>
+            <TermsPolicy href="/termsOfUse" target="_blank">
+              이용약관
+            </TermsPolicy>
+            {'  '}|{' '}
+            <TermsPolicy href="/privacyPolicy" target="_blank">
+              개인정보처리방침
+            </TermsPolicy>
+          </Item>
+          <Item>COPYRIGHT© Peachplanner ALL RIGHT RESERVED</Item>
+        </BottomContainer>
+      </InnerContainer>
     </Container>
   );
 };
@@ -24,10 +26,17 @@ const Footer = () => {
 export default Footer;
 
 const Container = styled.footer`
+  display: flex;
+  justify-content: center;
   margin-top: 100px;
   padding: 35px 10%;
   border-top: 1px solid;
-  border-top-color: #868e96;
+  border-top-color: #f1f3f5;
+`;
+
+const InnerContainer = styled.div`
+  width: 1100px;
+  /* display: flex; */
 `;
 
 const BottomContainer = styled.div`

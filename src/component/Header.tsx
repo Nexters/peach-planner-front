@@ -106,13 +106,15 @@ const Header = () => {
 
   return (
     <Container>
-      <InnerContainer>
-        <Link to="/">
-          <Logo />
-        </Link>
-        <LeftLink to="/search">웨딩플래너 찾기</LeftLink>
-      </InnerContainer>
-      {right}
+      <HeaderContainer>
+        <InnerContainer>
+          <Link to="/">
+            <Logo />
+          </Link>
+          <LeftLink to="/search">웨딩플래너 찾기</LeftLink>
+        </InnerContainer>
+        {right}
+      </HeaderContainer>
     </Container>
   );
 };
@@ -120,10 +122,20 @@ const Header = () => {
 export default Header;
 
 const Container = styled.header`
-  width: 1140px;
+  width: auto;
   height: 70px;
   margin: 0 auto;
   padding: 20px 0 18px 0;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid;
+  border-bottom-color: #f1f3f5;
+`;
+
+const HeaderContainer = styled.div`
+  width: 1100px;
   display: flex;
   justify-content: space-between;
   align-items: center;

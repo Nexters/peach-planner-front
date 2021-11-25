@@ -15,7 +15,7 @@ const Header = () => {
   let history = useHistory();
   const handleSignUp = () => history.push('/signUp');
   const [peachTokenState] = usePeachTokenState();
-  const [, setUserTypeState] = useUserTypeState();
+  const [userTypeState, setUserTypeState] = useUserTypeState();
   const [isClickedProfile, setIsClickedProfile] = useState(false);
   const [isAlart, setIsAlart] = useState(false);
   const isLogin = peachTokenState ? true : false;
@@ -71,12 +71,17 @@ const Header = () => {
               </Menu>
             </MenuTop>
             <MenuBody>
-              <Menu>
-                <MenuName onClick={handleMyPage}>내 페이지</MenuName>
+              <Menu onClick={handleMyPage}>
+                <MenuName>내 페이지</MenuName>
               </Menu>
-              <Menu>
-                <MenuName>프로필 관리</MenuName>
-              </Menu>
+              {userTypeState === 'USER' ? (
+                <></>
+              ) : (
+                <Menu>
+                  <MenuName>프로필 관리</MenuName>
+                </Menu>
+              )}
+
               <Menu>
                 <MenuName>계정 설정</MenuName>
               </Menu>

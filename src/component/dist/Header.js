@@ -18,7 +18,7 @@ var Header = function () {
     var history = react_router_dom_1.useHistory();
     var handleSignUp = function () { return history.push('/signUp'); };
     var peachTokenState = AuthStatus_1.usePeachTokenState()[0];
-    var _a = AuthStatus_1.useUserTypeState(), setUserTypeState = _a[1];
+    var _a = AuthStatus_1.useUserTypeState(), userTypeState = _a[0], setUserTypeState = _a[1];
     var _b = react_1.useState(false), isClickedProfile = _b[0], setIsClickedProfile = _b[1];
     var _c = react_1.useState(false), isAlart = _c[0], setIsAlart = _c[1];
     var isLogin = peachTokenState ? true : false;
@@ -63,10 +63,10 @@ var Header = function () {
                     react_1["default"].createElement(Menu, null,
                         react_1["default"].createElement(DropdownMessage, null, "\uBA54\uC2DC\uC9C0"))),
                 react_1["default"].createElement(MenuBody, null,
-                    react_1["default"].createElement(Menu, null,
-                        react_1["default"].createElement(MenuName, { onClick: handleMyPage }, "\uB0B4 \uD398\uC774\uC9C0")),
-                    react_1["default"].createElement(Menu, null,
-                        react_1["default"].createElement(MenuName, null, "\uD504\uB85C\uD544 \uAD00\uB9AC")),
+                    react_1["default"].createElement(Menu, { onClick: handleMyPage },
+                        react_1["default"].createElement(MenuName, null, "\uB0B4 \uD398\uC774\uC9C0")),
+                    userTypeState === 'USER' ? (react_1["default"].createElement(react_1["default"].Fragment, null)) : (react_1["default"].createElement(Menu, null,
+                        react_1["default"].createElement(MenuName, null, "\uD504\uB85C\uD544 \uAD00\uB9AC"))),
                     react_1["default"].createElement(Menu, null,
                         react_1["default"].createElement(MenuName, null, "\uACC4\uC815 \uC124\uC815"))),
                 react_1["default"].createElement(MenuBottom, null,

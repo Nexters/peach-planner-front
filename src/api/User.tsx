@@ -5,6 +5,7 @@ export interface User {
   id?: number;
   name: string;
   userType?: string;
+  email: string;
 }
 
 export const getUser = async () => {

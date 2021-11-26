@@ -4,6 +4,7 @@ import PButton from '../../component/PButton';
 import AccountDefault from '../../assets/svg/ic_account_default.svg';
 import EditImage from '../../assets/svg/ic_changephoto.svg';
 import { useState } from 'react';
+import UserType from 'src/component/UserType';
 
 interface Props {
   name: string | undefined;
@@ -53,18 +54,7 @@ const UserProfile = ({ name, type }: Props) => {
           <Title height={'27px'} width={'auto'} fontSize={'18px'} lineHeight={'27px'} margin={'24px 0 7px 0'}>
             {name ? name : ''}
           </Title>
-          <TypeBox>
-            <Content
-              height={'19px'}
-              width={'auto'}
-              color={'#D6336C'}
-              fontSize={'13px'}
-              lineHeight={'19px'}
-              margin={'2px 4px 2px 4px'}
-            >
-              {type === 'USER' ? '유저' : '플래너'}
-            </Content>
-          </TypeBox>
+          <UserType type={type} textHeight="19px" typeHeight="22px" fontSize="13px" lineHeight="19px"></UserType>
           <FlexDiv margin="18px 0 0 0" direction="column">
             <PButton fontSize="14px" height="41px" width="98px">
               계정 설정
@@ -77,15 +67,6 @@ const UserProfile = ({ name, type }: Props) => {
 };
 
 export default UserProfile;
-
-const TypeBox = styled.div`
-  height: 22px;
-  border-radius: 3px;
-  background-color: #fff0f6;
-  display: flex;
-  justify-content: 'center';
-  align-items: 'center';
-`;
 
 const Box = styled.div`
   box-sizing: border-box;

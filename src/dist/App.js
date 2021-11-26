@@ -5,8 +5,7 @@ var react_router_dom_1 = require("react-router-dom");
 var main_1 = require("./page/home/main");
 var planner_detail_1 = require("./page/planner-detail");
 var PlannerEstimate_1 = require("./page/planner-estimate/PlannerEstimate");
-var UserPage_1 = require("./page/user/mypage/UserPage");
-var PlannerPage_1 = require("./page/user/mypage/PlannerPage");
+var UserPageSideMenu_1 = require("./page/user/mypage/UserPageSideMenu");
 var globalStyle_1 = require("./styles/globalStyle");
 var theme_1 = require("./styles/theme");
 var styled_components_1 = require("styled-components");
@@ -31,6 +30,7 @@ var CompanyDetail_1 = require("./page/company-detail/CompanyDetail");
 var ScrollToTop_1 = require("./component/ScrollToTop");
 var TermsOfUse_1 = require("./page/signup-detail/TermsOfUse");
 var PrivacyPolicy_1 = require("./page/signup-detail/PrivacyPolicy");
+var mypage_1 = require("./page/mypage");
 exports.queryClient = new react_query_1.QueryClient();
 var App = function () {
     api_1.setAxiosDefaults();
@@ -62,9 +62,11 @@ var App = function () {
                             React.createElement(routes_1.UserPrivateRoute, { path: "/estimate/:id" },
                                 React.createElement(PlannerEstimate_1["default"], null)),
                             React.createElement(routes_1.UserPrivateRoute, { path: "/userPage" },
-                                React.createElement(UserPage_1["default"], null)),
+                                React.createElement(UserPageSideMenu_1["default"], null)),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerPage" },
-                                React.createElement(PlannerPage_1["default"], null)),
+                                React.createElement(mypage_1["default"], null)),
+                            React.createElement(routes_1.PlannerPrivateRoute, { path: "/registerProfile" },
+                                React.createElement(profile_1["default"], { isUpdate: false })),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/editProfile" },
                                 React.createElement(profile_1["default"], { isUpdate: true })),
                             React.createElement(routes_1.UserPrivateRoute, { path: "/chats" },

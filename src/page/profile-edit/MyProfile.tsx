@@ -11,7 +11,6 @@ interface Props {
 }
 
 const MyProfile = ({ summary, description, handleDescription }: Props) => {
-  console.log(description);
   return (
     <FlexDiv width="632px" margin="0 0 72px 0" direction="column" justify="flex-start" align="start">
       <LineAndTitle title="내 프로필"></LineAndTitle>

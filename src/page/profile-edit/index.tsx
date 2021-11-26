@@ -54,7 +54,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
       history.push('/');
     }
   });
-  console.log(planner);
+
   const [description, setDescription] = useState<PlannerDescription>({
     summary: '',
     description: ''

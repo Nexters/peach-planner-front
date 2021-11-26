@@ -11,7 +11,6 @@ var styled_components_1 = require("styled-components");
 var PlannerInputTitle_1 = require("./PlannerInputTitle");
 var MyProfile = function (_a) {
     var summary = _a.summary, description = _a.description, handleDescription = _a.handleDescription;
-    console.log(description);
     return (React.createElement(style_1.FlexDiv, { width: "632px", margin: "0 0 72px 0", direction: "column", justify: "flex-start", align: "start" },
         React.createElement(LindAndTitle_1["default"], { title: "\uB0B4 \uD504\uB85C\uD544" }),
         React.createElement(PlannerInputTitle_1["default"], { name: "\uD50C\uB798\uB108 \uD55C\uC904 \uC18C\uAC1C", margin: "20px 0 8px 0" }),

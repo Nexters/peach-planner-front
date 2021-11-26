@@ -46,6 +46,7 @@ const PlannerCompany = ({ companyName, handleCompanyName, handleCompanyItem }: P
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const openImageModal = () => setShowImageModal(true);
   const closeImageModal = () => {
+    
     setShowImageModal(false);
   };
 

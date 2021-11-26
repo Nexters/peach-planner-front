@@ -43,7 +43,6 @@ var Profile = function (_a) {
             history.push('/');
         }
     }), mutate = _e.mutate, isLoading = _e.isLoading;
-    console.log(planner);
     var _f = react_1.useState({
         summary: '',
         description: ''

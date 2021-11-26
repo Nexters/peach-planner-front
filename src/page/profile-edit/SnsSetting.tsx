@@ -3,10 +3,13 @@ import { Content, FlexDiv } from '../../component/style/style';
 import LineAndTitle from './LindAndTitle';
 import SnsSite from './SnsSite';
 interface Props {
+  instagram: string;
+  facebook: string;
+  blog: string;
   handleSns: (e: any) => void;
 }
 
-const SnsSetting = ({ handleSns }: Props) => {
+const SnsSetting = ({ instagram, facebook, blog, handleSns }: Props) => {
   return (
     <FlexDiv width="632px" margin="0 0 72px 0" direction="column" justify="flex-start" align="start">
       <LineAndTitle title="SNS 설정" content="연결된 SNS는 웨딩플래너 페이지에 노출됩니다."></LineAndTitle>
@@ -27,6 +30,7 @@ const SnsSetting = ({ handleSns }: Props) => {
         margin="16px 0 0 0"
         inputName="instagramUrl"
         handleSns={handleSns}
+        defaultValue={instagram}
       ></SnsSite>
       <SnsSite
         title="페이스북"
@@ -34,6 +38,7 @@ const SnsSetting = ({ handleSns }: Props) => {
         margin="24px 0 0 0"
         inputName="facebookUrl"
         handleSns={handleSns}
+        defaultValue={facebook}
       ></SnsSite>
       <SnsSite
         title="블로그"
@@ -41,6 +46,7 @@ const SnsSetting = ({ handleSns }: Props) => {
         margin="24px 0 0 0"
         inputName="blogUrl"
         handleSns={handleSns}
+        defaultValue={blog}
       ></SnsSite>
     </FlexDiv>
   );

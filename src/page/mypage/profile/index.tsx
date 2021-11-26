@@ -11,7 +11,7 @@ import PlannerInfo from 'src/page/planner-detail/PlannerInfo';
 import ReviewList from 'src/page/planner-detail/ReviewList';
 import Summary from 'src/page/planner-detail/Summary';
 import styled from 'styled-components';
-import LeftArrow from 'src/assets/svg/ic_left_gray.svg';
+import LeftArrow from 'src/assets/svg/ic_arrow-left-line.svg';
 
 interface routeProps {
   id: string;
@@ -51,7 +51,14 @@ const PlannerProfile = () => {
       <Back>
         <BackBody onClick={() => history.push('/plannerPage')}>
           <BackImage src={LeftArrow}></BackImage>
-          <Content height="21px" width="auto" fontSize="14px" color="#212529" lineHeight="normal">
+          <Content
+            height="21px"
+            width="auto"
+            fontSize="14px"
+            color="#212529"
+            lineHeight="20px"
+            margin="0px 0px 0px 8px"
+          >
             내페이지로 이동
           </Content>
         </BackBody>

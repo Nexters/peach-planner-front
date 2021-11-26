@@ -27,7 +27,7 @@ var PlannerInfo_1 = require("src/page/planner-detail/PlannerInfo");
 var ReviewList_1 = require("src/page/planner-detail/ReviewList");
 var Summary_1 = require("src/page/planner-detail/Summary");
 var styled_components_1 = require("styled-components");
-var ic_left_gray_svg_1 = require("src/assets/svg/ic_left_gray.svg");
+var ic_arrow_left_line_svg_1 = require("src/assets/svg/ic_arrow-left-line.svg");
 var PlannerProfile = function () {
     var _a = react_1.useState(null), plannerInfo = _a[0], setPlannerInfo = _a[1];
     var history = react_router_1.useHistory();
@@ -54,8 +54,8 @@ var PlannerProfile = function () {
     return plannerInfo ? (React.createElement(Container, null,
         React.createElement(Back, null,
             React.createElement(BackBody, { onClick: function () { return history.push('/plannerPage'); } },
-                React.createElement(BackImage, { src: ic_left_gray_svg_1["default"] }),
-                React.createElement(style_1.Content, { height: "21px", width: "auto", fontSize: "14px", color: "#212529", lineHeight: "normal" }, "\uB0B4\uD398\uC774\uC9C0\uB85C \uC774\uB3D9"))),
+                React.createElement(BackImage, { src: ic_arrow_left_line_svg_1["default"] }),
+                React.createElement(style_1.Content, { height: "21px", width: "auto", fontSize: "14px", color: "#212529", lineHeight: "20px", margin: "0px 0px 0px 8px" }, "\uB0B4\uD398\uC774\uC9C0\uB85C \uC774\uB3D9"))),
         React.createElement(Summary_1["default"], { plannerInfo: plannerInfo },
             React.createElement(PButton_1["default"], { onClick: handleProfileEdit, color: "pink" }, "\uD504\uB85C\uD544 \uC218\uC815\uD558\uAE30")),
         React.createElement(Detail_1["default"], { plannerInfo: plannerInfo }),

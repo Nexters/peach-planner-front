@@ -33,10 +33,6 @@ export const setAxiosDefaults = () => {
           .catch((err) => {
             console.log(err);
           });
-      } else {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        window.location.href = '/login/';
       }
     }
   );

@@ -12,7 +12,7 @@ var styled_components_1 = require("styled-components");
 var search_1 = require("./page/home/search");
 var Header_1 = require("./component/Header");
 var Footer_1 = require("./component/Footer");
-var profile_1 = require("./page/profile");
+var profile_edit_1 = require("./page/profile-edit");
 var Login_1 = require("./page/user/login/Login");
 var PlannerSignUp_1 = require("./page/user/signup/PlannerSignUp");
 var UserSignUp_1 = require("./page/user/signup/UserSignUp");
@@ -31,7 +31,7 @@ var ScrollToTop_1 = require("./component/ScrollToTop");
 var TermsOfUse_1 = require("./page/signup-detail/TermsOfUse");
 var PrivacyPolicy_1 = require("./page/signup-detail/PrivacyPolicy");
 var mypage_1 = require("./page/mypage");
-var profile_2 = require("./page/mypage/profile");
+var profile_1 = require("./page/mypage/profile");
 exports.queryClient = new react_query_1.QueryClient();
 var App = function () {
     api_1.setAxiosDefaults();
@@ -67,11 +67,11 @@ var App = function () {
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerPage" },
                                 React.createElement(mypage_1["default"], null)),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerProfile" },
-                                React.createElement(profile_2["default"], null)),
+                                React.createElement(profile_1["default"], null)),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/registerProfile" },
-                                React.createElement(profile_1["default"], { isUpdate: false })),
+                                React.createElement(profile_edit_1["default"], { isUpdate: false })),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/editProfile" },
-                                React.createElement(profile_1["default"], { isUpdate: true })),
+                                React.createElement(profile_edit_1["default"], { isUpdate: true })),
                             React.createElement(routes_1.UserPrivateRoute, { path: "/chats" },
                                 React.createElement(Chat_1["default"], null)),
                             React.createElement(routes_1.PublicOnlyRoute, { path: "/plannerSignUp" },

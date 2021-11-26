@@ -10,7 +10,7 @@ import { ThemeProvider } from 'styled-components';
 import Search from './page/home/search';
 import Header from './component/Header';
 import Footer from './component/Footer';
-import Profile from './page/profile';
+import Profile from './page/profile-edit';
 import Login from './page/user/login/Login';
 import PlannerSignUp from './page/user/signup/PlannerSignUp';
 import UserSignUp from './page/user/signup/UserSignUp';

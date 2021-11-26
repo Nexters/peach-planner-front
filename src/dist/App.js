@@ -31,6 +31,7 @@ var ScrollToTop_1 = require("./component/ScrollToTop");
 var TermsOfUse_1 = require("./page/signup-detail/TermsOfUse");
 var PrivacyPolicy_1 = require("./page/signup-detail/PrivacyPolicy");
 var mypage_1 = require("./page/mypage");
+var profile_2 = require("./page/mypage/profile");
 exports.queryClient = new react_query_1.QueryClient();
 var App = function () {
     api_1.setAxiosDefaults();
@@ -65,6 +66,8 @@ var App = function () {
                                 React.createElement(UserPageSideMenu_1["default"], null)),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerPage" },
                                 React.createElement(mypage_1["default"], null)),
+                            React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerProfile" },
+                                React.createElement(profile_2["default"], null)),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/registerProfile" },
                                 React.createElement(profile_1["default"], { isUpdate: false })),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/editProfile" },

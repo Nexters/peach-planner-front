@@ -33,10 +33,6 @@ const UserPageSideMenu = () => {
   const { data: user } = useQuery(['getUser'], getUser);
   const [selectedItem, setSelectedItem] = useState('');
 
-  useEffect(() => {
-    console.log(user, 'useruseruseruseruser');
-  }, []);
-
   const handleSideMenuItem = (item: any) => {
     setSelectedItem(item);
   };

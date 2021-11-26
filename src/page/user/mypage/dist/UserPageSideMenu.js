@@ -33,9 +33,6 @@ var sideMenuItem = [
 var UserPageSideMenu = function () {
     var user = react_query_1.useQuery(['getUser'], User_1.getUser).data;
     var _a = react_1.useState(''), selectedItem = _a[0], setSelectedItem = _a[1];
-    react_1.useEffect(function () {
-        console.log(user, 'useruseruseruseruser');
-    }, []);
     var handleSideMenuItem = function (item) {
         setSelectedItem(item);
     };

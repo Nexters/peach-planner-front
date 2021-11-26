@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import AccountDefault from 'src/assets/svg/ic_account_default.svg';
 import { Content, Title } from 'src/component/style/style';
 import UserType from 'src/component/UserType';
+import { useHistory } from 'react-router';
+import { getUser } from 'src/api/User';
+import { useQuery } from 'react-query';
 
 const sideMenuItem = [
   {
@@ -24,10 +27,15 @@ const sideMenuItem = [
 ];
 
 const PlannerPageSideMenu = () => {
+  const history = useHistory();
+  const { data: user } = useQuery(['getUser'], getUser);
   const [selectedItem, setSelectedItem] = useState('');
 
-  const handleSideMenuItem = (item: any) => {
+  const handleSideMenuItem = (item: string) => {
     setSelectedItem(item);
+    if (item === 'profile') {
+      history.push('/plannerProfile');
+    }
   };
 
   return (
@@ -37,12 +45,18 @@ const PlannerPageSideMenu = () => {
           <ProfileImgBox src={AccountDefault}></ProfileImgBox>
           <FlexDiv height="20px" margin="8px 0px 8px 0px">
             <Title fontSize="14px" height="21px" color="#212529" lineHeight="20px" margin="0px 4px 0px 0px">
-              이수영
+              {user?.name}
             </Title>
-            <UserType type="관리자" textHeight="15px" typeHeight="16px" fontSize="10px" lineHeight="13px"></UserType>
+            <UserType
+              type={user?.userType}
+              textHeight="15px"
+              typeHeight="16px"
+              fontSize="10px"
+              lineHeight="13px"
+            ></UserType>
           </FlexDiv>
           <Content color="#868E96" width="auto" height="18px" lineHeight="10px" fontSize="12px">
-            example@gmail.com
+            {user?.email}
           </Content>
         </ProfileDiv>
         <SideMenuDiv>
@@ -51,7 +65,20 @@ const PlannerPageSideMenu = () => {
           </Title>
           <Line></Line>
           {sideMenuItem.map((item) => {
-            return <SideMenuItem onClick={() => handleSideMenuItem(item.value)}>{item.name}</SideMenuItem>;
+            return (
+              <SideMenuItemContainer>
+                <Content
+                  height="17px"
+                  width="auto"
+                  color="#212529"
+                  fontSize="14px"
+                  lineHeight="17px"
+                  onClick={() => handleSideMenuItem(item.value)}
+                >
+                  {item.name}
+                </Content>
+              </SideMenuItemContainer>
+            );
           })}
         </SideMenuDiv>
       </FlexDiv>
@@ -106,15 +133,11 @@ const SideMenuDiv = styled.div`
   width: 200px;
 `;
 
-const SideMenuItem = styled.li`
+const SideMenuItemContainer = styled.div`
+  display: flex;
   height: 32px;
-  color: #212529;
-  font-size: 14px;
-  letter-spacing: 0;
-  line-height: 17px;
-
-  cursor: pointer;
-  list-style: none;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Line = styled.div`

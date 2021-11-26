@@ -30,6 +30,7 @@ import ScrollToTop from './component/ScrollToTop';
 import { TermsOfUse } from './page/signup-detail/TermsOfUse';
 import { PrivacyPolicy } from './page/signup-detail/PrivacyPolicy';
 import MyPage from './page/mypage';
+import PlannerProfile from './page/mypage/profile';
 
 export const queryClient = new QueryClient();
 
@@ -77,6 +78,9 @@ const App = () => {
                 </UserPrivateRoute>
                 <PlannerPrivateRoute path="/plannerPage">
                   <MyPage />
+                </PlannerPrivateRoute>
+                <PlannerPrivateRoute path="/plannerProfile">
+                  <PlannerProfile />
                 </PlannerPrivateRoute>
                 <PlannerPrivateRoute path="/registerProfile">
                   <Profile isUpdate={false} />

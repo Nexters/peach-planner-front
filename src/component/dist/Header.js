@@ -51,6 +51,10 @@ var Header = function () {
         });
         return;
     };
+    var hanldeMyProfile = function () {
+        history.push('/plannerProfile');
+        setIsClickedProfile(false);
+    };
     var right;
     if (isLogin) {
         right = (react_1["default"].createElement(InnerContainer, null,
@@ -65,7 +69,7 @@ var Header = function () {
                 react_1["default"].createElement(MenuBody, null,
                     react_1["default"].createElement(Menu, { onClick: handleMyPage },
                         react_1["default"].createElement(MenuName, null, "\uB0B4 \uD398\uC774\uC9C0")),
-                    userTypeState === 'USER' ? (react_1["default"].createElement(react_1["default"].Fragment, null)) : (react_1["default"].createElement(Menu, null,
+                    userTypeState === 'USER' ? (react_1["default"].createElement(react_1["default"].Fragment, null)) : (react_1["default"].createElement(Menu, { onClick: hanldeMyProfile },
                         react_1["default"].createElement(MenuName, null, "\uD504\uB85C\uD544 \uAD00\uB9AC"))),
                     react_1["default"].createElement(Menu, null,
                         react_1["default"].createElement(MenuName, null, "\uACC4\uC815 \uC124\uC815"))),

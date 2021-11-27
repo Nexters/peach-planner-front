@@ -31,6 +31,7 @@ import { TermsOfUse } from './page/signup-detail/TermsOfUse';
 import { PrivacyPolicy } from './page/signup-detail/PrivacyPolicy';
 import MyPage from './page/mypage';
 import PlannerProfile from './page/mypage/profile';
+import PlannerSetting from './component/PlannerSetting';
 
 export const queryClient = new QueryClient();
 
@@ -81,6 +82,9 @@ const App = () => {
                 </PlannerPrivateRoute>
                 <PlannerPrivateRoute path="/plannerProfile">
                   <PlannerProfile />
+                </PlannerPrivateRoute>
+                <PlannerPrivateRoute path="/plannerSetting">
+                  <PlannerSetting />
                 </PlannerPrivateRoute>
                 <PlannerPrivateRoute path="/registerProfile">
                   <Profile isUpdate={false} />

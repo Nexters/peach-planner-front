@@ -68,14 +68,40 @@ var CompanyRegisterModal = function (_a) {
     var _h = react_1.useState(''), phoneLast = _h[0], setPhoneLast = _h[1];
     var _j = react_1.useState(''), previewImage = _j[0], setPreviewImage = _j[1];
     var _k = react_1.useState(null), imageFile = _k[0], setImageFile = _k[1];
+    var _l = react_1.useState(true), isValidCompanyName = _l[0], setIsValidCompanyName = _l[1];
+    var _m = react_1.useState(true), isValidPhoneNumber = _m[0], setIsValidPhoneNumber = _m[1];
+    var _o = react_1.useState(true), isValidRegion = _o[0], setIsValidRegion = _o[1];
+    var _p = react_1.useState(true), isValidDescription = _p[0], setIsValidDescription = _p[1];
     var validateInput = function () {
-        return (phoneFirst.length === 3 &&
-            phoneMiddle.length === 4 &&
-            phoneLast.length === 4 &&
-            companyName.length > 0 &&
-            region.length > 0 &&
-            description.length > 0 &&
-            imageFile);
+        if (companyName.length === 0) {
+            setIsValidCompanyName(false);
+            return false;
+        }
+        else {
+            setIsValidCompanyName(true);
+        }
+        if (phoneFirst.length !== 3 && phoneMiddle.length !== 4 && phoneLast.length !== 4) {
+            setIsValidPhoneNumber(false);
+            return false;
+        }
+        else {
+            setIsValidPhoneNumber(true);
+        }
+        if (region.length === 0) {
+            setIsValidRegion(false);
+            return false;
+        }
+        else {
+            setIsValidRegion(true);
+        }
+        if (description.length === 0) {
+            setIsValidDescription(false);
+            return false;
+        }
+        else {
+            setIsValidDescription(true);
+        }
+        return true;
     };
     var handleRegisterCompany = function () { return __awaiter(void 0, void 0, void 0, function () {
         var s3ImageUrl, tel, companyRequest;
@@ -84,9 +110,13 @@ var CompanyRegisterModal = function (_a) {
                 case 0:
                     if (!validateInput())
                         return [2 /*return*/];
+                    s3ImageUrl = '';
+                    if (!imageFile) return [3 /*break*/, 2];
                     return [4 /*yield*/, Image_1.upload(imageFile)];
                 case 1:
                     s3ImageUrl = _a.sent();
+                    _a.label = 2;
+                case 2:
                     tel = phoneFirst + '-' + phoneMiddle + '-' + phoneLast;
                     companyRequest = {
                         location: region,
@@ -143,6 +173,7 @@ var CompanyRegisterModal = function (_a) {
                 React.createElement(style_1.FlexDiv, { margin: "0 31px 0 0", justify: "flex-start", align: "start", direction: "column" },
                     React.createElement(style_1.Content, { height: '20px', width: 'auto', color: '#495057', fontSize: '14px', lineHeight: '20px', margin: '0 0 6px 0' }, "\uC5C5\uCCB4 \uC774\uB984"),
                     React.createElement(Input, { height: "41px", width: "341px", placeholder: "\uC5C5\uCCB4 \uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.", onChange: handleChangeCompanyName }),
+                    isValidCompanyName ? (React.createElement(React.Fragment, null)) : (React.createElement(style_1.Content, { height: '16px', width: 'auto', color: '#8A0303', fontSize: '13px', lineHeight: '16px', margin: '6px 0px 0px 0px' }, "\uC5C5\uCCB4 \uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.")),
                     React.createElement(style_1.Content, { height: '20px', width: 'auto', color: '#495057', fontSize: '14px', lineHeight: '20px', margin: '16px 0 6px 0' }, "\uB300\uD45C \uC804\uD654\uBC88\uD638"),
                     React.createElement(style_1.FlexDiv, { margin: "0 0 0 0", justify: "flex-start", direction: "row" },
                         React.createElement(Input, { height: "41px", width: "51px", placeholder: "010", onChange: handleFirst, maxLength: 3 }),
@@ -150,10 +181,13 @@ var CompanyRegisterModal = function (_a) {
                         React.createElement(Input, { height: "41px", width: "60px", placeholder: "1234", onChange: handleMiddle, maxLength: 4 }),
                         React.createElement(style_1.Content, { height: '16px', width: 'auto', color: '#ADB5BD', fontSize: '13px', lineHeight: '16px', margin: '0px 6px 0 6px' }, "-"),
                         React.createElement(Input, { height: "41px", width: "60px", placeholder: "1234", onChange: handleLast, maxLength: 4 })),
+                    isValidPhoneNumber ? (React.createElement(React.Fragment, null)) : (React.createElement(style_1.Content, { height: '16px', width: 'auto', color: '#8A0303', fontSize: '13px', lineHeight: '16px', margin: '6px 0px 0px 0px' }, "\uC62C\uBC14\uB974\uC9C0 \uC54A\uC740 \uC804\uD654\uBC88\uD638\uC785\uB2C8\uB2E4.")),
                     React.createElement(style_1.Content, { height: '20px', width: 'auto', color: '#495057', fontSize: '14px', lineHeight: '20px', margin: '16px 0 6px 0' }, "\uC704\uCE58"),
                     React.createElement(SearchInput_1["default"], { height: "41px", width: "341px", placeholder: "\uC704\uCE58\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.", handleInput: handleRegion }),
+                    isValidRegion ? (React.createElement(React.Fragment, null)) : (React.createElement(style_1.Content, { height: '16px', width: 'auto', color: '#8A0303', fontSize: '13px', lineHeight: '16px', margin: '6px 0px 0px 0px' }, "\uC704\uCE58\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.")),
                     React.createElement(style_1.Content, { height: '20px', width: 'auto', color: '#495057', fontSize: '14px', lineHeight: '20px', margin: '16px 0 6px 0' }, "\uC5C5\uCCB4 \uC18C\uAC1C"),
-                    React.createElement(exports.TextArea, { placeholder: "\uC5C5\uCCB4 \uC18C\uAC1C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.", onChange: handleDescription })),
+                    React.createElement(exports.TextArea, { placeholder: "\uC5C5\uCCB4 \uC18C\uAC1C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.", onChange: handleDescription }),
+                    isValidDescription ? (React.createElement(React.Fragment, null)) : (React.createElement(style_1.Content, { height: '16px', width: 'auto', color: '#8A0303', fontSize: '13px', lineHeight: '16px', margin: '6px 0px 0px 0px' }, "\uC5C5\uCCB4 \uC18C\uAC1C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694."))),
                 React.createElement(style_1.FlexDiv, { margin: "0", height: "400px", justify: "flex-start", align: "start", direction: "column" },
                     React.createElement(style_1.Content, { height: '20px', width: 'auto', color: '#495057', fontSize: '14px', lineHeight: '20px', margin: '0' }, "\uB300\uD45C\uC0AC\uC9C4 \uB4F1\uB85D"),
                     React.createElement(ImageUpload_1["default"], { id: "modal", previewImage: previewImage, setImageFile: changeImageFile, setPreviewImage: changePreviewImage }))),
@@ -161,7 +195,7 @@ var CompanyRegisterModal = function (_a) {
                 React.createElement(PButton_1["default"], { color: "pink", fontSize: "14px", height: "40px", width: "341px", fontWeight: "bold", onClick: handleRegisterCompany }, "\uB4F1\uB85D\uD558\uAE30")))));
 };
 exports["default"] = CompanyRegisterModal;
-var StyledPopup = styled_components_1["default"](reactjs_popup_1["default"])(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  &-overlay {\n    background-color: rgb(0, 0, 0, 0.8);\n  }\n\n  &-content {\n    background-color: white;\n    width: 40%;\n    height: 65%;\n    border-radius: 10px;\n    padding: 40px 60px 40px 60px;\n  }\n"], ["\n  &-overlay {\n    background-color: rgb(0, 0, 0, 0.8);\n  }\n\n  &-content {\n    background-color: white;\n    width: 40%;\n    height: 65%;\n    border-radius: 10px;\n    padding: 40px 60px 40px 60px;\n  }\n"])));
+var StyledPopup = styled_components_1["default"](reactjs_popup_1["default"])(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  &-overlay {\n    background-color: rgb(0, 0, 0, 0.8);\n  }\n\n  &-content {\n    background-color: white;\n    width: 40%;\n    height: 80%;\n    border-radius: 10px;\n    padding: 40px 60px 40px 60px;\n  }\n"], ["\n  &-overlay {\n    background-color: rgb(0, 0, 0, 0.8);\n  }\n\n  &-content {\n    background-color: white;\n    width: 40%;\n    height: 80%;\n    border-radius: 10px;\n    padding: 40px 60px 40px 60px;\n  }\n"])));
 var CloseButton = styled_components_1["default"].img.attrs(function (props) { return ({ src: props.src }); })(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  cursor: pointer;\n  height: 24px;\n  width: 24px;\n"], ["\n  cursor: pointer;\n  height: 24px;\n  width: 24px;\n"])));
 var Input = styled_components_1["default"].input(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  box-sizing: border-box;\n  height: ", ";\n  width: ", ";\n  border: 1px solid #ced4da;\n  padding: 13px;\n  border-radius: 3px;\n  ::placeholder,\n  ::-webkit-input-placeholder {\n    color: ADB5BD;\n    font-size: 13px;\n  }\n"], ["\n  box-sizing: border-box;\n  height: ", ";\n  width: ", ";\n  border: 1px solid #ced4da;\n  padding: 13px;\n  border-radius: 3px;\n  ::placeholder,\n  ::-webkit-input-placeholder {\n    color: ADB5BD;\n    font-size: 13px;\n  }\n"])), function (props) { return props.height; }, function (props) { return props.width; });
 exports.TextArea = styled_components_1["default"].textarea(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  box-sizing: border-box;\n  height: 121px;\n  width: 341px;\n  padding: 13px;\n  border: 1px solid #ced4da;\n  border-radius: 3px;\n  resize: none;\n"], ["\n  box-sizing: border-box;\n  height: 121px;\n  width: 341px;\n  padding: 13px;\n  border: 1px solid #ced4da;\n  border-radius: 3px;\n  resize: none;\n"])));

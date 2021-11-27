@@ -52,6 +52,11 @@ const Header = () => {
     return;
   };
 
+  const hanldeMyProfile = () => {
+    history.push('/plannerProfile');
+    setIsClickedProfile(false);
+  };
+
   let right;
   if (isLogin) {
     right = (
@@ -77,11 +82,10 @@ const Header = () => {
               {userTypeState === 'USER' ? (
                 <></>
               ) : (
-                <Menu>
+                <Menu onClick={hanldeMyProfile}>
                   <MenuName>프로필 관리</MenuName>
                 </Menu>
               )}
-
               <Menu>
                 <MenuName>계정 설정</MenuName>
               </Menu>

@@ -31,10 +31,5 @@ exports.setAxiosDefaults = function () {
                 console.log(err);
             });
         }
-        else {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-            window.location.href = '/login/';
-        }
     });
 };

@@ -2,9 +2,10 @@ import { ProfileProps } from '.';
 import { FlexDiv, Title } from '../../component/style/style';
 import PButton from '../../component/PButton';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const ProfileHeader = ({ isUpdate }: ProfileProps) => {
+  const history = useHistory();
   return (
     <FlexDiv height="56px" justify="flex-start" margin="0 0 30px 0">
       <Title height={'33px'} width="430px" fontSize={'22px'} lineHeight={'33px'} margin={'16px 0 0 0'}>
@@ -12,7 +13,7 @@ const ProfileHeader = ({ isUpdate }: ProfileProps) => {
       </Title>
       <FlexDiv height="56px" justify="flex-end" margin="0 26px 0 0">
         {isUpdate ? (
-          <PButton fontSize="14px" height="41px" width="126px">
+          <PButton fontSize="14px" height="41px" width="126px" onClick={() => history.push('/plannerProfile')}>
             프로필 돌아가기
           </PButton>
         ) : (

@@ -72,11 +72,11 @@ export interface RecommnededPlanners {
 
 export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
-  const { data } = await axios.get<PagedPlanner>('/planners', { 
-    params, 
+  const { data } = await axios.get<PagedPlanner>('/planners', {
+    params,
     headers: {
-      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``,
-    } 
+      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
+    }
   });
   return data;
 };
@@ -85,8 +85,8 @@ export const fetchPopularPlanners = async ({ queryKey }: QueryFunctionContext) =
   const [_key, params] = queryKey;
   const { data } = await axios.get<PagedPlanner>('/planners/popular', {
     headers: {
-      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``,
-    },
+      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
+    }
   });
   return data;
 };
@@ -100,7 +100,7 @@ export const fetchRecommendedPlanners = async ({ queryKey }: QueryFunctionContex
 export const fetchPlanner = async (plannerId: string) => {
   const { data } = await axios.get<Planner>(`/planners/${plannerId}`, {
     headers: {
-      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``,
+      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
     }
   });
   return data;
@@ -108,6 +108,15 @@ export const fetchPlanner = async (plannerId: string) => {
 
 export const fetchPlannerPartners = async (plannerId: string) => {
   const { data } = await axios.get<Partners>(`/planners/${plannerId}/partners`);
+  return data;
+};
+
+export const fetchPlannerMe = async () => {
+  const { data } = await axios.get<Planner>(`/inhouse/planners/me`, {
+    headers: {
+      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
+    }
+  });
   return data;
 };
 
@@ -121,20 +130,20 @@ export interface AffiliatedCompany {
 }
 
 export interface PlannerRequest {
-  affiliatedCompanyInfoDTO: {
+  affiliatedCompanyInfo: {
     affiliatedCompanyId: number;
   };
   affiliatedDressCompanyList: AffiliatedCompany[];
   affiliatedMakeupCompanyList: AffiliatedCompany[];
   affiliatedStudioCompanyList: AffiliatedCompany[];
-  areaInfoDTO: {
+  areaInfo: {
     locationList: string[];
   };
-  myProfileDTO: {
+  myProfile: {
     description: string;
     summary: string;
   };
-  snsInfoDTO: {
+  snsInfo: {
     externalLinks: {
       blogLink: string;
       facebookLink: string;
@@ -142,7 +151,7 @@ export interface PlannerRequest {
     };
     webSiteUrl: string;
   };
-  supportInfoDTO: {
+  supportInfo: {
     supportInfoList: string[];
   };
 }

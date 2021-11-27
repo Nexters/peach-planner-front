@@ -12,7 +12,7 @@ import UserCertification from './UserCertification';
 import UserProfile from './UserProfile';
 import { useMutation, useQuery } from 'react-query';
 import { getUser } from 'src/api/User';
-import { AffiliatedCompany, PlannerRequest, updateProfile } from 'src/api/Planner';
+import { AffiliatedCompany, fetchPlannerMe, PlannerRequest, updateProfile } from 'src/api/Planner';
 import { useEffect, useState } from 'react';
 import { Company } from 'src/api/Company';
 import { useHistory } from 'react-router';
@@ -20,7 +20,8 @@ import { useHistory } from 'react-router';
 export interface ProfileProps {
   isUpdate: boolean;
 }
-interface PlannerDescription {
+
+export interface PlannerDescription {
   summary: string;
   description: string;
 }
@@ -45,6 +46,7 @@ export interface Item {
 
 const Profile = ({ isUpdate }: ProfileProps) => {
   const { data: user } = useQuery(['user'], getUser);
+  const { data: planner } = useQuery(['planner'], fetchPlannerMe);
   const history = useHistory();
   const { mutate, isLoading } = useMutation(updateProfile, {
     onSuccess: (data) => {
@@ -52,7 +54,11 @@ const Profile = ({ isUpdate }: ProfileProps) => {
       history.push('/');
     }
   });
-  const [description, setDescription] = useState<PlannerDescription>({ summary: '', description: '' });
+
+  const [description, setDescription] = useState<PlannerDescription>({
+    summary: '',
+    description: ''
+  });
   const [sns, setSns] = useState<Sns>({ webUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' });
   const [regions, setRegions] = useState<Item[]>([]);
   const [offers, setOffers] = useState<Item[]>([]);
@@ -154,17 +160,17 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     });
 
     const request: PlannerRequest = {
-      affiliatedCompanyInfoDTO: {
+      affiliatedCompanyInfo: {
         affiliatedCompanyId: company?.id!!
       },
       affiliatedDressCompanyList: affilicatedDress,
       affiliatedStudioCompanyList: affilicatedStudios,
       affiliatedMakeupCompanyList: affilicatedMakeUps,
-      areaInfoDTO: {
+      areaInfo: {
         locationList: regions.map((value) => value.display)
       },
-      myProfileDTO: description,
-      snsInfoDTO: {
+      myProfile: description,
+      snsInfo: {
         externalLinks: {
           blogLink: sns.blogUrl,
           facebookLink: sns.facebookUrl,
@@ -172,7 +178,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
         },
         webSiteUrl: sns.webUrl
       },
-      supportInfoDTO: {
+      supportInfo: {
         supportInfoList: offers.map((value) => value.value)
       }
     };
@@ -191,8 +197,17 @@ const Profile = ({ isUpdate }: ProfileProps) => {
           {/* <UserCertification></UserCertification> */}
         </FlexDiv>
         <FlexDiv direction="column" margin="0" width="990px">
-          <MyProfile handleDescription={handleDescription}></MyProfile>
-          <SnsSetting handleSns={handleSns}></SnsSetting>
+          <MyProfile
+            summary={planner?.summary!!}
+            description={planner?.description!!}
+            handleDescription={handleDescription}
+          ></MyProfile>
+          <SnsSetting
+            instagram={planner?.externalLinks?.instagramLink!!}
+            blog={planner?.externalLinks?.blogLink!!}
+            facebook={planner?.externalLinks?.facebookLink!!}
+            handleSns={handleSns}
+          ></SnsSetting>
           <PlannerArea regions={regions} handleRegions={handleRegions}></PlannerArea>
           <PlannerOfferList offers={offers} handleOffers={handleOffers}></PlannerOfferList>
           <PlannerCompany

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.FindUser = exports.EditUserInfo = exports.getUserTest = exports.getUser = void 0;
+exports.DeleteUser = exports.ResetPw = exports.FindEmail = exports.FindUser = exports.EditUserInfo = exports.getUserTest = exports.getUser = void 0;
 var axios_1 = require("axios");
 exports.getUser = function () { return __awaiter(void 0, void 0, void 0, function () {
     var data;
@@ -94,4 +94,39 @@ exports.FindUser = function (reqBody) { return __awaiter(void 0, void 0, void 0,
         }
     });
 }); };
-// /auth/find
+exports.FindEmail = function (email) { return __awaiter(void 0, void 0, void 0, function () {
+    var data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, axios_1["default"].post("/auth/find/email?email=" + email)];
+            case 1:
+                data = (_a.sent()).data;
+                return [2 /*return*/, data];
+        }
+    });
+}); };
+exports.ResetPw = function (userId, reqBody) { return __awaiter(void 0, void 0, void 0, function () {
+    var data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, axios_1["default"].patch("/auth/users/" + userId + "/pw", reqBody)];
+            case 1:
+                data = (_a.sent()).data;
+                return [2 /*return*/, data];
+        }
+    });
+}); };
+exports.DeleteUser = function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, axios_1["default"]["delete"]("/auth/resign", {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('accessToken')
+                    }
+                })];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };

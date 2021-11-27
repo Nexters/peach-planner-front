@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.updateProfile = exports.fetchPlannerPartners = exports.fetchPlanner = exports.fetchRecommendedPlanners = exports.fetchPopularPlanners = exports.fetchPlanners = void 0;
+exports.updateProfile = exports.fetchPlannerMe = exports.fetchPlannerPartners = exports.fetchPlanner = exports.fetchRecommendedPlanners = exports.fetchPopularPlanners = exports.fetchPlanners = void 0;
 var axios_1 = require("axios");
 exports.fetchPlanners = function (_a) {
     var queryKey = _a.queryKey;
@@ -46,7 +46,12 @@ exports.fetchPlanners = function (_a) {
             switch (_b.label) {
                 case 0:
                     _key = queryKey[0], params = queryKey[1];
-                    return [4 /*yield*/, axios_1["default"].get('/planners', { params: params })];
+                    return [4 /*yield*/, axios_1["default"].get('/planners', {
+                            params: params,
+                            headers: {
+                                Authorization: localStorage.getItem('accessToken') ? "Bearer " + localStorage.getItem('accessToken') : ""
+                            }
+                        })];
                 case 1:
                     data = (_b.sent()).data;
                     return [2 /*return*/, data];
@@ -62,7 +67,11 @@ exports.fetchPopularPlanners = function (_a) {
             switch (_b.label) {
                 case 0:
                     _key = queryKey[0], params = queryKey[1];
-                    return [4 /*yield*/, axios_1["default"].get('/planners/popular')];
+                    return [4 /*yield*/, axios_1["default"].get('/planners/popular', {
+                            headers: {
+                                Authorization: localStorage.getItem('accessToken') ? "Bearer " + localStorage.getItem('accessToken') : ""
+                            }
+                        })];
                 case 1:
                     data = (_b.sent()).data;
                     return [2 /*return*/, data];
@@ -90,7 +99,11 @@ exports.fetchPlanner = function (plannerId) { return __awaiter(void 0, void 0, v
     var data;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, axios_1["default"].get("/planners/" + plannerId)];
+            case 0: return [4 /*yield*/, axios_1["default"].get("/planners/" + plannerId, {
+                    headers: {
+                        Authorization: localStorage.getItem('accessToken') ? "Bearer " + localStorage.getItem('accessToken') : ""
+                    }
+                })];
             case 1:
                 data = (_a.sent()).data;
                 return [2 /*return*/, data];
@@ -102,6 +115,21 @@ exports.fetchPlannerPartners = function (plannerId) { return __awaiter(void 0, v
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, axios_1["default"].get("/planners/" + plannerId + "/partners")];
+            case 1:
+                data = (_a.sent()).data;
+                return [2 /*return*/, data];
+        }
+    });
+}); };
+exports.fetchPlannerMe = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, axios_1["default"].get("/inhouse/planners/me", {
+                    headers: {
+                        Authorization: localStorage.getItem('accessToken') ? "Bearer " + localStorage.getItem('accessToken') : ""
+                    }
+                })];
             case 1:
                 data = (_a.sent()).data;
                 return [2 /*return*/, data];

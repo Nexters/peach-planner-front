@@ -32,24 +32,29 @@ var Planner_1 = require("src/api/Planner");
 var react_1 = require("react");
 var react_router_1 = require("react-router");
 var Profile = function (_a) {
+    var _b, _c, _d;
     var isUpdate = _a.isUpdate;
     var user = react_query_1.useQuery(['user'], User_1.getUser).data;
+    var planner = react_query_1.useQuery(['planner'], Planner_1.fetchPlannerMe).data;
     var history = react_router_1.useHistory();
-    var _b = react_query_1.useMutation(Planner_1.updateProfile, {
+    var _e = react_query_1.useMutation(Planner_1.updateProfile, {
         onSuccess: function (data) {
             alert("\uD504\uB85C\uD544 " + (isUpdate ? '수정' : '등록') + "\uC774 \uC644\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4.");
             history.push('/');
         }
-    }), mutate = _b.mutate, isLoading = _b.isLoading;
-    var _c = react_1.useState({ summary: '', description: '' }), description = _c[0], setDescription = _c[1];
-    var _d = react_1.useState({ webUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' }), sns = _d[0], setSns = _d[1];
-    var _e = react_1.useState([]), regions = _e[0], setRegions = _e[1];
-    var _f = react_1.useState([]), offers = _f[0], setOffers = _f[1];
-    var _g = react_1.useState(), company = _g[0], setCompany = _g[1];
-    var _h = react_1.useState(''), inputCompanyName = _h[0], setInputCompanyName = _h[1];
-    var _j = react_1.useState([]), studios = _j[0], setStudios = _j[1];
-    var _k = react_1.useState([]), dresses = _k[0], setDresses = _k[1];
-    var _l = react_1.useState([]), makeUps = _l[0], setMakeUps = _l[1];
+    }), mutate = _e.mutate, isLoading = _e.isLoading;
+    var _f = react_1.useState({
+        summary: '',
+        description: ''
+    }), description = _f[0], setDescription = _f[1];
+    var _g = react_1.useState({ webUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' }), sns = _g[0], setSns = _g[1];
+    var _h = react_1.useState([]), regions = _h[0], setRegions = _h[1];
+    var _j = react_1.useState([]), offers = _j[0], setOffers = _j[1];
+    var _k = react_1.useState(), company = _k[0], setCompany = _k[1];
+    var _l = react_1.useState(''), inputCompanyName = _l[0], setInputCompanyName = _l[1];
+    var _m = react_1.useState([]), studios = _m[0], setStudios = _m[1];
+    var _o = react_1.useState([]), dresses = _o[0], setDresses = _o[1];
+    var _p = react_1.useState([]), makeUps = _p[0], setMakeUps = _p[1];
     var handleDescription = function (e) {
         var _a;
         var id = e.target.name;
@@ -129,17 +134,17 @@ var Profile = function (_a) {
             };
         });
         var request = {
-            affiliatedCompanyInfoDTO: {
+            affiliatedCompanyInfo: {
                 affiliatedCompanyId: company === null || company === void 0 ? void 0 : company.id
             },
             affiliatedDressCompanyList: affilicatedDress,
             affiliatedStudioCompanyList: affilicatedStudios,
             affiliatedMakeupCompanyList: affilicatedMakeUps,
-            areaInfoDTO: {
+            areaInfo: {
                 locationList: regions.map(function (value) { return value.display; })
             },
-            myProfileDTO: description,
-            snsInfoDTO: {
+            myProfile: description,
+            snsInfo: {
                 externalLinks: {
                     blogLink: sns.blogUrl,
                     facebookLink: sns.facebookUrl,
@@ -147,7 +152,7 @@ var Profile = function (_a) {
                 },
                 webSiteUrl: sns.webUrl
             },
-            supportInfoDTO: {
+            supportInfo: {
                 supportInfoList: offers.map(function (value) { return value.value; })
             }
         };
@@ -160,8 +165,8 @@ var Profile = function (_a) {
             React.createElement(style_1.FlexDiv, { width: "310px", height: "auto", justify: "flex-start", align: "start", direction: "column", margin: "0 105px 0 0" },
                 React.createElement(UserProfile_1["default"], { name: user === null || user === void 0 ? void 0 : user.name, type: user === null || user === void 0 ? void 0 : user.userType })),
             React.createElement(style_1.FlexDiv, { direction: "column", margin: "0", width: "990px" },
-                React.createElement(MyProfile_1["default"], { handleDescription: handleDescription }),
-                React.createElement(SnsSetting_1["default"], { handleSns: handleSns }),
+                React.createElement(MyProfile_1["default"], { summary: planner === null || planner === void 0 ? void 0 : planner.summary, description: planner === null || planner === void 0 ? void 0 : planner.description, handleDescription: handleDescription }),
+                React.createElement(SnsSetting_1["default"], { instagram: (_b = planner === null || planner === void 0 ? void 0 : planner.externalLinks) === null || _b === void 0 ? void 0 : _b.instagramLink, blog: (_c = planner === null || planner === void 0 ? void 0 : planner.externalLinks) === null || _c === void 0 ? void 0 : _c.blogLink, facebook: (_d = planner === null || planner === void 0 ? void 0 : planner.externalLinks) === null || _d === void 0 ? void 0 : _d.facebookLink, handleSns: handleSns }),
                 React.createElement(PlannerArea_1["default"], { regions: regions, handleRegions: handleRegions }),
                 React.createElement(PlannerOfferList_1["default"], { offers: offers, handleOffers: handleOffers }),
                 React.createElement(PlannerCompany_1["default"], { companyName: inputCompanyName, handleCompanyName: handleCompanyName, handleCompanyItem: handleCompany }),

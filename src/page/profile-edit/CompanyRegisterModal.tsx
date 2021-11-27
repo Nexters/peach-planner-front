@@ -31,21 +31,48 @@ const CompanyRegisterModal = ({ showImageModal, closeImageModal }: ImageModalPro
   const [previewImage, setPreviewImage] = useState('');
   const [imageFile, setImageFile] = useState(null);
 
+  const [isValidCompanyName, setIsValidCompanyName] = useState(true);
+  const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(true);
+  const [isValidRegion, setIsValidRegion] = useState(true);
+  const [isValidDescription, setIsValidDescription] = useState(true);
+
   const validateInput = () => {
-    return (
-      phoneFirst.length === 3 &&
-      phoneMiddle.length === 4 &&
-      phoneLast.length === 4 &&
-      companyName.length > 0 &&
-      region.length > 0 &&
-      description.length > 0 &&
-      imageFile
-    );
+    if (companyName.length === 0) {
+      setIsValidCompanyName(false);
+      return false;
+    } else {
+      setIsValidCompanyName(true);
+    }
+
+    if (phoneFirst.length !== 3 && phoneMiddle.length !== 4 && phoneLast.length !== 4) {
+      setIsValidPhoneNumber(false);
+      return false;
+    } else {
+      setIsValidPhoneNumber(true);
+    }
+
+    if (region.length === 0) {
+      setIsValidRegion(false);
+      return false;
+    } else {
+      setIsValidRegion(true);
+    }
+
+    if (description.length === 0) {
+      setIsValidDescription(false);
+      return false;
+    } else {
+      setIsValidDescription(true);
+    }
+    return true;
   };
 
   const handleRegisterCompany = async () => {
     if (!validateInput()) return;
-    const s3ImageUrl = await upload(imageFile);
+    let s3ImageUrl = '';
+    if (imageFile) {
+      s3ImageUrl = await upload(imageFile);
+    }
     const tel = phoneFirst + '-' + phoneMiddle + '-' + phoneLast;
     const companyRequest: CompanyRequest = {
       location: region,
@@ -136,6 +163,20 @@ const CompanyRegisterModal = ({ showImageModal, closeImageModal }: ImageModalPro
               placeholder="업체 이름을 입력해주세요."
               onChange={handleChangeCompanyName}
             ></Input>
+            {isValidCompanyName ? (
+              <></>
+            ) : (
+              <Content
+                height={'16px'}
+                width={'auto'}
+                color={'#8A0303'}
+                fontSize={'13px'}
+                lineHeight={'16px'}
+                margin={'6px 0px 0px 0px'}
+              >
+                업체 이름을 입력해주세요.
+              </Content>
+            )}
             <Content
               height={'20px'}
               width={'auto'}
@@ -171,6 +212,20 @@ const CompanyRegisterModal = ({ showImageModal, closeImageModal }: ImageModalPro
               </Content>
               <Input height="41px" width="60px" placeholder="1234" onChange={handleLast} maxLength={4}></Input>
             </FlexDiv>
+            {isValidPhoneNumber ? (
+              <></>
+            ) : (
+              <Content
+                height={'16px'}
+                width={'auto'}
+                color={'#8A0303'}
+                fontSize={'13px'}
+                lineHeight={'16px'}
+                margin={'6px 0px 0px 0px'}
+              >
+                올바르지 않은 전화번호입니다.
+              </Content>
+            )}
             <Content
               height={'20px'}
               width={'auto'}
@@ -187,6 +242,20 @@ const CompanyRegisterModal = ({ showImageModal, closeImageModal }: ImageModalPro
               placeholder="위치를 입력해주세요."
               handleInput={handleRegion}
             ></SearchInput>
+            {isValidRegion ? (
+              <></>
+            ) : (
+              <Content
+                height={'16px'}
+                width={'auto'}
+                color={'#8A0303'}
+                fontSize={'13px'}
+                lineHeight={'16px'}
+                margin={'6px 0px 0px 0px'}
+              >
+                위치를 입력해주세요.
+              </Content>
+            )}
             <Content
               height={'20px'}
               width={'auto'}
@@ -198,6 +267,20 @@ const CompanyRegisterModal = ({ showImageModal, closeImageModal }: ImageModalPro
               업체 소개
             </Content>
             <TextArea placeholder="업체 소개를 입력해주세요." onChange={handleDescription}></TextArea>
+            {isValidDescription ? (
+              <></>
+            ) : (
+              <Content
+                height={'16px'}
+                width={'auto'}
+                color={'#8A0303'}
+                fontSize={'13px'}
+                lineHeight={'16px'}
+                margin={'6px 0px 0px 0px'}
+              >
+                업체 소개를 입력해주세요.
+              </Content>
+            )}
           </FlexDiv>
           <FlexDiv margin="0" height="400px" justify="flex-start" align="start" direction="column">
             <Content
@@ -245,7 +328,7 @@ const StyledPopup = styled(Popup)`
   &-content {
     background-color: white;
     width: 40%;
-    height: 65%;
+    height: 80%;
     border-radius: 10px;
     padding: 40px 60px 40px 60px;
   }

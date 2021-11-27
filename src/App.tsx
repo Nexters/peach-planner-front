@@ -2,15 +2,15 @@ import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 're
 import Main from './page/home/main';
 import PlannerDetail from './page/planner-detail';
 import PlannerEstimate from './page/planner-estimate/PlannerEstimate';
-import UserPage from './page/user/mypage/UserPage';
-import PlannerPage from './page/user/mypage/PlannerPage';
+import UserPageSideMenu from './page/user/mypage/UserPageSideMenu';
+import PlannerPageSideMenu from './page/user/mypage/PlannerPageSideMenu';
 import GlobalStyle from './styles/globalStyle';
 import theme from './styles/theme';
 import { ThemeProvider } from 'styled-components';
 import Search from './page/home/search';
 import Header from './component/Header';
 import Footer from './component/Footer';
-import Profile from './page/profile';
+import Profile from './page/profile-edit';
 import Login from './page/user/login/Login';
 import PlannerSignUp from './page/user/signup/PlannerSignUp';
 import UserSignUp from './page/user/signup/UserSignUp';
@@ -29,6 +29,8 @@ import CompanyDetail from './page/company-detail/CompanyDetail';
 import ScrollToTop from './component/ScrollToTop';
 import { TermsOfUse } from './page/signup-detail/TermsOfUse';
 import { PrivacyPolicy } from './page/signup-detail/PrivacyPolicy';
+import MyPage from './page/mypage';
+import PlannerProfile from './page/mypage/profile';
 
 export const queryClient = new QueryClient();
 
@@ -72,10 +74,13 @@ const App = () => {
                   <PlannerEstimate />
                 </UserPrivateRoute>
                 <UserPrivateRoute path="/userPage">
-                  <UserPage />
+                  <UserPageSideMenu />
                 </UserPrivateRoute>
                 <PlannerPrivateRoute path="/plannerPage">
-                  <PlannerPage />
+                  <MyPage />
+                </PlannerPrivateRoute>
+                <PlannerPrivateRoute path="/plannerProfile">
+                  <PlannerProfile />
                 </PlannerPrivateRoute>
                 <PlannerPrivateRoute path="/registerProfile">
                   <Profile isUpdate={false} />

@@ -14,7 +14,7 @@ import { User, getUser } from 'src/api/User';
 import axios from 'axios';
 
 const client = new Client({
-  brokerURL: 'ws://localhost:8080/websocket',
+  brokerURL: 'wss://api.peachplanner.com/websocket',
   connectHeaders: {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`
   },

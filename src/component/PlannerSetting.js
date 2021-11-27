@@ -65,25 +65,33 @@ const PlannerSetting = () => {
       <InnerContainer>
         <PlannerPageSideMenu></PlannerPageSideMenu>
         {changePw ? (
-          <$.FlexDiv direction="column">
+          <$.FlexDiv direction="column" margin="0 40px" justify="flex-start">
             <$.SettingBox>
-              <LeftArrow onClick={() => setChangePw(false)} style={{ cursor: 'pointer' }} />
-              <$.SettingTitle>비밀번호 변경</$.SettingTitle>
+              <AlignCenterBox>
+                <LeftArrow onClick={() => setChangePw(false)} style={{ cursor: 'pointer' }} />
+                <$.SettingTitle margin="0 5px">비밀번호 변경</$.SettingTitle>
+              </AlignCenterBox>
 
               <$.SettingLabel>현재 비밀번호</$.SettingLabel>
               <$.SettingInfo>
                 <$.Input name="originalPassword" onChange={onChangeInput} value={originalPassword} type="password" />
               </$.SettingInfo>
 
-              <$.SettingLabel>새 비밀번호</$.SettingLabel>
-              <$.SettingInfo>
-                <$.Input name="password" onChange={onChangeInput} value={password} type="password" />
-              </$.SettingInfo>
+              <AlignCenterBox>
+                <ColumnBox>
+                  <$.SettingLabel>새 비밀번호</$.SettingLabel>
+                  <$.SettingInfo>
+                    <$.Input name="password" onChange={onChangeInput} value={password} type="password" />
+                  </$.SettingInfo>
+                </ColumnBox>
 
-              <$.SettingLabel>새 비밀번호 확인</$.SettingLabel>
-              <$.SettingInfo>
-                <$.Input name="passwordConfirm" onChange={onChangeInput} value={passwordConfirm} type="password" />
-              </$.SettingInfo>
+                <ColumnBox margin="0 20px">
+                  <$.SettingLabel>새 비밀번호 확인</$.SettingLabel>
+                  <$.SettingInfo>
+                    <$.Input name="passwordConfirm" onChange={onChangeInput} value={passwordConfirm} type="password" />
+                  </$.SettingInfo>
+                </ColumnBox>
+              </AlignCenterBox>
 
               <$.SettingButton onClick={changePassword}>
                 <$.SettingButtonText>변경하기</$.SettingButtonText>
@@ -91,9 +99,10 @@ const PlannerSetting = () => {
             </$.SettingBox>
           </$.FlexDiv>
         ) : (
-          <$.FlexDiv direction="column" margin="0" justify="flex-start">
-            <$.SettingBox padding="0">
-              <$.SettingTitle>계정 설정</$.SettingTitle>
+          <$.FlexDiv direction="column" margin="0 40px" justify="flex-start">
+            <Title>계정 설정</Title>
+            <$.SettingBox>
+              <$.SettingTitle>회원 정보</$.SettingTitle>
 
               <$.SettingLabel>이름</$.SettingLabel>
               <$.SettingInfoBox>
@@ -131,4 +140,31 @@ const InnerContainer = styled.div`
   width: 1100px;
   display: flex;
   justify-content: space-between;
+`;
+
+const Title = styled.span`
+  display: inline-block;
+  width: 100%;
+  height: 27px;
+  font-family: SpoqaHanSans;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000;
+  margin-bottom: 15px;
+`;
+
+const AlignCenterBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ColumnBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: ${(props) => props.margin || '0px'};
 `;

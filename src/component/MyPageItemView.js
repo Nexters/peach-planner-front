@@ -153,6 +153,7 @@ export const SettingTitle = styled.span`
   letter-spacing: normal;
   text-align: left;
   color: #495057;
+  margin: ${(props) => props.margin || '0px'};
 `;
 
 export const SettingLabel = styled.label`
@@ -229,7 +230,7 @@ export const SettingButton = styled.button`
 `;
 
 export const SettingBox = styled.div`
-  padding: 8px 0 40px;
+  padding: ${(props) => (props.padding ? props.padding : '8px 0 40px')};
   border-top: 1px solid #e9ecef;
   width: 100%;
   display: flex;
@@ -253,8 +254,9 @@ export const ImgBox = styled.div`
 export const Input = styled.input.attrs((props) => ({
   type: props.type
 }))`
-  width: 100%;
+  width: 279px;
+  height: 40px;
   background: transparent;
-  border: none;
+  border: 1px solid #ced4da;
   outline: none;
 `;

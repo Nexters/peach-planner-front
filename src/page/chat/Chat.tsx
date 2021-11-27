@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Client, Message, IFrame, ActivationState, StompSocketState } from '@stomp/stompjs';
 import { useMemo } from 'react';
 import { User, getUser } from 'src/api/User';
+import axios from 'axios';
 
 const client = new Client({
   brokerURL: 'wss://api.peachplanner.com/websocket',
@@ -29,7 +30,7 @@ const subscribeIds = new Set();
 
 interface ChatMessageModel {
   id: number;
-  sender: string;
+  sender: ChatRoomParticipant;
   senderId: number;
   messageType: 'SYSTEM_START' | 'NORMAL' | 'SYSTEM_END';
   senderType: 'SYSTEM' | 'USER' | 'PLANNER';
@@ -44,7 +45,7 @@ const ChatContainer = () => {
   const currentRoom = React.useRef<ChatRoom>({} as ChatRoom);
   const [typingMessage, setTypingMessage] = React.useState('');
 
-  const chatRoomParticipant = React.useRef<{ [key: string]: string }>();
+  const chatRoomParticipant = React.useRef<{ [key: string]: ChatRoomParticipant }>();
   const [chatMessages, setChatMessages] = React.useState<ChatMessageModel[]>([]);
 
   const messagesEndRef = React.useRef<null | HTMLDivElement>(null);
@@ -100,7 +101,7 @@ const ChatContainer = () => {
   }, [rooms]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages]);
 
   return (
@@ -113,9 +114,39 @@ const ChatContainer = () => {
             </Title>
           </Cell>
           <Cell width="65%">
-            <Title height="20px" width="auto" fontSize="14px" lineHeight="20px" padding="24px 0 24px 16px">
-              {currentRoom.current.roomName}
-            </Title>
+            <ChatRoomTitleLine>
+              <Title height="20px" width="auto" fontSize="14px" lineHeight="20px" padding="24px 0 24px 16px">
+                {currentRoom.current.roomName}
+              </Title>
+              <PlannerProfileTitleDiv>
+              {
+                chatRoomParticipant.current &&
+                <PlannerProfileLink href={`/planner/${Object.values(chatRoomParticipant.current).filter(a => a.participantType == 'PLANNER')[0].participantTypeId}`}>
+                  <PlannerProfileCTA color="#000000">프로필 보기</PlannerProfileCTA>
+                </PlannerProfileLink>
+              }
+              {
+                me.current?.userType == 'PLANNER' && currentRoom.current.estimationId != null && currentRoom.current.chatRoomStatus == 'OPEN' &&
+                <PlannerProfileEndConsult onClick={() => {
+                  axios
+                    .post(
+                      `/estimate/${currentRoom.current.estimationId}/complete`,
+                      {},
+                      { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+                    )
+                  console.log('상담 완료 ' + currentRoom.current.estimationId);
+                }}>
+                  <PlannerProfileCTA color="#FFFFFF">상담 완료하기</PlannerProfileCTA>
+                </PlannerProfileEndConsult>
+              }
+              {
+                me.current?.userType == 'PLANNER' && currentRoom.current.estimationId != null && currentRoom.current.chatRoomStatus == 'CLOSED' &&
+                <PlannerProfileEndedConsult>
+                  <PlannerProfileCTA color="#FFFFFF">완료됨</PlannerProfileCTA>
+                </PlannerProfileEndedConsult>
+              }
+              </PlannerProfileTitleDiv>
+            </ChatRoomTitleLine>
           </Cell>
         </Row>
 
@@ -154,7 +185,7 @@ const ChatContainer = () => {
                         })();
                       }}
                     >
-                      <ChatProfileImg src={shape} />
+                      <ChatProfileImg src={room.profileImage || shape}/>
                       <ChatProfileText>
                         <ChatProfileLine>
                           <ChatProfileName>{room.roomName}</ChatProfileName>
@@ -190,10 +221,10 @@ const ChatContainer = () => {
                   if (message.messageType === 'SYSTEM_END') {
                     return (
                       <SystemMessageDiv>
-                        <SystemMessage>{message.message}</SystemMessage>
-                        <a href="/">
+                        <SystemMessage>{me.current?.userType == 'PLANNER' ? message.message : '상담에 만족하셨나요? 플래너 리뷰를 작성하실 수 있습니다.'}</SystemMessage>
+                        {me.current?.userType != 'PLANNER' && <a href="/">
                           <SystemMessageLink>플래너 리뷰 작성하기</SystemMessageLink>
-                        </a>
+                        </a>}
                       </SystemMessageDiv>
                     );
                   }
@@ -203,7 +234,7 @@ const ChatContainer = () => {
                       <MyChatMessageDiv>
                         <MyChatMessageCard>
                           <MyChatMessageTitle>
-                            <ChatMessageProfileName>{message.sender}</ChatMessageProfileName>
+                            <ChatMessageProfileName>{message.sender.name}</ChatMessageProfileName>
                             <ChatMessageProfileDatetime>
                               {new Date(message.dateTime).toLocaleTimeString('ko-KR', {
                                 hour12: true,
@@ -214,17 +245,17 @@ const ChatContainer = () => {
                           </MyChatMessageTitle>
                           <MyChatMessageText>{message.message}</MyChatMessageText>
                         </MyChatMessageCard>
-                        <ChatMessageProfileImg src={shape} />
+                        <ChatMessageProfileImg src={message.sender.profileImage || shape} />
                       </MyChatMessageDiv>
                     );
                   }
 
                   return (
                     <ChatMessageDiv>
-                      <ChatMessageProfileImg src={shape} />
+                      <ChatMessageProfileImg src={message.sender.profileImage || shape} />
                       <ChatMessageCard>
                         <ChatMessageTitle>
-                          <ChatMessageProfileName>{message.sender}</ChatMessageProfileName>
+                          <ChatMessageProfileName>{message.sender.name}</ChatMessageProfileName>
                           <ChatMessageProfileDatetime>
                             {new Date(message.dateTime).toLocaleTimeString('ko-KR', {
                               hour12: true,
@@ -337,6 +368,11 @@ const CellContent = styled.div`
   }
 `;
 
+const ChatRoomTitleLine = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 interface ChatCardProps {
   selected?: boolean;
 }
@@ -361,6 +397,72 @@ const ChatProfileLine = styled.div`
   justify-content: space-between;
   padding-bottom: 4px;
 `;
+
+const PlannerProfileTitleDiv = styled.div`
+  margin: 20px 20px 20px 20px;
+  display: flex;
+  /* justify-content: space-between;
+  padding-bottom: 4px;
+  vertical-align: bottom; */
+  justify-content: flex-end;
+`;
+
+const PlannerProfileLink = styled.a`
+  width: 90px;
+  margin: 0 8px 0 0;
+  padding: 6px 16px 8px;
+  border-radius: 3px;
+  border: solid 2px #adb5bd;
+
+  color: transparent;
+
+  font-weight: 700;
+  font-style: normal;
+  font-size: medium;
+  transition-duration: 0.4s;
+  :hover {
+    background-color: #ced4da;
+  }
+`;
+
+const PlannerProfileEndConsult = styled.button`
+  width: 120px;
+  margin: 0 8px 0 0;
+  padding: 6px 16px 8px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+
+  background-color: #e64980;
+
+  font-weight: 700;
+  font-style: normal;
+  font-size: medium;
+  transition-duration: 0.4s;
+`;
+
+const PlannerProfileEndedConsult = styled(PlannerProfileEndConsult)`
+cursor: initial;
+  background-color: #868e96;
+`;
+
+
+interface PlannerProfileCTAProps {
+  color: string;
+}
+
+const PlannerProfileCTA = styled.p<PlannerProfileCTAProps>`
+  font-family: SpoqaHanSans;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: ${(props: PlannerProfileCTAProps) => props.color};
+`;
+
 
 const ChatProfileText = styled.div`
   padding: 4px;

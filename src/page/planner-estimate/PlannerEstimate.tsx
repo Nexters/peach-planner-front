@@ -25,7 +25,7 @@ const PlannerEstimate = () => {
     phone2: '1234',
     phone3: '1234',
     email: 'example@gmail.com',
-    date: '2021.06.12'
+    date: '2021-06-12'
   });
 
   const [companyInfo, setCompanyInfo] = useState({
@@ -64,8 +64,8 @@ const PlannerEstimate = () => {
       <EstimateBox>
         <FlexContainer>
           <div>
-            <PlannerName>{plannerInfo ? plannerInfo.name : ''} 플래너</PlannerName>
-            <CompanyName>{plannerInfo ? plannerInfo.company.name : ''}</CompanyName>
+            <PlannerName>{plannerInfo?.name ?? ''} 플래너</PlannerName>
+            <CompanyName>{plannerInfo?.company?.name ?? ''}</CompanyName>
             <Description>견적 요청이 아닌 웨딩 계약서는 플래너에게 따로 요청해주세요.</Description>
           </div>
           <PButton width="107px" height="44px" onClick={handleChat}>
@@ -86,7 +86,7 @@ const PlannerEstimate = () => {
         </EstimateRow>
         <EstimateRow label="이메일">{myInfo.email}</EstimateRow>
         <EstimateRow label="예식 예정일">
-          <input type="text" value={myInfo.date} name="date" onChange={handleMyInfoChange} />
+          <input type="date" value={myInfo.date} name="date" onChange={handleMyInfoChange} />
         </EstimateRow>
       </EstimateBox>
       <EstimateBox title="업체 선택">
@@ -105,7 +105,33 @@ const PlannerEstimate = () => {
       </EstimateBox>
       <EstimateBox title="첨부파일">첨부파일</EstimateBox>
       <EstimateBox>
-        <PButton color="pink">전적 요청하기</PButton>
+        <PButton color="pink" onClick={() => {
+          axios
+            .post(
+              `/estimate/upload`,
+              {
+                plannerId: plannerId,
+                userName: myInfo.name,
+                email: myInfo.email,
+                phoneNum: `${myInfo.phone1}${myInfo.phone2}${myInfo.phone3}`,
+                weddingDate: myInfo.date,
+                studio: companyInfo.name,
+                dress: companyInfo.dress,
+                makeup: companyInfo.makeup,
+                // TODO:: Add below input fields
+                weddingHall: false,
+                weddingCard: false,
+                description: '웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. ',
+                filePath: '',
+              },
+              { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+            )
+            .then((res) => {
+              if (res.status == 200) {
+                history.push('/chats');
+              }
+            });
+        }}>전적 요청하기</PButton>
         <SaveButton>임시저장</SaveButton>
       </EstimateBox>
       <Empty />

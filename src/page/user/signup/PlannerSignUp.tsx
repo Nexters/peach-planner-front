@@ -6,6 +6,7 @@ import { FlexDiv, Content, Title } from 'src/component/style/style';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { User } from 'src/interface';
+import { FindEmail } from 'src/api/User';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -52,6 +53,7 @@ const PlannerSignUp = () => {
   // const [phone, setPhone] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [agreePrivacy, setAgreePrivacy] = useState(false);
+  const [isExistEmail, setIsExistEmail] = useState(false);
 
   useEffect(() => {
     if (checkAll) {
@@ -132,15 +134,26 @@ const PlannerSignUp = () => {
       setIsValidPassword(true);
       setIsValidEmail(true);
     } else {
-      signup({
-        name,
-        userName: email,
-        email,
-        password,
-        type: 'PLANNER',
-        // tel: phone,
-        nickName: name
-      });
+      FindEmail(email)
+        .then((res) => {
+          if (res.exist) {
+            setIsExistEmail(true);
+          } else {
+            setIsExistEmail(false);
+            signup({
+              name,
+              userName: email,
+              email,
+              password,
+              type: 'PLANNER',
+              // tel: phone,
+              nickName: name
+            });
+          }
+        })
+        .catch((err) => {
+          alert('새로고침 후 다시 시도해주세요.');
+        });
     }
   };
 
@@ -189,6 +202,11 @@ const PlannerSignUp = () => {
         {!isValidEmail && (
           <Content color="#E03131" fontSize="12px" height="18px" width="undefined" lineHeight="18px">
             이메일 형식이 유효하지 않습니다.
+          </Content>
+        )}
+        {isExistEmail && (
+          <Content color="#E03131" fontSize="12px" height="18px" width="undefined" lineHeight="18px">
+            이미 가입되어있는 아이디입니다.
           </Content>
         )}
 

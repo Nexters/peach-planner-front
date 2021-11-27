@@ -35,6 +35,8 @@ const PlannerPageSideMenu = () => {
     setSelectedItem(item);
     if (item === 'profile') {
       history.push('/plannerProfile');
+    } else if (item === 'setting') {
+      history.push('/plannerSetting');
     }
   };
 

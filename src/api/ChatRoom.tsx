@@ -7,6 +7,8 @@ export interface ChatRoom {
   lastMessageDateTime: string;
   profileImage: string;
   roomName: string;
+  estimationId: number;
+  chatRoomStatus: 'OPEN' | 'CLOSED';
 }
 
 export const fetchChatRooms = async ({ queryKey }: QueryFunctionContext) => {
@@ -22,6 +24,7 @@ export const fetchChatRooms = async ({ queryKey }: QueryFunctionContext) => {
 export interface ChatRoomParticipant {
   participantId: number;
   participantType: 'USER' | 'PLANNER';
+  participantTypeId: number;
   name: string;
   profileImage: string;
 }
@@ -33,8 +36,8 @@ export const fetchChatRoomParticipant = async (roomId: number) => {
     }
   });
   return (
-    data.reduce((map: { [key: string]: string }, participant: ChatRoomParticipant) => {
-      map[`${participant.participantId}`] = participant.name;
+    data.reduce((map: { [key: string]: ChatRoomParticipant }, participant: ChatRoomParticipant) => {
+      map[`${participant.participantId}`] = participant;
       return map;
     }, {}) ?? {}
   );

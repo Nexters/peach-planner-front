@@ -4,7 +4,7 @@ import { QueryFunctionContext } from 'react-query';
 export interface User {
   id?: number;
   name: string;
-  userType?: string;
+  userType?: 'USER' | 'PLANNER';
   email: string;
 }
 

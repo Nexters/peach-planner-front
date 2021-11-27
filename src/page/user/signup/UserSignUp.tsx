@@ -8,6 +8,7 @@ import { User } from 'src/interface';
 import { KAKAO_AUTH_URL } from '../OAuth/OAuth';
 import HorizontalLine from 'src/component/HorizontalLine';
 import logo from '../../../assets/img/ic_share_kakao.png';
+import { FindEmail } from 'src/api/User';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -15,6 +16,7 @@ const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#
 const UserSignUp = () => {
   const history = useHistory();
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isExistEmail, setIsExistEmail] = useState(false);
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [inputs, setInputs] = useState({
     email: '',
@@ -93,13 +95,24 @@ const UserSignUp = () => {
       setIsValidPassword(true);
       setIsValidEmail(true);
     } else {
-      signup({
-        name,
-        nickName,
-        userName: email,
-        password,
-        type: 'USER'
-      });
+      FindEmail(email)
+        .then((res) => {
+          if (res.exist) {
+            setIsExistEmail(true);
+          } else {
+            setIsExistEmail(false);
+            signup({
+              name,
+              nickName,
+              userName: email,
+              password,
+              type: 'USER'
+            });
+          }
+        })
+        .catch((err) => {
+          alert('새로고침 후 다시 시도해주세요.');
+        });
     }
   };
 
@@ -158,6 +171,11 @@ const UserSignUp = () => {
             {!isValidEmail && (
               <Content color="#E03131" fontSize="12px" height="18px" width="undefined" lineHeight="18px">
                 이메일 형식이 유효하지 않습니다.
+              </Content>
+            )}
+            {isExistEmail && (
+              <Content color="#E03131" fontSize="12px" height="18px" width="undefined" lineHeight="18px">
+                이미 가입되어있는 아이디입니다.
               </Content>
             )}
 

@@ -229,7 +229,7 @@ export const SettingButton = styled.button`
 `;
 
 export const SettingBox = styled.div`
-  padding: 8px 0 40px;
+  padding: ${(props) => (props.padding ? props.padding : '8px 0 40px')};
   border-top: 1px solid #e9ecef;
   width: 100%;
   display: flex;

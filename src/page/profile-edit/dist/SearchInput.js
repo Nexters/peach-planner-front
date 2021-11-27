@@ -7,9 +7,9 @@ exports.__esModule = true;
 var styled_components_1 = require("styled-components");
 var ic_search_svg_1 = require("../../assets/svg/ic_search.svg");
 var SearchInput = function (_a) {
-    var height = _a.height, width = _a.width, placeholder = _a.placeholder, handleInput = _a.handleInput, onFocus = _a.onFocus, value = _a.value;
+    var height = _a.height, width = _a.width, placeholder = _a.placeholder, handleInput = _a.handleInput, onFocus = _a.onFocus, value = _a.value, defaultValue = _a.defaultValue;
     return (React.createElement(SearchBox, null,
-        React.createElement(Input, { height: height, width: width, placeholder: placeholder, onChange: handleInput, onFocus: onFocus, value: value }),
+        React.createElement(Input, { height: height, width: width, placeholder: placeholder, onChange: handleInput, onFocus: onFocus, value: value, defaultValue: defaultValue }),
         React.createElement(SearchIcon, { src: ic_search_svg_1["default"] })));
 };
 exports["default"] = SearchInput;

@@ -13,9 +13,9 @@ export interface Planner {
   images: string[];
   name: string;
   externalLinks: {
-    blogLink: string;
-    instagramLink: string;
-    facebookLink: string;
+    blogLink?: string;
+    instagramLink?: string;
+    facebookLink?: string;
   };
   likes: number;
   reviews: number;

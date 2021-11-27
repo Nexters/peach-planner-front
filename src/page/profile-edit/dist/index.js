@@ -32,29 +32,29 @@ var Planner_1 = require("src/api/Planner");
 var react_1 = require("react");
 var react_router_1 = require("react-router");
 var Profile = function (_a) {
-    var _b, _c, _d;
+    var _b, _c, _d, _e;
     var isUpdate = _a.isUpdate;
     var user = react_query_1.useQuery(['user'], User_1.getUser).data;
     var planner = react_query_1.useQuery(['planner'], Planner_1.fetchPlannerMe).data;
     var history = react_router_1.useHistory();
-    var _e = react_query_1.useMutation(Planner_1.updateProfile, {
+    var _f = react_query_1.useMutation(Planner_1.updateProfile, {
         onSuccess: function (data) {
             alert("\uD504\uB85C\uD544 " + (isUpdate ? '수정' : '등록') + "\uC774 \uC644\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4.");
             history.push('/');
         }
-    }), mutate = _e.mutate, isLoading = _e.isLoading;
-    var _f = react_1.useState({
+    }), mutate = _f.mutate, isLoading = _f.isLoading;
+    var _g = react_1.useState({
         summary: '',
         description: ''
-    }), description = _f[0], setDescription = _f[1];
-    var _g = react_1.useState({ webUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' }), sns = _g[0], setSns = _g[1];
-    var _h = react_1.useState([]), regions = _h[0], setRegions = _h[1];
-    var _j = react_1.useState([]), offers = _j[0], setOffers = _j[1];
-    var _k = react_1.useState(), company = _k[0], setCompany = _k[1];
-    var _l = react_1.useState(''), inputCompanyName = _l[0], setInputCompanyName = _l[1];
-    var _m = react_1.useState([]), studios = _m[0], setStudios = _m[1];
-    var _o = react_1.useState([]), dresses = _o[0], setDresses = _o[1];
-    var _p = react_1.useState([]), makeUps = _p[0], setMakeUps = _p[1];
+    }), description = _g[0], setDescription = _g[1];
+    var _h = react_1.useState({ webUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' }), sns = _h[0], setSns = _h[1];
+    var _j = react_1.useState([]), regions = _j[0], setRegions = _j[1];
+    var _k = react_1.useState([]), offers = _k[0], setOffers = _k[1];
+    var _l = react_1.useState(), company = _l[0], setCompany = _l[1];
+    var _m = react_1.useState(''), inputCompanyName = _m[0], setInputCompanyName = _m[1];
+    var _o = react_1.useState([]), studios = _o[0], setStudios = _o[1];
+    var _p = react_1.useState([]), dresses = _p[0], setDresses = _p[1];
+    var _q = react_1.useState([]), makeUps = _q[0], setMakeUps = _q[1];
     var handleDescription = function (e) {
         var _a;
         var id = e.target.name;
@@ -158,6 +158,12 @@ var Profile = function (_a) {
         };
         mutate(request);
     };
+    react_1.useEffect(function () {
+        var plannerRegions = PlannerArea_1.allRegions.filter(function (region) { return planner === null || planner === void 0 ? void 0 : planner.locations.includes(region.display); });
+        setRegions(plannerRegions);
+        var plannerOffers = PlannerOfferList_1.allOffers.filter(function (offer) { return planner === null || planner === void 0 ? void 0 : planner.supportInfos.includes(offer.display); });
+        setOffers(plannerOffers);
+    }, [planner]);
     return (React.createElement(Container, null,
         React.createElement(InnerContainer, null,
             React.createElement(ProfileHeader_1["default"], { isUpdate: isUpdate })),
@@ -167,9 +173,9 @@ var Profile = function (_a) {
             React.createElement(style_1.FlexDiv, { direction: "column", margin: "0", width: "990px" },
                 React.createElement(MyProfile_1["default"], { summary: planner === null || planner === void 0 ? void 0 : planner.summary, description: planner === null || planner === void 0 ? void 0 : planner.description, handleDescription: handleDescription }),
                 React.createElement(SnsSetting_1["default"], { instagram: (_b = planner === null || planner === void 0 ? void 0 : planner.externalLinks) === null || _b === void 0 ? void 0 : _b.instagramLink, blog: (_c = planner === null || planner === void 0 ? void 0 : planner.externalLinks) === null || _c === void 0 ? void 0 : _c.blogLink, facebook: (_d = planner === null || planner === void 0 ? void 0 : planner.externalLinks) === null || _d === void 0 ? void 0 : _d.facebookLink, handleSns: handleSns }),
-                React.createElement(PlannerArea_1["default"], { regions: regions, handleRegions: handleRegions }),
-                React.createElement(PlannerOfferList_1["default"], { offers: offers, handleOffers: handleOffers }),
-                React.createElement(PlannerCompany_1["default"], { companyName: inputCompanyName, handleCompanyName: handleCompanyName, handleCompanyItem: handleCompany }),
+                React.createElement(PlannerArea_1["default"], { plannerRegions: planner === null || planner === void 0 ? void 0 : planner.locations, regions: regions, handleRegions: handleRegions }),
+                React.createElement(PlannerOfferList_1["default"], { plannerOffers: planner === null || planner === void 0 ? void 0 : planner.supportInfos, offers: offers, handleOffers: handleOffers }),
+                React.createElement(PlannerCompany_1["default"], { defaultCompanyName: (_e = planner === null || planner === void 0 ? void 0 : planner.company) === null || _e === void 0 ? void 0 : _e.name, companyName: inputCompanyName, handleCompanyName: handleCompanyName, handleCompanyItem: handleCompany }),
                 React.createElement(AssociateOrganization_1["default"], { id: "studio", name: "\uC2A4\uD29C\uB514\uC624", margin: "0 0 72px 0", handleStores: handleStudio }),
                 React.createElement(AssociateOrganization_1["default"], { id: "dress", name: "\uB4DC\uB808\uC2A4", margin: "0 0 72px 0", handleStores: handleDress }),
                 React.createElement(AssociateOrganization_1["default"], { id: "makeup", name: "\uBA54\uC774\uD06C\uC5C5", margin: "0 0 24px 0", handleStores: handleMakeUp }),

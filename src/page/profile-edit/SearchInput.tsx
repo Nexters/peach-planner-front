@@ -8,10 +8,10 @@ interface Props {
   handleInput: (e: any) => void;
   onFocus?: () => void;
   value?: string;
-
+  defaultValue?: string;
 }
 
-const SearchInput = ({ height, width, placeholder, handleInput, onFocus, value }: Props) => {
+const SearchInput = ({ height, width, placeholder, handleInput, onFocus, value, defaultValue }: Props) => {
   return (
     <SearchBox>
       <Input
@@ -21,6 +21,7 @@ const SearchInput = ({ height, width, placeholder, handleInput, onFocus, value }
         onChange={handleInput}
         onFocus={onFocus}
         value={value}
+        defaultValue={defaultValue}
       ></Input>
       <SearchIcon src={SearchIconSvg} />
     </SearchBox>

@@ -3,8 +3,8 @@ import { FlexDiv } from '../../component/style/style';
 import PButton from '../../component/PButton';
 import AssociateOrganization from './AssociateOrganization';
 import MyProfile from './MyProfile';
-import PlannerArea from './PlannerArea';
-import PlannerOfferList from './PlannerOfferList';
+import PlannerArea, { allRegions } from './PlannerArea';
+import PlannerOfferList, { allOffers } from './PlannerOfferList';
 import PlannerCompany from './PlannerCompany';
 import ProfileHeader from './ProfileHeader';
 import SnsSetting from './SnsSetting';
@@ -185,6 +185,13 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     mutate(request);
   };
 
+  useEffect(() => {
+    const plannerRegions = allRegions.filter((region) => planner?.locations.includes(region.display));
+    setRegions(plannerRegions);
+    const plannerOffers = allOffers.filter((offer) => planner?.supportInfos.includes(offer.display));
+    setOffers(plannerOffers);
+  }, [planner]);
+
   return (
     <Container>
       <InnerContainer>
@@ -208,9 +215,18 @@ const Profile = ({ isUpdate }: ProfileProps) => {
             facebook={planner?.externalLinks?.facebookLink!!}
             handleSns={handleSns}
           ></SnsSetting>
-          <PlannerArea regions={regions} handleRegions={handleRegions}></PlannerArea>
-          <PlannerOfferList offers={offers} handleOffers={handleOffers}></PlannerOfferList>
+          <PlannerArea
+            plannerRegions={planner?.locations}
+            regions={regions}
+            handleRegions={handleRegions}
+          ></PlannerArea>
+          <PlannerOfferList
+            plannerOffers={planner?.supportInfos}
+            offers={offers}
+            handleOffers={handleOffers}
+          ></PlannerOfferList>
           <PlannerCompany
+            defaultCompanyName={planner?.company?.name!!}
             companyName={inputCompanyName}
             handleCompanyName={handleCompanyName}
             handleCompanyItem={handleCompany}

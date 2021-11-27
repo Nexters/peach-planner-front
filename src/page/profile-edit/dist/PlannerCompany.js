@@ -34,7 +34,7 @@ function useOutsideAlerter(ref, setFocused) {
     }, [ref]);
 }
 var PlannerCompany = function (_a) {
-    var companyName = _a.companyName, handleCompanyName = _a.handleCompanyName, handleCompanyItem = _a.handleCompanyItem;
+    var defaultCompanyName = _a.defaultCompanyName, companyName = _a.companyName, handleCompanyName = _a.handleCompanyName, handleCompanyItem = _a.handleCompanyItem;
     var _b = react_1.useState(false), focused = _b[0], setFocused = _b[1];
     var wrapperRef = react_1.useRef(null);
     useOutsideAlerter(wrapperRef, setFocused);
@@ -53,7 +53,7 @@ var PlannerCompany = function (_a) {
         React.createElement(style_1.Content, { height: '19px', width: 'auto', color: '#495057', fontSize: '13px', lineHeight: '19px', margin: '4px 0 20px 0' }, "\uC18C\uC18D \uC6E8\uB529\uC5C5\uCCB4\uB97C \uB4F1\uB85D\uD560 \uC218 \uC788\uC5B4\uC694."),
         React.createElement(style_1.Content, { height: '24px', width: 'auto', color: '#495057', fontSize: '16px', lineHeight: '24px', margin: '20px 0 8px 0' }, "\uC6E8\uB529\uC5C5\uCCB4 \uC774\uB984"),
         React.createElement(SearchContainer, { ref: wrapperRef },
-            React.createElement(SearchInput_1["default"], { height: "41px", width: "421px", placeholder: "\uC6E8\uB529 \uC5C5\uCCB4 \uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.", handleInput: handleCompanyName, onFocus: onFocus, value: companyName }),
+            React.createElement(SearchInput_1["default"], { height: "41px", width: "421px", placeholder: "\uC6E8\uB529 \uC5C5\uCCB4 \uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.", handleInput: handleCompanyName, onFocus: onFocus, value: companyName, defaultValue: defaultCompanyName }),
             focused ? (React.createElement(Container, { ref: wrapperRef },
                 React.createElement(CompanyContainer, null,
                     React.createElement(CompanyInnerContainer, null, data ? (data.companies.map(function (company) {

@@ -71,9 +71,9 @@ const NewPlanner = () => {
                   organization={planner.company?.name}
                   region={planner.locations.join(',')}
                   id={planner.id}
-                  blogLink={planner.externalLinks.blogLink}
-                  instagramLink={planner.externalLinks.instagramLink}
-                  facebookLink={planner.externalLinks.facebookLink}
+                  blogLink={planner.externalLinks?.blogLink}
+                  instagramLink={planner.externalLinks?.instagramLink}
+                  facebookLink={planner.externalLinks?.facebookLink}
                   postLiked={planner.postLiked}
                   mutate={mutate}
                 />

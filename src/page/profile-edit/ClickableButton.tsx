@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Item } from '.';
 import { Content } from '../../component/style/style';
@@ -7,10 +7,11 @@ interface Props {
   items: Item[];
   handleItems: (items: Item[]) => void;
   content: Item;
+  isAlreadyClicked: boolean;
 }
 
-const ClickableButton = ({ items, handleItems, content }: Props) => {
-  const [isClicked, setIsClicked] = useState(false);
+const ClickableButton = ({ items, handleItems, content, isAlreadyClicked }: Props) => {
+  const [isClicked, setIsClicked] = useState(isAlreadyClicked);
 
   const handleClick = () => {
     if (!isClicked) {
@@ -21,6 +22,10 @@ const ClickableButton = ({ items, handleItems, content }: Props) => {
     }
     setIsClicked(!isClicked);
   };
+
+  useEffect(() => {
+    setIsClicked(isAlreadyClicked);
+  }, [isAlreadyClicked]);
 
   return (
     <>

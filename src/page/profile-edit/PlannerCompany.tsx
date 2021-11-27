@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import CompanyItem from './CompanyItem';
 
 interface Props {
+  defaultCompanyName: string;
   companyName: string;
   handleCompanyName: (e: any) => void;
   handleCompanyItem: (company: Company) => void;
@@ -36,7 +37,7 @@ function useOutsideAlerter(ref: any, setFocused: any) {
   }, [ref]);
 }
 
-const PlannerCompany = ({ companyName, handleCompanyName, handleCompanyItem }: Props) => {
+const PlannerCompany = ({ defaultCompanyName, companyName, handleCompanyName, handleCompanyItem }: Props) => {
   const [focused, setFocused] = useState(false);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setFocused);
@@ -86,6 +87,7 @@ const PlannerCompany = ({ companyName, handleCompanyName, handleCompanyItem }: P
           handleInput={handleCompanyName}
           onFocus={onFocus}
           value={companyName}
+          defaultValue={defaultCompanyName}
         ></SearchInput>
         {focused ? (
           <Container ref={wrapperRef}>

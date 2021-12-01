@@ -47,7 +47,6 @@ const PlannerCompany = ({ defaultCompanyName, companyName, handleCompanyName, ha
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const openImageModal = () => setShowImageModal(true);
   const closeImageModal = () => {
-    
     setShowImageModal(false);
   };
 
@@ -122,10 +121,10 @@ const PlannerCompany = ({ defaultCompanyName, companyName, handleCompanyName, ha
           <></>
         )}
       </SearchContainer>
-      <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-start" align="start">
+      {/* <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-start" align="start">
         <SideText text="업체가 등록되어 있지 않으신가요?" colorText="업체 등록하기" onClick={openImageModal}></SideText>
         <CompanyRegisterModal showImageModal={showImageModal} closeImageModal={closeImageModal} />
-      </FlexDiv>
+      </FlexDiv> */}
     </FlexDiv>
   );
 };

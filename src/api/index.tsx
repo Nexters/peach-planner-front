@@ -14,7 +14,7 @@ export const setAxiosDefaults = () => {
     },
     (error) => {
       const originalRequest = error.config;
-      if (error.response.status === 500 && originalRequest.url === axios.defaults.baseURL + 'token/refresh/') {
+      if (error.response.status === 500 && originalRequest.url === '/auth/token/refresh') {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         window.location.href = '/login/';

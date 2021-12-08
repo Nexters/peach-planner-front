@@ -45,6 +45,8 @@ export default Review;
 const Container = styled.div`
   display: flex;
   flex-direction: row;
+  border-bottom: 1px solid;
+  border-bottom-color: #ced4da;
 `;
 
 const ReviewStateBox = styled.div`

@@ -13,11 +13,11 @@ const MyPage = () => {
       <InnerContainer>
         <PlannerPageSideMenu></PlannerPageSideMenu>
         <ContentContainer>
-          <ContentBox title="1:1 문의" viewName="메시지" handleClick={() => history.push('/plannerReview')}>
+          <ContentBox title="1:1 문의" viewName="메시지" handleClick={() => history.push('/chats')}>
             <ContentNotification content="진행 중" count={2}></ContentNotification>
             <ContentNotification content="완료" count={1}></ContentNotification>
           </ContentBox>
-          <ContentBox title="견적" viewName="견적서" handleClick={() => history.push('/plannerReview')}>
+          <ContentBox title="견적" viewName="견적서" handleClick={() => history.push('/plannerMyEstimate')}>
             <ContentNotification content="새로 받은 견적서" count={2}></ContentNotification>
             <Content
               height="18px"

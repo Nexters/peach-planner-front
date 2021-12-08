@@ -42,6 +42,9 @@ var PlannerPageSideMenu = function () {
         else if (item === 'setting') {
             history.push('/plannerSetting');
         }
+        else if (item === 'estimate') {
+            history.push('/plannerMyEstimate');
+        }
     };
     return (React.createElement(FlexDiv, { justify: "flex-start", width: "200px" },
         React.createElement(FlexDiv, { justify: "flex-start", direction: "column" },

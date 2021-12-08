@@ -37,6 +37,8 @@ const PlannerPageSideMenu = () => {
       history.push('/plannerProfile');
     } else if (item === 'setting') {
       history.push('/plannerSetting');
+    } else if (item === 'estimate') {
+      history.push('/plannerMyEstimate');
     }
   };
 

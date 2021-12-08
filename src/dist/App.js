@@ -30,10 +30,11 @@ var CompanyDetail_1 = require("./page/company-detail/CompanyDetail");
 var ScrollToTop_1 = require("./component/ScrollToTop");
 var TermsOfUse_1 = require("./page/signup-detail/TermsOfUse");
 var PrivacyPolicy_1 = require("./page/signup-detail/PrivacyPolicy");
-var mypage_1 = require("./page/mypage");
-var profile_1 = require("./page/mypage/profile");
+var planner_mypage_1 = require("./page/planner-mypage");
+var profile_1 = require("./page/planner-mypage/profile");
 var PlannerSetting_1 = require("./component/PlannerSetting");
 var planner_review_1 = require("./page/planner-review");
+var planner_my_estimate_1 = require("./page/planner-my-estimate");
 exports.queryClient = new react_query_1.QueryClient();
 var App = function () {
     api_1.setAxiosDefaults();
@@ -67,7 +68,7 @@ var App = function () {
                             React.createElement(routes_1.UserPrivateRoute, { path: "/userPage" },
                                 React.createElement(UserPageSideMenu_1["default"], null)),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerPage" },
-                                React.createElement(mypage_1["default"], null)),
+                                React.createElement(planner_mypage_1["default"], null)),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerProfile" },
                                 React.createElement(profile_1["default"], null)),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerSetting" },
@@ -78,6 +79,8 @@ var App = function () {
                                 React.createElement(profile_edit_1["default"], { isUpdate: true })),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerReview" },
                                 React.createElement(planner_review_1["default"], null)),
+                            React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerMyEstimate" },
+                                React.createElement(planner_my_estimate_1["default"], null)),
                             React.createElement(routes_1.UserPrivateRoute, { path: "/chats" },
                                 React.createElement(Chat_1["default"], null)),
                             React.createElement(routes_1.PublicOnlyRoute, { path: "/plannerSignUp" },

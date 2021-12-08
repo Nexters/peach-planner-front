@@ -29,10 +29,11 @@ import CompanyDetail from './page/company-detail/CompanyDetail';
 import ScrollToTop from './component/ScrollToTop';
 import { TermsOfUse } from './page/signup-detail/TermsOfUse';
 import { PrivacyPolicy } from './page/signup-detail/PrivacyPolicy';
-import MyPage from './page/mypage';
-import PlannerProfile from './page/mypage/profile';
+import MyPage from './page/planner-mypage';
+import PlannerProfile from './page/planner-mypage/profile';
 import PlannerSetting from './component/PlannerSetting';
 import PlannerReview from './page/planner-review';
+import PlannerMyEstimate from './page/planner-my-estimate';
 
 export const queryClient = new QueryClient();
 
@@ -95,6 +96,9 @@ const App = () => {
                 </PlannerPrivateRoute>
                 <PlannerPrivateRoute path="/plannerReview">
                   <PlannerReview />
+                </PlannerPrivateRoute>
+                <PlannerPrivateRoute path="/plannerMyEstimate">
+                  <PlannerMyEstimate />
                 </PlannerPrivateRoute>
                 <UserPrivateRoute path="/chats">
                   <ChatContainer />

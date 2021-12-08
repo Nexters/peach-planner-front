@@ -4,23 +4,25 @@ var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cook
     return cooked;
 };
 exports.__esModule = true;
+var react_router_1 = require("react-router");
 var style_1 = require("src/component/style/style");
 var styled_components_1 = require("styled-components");
 var PlannerPageSideMenu_1 = require("../user/mypage/PlannerPageSideMenu");
 var ContentBox_1 = require("./ContentBox");
 var ContentNotification_1 = require("./ContentNotification");
 var MyPage = function () {
+    var history = react_router_1.useHistory();
     return (React.createElement(Container, null,
         React.createElement(InnerContainer, null,
             React.createElement(PlannerPageSideMenu_1["default"], null),
             React.createElement(ContentContainer, null,
-                React.createElement(ContentBox_1["default"], { title: "1:1 \uBB38\uC758", viewName: "\uBA54\uC2DC\uC9C0" },
+                React.createElement(ContentBox_1["default"], { title: "1:1 \uBB38\uC758", viewName: "\uBA54\uC2DC\uC9C0", handleClick: function () { return history.push('/plannerReview'); } },
                     React.createElement(ContentNotification_1["default"], { content: "\uC9C4\uD589 \uC911", count: 2 }),
                     React.createElement(ContentNotification_1["default"], { content: "\uC644\uB8CC", count: 1 })),
-                React.createElement(ContentBox_1["default"], { title: "\uACAC\uC801", viewName: "\uACAC\uC801\uC11C" },
+                React.createElement(ContentBox_1["default"], { title: "\uACAC\uC801", viewName: "\uACAC\uC801\uC11C", handleClick: function () { return history.push('/plannerReview'); } },
                     React.createElement(ContentNotification_1["default"], { content: "\uC0C8\uB85C \uBC1B\uC740 \uACAC\uC801\uC11C", count: 2 }),
                     React.createElement(style_1.Content, { height: "18px", width: "auto", fontSize: "12px", color: "#adb5bd", lineHeight: "normal", margin: "0px 0px 0px 16px" }, "\uCD5C\uADFC \uC77C\uC8FC\uC77C \uAE30\uC900")),
-                React.createElement(ContentBox_1["default"], { title: "\uB9AC\uBDF0", viewName: "\uB9AC\uBDF0" },
+                React.createElement(ContentBox_1["default"], { title: "\uB9AC\uBDF0", viewName: "\uB9AC\uBDF0", handleClick: function () { return history.push('/plannerReview'); } },
                     React.createElement(ContentNotification_1["default"], { content: "\uC0C8\uB85C \uBC1B\uC740 \uB9AC\uBDF0", count: 2 }),
                     React.createElement(style_1.Content, { height: "18px", width: "auto", fontSize: "12px", color: "#adb5bd", lineHeight: "normal", margin: "0px 0px 0px 16px" }, "\uCD5C\uADFC \uC77C\uC8FC\uC77C \uAE30\uC900"))))));
 };

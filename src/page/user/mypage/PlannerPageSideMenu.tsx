@@ -62,9 +62,11 @@ const PlannerPageSideMenu = () => {
           </Content>
         </ProfileDiv>
         <SideMenuDiv>
-          <Title height="16px" fontSize="16px" lineHeight="10px">
-            내 페이지
-          </Title>
+          <TitleBox onClick={() => history.push('/plannerPage')}>
+            <Title height="16px" fontSize="16px" lineHeight="10px">
+              내 페이지
+            </Title>
+          </TitleBox>
           <Line></Line>
           {sideMenuItem.map((item) => {
             return (
@@ -149,4 +151,10 @@ const Line = styled.div`
   width: 200px;
   border-bottom: 1px solid;
   border-bottom-color: #212529;
+`;
+
+const TitleBox = styled.div`
+  width: 63px;
+  height: 24px;
+  cursor: pointer;
 `;

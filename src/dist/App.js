@@ -32,6 +32,8 @@ var TermsOfUse_1 = require("./page/signup-detail/TermsOfUse");
 var PrivacyPolicy_1 = require("./page/signup-detail/PrivacyPolicy");
 var mypage_1 = require("./page/mypage");
 var profile_1 = require("./page/mypage/profile");
+var PlannerSetting_1 = require("./component/PlannerSetting");
+var planner_review_1 = require("./page/planner-review");
 exports.queryClient = new react_query_1.QueryClient();
 var App = function () {
     api_1.setAxiosDefaults();
@@ -68,10 +70,14 @@ var App = function () {
                                 React.createElement(mypage_1["default"], null)),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerProfile" },
                                 React.createElement(profile_1["default"], null)),
+                            React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerSetting" },
+                                React.createElement(PlannerSetting_1["default"], null)),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/registerProfile" },
                                 React.createElement(profile_edit_1["default"], { isUpdate: false })),
                             React.createElement(routes_1.PlannerPrivateRoute, { path: "/editProfile" },
                                 React.createElement(profile_edit_1["default"], { isUpdate: true })),
+                            React.createElement(routes_1.PlannerPrivateRoute, { path: "/plannerReview" },
+                                React.createElement(planner_review_1["default"], null)),
                             React.createElement(routes_1.UserPrivateRoute, { path: "/chats" },
                                 React.createElement(Chat_1["default"], null)),
                             React.createElement(routes_1.PublicOnlyRoute, { path: "/plannerSignUp" },

@@ -45,8 +45,6 @@ const PlannerDetail = () => {
     fetchPlanner();
   }, []);
 
-  console.log(userType);
-
   return plannerInfo ? (
     <Container>
       <Summary plannerInfo={plannerInfo}>

@@ -6,9 +6,11 @@ import ArrowRight from 'src/assets/svg/ic_right_gray.svg';
 interface Props {
   title: string;
   viewName: string;
+  handleClick: () => void;
 }
 
-const ContentBox: FC<Props> = ({ title, viewName, children }) => {
+const ContentBox: FC<Props> = ({ title, viewName, handleClick, children }) => {
+
   return (
     <Box>
       <TitleBox>
@@ -19,7 +21,7 @@ const ContentBox: FC<Props> = ({ title, viewName, children }) => {
       <Line></Line>
       <Body>
         <ChildBody>{children}</ChildBody>
-        <MoveButtonBox>
+        <MoveButtonBox onClick={handleClick}>
           <Content
             height="19px"
             width="auto"

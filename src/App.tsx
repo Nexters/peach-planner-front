@@ -32,6 +32,7 @@ import { PrivacyPolicy } from './page/signup-detail/PrivacyPolicy';
 import MyPage from './page/mypage';
 import PlannerProfile from './page/mypage/profile';
 import PlannerSetting from './component/PlannerSetting';
+import PlannerReview from './page/planner-review';
 
 export const queryClient = new QueryClient();
 
@@ -91,6 +92,9 @@ const App = () => {
                 </PlannerPrivateRoute>
                 <PlannerPrivateRoute path="/editProfile">
                   <Profile isUpdate={true} />
+                </PlannerPrivateRoute>
+                <PlannerPrivateRoute path="/plannerReview">
+                  <PlannerReview />
                 </PlannerPrivateRoute>
                 <UserPrivateRoute path="/chats">
                   <ChatContainer />

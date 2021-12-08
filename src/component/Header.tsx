@@ -31,8 +31,9 @@ const Header = () => {
     setIsClickedProfile(!isClickedProfile);
   };
 
-  const handleClickNoti = () => {
-    setIsAlart(!isAlart);
+  const handleClickAccountSetting = () => {
+    history.push('/plannerSetting');
+    setIsClickedProfile(!isClickedProfile);
   };
 
   const handleMyPage = () => {
@@ -86,7 +87,7 @@ const Header = () => {
                   <MenuName>프로필 관리</MenuName>
                 </Menu>
               )}
-              <Menu>
+              <Menu onClick={handleClickAccountSetting}>
                 <MenuName>계정 설정</MenuName>
               </Menu>
             </MenuBody>

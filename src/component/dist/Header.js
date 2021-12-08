@@ -32,8 +32,9 @@ var Header = function () {
     var handleClickProfile = function () {
         setIsClickedProfile(!isClickedProfile);
     };
-    var handleClickNoti = function () {
-        setIsAlart(!isAlart);
+    var handleClickAccountSetting = function () {
+        history.push('/plannerSetting');
+        setIsClickedProfile(!isClickedProfile);
     };
     var handleMyPage = function () {
         User_1.getUserTest()
@@ -71,7 +72,7 @@ var Header = function () {
                         react_1["default"].createElement(MenuName, null, "\uB0B4 \uD398\uC774\uC9C0")),
                     userTypeState === 'USER' ? (react_1["default"].createElement(react_1["default"].Fragment, null)) : (react_1["default"].createElement(Menu, { onClick: hanldeMyProfile },
                         react_1["default"].createElement(MenuName, null, "\uD504\uB85C\uD544 \uAD00\uB9AC"))),
-                    react_1["default"].createElement(Menu, null,
+                    react_1["default"].createElement(Menu, { onClick: handleClickAccountSetting },
                         react_1["default"].createElement(MenuName, null, "\uACC4\uC815 \uC124\uC815"))),
                 react_1["default"].createElement(MenuBottom, null,
                     react_1["default"].createElement(Menu, null,

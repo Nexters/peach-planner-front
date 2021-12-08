@@ -50,7 +50,6 @@ var PlannerDetail = function () {
     react_1.useEffect(function () {
         fetchPlanner();
     }, []);
-    console.log(userType);
     return plannerInfo ? (react_1["default"].createElement(Container, null,
         react_1["default"].createElement(Summary_1["default"], { plannerInfo: plannerInfo }, userType === 'USER' ? (react_1["default"].createElement(Interaction_1["default"], { plannerInfo: plannerInfo, setPlannerInfo: setPlannerInfo })) : (react_1["default"].createElement(react_1["default"].Fragment, null))),
         react_1["default"].createElement(Detail_1["default"], { plannerInfo: plannerInfo }),

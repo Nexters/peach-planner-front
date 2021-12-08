@@ -8,14 +8,14 @@ var style_1 = require("src/component/style/style");
 var styled_components_1 = require("styled-components");
 var ic_right_gray_svg_1 = require("src/assets/svg/ic_right_gray.svg");
 var ContentBox = function (_a) {
-    var title = _a.title, viewName = _a.viewName, children = _a.children;
+    var title = _a.title, viewName = _a.viewName, handleClick = _a.handleClick, children = _a.children;
     return (React.createElement(Box, null,
         React.createElement(TitleBox, null,
             React.createElement(style_1.Title, { height: "25px", fontSize: "17px", lineHeight: "normal", color: "#495057", margin: "0px 0px 0px 16px" }, title)),
         React.createElement(Line, null),
         React.createElement(Body, null,
             React.createElement(ChildBody, null, children),
-            React.createElement(MoveButtonBox, null,
+            React.createElement(MoveButtonBox, { onClick: handleClick },
                 React.createElement(style_1.Content, { height: "19px", width: "auto", fontSize: "13px", color: "#495057", lineHeight: "normal", margin: "0px 0px 0px 16px" },
                     "\uC804\uCCB4 ",
                     viewName,

@@ -47,8 +47,8 @@ var SearchResult = function (_a) {
             React.createElement("option", { value: "pick,DESC" }, "\uC778\uAE30\uC21C"),
             React.createElement("option", { value: "review,DESC" }, "\uB9AC\uBDF0\uC21C")),
         React.createElement(SearchResultList, null, planners ? (planners.content.map(function (planner, index) {
-            var _a;
-            return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 12px 32px 0', size: '206px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, blogLink: planner.externalLinks.blogLink, instagramLink: planner.externalLinks.instagramLink, facebookLink: planner.externalLinks.facebookLink, mutate: mutate }));
+            var _a, _b, _c, _d;
+            return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 12px 32px 0', size: '206px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, blogLink: (_b = planner.externalLinks) === null || _b === void 0 ? void 0 : _b.blogLink, instagramLink: (_c = planner.externalLinks) === null || _c === void 0 ? void 0 : _c.instagramLink, facebookLink: (_d = planner.externalLinks) === null || _d === void 0 ? void 0 : _d.facebookLink, postLiked: planner.postLiked, mutate: mutate }));
         })) : (React.createElement(React.Fragment, null)))));
 };
 exports["default"] = SearchResult;

@@ -5,6 +5,7 @@ import Setting from 'src/component/Setting';
 import { getUser } from 'src/api/User';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
+import { useHistory } from 'react-router';
 
 const sideMenuItem = [
   {
@@ -30,11 +31,16 @@ const sideMenuItem = [
 ];
 
 const UserPageSideMenu = () => {
+  const history = useHistory();
   const { data: user } = useQuery(['getUser'], getUser);
   const [selectedItem, setSelectedItem] = useState('');
 
   const handleSideMenuItem = (item: any) => {
     setSelectedItem(item);
+
+    if (item === 'setting') {
+      // history.push('/userSetting')
+    }
   };
 
   return (

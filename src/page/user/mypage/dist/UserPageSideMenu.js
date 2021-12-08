@@ -8,6 +8,7 @@ var react_1 = require("react");
 var User_1 = require("src/api/User");
 var react_query_1 = require("react-query");
 var styled_components_1 = require("styled-components");
+var react_router_1 = require("react-router");
 var sideMenuItem = [
     {
         name: '찜목록',
@@ -31,10 +32,14 @@ var sideMenuItem = [
     }
 ];
 var UserPageSideMenu = function () {
+    var history = react_router_1.useHistory();
     var user = react_query_1.useQuery(['getUser'], User_1.getUser).data;
     var _a = react_1.useState(''), selectedItem = _a[0], setSelectedItem = _a[1];
     var handleSideMenuItem = function (item) {
         setSelectedItem(item);
+        if (item === 'setting') {
+            // history.push('/userSetting')
+        }
     };
     return (react_1["default"].createElement(FlexDiv, { justify: "center", width: "200px" },
         react_1["default"].createElement(FlexDiv, { justify: "flex-start", direction: "column" },

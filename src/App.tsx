@@ -34,6 +34,7 @@ import PlannerProfile from './page/planner-mypage/profile';
 import PlannerSetting from './component/PlannerSetting';
 import PlannerReview from './page/planner-review';
 import PlannerMyEstimate from './page/planner-my-estimate';
+import UserMyPage from './page/user-mypage';
 
 export const queryClient = new QueryClient();
 
@@ -77,7 +78,7 @@ const App = () => {
                   <PlannerEstimate />
                 </UserPrivateRoute>
                 <UserPrivateRoute path="/userPage">
-                  <UserPageSideMenu />
+                  <UserMyPage />
                 </UserPrivateRoute>
                 <PlannerPrivateRoute path="/plannerPage">
                   <MyPage />

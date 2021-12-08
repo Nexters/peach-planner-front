@@ -26,8 +26,10 @@ var Summary_1 = require("./Summary");
 var react_router_1 = require("react-router");
 var axios_1 = require("axios");
 var Interaction_1 = require("./Interaction");
+var AuthStatus_1 = require("src/atoms/AuthStatus");
 var PlannerDetail = function () {
     var _a = react_1.useState(null), plannerInfo = _a[0], setPlannerInfo = _a[1];
+    var _b = AuthStatus_1.useUserTypeState(), userType = _b[0], _ = _b[1];
     var history = react_router_1.useHistory();
     var params = react_router_1.useRouteMatch().params;
     var plannerId = params.id;
@@ -48,9 +50,9 @@ var PlannerDetail = function () {
     react_1.useEffect(function () {
         fetchPlanner();
     }, []);
+    console.log(userType);
     return plannerInfo ? (react_1["default"].createElement(Container, null,
-        react_1["default"].createElement(Summary_1["default"], { plannerInfo: plannerInfo },
-            react_1["default"].createElement(Interaction_1["default"], { plannerInfo: plannerInfo, setPlannerInfo: setPlannerInfo })),
+        react_1["default"].createElement(Summary_1["default"], { plannerInfo: plannerInfo }, userType === 'USER' ? (react_1["default"].createElement(Interaction_1["default"], { plannerInfo: plannerInfo, setPlannerInfo: setPlannerInfo })) : (react_1["default"].createElement(react_1["default"].Fragment, null))),
         react_1["default"].createElement(Detail_1["default"], { plannerInfo: plannerInfo }),
         react_1["default"].createElement(PlannerInfo_1["default"], { plannerInfo: plannerInfo }),
         plannerInfo.company && react_1["default"].createElement(CompanyInfo_1["default"], { companyInfo: plannerInfo.company }),

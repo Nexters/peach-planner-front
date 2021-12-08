@@ -11,6 +11,7 @@ import { useQuery } from 'react-query';
 import { Planner } from '../../api/Planner';
 import axios from 'axios';
 import Interaction from './Interaction';
+import { useUserTypeState } from 'src/atoms/AuthStatus';
 
 interface routeProps {
   id: string;
@@ -18,6 +19,7 @@ interface routeProps {
 
 const PlannerDetail = () => {
   const [plannerInfo, setPlannerInfo] = useState<Planner | null>(null);
+  const [userType, _] = useUserTypeState();
   const history = useHistory();
   const { params } = useRouteMatch<routeProps>();
   const plannerId = params.id;
@@ -43,10 +45,16 @@ const PlannerDetail = () => {
     fetchPlanner();
   }, []);
 
+  console.log(userType);
+
   return plannerInfo ? (
     <Container>
       <Summary plannerInfo={plannerInfo}>
-        <Interaction plannerInfo={plannerInfo} setPlannerInfo={setPlannerInfo}></Interaction>
+        {userType === 'USER' ? (
+          <Interaction plannerInfo={plannerInfo} setPlannerInfo={setPlannerInfo}></Interaction>
+        ) : (
+          <></>
+        )}
       </Summary>
       <Detail plannerInfo={plannerInfo} />
       <PlannerInfo plannerInfo={plannerInfo} />

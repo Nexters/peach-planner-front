@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Card, CardImg, More, MyPageItemSpan } from './MyPageItemView';
 import { FlexDiv } from './style/style';
-import { GetPick } from 'src/api/Pick';
+import { fetchPicks } from 'src/api/Pick';
 
 const Heart = () => {
   const [hearts, setHearts] = useState([]);
 
   useEffect(() => {
-    GetPick()
+    fetchPicks()
       .then((data) => {
         setHearts(data.pickLists);
       })

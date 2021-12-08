@@ -12,6 +12,17 @@ export interface PickRequest {
   toBePick: boolean;
 }
 
+interface PickList {
+  pickLists: Pick[];
+}
+
+interface Pick {
+  id: number;
+  imageUrlPath: string;
+  name: string;
+  subName: string;
+}
+
 export const pick = async (pickReq: PickRequest) => {
   await axios
     .post(`pick`, pickReq, {
@@ -22,7 +33,7 @@ export const pick = async (pickReq: PickRequest) => {
     .then((data) => console.log(data));
 };
 
-export const GetPick = async () => {
-  const { data } = await axios.get(`pick`, config);
+export const fetchPicks = async () => {
+  const { data } = await axios.get<PickList>(`pick`, config);
   return data;
 };

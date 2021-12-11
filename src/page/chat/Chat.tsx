@@ -101,6 +101,9 @@ const ChatContainer = () => {
   }, [rooms]);
 
   useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight - messagesEndRef.current.clientHeight;
+    }
     // messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages]);
 
@@ -202,7 +205,7 @@ const ChatContainer = () => {
             </CellContent>
           </Cell>
           <Cell width="65%">
-            <CellContent>
+            <CellContent ref={messagesEndRef}>
               {chatMessages && chatMessages.length > 0 ? (
                 <ChatMessageDate>{new Date(chatMessages[0].dateTime).toLocaleDateString('ko-KR')}</ChatMessageDate>
               ) : (
@@ -272,7 +275,7 @@ const ChatContainer = () => {
               ) : (
                 <></>
               )}
-              <div ref={messagesEndRef} />
+              {/* <div ref={messagesEndRef} /> */}
             </CellContent>
             <ChatMessageBoxDiv>
               <ChatMessageClipDiv>
@@ -347,6 +350,7 @@ const Cell = styled.div<CellProps>`
 `;
 
 const CellContent = styled.div`
+  overflow-anchor: none;
   overflow-y: auto;
   position: relative;
   display: flex;

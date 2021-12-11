@@ -19,9 +19,9 @@ const client = new Client({
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`
   },
   // debug: (str) => console.log(str),
-  reconnectDelay: 5000, //자동 재 연결
-  heartbeatIncoming: 4000,
-  heartbeatOutgoing: 4000,
+  reconnectDelay: 4000, //자동 재 연결
+  heartbeatIncoming: 3000,
+  heartbeatOutgoing: 3000,
   onConnect: (receipt: IFrame) => {
     console.log(receipt.body);
   }
@@ -104,7 +104,6 @@ const ChatContainer = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight - messagesEndRef.current.clientHeight;
     }
-    // messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages]);
 
   return (
@@ -225,7 +224,9 @@ const ChatContainer = () => {
                     return (
                       <SystemMessageDiv>
                         <SystemMessage>{me.current?.userType == 'PLANNER' ? message.message : '상담에 만족하셨나요? 플래너 리뷰를 작성하실 수 있습니다.'}</SystemMessage>
-                        {me.current?.userType != 'PLANNER' && <a href="/">
+                        {me.current?.userType != 'PLANNER' && <a onClick={() => {
+                          console.log("asd");
+                        }}>
                           <SystemMessageLink>플래너 리뷰 작성하기</SystemMessageLink>
                         </a>}
                       </SystemMessageDiv>
@@ -627,6 +628,8 @@ const SystemMessageLink = styled.p`
   font-weight: bold;
   letter-spacing: 0;
   line-height: 18px;
+  cursor: pointer;
+  text-decoration: underline;
 `;
 
 const MyChatMessageDiv = styled(ChatMessageDiv)`

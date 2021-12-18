@@ -41,6 +41,23 @@ const Login = () => {
       userName: email,
       password,
       loginType: 'BASIC'
+    })
+    .then((res) => {
+      const accessToken = res.data.accessToken;
+      const refreshToken = res.data.refreshToken;
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+    setPeachTokenState(accessToken);
+      getUserAfterLogin();
+    })
+    .catch((error) => {
+      if (error?.response?.data?.message) {
+        const errorMessage = error?.response?.data?.message;
+        alert(errorMessage);
+        return;
+      } 
+      alert('아이디나 비밀번호를 확인해주세요');
+      return;
     });
   };
 
@@ -54,17 +71,17 @@ const Login = () => {
 
   const login = async (data: User) => {
     const res = await axios.post('/auth/login', data);
-    const accessToken = res.data.accessToken;
-    const refreshToken = res.data.refreshToken;
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
-    const user = await getUser();
-    setUserTypeState(user.userType ? user.userType : 'USER');
-    history.push('/');
-    alert('로그인되었습니다.');
-    const expireTime = Date.parse(res.data.expireDateTime);
-    setPeachTokenState(accessToken);
+    return res;
   };
+
+  const getUserAfterLogin =() => {
+    getUser()
+    .then((res) => {
+      setUserTypeState(res.userType ? res.userType : 'USER');
+      history.push('/');
+      alert('로그인되었습니다.');
+    })
+  }
 
   const refreshToken = async () => {
     const refreshToken = localStorage.getItem('refreshToken');

@@ -127,8 +127,8 @@ const UserSignUp = () => {
 
   const login = async (data: User) => {
     const res = await axios.post('/auth/login', data);
-    localStorage.setItem('accessToken', res.data.accessToken);
-    localStorage.setItem('refreshToken', res.data.refreshToken);
+    localStorage.setItem('accessToken', res?.data?.accessToken);
+    localStorage.setItem('refreshToken', res?.data?.refreshToken);
     history.push('/');
     window.location.reload();
     alert('회원가입 및 로그인이 완료되었습니다.');

@@ -62,9 +62,9 @@ const NewPlanner = () => {
         width="1100px"
         style={{ overflow: 'hidden' }}
       >
-        {() => {
-          if (planners !== undefined && planners.totalElements! <= 4) {
-            return planners.content.map((planner) => {
+        <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
+          {planners ? (
+            planners.content.map((planner) => {
               return (
                 <PlannerCard
                   key={planner.id}
@@ -84,39 +84,11 @@ const NewPlanner = () => {
                   mutate={mutate}
                 />
               );
-            });
-          } else {
-            return (
-              <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
-                {planners ? (
-                  planners.content.map((planner) => {
-                    return (
-                      <PlannerCard
-                        key={planner.id}
-                        margin={'0 28px 0 0'}
-                        size={'254px'}
-                        imagePath={planner.images[0]}
-                        heartCount={planner.likes}
-                        reviewCount={planner.reviews}
-                        name={planner.name}
-                        organization={planner.company?.name}
-                        region={planner.locations.join(',')}
-                        id={planner.id}
-                        blogLink={planner.externalLinks?.blogLink}
-                        instagramLink={planner.externalLinks?.instagramLink}
-                        facebookLink={planner.externalLinks?.facebookLink}
-                        postLiked={planner.postLiked}
-                        mutate={mutate}
-                      />
-                    );
-                  })
-                ) : (
-                  <></>
-                )}
-              </Slider>
-            );
-          }
-        }}
+            })
+          ) : (
+            <></>
+          )}
+        </Slider>
       </FlexDiv>
     </FlexDiv>
   );

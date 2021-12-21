@@ -35,14 +35,20 @@ const UserMyPage = () => {
               찜 목록
             </Title>
             <FlexDiv justify="flex-end">
-              <ArrowButton src={LeftArrow} onClick={slider?.slickPrev} margin="0 8px 0 0"></ArrowButton>
-              <ArrowButton src={RightArrow} onClick={slider?.slickNext} margin="0"></ArrowButton>
+              {picks?.pickLists?.length! > 6 ? (
+                <>
+                  <ArrowButton src={LeftArrow} onClick={slider?.slickPrev} margin="0 8px 0 0"></ArrowButton>
+                  <ArrowButton src={RightArrow} onClick={slider?.slickNext} margin="0"></ArrowButton>
+                </>
+              ) : (
+                <></>
+              )}
             </FlexDiv>
           </PickTitleBox>
           <PickListBox style={{ overflow: 'hidden' }}>
-            <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
-              {picks ? (
-                picks?.pickLists.map((pick) => {
+            {(function () {
+              if (picks !== undefined && picks.pickLists.length <= 6) {
+                return picks.pickLists.map((pick) => {
                   return (
                     <PlannerMiniCard
                       key={pick.id}
@@ -54,11 +60,31 @@ const UserMyPage = () => {
                       margin={'0 16px 0 0'}
                     ></PlannerMiniCard>
                   );
-                })
-              ) : (
-                <></>
-              )}
-            </Slider>
+                });
+              } else {
+                return (
+                  <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
+                    {picks ? (
+                      picks?.pickLists.map((pick) => {
+                        return (
+                          <PlannerMiniCard
+                            key={pick.id}
+                            id={pick.id}
+                            size="130px"
+                            image={pick.imageUrlPath}
+                            plannerName={pick.name}
+                            companyName={pick.subName}
+                            margin={'0 16px 0 0'}
+                          ></PlannerMiniCard>
+                        );
+                      })
+                    ) : (
+                      <></>
+                    )}
+                  </Slider>
+                );
+              }
+            })()}
           </PickListBox>
           <MyEstimateTitle>
             <Title height="27px" fontSize="18px" width="auto" lineHeight="normal" color="#000000">

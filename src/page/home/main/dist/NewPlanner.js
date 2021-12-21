@@ -60,20 +60,11 @@ var NewPlanner = function () {
                 (planners === null || planners === void 0 ? void 0 : planners.totalElements) > 4 ? (React.createElement(React.Fragment, null,
                     React.createElement(ArrowButton, { src: ic_arrow_left_svg_1["default"], onClick: slider === null || slider === void 0 ? void 0 : slider.slickPrev, margin: "0 8px 0 0" }),
                     React.createElement(ArrowButton, { src: ic_arrow_right_svg_1["default"], onClick: slider === null || slider === void 0 ? void 0 : slider.slickNext, margin: "0" }))) : (React.createElement(React.Fragment, null)))),
-        React.createElement(style_1.FlexDiv, { justify: "flex-start", align: "start", direction: "row", margin: "0", width: "1100px", style: { overflow: 'hidden' } }, function () {
-            if (planners !== undefined && planners.totalElements <= 4) {
-                return planners.content.map(function (planner) {
-                    var _a, _b, _c, _d;
-                    return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 28px 0 0', size: '254px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, blogLink: (_b = planner.externalLinks) === null || _b === void 0 ? void 0 : _b.blogLink, instagramLink: (_c = planner.externalLinks) === null || _c === void 0 ? void 0 : _c.instagramLink, facebookLink: (_d = planner.externalLinks) === null || _d === void 0 ? void 0 : _d.facebookLink, postLiked: planner.postLiked, mutate: mutate }));
-                });
-            }
-            else {
-                return (React.createElement(Slider, __assign({}, slickSettings, { ref: function (ref) { return setSlider(ref); } }), planners ? (planners.content.map(function (planner) {
-                    var _a, _b, _c, _d;
-                    return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 28px 0 0', size: '254px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, blogLink: (_b = planner.externalLinks) === null || _b === void 0 ? void 0 : _b.blogLink, instagramLink: (_c = planner.externalLinks) === null || _c === void 0 ? void 0 : _c.instagramLink, facebookLink: (_d = planner.externalLinks) === null || _d === void 0 ? void 0 : _d.facebookLink, postLiked: planner.postLiked, mutate: mutate }));
-                })) : (React.createElement(React.Fragment, null))));
-            }
-        })));
+        React.createElement(style_1.FlexDiv, { justify: "flex-start", align: "start", direction: "row", margin: "0", width: "1100px", style: { overflow: 'hidden' } },
+            React.createElement(Slider, __assign({}, slickSettings, { ref: function (ref) { return setSlider(ref); } }), planners ? (planners.content.map(function (planner) {
+                var _a, _b, _c, _d;
+                return (React.createElement(PlannerCard_1["default"], { key: planner.id, margin: '0 28px 0 0', size: '254px', imagePath: planner.images[0], heartCount: planner.likes, reviewCount: planner.reviews, name: planner.name, organization: (_a = planner.company) === null || _a === void 0 ? void 0 : _a.name, region: planner.locations.join(','), id: planner.id, blogLink: (_b = planner.externalLinks) === null || _b === void 0 ? void 0 : _b.blogLink, instagramLink: (_c = planner.externalLinks) === null || _c === void 0 ? void 0 : _c.instagramLink, facebookLink: (_d = planner.externalLinks) === null || _d === void 0 ? void 0 : _d.facebookLink, postLiked: planner.postLiked, mutate: mutate }));
+            })) : (React.createElement(React.Fragment, null))))));
 };
 exports["default"] = NewPlanner;
 var StyledLink = styled_components_1["default"](react_router_dom_1.Link)(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  text-decoration: none;\n  color: #495057;\n  font-size: 13px;\n  line-height: 19px;\n"], ["\n  text-decoration: none;\n  color: #495057;\n  font-size: 13px;\n  line-height: 19px;\n"])));

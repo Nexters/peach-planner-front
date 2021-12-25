@@ -3,13 +3,22 @@ import React, { useState, FC } from 'react';
 import styled from 'styled-components';
 import Popup from 'reactjs-popup';
 import { ReactComponent as Close } from '../../assets/svg/ic_close_b.svg';
+import { useHistory } from 'react-router';
+import { fetchPlanner } from 'src/api/Planner';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
 interface ReviewModalProps {
   showReviewModal: boolean;
   closeReviewModal(): void;
+  plannerId: string;
 }
 
-const ReviewPopup: FC<ReviewModalProps> = ({ showReviewModal, closeReviewModal }) => {
+const ReviewPopup: FC<ReviewModalProps> = ({ showReviewModal, closeReviewModal, plannerId }) => {
+  const history = useHistory();
+  const { data: plannerInfo } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
+  const [reviewMessage, setReviewMessage] = React.useState('');
+
   return (
     <StyledPopup open={showReviewModal} closeOnDocumentClick onClose={closeReviewModal}>
       <PopupTitleContainer>
@@ -19,16 +28,30 @@ const ReviewPopup: FC<ReviewModalProps> = ({ showReviewModal, closeReviewModal }
         </CloseButton>
       </PopupTitleContainer>
       <SizedBox height={"16px"} />
-      <PopupSubtitle>송영주 플래너</PopupSubtitle>
+      <PopupSubtitle>{plannerInfo?.name}</PopupSubtitle>
       <Divider />
       <SizedBox height={"15px"} />
       <WriteReviewTitle>플래너님의 리뷰를 남겨주세요</WriteReviewTitle>
       <SizedBox height={"6px"} />
-      <WriteReviewArea placeholder='최소 10자 이상 입력해 주세요.'></WriteReviewArea>
+      <WriteReviewArea 
+        placeholder='최소 10자 이상 입력해 주세요.' 
+        onChange={(e) => setReviewMessage(e.target.value)}
+        value={reviewMessage} />
       <SizedBox height={"20px"}/>
       {/* <div>사진 첨부하기</div>
       <SizedBox height={"137px"}/> */}
-      <CTAButton>
+      <CTAButton onClick={async () => {
+        await axios.post(`/review`, {
+          comment: reviewMessage,
+          plannerId: parseInt(plannerId),
+        }, {
+          headers: {
+            Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
+          }
+        });
+        closeReviewModal();
+        history.push(`/planner/${plannerId}`);
+      }}>
         <CTA color="#FFFFFF">등록하기</CTA>
       </CTAButton>
     </StyledPopup>

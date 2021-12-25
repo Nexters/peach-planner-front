@@ -303,7 +303,10 @@ const ChatContainer = () => {
           </Cell>
         </Row>
       </Page>
-      <ReviewPopup showReviewModal={showReviewModal} closeReviewModal={(() => { setShowReviewModal(false); })}></ReviewPopup>
+      <ReviewPopup 
+        plannerId={chatRoomParticipant.current ? Object.values(chatRoomParticipant.current!).filter(a => a.participantType == 'PLANNER')[0].participantTypeId.toString() : ''} 
+        showReviewModal={showReviewModal} 
+        closeReviewModal={(() => { setShowReviewModal(false); })} />
     </Container>
   );
 };

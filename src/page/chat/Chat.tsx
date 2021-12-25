@@ -2,7 +2,7 @@ import { Title } from '../../component/style/style';
 import styled from 'styled-components';
 import shape from 'src/images/Shape 2.png';
 import imgWedding from 'src/images/img_wedding_1.png';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, QueryFunctionContext } from 'react-query';
 import { ChatRoom, ChatRoomParticipant, fetchChatRoomParticipant, fetchChatRooms } from 'src/api/ChatRoom';
 import { ChatMessage, ChatMessageReq, fetchChatMessages, sendMessage } from 'src/api/ChatMessage';
@@ -12,6 +12,7 @@ import { Client, Message, IFrame, ActivationState, StompSocketState } from '@sto
 import { useMemo } from 'react';
 import { User, getUser } from 'src/api/User';
 import axios from 'axios';
+import ReviewPopup from './ReviewPopup';
 
 const client = new Client({
   brokerURL: 'wss://api.peachplanner.com/websocket',
@@ -51,6 +52,7 @@ const ChatContainer = () => {
   const messagesEndRef = React.useRef<null | HTMLDivElement>(null);
 
   const me = React.useRef<User>();
+  const [showReviewModal, setShowReviewModal] = useState<boolean>(false);
 
   useEffect(() => {
     client.activate();
@@ -224,9 +226,7 @@ const ChatContainer = () => {
                     return (
                       <SystemMessageDiv>
                         <SystemMessage>{me.current?.userType == 'PLANNER' ? message.message : '상담에 만족하셨나요? 플래너 리뷰를 작성하실 수 있습니다.'}</SystemMessage>
-                        {me.current?.userType != 'PLANNER' && <a onClick={() => {
-                          console.log("asd");
-                        }}>
+                        {me.current?.userType != 'PLANNER' && <a onClick={() => { setShowReviewModal(true); }}>
                           <SystemMessageLink>플래너 리뷰 작성하기</SystemMessageLink>
                         </a>}
                       </SystemMessageDiv>
@@ -276,7 +276,6 @@ const ChatContainer = () => {
               ) : (
                 <></>
               )}
-              {/* <div ref={messagesEndRef} /> */}
             </CellContent>
             <ChatMessageBoxDiv>
               <ChatMessageClipDiv>
@@ -304,6 +303,10 @@ const ChatContainer = () => {
           </Cell>
         </Row>
       </Page>
+      <ReviewPopup 
+        plannerId={chatRoomParticipant.current ? Object.values(chatRoomParticipant.current!).filter(a => a.participantType == 'PLANNER')[0].participantTypeId.toString() : ''} 
+        showReviewModal={showReviewModal} 
+        closeReviewModal={(() => { setShowReviewModal(false); })} />
     </Container>
   );
 };

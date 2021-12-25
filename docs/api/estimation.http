@@ -1,0 +1,18 @@
+POST https://api.peachplanner.com/api/estimate/upload
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MDQyNjYzNCwiZXhwIjoxNjQwNTEzMDM0fQ.Wh7Qt1hoG2uIEObaJ6KHZ_-njzWW-ZmS-EtR2NRuqktqISSOHOJoSVeIrwxZ-tLd
+
+{
+   "plannerId":"203",
+   "userName":"홍길동",
+   "email":"example@gmail.com",
+   "phoneNum":"01012341234",
+   "weddingDate":"2021-06-12",
+   "studio":"A스튜디오",
+   "dress":"A드레스",
+   "makeup":"A메이크업",
+   "weddingHall":false,
+   "weddingCard":false,
+   "description":"웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. ",
+   "filePath":""
+}

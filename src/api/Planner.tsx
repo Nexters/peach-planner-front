@@ -32,6 +32,23 @@ export interface Planner {
   postLiked: boolean;
 }
 
+export interface PlannerMyStats {
+  chats: PlannerMyChatStats;
+  estimations: PlannerMyEstimationStats;
+  reviews: PlannerMyReviewStats;
+}
+
+interface PlannerMyChatStats {
+  open: number;
+  closed: number;
+} 
+interface PlannerMyEstimationStats {
+  new: number;
+}
+interface PlannerMyReviewStats {
+  new: number;
+}
+
 export interface Company {
   id: number;
   certificated: boolean;
@@ -119,6 +136,15 @@ export const fetchPlannerMe = async () => {
   });
   return data;
 };
+
+export const fetchPlannerMyStats = async () => {
+  const { data } = await axios.get<PlannerMyStats>(`/inhouse/planners/my/stats`, {
+    headers: {
+      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
+    }
+  });
+  return data;
+}
 
 export interface AffiliatedCompany {
   companyName: string;

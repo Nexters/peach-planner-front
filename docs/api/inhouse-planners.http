@@ -1,0 +1,17 @@
+POST https://api.peachplanner.com/api/auth/login
+Content-Type: application/json
+
+{
+    "loginType": "BASIC",
+    "password": 1234,
+    "userName": "test_planner@test.com"
+}
+
+###
+GET https://api.peachplanner.com/api/inhouse/planners/me
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIyOTMiLCJpYXQiOjE2NDA0MjIyODMsImV4cCI6MTY0MDUwODY4M30.mE7mGKLN7mH7Dda7JALd2CA_k5Vx6s3IiLI5FZe-5Abu3-zNEavChDxa88SLFBrr
+
+
+###
+GET https://api.peachplanner.com/api/inhouse/planners/my/stats
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIyOTMiLCJpYXQiOjE2NDA0MjIyODMsImV4cCI6MTY0MDUwODY4M30.mE7mGKLN7mH7Dda7JALd2CA_k5Vx6s3IiLI5FZe-5Abu3-zNEavChDxa88SLFBrr

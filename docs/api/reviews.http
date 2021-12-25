@@ -10,11 +10,22 @@ Content-Type: application/json
 ###
 
 POST https://api.peachplanner.com/api/review
-Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MDM0MzIxMCwiZXhwIjoxNjQwNDI5NjEwfQ.K7OY_Rz2EQV3n0T13c2VyRkjiRZOUJ5GzJVTbEJGNPq3XiWRDy7uao5KDaQw546p
+Content-Type: application/json
 
 {
     "loginType": "BASIC",
     "password": 1234,
     "userName": "test@test.com"
 }
+
+###
+POST https://api.peachplanner.com/api/s3/upload
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MDQzNzEwMSwiZXhwIjoxNjQwNTIzNTAxfQ.YHEM_sJmjOV5sLpZ-jMxCxyGHHqjEcAIlxejAZGidZB1AV6-mtTsnGPnjUHaXdVa"
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="img.png"
+
+< ./img.png
+--boundary

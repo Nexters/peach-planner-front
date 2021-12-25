@@ -42,7 +42,7 @@ const AccordionTitle = styled.div`
 `;
 
 const TitleContainer = styled.div`
-  display: felx;
+  display: flex;
   justify-content: space-between;
   border-top: solid 1px #212529;
 `;

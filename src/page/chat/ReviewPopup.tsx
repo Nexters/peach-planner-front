@@ -2,41 +2,35 @@
 import React, { useState, FC } from 'react';
 import styled from 'styled-components';
 import Popup from 'reactjs-popup';
-import { ReactComponent as Close } from '../../assets/svg/ic_close_w.svg';
-// import { ReactComponent as Close } from '../../assets/svg/ic_left_gray.svg';
-import { ReactComponent as Left } from '../../assets/svg/ic_left_img.svg';
-import { ReactComponent as Right } from '../../assets/svg/ic_right_img.svg';
+import { ReactComponent as Close } from '../../assets/svg/ic_close_b.svg';
 
-interface ImageModalProps {
-  showImageModal: boolean;
-  closeImageModal(): void;
+interface ReviewModalProps {
+  showReviewModal: boolean;
+  closeReviewModal(): void;
 }
 
-const ReviewPopup: FC<ImageModalProps> = ({ showImageModal, closeImageModal, /* imageList */ }) => {
-  const [imgIndex, setImgIndex] = useState<number>(0);
-
-  const showLeftImage = () => {
-    if (imgIndex > 0) {
-      setImgIndex((prevState) => prevState - 1);
-    }
-  };
-
-  // const showRightImage = () => {
-  //   if (imgIndex < imageList.length - 1) {
-  //     setImgIndex((prevState) => prevState + 1);
-  //   }
-  // };
-
+const ReviewPopup: FC<ReviewModalProps> = ({ showReviewModal, closeReviewModal }) => {
   return (
-    <StyledPopup open={showImageModal} closeOnDocumentClick onClose={closeImageModal}>
-      <CloseButton onClick={closeImageModal}>
-        <Close /> 닫기
-      </CloseButton>
-      <LeftImage onClick={showLeftImage} />
-      {/* <RightImage onClick={showRightImage} /> */}
-      <Count>
-        {/* {imgIndex + 1} / {imageList.length} */}
-      </Count>
+    <StyledPopup open={showReviewModal} closeOnDocumentClick onClose={closeReviewModal}>
+      <PopupTitleContainer>
+        <PopupTitle>리뷰쓰기</PopupTitle>
+        <CloseButton onClick={closeReviewModal}>
+          <Close />
+        </CloseButton>
+      </PopupTitleContainer>
+      <SizedBox height={"16px"} />
+      <PopupSubtitle>송영주 플래너</PopupSubtitle>
+      <Divider />
+      <SizedBox height={"15px"} />
+      <WriteReviewTitle>플래너님의 리뷰를 남겨주세요</WriteReviewTitle>
+      <SizedBox height={"6px"} />
+      <WriteReviewArea placeholder='최소 10자 이상 입력해 주세요.'></WriteReviewArea>
+      <SizedBox height={"20px"}/>
+      {/* <div>사진 첨부하기</div>
+      <SizedBox height={"137px"}/> */}
+      <CTAButton>
+        <CTA color="#FFFFFF">등록하기</CTA>
+      </CTAButton>
     </StyledPopup>
   );
 };
@@ -50,18 +44,85 @@ const StyledPopup = styled(Popup)`
 
   &-content {
     background-color: white;
-    width: 65%;
-    height: 70%;
-    border-radius: 10px;
-    padding: 24px;
+    width: 45%;
+    border-radius: 2px;
+    padding: 40px;
+  }
+`;
+
+const PopupTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PopupTitle = styled.div`
+  font-family: 'SpoqaHanSans';
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000;
+`;
+
+const PopupSubtitle = styled.div`
+  font-family: 'SpoqaHanSans';
+  font-size: 14px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #495057;
+`;
+
+const Divider = styled.div`
+  width: 440px;
+  height: 1px;
+  flex-grow: 0;
+  margin: 6px 252px 8px 0;
+  background-color: #ced4da;
+`;
+
+const WriteReviewTitle = styled.div`
+  flex-grow: 0;
+  font-family: 'AppleSDGothicNeo';
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #495057;
+`;
+
+const WriteReviewArea = styled.textarea`
+  display: flex;
+  resize: none;  
+  width: 100%;
+  height: 120px;
+  border-radius: 3px;
+  border: solid 1px #ced4da;
+
+  padding: 10px;
+  ::placeholder {
+    font-family: 'SpoqaHanSans';
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #adb5bd;
   }
 `;
 
 const CloseButton = styled.button`
-  position: fixed;
-  top: 56px;
-  left: 56px;
-  color: white;
   cursor: pointer;
   outline: none;
   font-size: 18px;
@@ -72,39 +133,52 @@ const CloseButton = styled.button`
 
   svg {
     margin-right: 4px;
+    color: black;
   }
 `;
 
-const LeftImage = styled(Left)`
-  position: fixed;
-  top: 45%;
-  left: 8%;
-  cursor: pointer;
+interface SizedBoxProps {
+  width?: string;
+  height?: string;
+}
+
+const SizedBox = styled.div<SizedBoxProps>`
+  width: ${(props: SizedBoxProps) => (props.width)};
+  height: ${(props: SizedBoxProps) => (props.height)};
+  display: inline-block;
 `;
 
-const RightImage = styled(Right)`
-  position: fixed;
-  top: 45%;
-  right: 8%;
+const CTAButton = styled.button`
+  width: 100%;
+  margin: 0 8px 0 0;
+  padding: 6px 16px 8px;
+  border-radius: 3px;
+  border: none;
   cursor: pointer;
+
+  background-color: #e64980;
+
+  font-weight: 700;
+  font-style: normal;
+  font-size: medium;
+  transition-duration: 0.4s;
+  :hover {
+    background-color: #FF79B0;
+  }
 `;
 
-const Count = styled.div`
+interface CTAProps {
+  color: string;
+}
+
+const CTA = styled.p<CTAProps>`
+  font-family: SpoqaHanSans;
   font-size: 14px;
-  color: #212529;
-  text-align: center;
-`;
-
-const BigImageContainer = styled.div`
-  text-align: center;
-  margin: 24px 0;
-`;
-
-const BigImage = styled.img`
-  height: 300px;
-`;
-
-const SmallImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;  
+  color: ${(props: CTAProps) => props.color};
 `;

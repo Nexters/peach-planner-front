@@ -303,7 +303,7 @@ const ChatContainer = () => {
           </Cell>
         </Row>
       </Page>
-      <ReviewPopup showImageModal={showReviewModal} closeImageModal={(() => { setShowReviewModal(false); })}></ReviewPopup>
+      <ReviewPopup showReviewModal={showReviewModal} closeReviewModal={(() => { setShowReviewModal(false); })}></ReviewPopup>
     </Container>
   );
 };

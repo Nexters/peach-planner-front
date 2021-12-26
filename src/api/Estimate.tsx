@@ -1,11 +1,5 @@
 import axios from 'axios';
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-  }
-};
-
 export interface Estimate {
   id: number;
   companyName: string;
@@ -16,6 +10,10 @@ export interface Estimate {
 }
 
 export const fetchEstimateList = async () => {
-  const { data } = await axios.get<Estimate[]>(`/estimate/list`, config);
+  const { data } = await axios.get<Estimate[]>(`/estimate/list`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  });
   return data;
 };

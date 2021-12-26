@@ -31,6 +31,11 @@ const Header = () => {
     setIsClickedProfile(!isClickedProfile);
   };
 
+  const handleClickMessage = () => {
+    history.push('/chats');
+    setIsClickedProfile(!isClickedProfile);
+  }
+
   const handleClickAccountSetting = () => {
     history.push('/plannerSetting');
     setIsClickedProfile(!isClickedProfile);
@@ -72,7 +77,7 @@ const Header = () => {
         {isClickedProfile ? (
           <DropdownContainer>
             <MenuTop>
-              <Menu>
+              <Menu onClick={handleClickMessage}>
                 <DropdownMessage>메시지</DropdownMessage>
               </Menu>
             </MenuTop>

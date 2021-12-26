@@ -8,7 +8,7 @@ import UserType from 'src/component/UserType';
 
 interface Props {
   name: string | undefined;
-  type: string | undefined;
+  type: 'USER' | 'PLANNER' | undefined;
 }
 
 const userProps = {
@@ -56,9 +56,11 @@ const UserProfile = ({ name, type }: Props) => {
           </Title>
           <UserType type={type} textHeight="19px" typeHeight="22px" fontSize="13px" lineHeight="19px"></UserType>
           <FlexDiv margin="18px 0 0 0" direction="column">
-            <PButton fontSize="14px" height="41px" width="98px">
-              계정 설정
-            </PButton>
+            <a href={type == 'PLANNER' ? "/plannerSetting" : '/userSetting'}>
+              <PButton fontSize="14px" height="41px" width="98px">
+                계정 설정
+              </PButton>
+            </a>
           </FlexDiv>
         </FlexDiv>
       </Box>

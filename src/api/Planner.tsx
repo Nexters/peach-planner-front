@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { QueryFunctionContext } from 'react-query';
+import { Estimate } from './Estimate';
+import { MyReview } from './Review';
 
-export interface PagedPlanner {
-  content: Planner[];
+export interface Paged<T> {
+  content: T[];
   size: number;
   totalElements: number;
   totalPages: number;
@@ -89,7 +91,7 @@ export interface RecommnededPlanners {
 
 export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
-  const { data } = await axios.get<PagedPlanner>('/planners', {
+  const { data } = await axios.get<Paged<Planner>>('/planners', {
     params,
     headers: {
       Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
@@ -100,7 +102,7 @@ export const fetchPlanners = async ({ queryKey }: QueryFunctionContext) => {
 
 export const fetchPopularPlanners = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
-  const { data } = await axios.get<PagedPlanner>('/planners/popular', {
+  const { data } = await axios.get<Paged<Planner>>('/planners/popular', {
     headers: {
       Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
     }
@@ -145,6 +147,27 @@ export const fetchPlannerMyStats = async () => {
   });
   return data;
 }
+
+export const fetchPlannerMyEstimations = async ({ queryKey }: QueryFunctionContext) => {
+  const [_key, params] = queryKey;
+  const { data } = await axios.get<Paged<Estimate>>(`/inhouse/planners/my/estimations`, {
+    headers: {
+      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
+    }
+  });
+  return data;
+}
+
+export const fetchPlannerMyReviews = async ({ queryKey }: QueryFunctionContext) => {
+  const [_key, params] = queryKey;
+  const { data } = await axios.get<Paged<MyReview>>(`/inhouse/planners/my/reviews`, {
+    headers: {
+      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
+    }
+  });
+  return data;
+}
+
 
 export interface AffiliatedCompany {
   companyName: string;

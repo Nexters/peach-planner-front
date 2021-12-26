@@ -6,7 +6,7 @@ const config = {
   }
 };
 
-interface Estimate {
+export interface Estimate {
   id: number;
   companyName: string;
   createDate: string;

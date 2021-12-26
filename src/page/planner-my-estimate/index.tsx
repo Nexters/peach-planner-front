@@ -1,9 +1,13 @@
+import { useQuery } from 'react-query';
+import { fetchPlannerMyEstimations } from 'src/api/Planner';
 import { Title } from 'src/component/style/style';
 import styled from 'styled-components';
 import PlannerPageSideMenu from '../user/mypage/PlannerPageSideMenu';
 import Estimate from './Estimate';
 
 const PlannerMyEstimate = () => {
+  const { data: myEstimations } = useQuery('planner/my/estimations', fetchPlannerMyEstimations);
+
   return (
     <Container>
       <InnerContainer>
@@ -31,21 +35,15 @@ const PlannerMyEstimate = () => {
               </Title>
             </RequestContent>
           </TableHeader>
-          <Estimate
-            requestDay="2021.06.24"
-            customerName="조해리"
-            requestContent="A스튜디오일 때와 B스튜디오일 때 가격이 궁금해요."
-          ></Estimate>
-          <Estimate
-            requestDay="2021.06.24"
-            customerName="조해리"
-            requestContent="A스튜디오일 때와 B스튜디오일 때 가격이 궁금해요."
-          ></Estimate>
-          <Estimate
-            requestDay="2021.06.24"
-            customerName="조해리"
-            requestContent="A스튜디오일 때와 B스튜디오일 때 가격이 궁금해요."
-          ></Estimate>
+          {myEstimations?.content.map((estimation, index) => {
+            return (
+              <Estimate
+                requestDay={new Date(estimation.createDate).toLocaleDateString()}
+                customerName={estimation.userName}
+                requestContent={estimation.description}
+              ></Estimate>
+            );
+          })}
         </ContentContainer>
       </InnerContainer>
     </Container>

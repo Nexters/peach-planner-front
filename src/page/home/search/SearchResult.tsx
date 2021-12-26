@@ -57,31 +57,27 @@ const SearchResult = ({ location, support }: Props) => {
         <option value="review,DESC">리뷰순</option>
       </select>
       <SearchResultList>
-        {planners ? (
-          planners.content.map((planner, index) => {
-            return (
-              <PlannerCard
-                key={planner.id}
-                margin={'0 12px 32px 0'}
-                size={'206px'}
-                imagePath={planner.images[0]}
-                heartCount={planner.likes}
-                reviewCount={planner.reviews}
-                name={planner.name}
-                organization={planner.company?.name}
-                region={planner.locations.join(',')}
-                id={planner.id}
-                blogLink={planner.externalLinks?.blogLink}
-                instagramLink={planner.externalLinks?.instagramLink}
-                facebookLink={planner.externalLinks?.facebookLink}
-                postLiked={planner.postLiked}
-                mutate={mutate}
-              ></PlannerCard>
-            );
-          })
-        ) : (
-          <></>
-        )}
+        {planners?.content.map((planner, index) => {
+          return (
+            <PlannerCard
+              key={planner.id}
+              margin={'0 12px 32px 0'}
+              size={'206px'}
+              imagePath={planner.images[0]}
+              heartCount={planner.likes}
+              reviewCount={planner.reviews}
+              name={planner.name}
+              organization={planner.company?.name}
+              region={planner.locations.join(',')}
+              id={planner.id}
+              blogLink={planner.externalLinks?.blogLink}
+              instagramLink={planner.externalLinks?.instagramLink}
+              facebookLink={planner.externalLinks?.facebookLink}
+              postLiked={planner.postLiked}
+              mutate={mutate}
+            ></PlannerCard>
+          );
+        })}
       </SearchResultList>
     </FlexDiv>
   );

@@ -7,12 +7,14 @@ import { useRouteMatch, useHistory } from 'react-router';
 import { useQuery } from 'react-query';
 import { fetchPlanner } from '../../api/Planner';
 import axios from 'axios';
+import { getUser } from 'src/api/User';
 interface routeProps {
   id: string;
 }
 
 const PlannerEstimate = () => {
   const history = useHistory();
+  const { data: user } = useQuery(['getUser'], getUser);
 
   const { params } = useRouteMatch<routeProps>();
   const plannerId = params.id;
@@ -20,12 +22,13 @@ const PlannerEstimate = () => {
   const { data: plannerInfo } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
 
   const [myInfo, setMyInfo] = useState({
-    name: '홍길동',
+    name: user?.name ?? '홍길동',
     phone1: '010',
-    phone2: '1234',
-    phone3: '1234',
-    email: 'example@gmail.com',
-    date: '2021-06-12'
+    phone2: '0000',
+    phone3: '0000',
+    email: user?.email ?? 'example@gmail.com',
+    date: new Date().toISOString().split('T')[0],
+    description: '',
   });
 
   const [companyInfo, setCompanyInfo] = useState({
@@ -101,9 +104,11 @@ const PlannerEstimate = () => {
         </EstimateRow>
       </EstimateBox>
       <EstimateBox title="요청사항">
-        <TextArea placeholder="웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. "></TextArea>
+        <TextArea value={myInfo.description} placeholder="웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. " name="description" onChange={(e) => {
+          setMyInfo({ ...myInfo, [e.target.name]: e.target.value });
+        }} />
       </EstimateBox>
-      <EstimateBox title="첨부파일">첨부파일</EstimateBox>
+      {/* <EstimateBox title="첨부파일">첨부파일</EstimateBox> */}
       <EstimateBox>
         <PButton color="pink" onClick={() => {
           axios
@@ -177,6 +182,7 @@ const Description = styled.div`
 const TextArea = styled.textarea`
   width: 100%;
   height: 250px;
+  resize: none;
 `;
 
 const SaveButton = styled.div`

@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import PlannerPageSideMenu from '../user/mypage/PlannerPageSideMenu';
 import Review from './Review';
 import Test from 'src/assets/svg/ic_right_gray.svg';
+import { fetchPlannerMyReviews } from 'src/api/Planner';
+import { useQuery } from 'react-query';
 
 const PlannerReview = () => {
+  const { data: myReviews } = useQuery('planner/my/reviews', fetchPlannerMyReviews);
+
   return (
     <Container>
       <InnerContainer>
@@ -42,27 +46,18 @@ const PlannerReview = () => {
               </Title>
             </ReviewCreatedAt>
           </TableHeader>
-          <Review
-            reviewState="상담완료"
-            reviewWriter="조해리"
-            reviewContent="너무 좋아요 어쩌고 저쩌고"
-            picture={Test}
-            reviewCreatedAt="2021.7.31. 12:30"
-          ></Review>
-          <Review
-            reviewState="상담완료"
-            reviewWriter="조해리"
-            reviewContent="너무 좋아요 어쩌고 저쩌고"
-            picture={Test}
-            reviewCreatedAt="2021.7.31. 12:30"
-          ></Review>
-          <Review
-            reviewState="상담완료"
-            reviewWriter="조해리"
-            reviewContent="너무 좋아요 어쩌고 저쩌고"
-            picture={Test}
-            reviewCreatedAt="2021.7.31. 12:30"
-          ></Review>
+          
+          {myReviews?.content.map((review, index) => {
+            return (
+              <Review
+                reviewState="상담완료"
+                reviewWriter={review.userName}
+                reviewContent={review.comment}
+                picture={Test}
+                reviewCreatedAt={new Date(review.writeDate).toLocaleDateString()}
+              ></Review>
+            );
+          })}
         </ContentContainer>
       </InnerContainer>
     </Container>

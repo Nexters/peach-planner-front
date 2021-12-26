@@ -13,8 +13,8 @@ const sideMenuItem = [
     value: 'estimate'
   },
   {
-    name: '1:1 문의',
-    value: 'question'
+    name: '나의 리뷰',
+    value: 'reviews'
   },
   {
     name: '프로필 관리',
@@ -35,6 +35,8 @@ const PlannerPageSideMenu = () => {
     setSelectedItem(item);
     if (item === 'profile') {
       history.push('/plannerProfile');
+    } else if (item === 'reviews') {
+      history.push('/plannerReview');
     } else if (item === 'setting') {
       history.push('/plannerSetting');
     } else if (item === 'estimate') {

@@ -48,7 +48,7 @@ const PlannerPageSideMenu = () => {
     <FlexDiv justify="flex-start" width="200px">
       <FlexDiv justify="flex-start" direction="column">
         <ProfileDiv>
-          <ProfileImgBox src={AccountDefault}></ProfileImgBox>
+          <ProfileImgBox src={user?.profileImage ?? AccountDefault}></ProfileImgBox>
           <FlexDiv height="20px" margin="8px 0px 8px 0px">
             <Title fontSize="14px" height="21px" color="#212529" lineHeight="20px" margin="0px 4px 0px 0px">
               {user?.name}

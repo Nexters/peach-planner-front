@@ -75,6 +75,8 @@ const Header = () => {
     setIsClickedProfile(false);
   };
 
+  console.log(user?.profileImage);
+
   let right;
   if (isLogin) {
     right = (
@@ -82,7 +84,7 @@ const Header = () => {
         <ProfileContainer>
           {/* <NotiImage src={NotiDefault}></NotiImage> */}
           <ProfileBox onClick={handleClickProfile}>
-            <ProfileImage src={DefaultProfileImage}></ProfileImage>
+            <ProfileImage src={user?.profileImage ?? DefaultProfileImage}></ProfileImage>
             <DropdownImage src={DownArrowImage}></DropdownImage>
           </ProfileBox>
         </ProfileContainer>
@@ -221,6 +223,7 @@ const ProfileImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }
   height: 32px;
   width: 32px;
   margin: 0 0 0 7px;
+  border-radius: 100%;
 `;
 
 const DropdownImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`

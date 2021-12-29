@@ -200,7 +200,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
       </InnerContainer>
       <InnerContainer>
         <FlexDiv width="310px" height="auto" justify="flex-start" align="start" direction="column" margin="0 105px 0 0">
-          <UserProfile name={user?.name} type={user?.userType}></UserProfile>
+          <UserProfile name={user?.name} type={user?.userType} profileImage={user?.profileImage}></UserProfile>
           {/* TODO 인증 기능 없어서 주석 처리*/}
           {/* <UserCertification></UserCertification> */}
         </FlexDiv>

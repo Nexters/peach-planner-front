@@ -6,10 +6,12 @@ export interface User {
   name: string;
   userType?: 'USER' | 'PLANNER';
   email: string;
+  profileImage: string;
+  tel: string;
 }
 
 export const getUserMe = async () => {
-  const { data } = await axios.get(`/users/me`, {
+  const { data } = await axios.get<User>(`/users/me`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
     }
@@ -33,6 +35,19 @@ export const EditUserInfo = async (reqBody: EditInfo) => {
   });
   return data;
 };
+
+export interface EditUserProfileImageReq {
+  profileImage: string;
+}
+
+export const editUserProfileImage = async (req: EditUserProfileImageReq) => {
+  const { data } = await axios.put(`/users/my/image`, req, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  });
+  return data;
+}
 
 export interface FindInfo {
   name?: string;

@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import PButton from 'src/component/PButton';
 import { FlexDiv, Content, Title } from 'src/component/style/style';
 import { useHistory } from 'react-router-dom';
-import { FindEmail } from 'src/api/User';
+import { FindUserByEmail } from 'src/api/User';
 
 const FindEmailPage = () => {
   const history = useHistory();
@@ -17,7 +17,7 @@ const FindEmailPage = () => {
 
   const handleCheck = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    FindEmail(email)
+    FindUserByEmail(email)
       .then((res) => {
         if (res.exist) {
           setExist(true);

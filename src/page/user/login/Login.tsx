@@ -8,7 +8,7 @@ import { KAKAO_AUTH_URL } from '../OAuth/OAuth';
 import { User } from 'src/interface';
 import logo from '../../../assets/img/ic_share_kakao.png';
 import { useMutation } from 'react-query';
-import { getUser } from 'src/api/User';
+import { getUserMe } from 'src/api/User';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -75,7 +75,7 @@ const Login = () => {
   };
 
   const getUserAfterLogin =() => {
-    getUser()
+    getUserMe()
     .then((res) => {
       setUserTypeState(res.userType ? res.userType : 'USER');
       history.push('/');

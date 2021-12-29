@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getUser } from 'src/api/User';
+import { getUserMe } from 'src/api/User';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
@@ -19,7 +19,7 @@ const sideMenuItem = [
 
 const UserPageSideMenu = () => {
   const history = useHistory();
-  const { data: user } = useQuery(['getUser'], getUser);
+  const { data: user } = useQuery(['getUser'], getUserMe);
   const [selectedItem, setSelectedItem] = useState('');
 
   const handleSideMenuItem = (item: any) => {

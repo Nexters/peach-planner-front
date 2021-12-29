@@ -8,7 +8,7 @@ import DefaultProfileImage from '../assets/svg/ic_account_default.svg';
 import DownArrowImage from '../assets/svg/ic_arrow_down.svg';
 import NotiDefault from '../assets/svg/ic_noti_default.svg';
 import HorizontalLine from './HorizontalLine';
-import { getUser, getUserMe } from 'src/api/User';
+import { getUserMe } from 'src/api/User';
 import { useQuery } from 'react-query';
 
 const Header = () => {
@@ -19,7 +19,7 @@ const Header = () => {
   const [isClickedProfile, setIsClickedProfile] = useState(false);
   const [isAlart, setIsAlart] = useState(false);
   const isLogin = peachTokenState ? true : false;
-  const { data: user } = useQuery(['getUser'], getUser, { enabled: isLogin });
+  const { data: user } = useQuery(['getUser'], getUserMe, { enabled: isLogin });
   setUserTypeState(user?.userType ? user?.userType : 'USER');
   const logout = () => {
     localStorage.removeItem('accessToken');

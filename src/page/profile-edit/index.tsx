@@ -1,3 +1,4 @@
+import axios from 'axios';
 import styled from 'styled-components';
 import { FlexDiv } from '../../component/style/style';
 import PButton from '../../component/PButton';
@@ -11,7 +12,7 @@ import SnsSetting from './SnsSetting';
 import UserCertification from './UserCertification';
 import UserProfile from './UserProfile';
 import { useMutation, useQuery } from 'react-query';
-import { getUser } from 'src/api/User';
+import { getUserMe } from 'src/api/User';
 import { AffiliatedCompany, fetchPlannerMe, PlannerRequest, updateProfile } from 'src/api/Planner';
 import { useEffect, useState } from 'react';
 import { Company } from 'src/api/Company';
@@ -45,7 +46,7 @@ export interface Item {
 }
 
 const Profile = ({ isUpdate }: ProfileProps) => {
-  const { data: user } = useQuery(['user'], getUser);
+  const { data: user } = useQuery(['user'], getUserMe);
   const { data: planner } = useQuery(['planner'], fetchPlannerMe);
   const history = useHistory();
   const { mutate, isLoading } = useMutation(updateProfile, {

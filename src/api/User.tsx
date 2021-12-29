@@ -8,15 +8,6 @@ export interface User {
   email: string;
 }
 
-export const getUser = async () => {
-  const { data } = await axios.get<User>(`/users/me`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-    }
-  });
-  return data;
-};
-
 export const getUserMe = async () => {
   const { data } = await axios.get(`/users/me`, {
     headers: {
@@ -49,12 +40,7 @@ export interface FindInfo {
   userName?: string;
 }
 
-export const FindUser = async (reqBody: FindInfo) => {
-  const { data } = await axios.patch(`/users/me`, reqBody);
-  return data;
-};
-
-export const FindEmail = async (email: string) => {
+export const FindUserByEmail = async (email: string) => {
   const { data } = await axios.post(`/auth/find/email?email=${email}`);
   return data;
 };

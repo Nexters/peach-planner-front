@@ -10,7 +10,7 @@ import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Client, Message, IFrame, ActivationState, StompSocketState } from '@stomp/stompjs';
 import { useMemo } from 'react';
-import { User, getUser } from 'src/api/User';
+import { User, getUserMe } from 'src/api/User';
 import axios from 'axios';
 import ReviewPopup from './ReviewPopup';
 
@@ -42,7 +42,7 @@ interface ChatMessageModel {
 const ChatContainer = () => {
   const [selected, setSelected] = React.useState(-1);
   const { data: rooms } = useQuery(['rooms'], fetchChatRooms);
-  const { data: user } = useQuery(['getUser'], getUser);
+  const { data: user } = useQuery(['getUser'], getUserMe);
   const currentRoom = React.useRef<ChatRoom>({} as ChatRoom);
   const [typingMessage, setTypingMessage] = React.useState('');
 

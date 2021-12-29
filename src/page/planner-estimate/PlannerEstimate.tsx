@@ -7,14 +7,14 @@ import { useRouteMatch, useHistory } from 'react-router';
 import { useQuery } from 'react-query';
 import { fetchPlanner } from '../../api/Planner';
 import axios from 'axios';
-import { getUser } from 'src/api/User';
+import { getUserMe } from 'src/api/User';
 interface routeProps {
   id: string;
 }
 
 const PlannerEstimate = () => {
   const history = useHistory();
-  const { data: user } = useQuery(['getUser'], getUser);
+  const { data: user } = useQuery(['getUser'], getUserMe);
 
   const { params } = useRouteMatch<routeProps>();
   const plannerId = params.id;

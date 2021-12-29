@@ -17,6 +17,7 @@ const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
   const PLANNER_NAME: string = plannerInfo.name;
   const DETAIL: string = plannerInfo.summary;
   const LIKES: number = plannerInfo.likes;
+  const REVIEWs: number = plannerInfo.reviews;
   const DESCRIPTION: string[] = plannerInfo.description.split('\\n');
 
   const handleChat = () => {
@@ -35,7 +36,7 @@ const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
 
   return (
     <Container title="플래너 소개">
-      <UserInfoIcon imgSrc={plannerInfo.images[0]} title={PLANNER_NAME} detail={DETAIL} likeCount={LIKES} />
+      <UserInfoIcon imgSrc={plannerInfo.images[0]} title={PLANNER_NAME} detail={DETAIL} likeCount={LIKES} reviewCount={REVIEWs} />
       <Detail>
         {DESCRIPTION.map((desc, i) => (
           <div key={i}>{desc}</div>

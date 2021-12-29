@@ -8,7 +8,7 @@ import DefaultProfileImage from '../assets/svg/ic_account_default.svg';
 import DownArrowImage from '../assets/svg/ic_arrow_down.svg';
 import NotiDefault from '../assets/svg/ic_noti_default.svg';
 import HorizontalLine from './HorizontalLine';
-import { getUser, getUserTest } from 'src/api/User';
+import { getUser, getUserMe } from 'src/api/User';
 import { useQuery } from 'react-query';
 
 const Header = () => {
@@ -37,12 +37,24 @@ const Header = () => {
   }
 
   const handleClickAccountSetting = () => {
-    history.push('/plannerSetting');
+    getUserMe()
+      .then((res) => {
+        if (res.userType === 'USER') {
+          history.push(`/userSetting`);
+        } else {
+          history.push(`/plannerSetting`);
+        }
+        setIsClickedProfile(false);
+      })
+      .catch((err) => {
+        console.log(err, 'err');
+        setIsClickedProfile(false);
+      });
     setIsClickedProfile(!isClickedProfile);
   };
 
   const handleMyPage = () => {
-    getUserTest()
+    getUserMe()
       .then((res) => {
         if (res.userType === 'USER') {
           history.push(`/userPage`);

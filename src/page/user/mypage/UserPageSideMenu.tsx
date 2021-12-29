@@ -26,7 +26,7 @@ const UserPageSideMenu = () => {
     setSelectedItem(item);
 
     if (item === 'setting') {
-      // history.push('/userSetting')
+      history.push('/userSetting');
     } else if (item == 'chat') {
       history.push('/chats');
     }

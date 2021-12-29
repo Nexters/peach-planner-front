@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as $ from './MyPageItemView.js';
-import { getUser, getUserTest, EditUserInfo, DeleteUser } from 'src/api/User';
+import { getUser, getUserMe, EditUserInfo, DeleteUser } from 'src/api/User';
 import { useQuery } from 'react-query';
 import { Link, useHistory } from 'react-router-dom';
 import { ReactComponent as LeftArrow } from '../assets/svg/ic_arrow_left.svg';
@@ -22,7 +22,7 @@ const PlannerSetting = () => {
 
   useEffect(() => {
     setChangePw(false);
-    getUserTest()
+    getUserMe()
       .then((data) => {
         setUser(data);
       })

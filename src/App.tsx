@@ -2,8 +2,6 @@ import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 're
 import Main from './page/home/main';
 import PlannerDetail from './page/planner-detail';
 import PlannerEstimate from './page/planner-estimate/PlannerEstimate';
-import UserPageSideMenu from './page/user/mypage/UserPageSideMenu';
-import PlannerPageSideMenu from './page/user/mypage/PlannerPageSideMenu';
 import GlobalStyle from './styles/globalStyle';
 import theme from './styles/theme';
 import { ThemeProvider } from 'styled-components';
@@ -35,6 +33,7 @@ import PlannerSetting from './component/PlannerSetting';
 import PlannerReview from './page/planner-review';
 import PlannerMyEstimate from './page/planner-my-estimate';
 import UserMyPage from './page/user-mypage';
+import UserSetting from './component/Setting';
 
 export const queryClient = new QueryClient();
 
@@ -79,6 +78,9 @@ const App = () => {
                 </UserPrivateRoute>
                 <UserPrivateRoute path="/userPage">
                   <UserMyPage />
+                </UserPrivateRoute>
+                <UserPrivateRoute path="/userSetting">
+                  <UserSetting />
                 </UserPrivateRoute>
                 <PlannerPrivateRoute path="/plannerPage">
                   <MyPage />

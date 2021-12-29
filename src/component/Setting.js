@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as $ from './MyPageItemView.js';
-import { getUser, getUserTest, EditUserInfo, DeleteUser } from 'src/api/User';
+import { getUser, getUserMe, EditUserInfo, DeleteUser } from 'src/api/User';
 import { useQuery } from 'react-query';
 import { Link, useHistory } from 'react-router-dom';
 import { ReactComponent as LeftArrow } from '../assets/svg/ic_arrow_left.svg';
 
-const Setting = () => {
+const UserSetting = () => {
   // const { data: user } = useQuery(['getUser'], getUser);
   const [user, setUser] = useState(null);
   const [focus, setFocus] = useState(false);
@@ -23,7 +23,7 @@ const Setting = () => {
 
   useEffect(() => {
     setChangePw(false);
-    getUserTest()
+    getUserMe()
       .then((data) => {
         setUser(data);
       })
@@ -200,4 +200,4 @@ const Setting = () => {
   );
 };
 
-export default Setting;
+export default UserSetting;

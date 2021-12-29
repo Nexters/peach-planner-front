@@ -10,10 +10,11 @@ interface UserInfoIconProps {
   detail?: string;
   buttonText?: string;
   likeCount?: number;
+  reviewCount?: number;
   onButtonClick?: () => void;
 }
 
-const UserInfoIcon: FC<UserInfoIconProps> = ({ imgSrc, title, detail, buttonText, likeCount, onButtonClick }) => {
+const UserInfoIcon: FC<UserInfoIconProps> = ({ imgSrc, title, detail, buttonText, likeCount, reviewCount, onButtonClick }) => {
   return (
     <Container>
       <Image src={imgSrc} />
@@ -25,7 +26,7 @@ const UserInfoIcon: FC<UserInfoIconProps> = ({ imgSrc, title, detail, buttonText
             <Detail>{detail}</Detail>
             <IconContainer>
               <Heart /> {likeCount}
-              <Review /> 24
+              <Review /> {reviewCount}
             </IconContainer>
           </>
         )}

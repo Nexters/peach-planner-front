@@ -17,7 +17,7 @@ export const getUser = async () => {
   return data;
 };
 
-export const getUserTest = async () => {
+export const getUserMe = async () => {
   const { data } = await axios.get(`/users/me`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`

@@ -8,7 +8,7 @@ import { User } from 'src/interface';
 import { KAKAO_AUTH_URL } from '../OAuth/OAuth';
 import HorizontalLine from 'src/component/HorizontalLine';
 import logo from '../../../assets/img/ic_share_kakao.png';
-import { FindEmail } from 'src/api/User';
+import { FindUserByEmail } from 'src/api/User';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -95,7 +95,7 @@ const UserSignUp = () => {
       setIsValidPassword(true);
       setIsValidEmail(true);
     } else {
-      FindEmail(email)
+      FindUserByEmail(email)
         .then((res) => {
           if (res.exist) {
             setIsExistEmail(true);

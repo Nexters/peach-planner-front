@@ -36,7 +36,7 @@ const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
 
   return (
     <Container title="플래너 소개">
-      <UserInfoIcon imgSrc={plannerInfo.images[0]} title={PLANNER_NAME} detail={DETAIL} likeCount={LIKES} reviewCount={REVIEWs} />
+      <UserInfoIcon imgSrc={plannerInfo.profileImage} title={PLANNER_NAME} detail={DETAIL} likeCount={LIKES} reviewCount={REVIEWs} />
       <Detail>
         {DESCRIPTION.map((desc, i) => (
           <div key={i}>{desc}</div>

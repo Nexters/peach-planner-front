@@ -8,7 +8,7 @@ import DefaultProfileImage from '../assets/svg/ic_account_default.svg';
 import DownArrowImage from '../assets/svg/ic_arrow_down.svg';
 import NotiDefault from '../assets/svg/ic_noti_default.svg';
 import HorizontalLine from './HorizontalLine';
-import { getUser, getUserMe } from 'src/api/User';
+import { getUserMe } from 'src/api/User';
 import { useQuery } from 'react-query';
 
 const Header = () => {
@@ -19,7 +19,7 @@ const Header = () => {
   const [isClickedProfile, setIsClickedProfile] = useState(false);
   const [isAlart, setIsAlart] = useState(false);
   const isLogin = peachTokenState ? true : false;
-  const { data: user } = useQuery(['getUser'], getUser, { enabled: isLogin });
+  const { data: user } = useQuery(['getUser'], getUserMe, { enabled: isLogin });
   setUserTypeState(user?.userType ? user?.userType : 'USER');
   const logout = () => {
     localStorage.removeItem('accessToken');
@@ -75,6 +75,8 @@ const Header = () => {
     setIsClickedProfile(false);
   };
 
+  console.log(user?.profileImage);
+
   let right;
   if (isLogin) {
     right = (
@@ -82,7 +84,7 @@ const Header = () => {
         <ProfileContainer>
           {/* <NotiImage src={NotiDefault}></NotiImage> */}
           <ProfileBox onClick={handleClickProfile}>
-            <ProfileImage src={DefaultProfileImage}></ProfileImage>
+            <ProfileImage src={user?.profileImage ?? DefaultProfileImage}></ProfileImage>
             <DropdownImage src={DownArrowImage}></DropdownImage>
           </ProfileBox>
         </ProfileContainer>
@@ -221,6 +223,7 @@ const ProfileImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }
   height: 32px;
   width: 32px;
   margin: 0 0 0 7px;
+  border-radius: 100%;
 `;
 
 const DropdownImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`

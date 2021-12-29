@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getUser } from 'src/api/User';
+import { getUserMe } from 'src/api/User';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
@@ -19,7 +19,7 @@ const sideMenuItem = [
 
 const UserPageSideMenu = () => {
   const history = useHistory();
-  const { data: user } = useQuery(['getUser'], getUser);
+  const { data: user } = useQuery(['getUser'], getUserMe);
   const [selectedItem, setSelectedItem] = useState('');
 
   const handleSideMenuItem = (item: any) => {
@@ -36,7 +36,7 @@ const UserPageSideMenu = () => {
     <FlexDiv justify="center" width="200px">
       <FlexDiv justify="flex-start" direction="column">
         <ProfileDiv>
-          <ProfileImgBox src={AccountDefault}></ProfileImgBox>
+          <ProfileImgBox src={user?.profileImage ?? AccountDefault}></ProfileImgBox>
           <FlexDiv height="20px" margin="8px 0px 8px 0px">
             <Title fontSize="14px" height="21px" color="#212529" lineHeight="20px" margin="0px 4px 0px 0px">
               {user?.name}

@@ -32,6 +32,7 @@ export interface Planner {
   summary: string;
   supportInfos: string[];
   postLiked: boolean;
+  profileImage: string;
 }
 
 export interface PlannerMyStats {

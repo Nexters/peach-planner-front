@@ -5,27 +5,27 @@ import AccountDefault from '../../assets/svg/ic_account_default.svg';
 import EditImage from '../../assets/svg/ic_changephoto.svg';
 import { useState } from 'react';
 import UserType from 'src/component/UserType';
+import { upload } from 'src/api/Image';
+import { editUserProfileImage } from 'src/api/User';
 
 interface Props {
   name: string | undefined;
   type: 'USER' | 'PLANNER' | undefined;
+  profileImage?: string;
 }
 
-const userProps = {
-  name: '홍길동',
-  type: '플래너'
-};
-
-const UserProfile = ({ name, type }: Props) => {
+const UserProfile = ({ name, type, profileImage }: Props) => {
   const [previewImage, setPreviewImage] = useState('');
-  const [imageFile, setImageFile] = useState(null);
 
-  const handleFile = (e: any) => {
+  const handleFile = async (e: any) => {
     const file = e.target.files[0];
 
     if (file) {
-      setImageFile(file);
-      setImageFromFile(file);
+      const s3ImageUrl = await upload(file);
+      await editUserProfileImage({
+        profileImage: s3ImageUrl,
+      });
+      setPreviewImage(s3ImageUrl);
     }
   };
 
@@ -37,6 +37,7 @@ const UserProfile = ({ name, type }: Props) => {
         setPreviewImage(image.toString());
       }
     };
+    
     reader.readAsDataURL(file);
   };
 
@@ -45,7 +46,7 @@ const UserProfile = ({ name, type }: Props) => {
       <Box>
         <FlexDiv margin="0" direction="column">
           <ProfileImageBox>
-            <ProfileImage src={previewImage ? previewImage : AccountDefault}></ProfileImage>
+            <ProfileImage src={previewImage ? previewImage : profileImage ? profileImage : AccountDefault}></ProfileImage>
             <Input id="profile-image-file" type="file" onChange={handleFile}></Input>
             <Label htmlFor="profile-image-file">
               <EditIcon src={EditImage}></EditIcon>

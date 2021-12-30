@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect, ChangeEvent, HtmlHTMLAttributes } from 'react';
-import { getUserMe, EditUserInfo, DeleteUser, User } from 'src/api/User';
+import { getUserMe, EditUserInfo, DeleteUser, User, editUserProfileImage } from 'src/api/User';
 import { useQuery } from 'react-query';
 import { Link, useHistory } from 'react-router-dom';
 import { ReactComponent as LeftArrow } from '../../assets/svg/ic_arrow_left.svg';
 import styled, { css } from 'styled-components';
 import UserPageSideMenu from '../user/mypage/UserPageSideMenu';
+import DefaultProfileImage from '../../assets/svg/ic_account_default.svg';
+import { upload } from 'src/api/Image';
 
 export default () => {
   // const { data: user } = useQuery(['getUser'], getUser);
@@ -17,15 +19,19 @@ export default () => {
     passwordConfirm: ''
   });
   const { nickName, originalPassword, password, passwordConfirm } = inputs;
+  const [userImage, setUserImage] = useState<string | null>(null);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const history = useHistory();
   const [changePw, setChangePw] = useState(false);
+  const hiddenFileInput = useRef<HTMLInputElement>(null);
+  const [editedProfileImage, setEditedProfileImage] = useState('');
 
   useEffect(() => {
     setChangePw(false);
     getUserMe()
       .then((data) => {
+        setInputs({ ...inputs, nickName: data.nickName, });
         setUser(data);
       })
       .catch((err) => {
@@ -92,6 +98,10 @@ export default () => {
   };
 
   const handleDelete = () => {
+    if (window.confirm("정말 탈퇴하시겠어요?") != true) {
+      return;
+    }
+
     DeleteUser();
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
@@ -134,6 +144,7 @@ export default () => {
             </FlexDiv>
           ) : (
             <FlexDiv direction="column">
+              <Title>계정 설정</Title>
               <SettingBox>
                 <SettingTitle>회원정보</SettingTitle>
 
@@ -177,14 +188,25 @@ export default () => {
 
               <SettingBox>
                 <SettingTitle>프로필사진 변경</SettingTitle>
-                <ImgBox></ImgBox>
+                <ImgBox src={editedProfileImage ? editedProfileImage : user?.profileImage ?? DefaultProfileImage} />
                 <div>
-                  <SettingButton>
+                  <input ref={hiddenFileInput} type="file" style={{ display: "none" }} onChange={async (e: any) => {
+                    const file = e.target.files[0];
+
+                    if (file) {
+                      const s3ImageUrl = await upload(file);
+                      await editUserProfileImage({
+                        profileImage: s3ImageUrl,
+                      });
+                      setEditedProfileImage(s3ImageUrl);
+                    }
+                  }} />
+                  <SettingButton onClick={(e) => hiddenFileInput.current?.click()}>
                     <SettingButtonText>사진 변경</SettingButtonText>
                   </SettingButton>
-                  <SettingButton w={54}>
+                  {/* <SettingButton w={54}>
                     <SettingButtonText>삭제</SettingButtonText>
-                  </SettingButton>
+                  </SettingButton> */}
                 </div>
               </SettingBox>
               <SettingBox>
@@ -239,6 +261,21 @@ const FlexDiv = styled.div<{
   margin: ${(props) => props.margin || '20px 0'};
 `;
 
+const Title = styled.span`
+  display: inline-block;
+  width: 100%;
+  height: 27px;
+  font-family: SpoqaHanSans;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000;
+  margin-bottom: 15px;
+`;
 
 const SettingTitle = styled.span<{ margin?: string }>`
   height: 24px;
@@ -336,15 +373,11 @@ const SettingBox = styled.div<{ padding?: string }>`
   :nth-child(1) {
     height: 336px;
   }
-  :nth-child(2) {
-    height: 201px;
-  }
 `;
 
-const ImgBox = styled.div`
+const ImgBox = styled.img`
   width: 64px;
   height: 64px;
-  background-color: #dee2e6;
   margin: 10px 0 15px;
   border-radius: 100%;
 `;

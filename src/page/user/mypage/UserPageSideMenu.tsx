@@ -48,11 +48,9 @@ const UserPageSideMenu = () => {
         </ProfileDiv>
         <SideMenuDiv>
           <TitleBox onClick={() => history.push('/userPage')}>
-            <MyPageSpan color="#000000" size="16px">
-              <Title height="16px" fontSize="16px" lineHeight="10px">
-                내 페이지
-              </Title>
-            </MyPageSpan>
+            <Title height="16px" fontSize="16px" lineHeight="10px">
+              내 페이지
+            </Title>
           </TitleBox>
           <Line />
           {sideMenuItem.map((item) => {

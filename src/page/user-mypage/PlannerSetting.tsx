@@ -182,14 +182,6 @@ const FlexDiv = styled.div<{
   margin: ${(props) => props.margin || '20px 0'};
 `;
 
-
-const Line = styled.hr`
-  height: 1px;
-  width: 200px;
-  background-color: #212529;
-  margin: 16px 0;
-`;
-
 const SettingTitle = styled.span<{ margin?: string }>`
   height: 24px;
   font-family: SpoqaHanSans;

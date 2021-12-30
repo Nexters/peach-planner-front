@@ -175,8 +175,9 @@ const ShowImageButton = styled.button`
 `;
 
 const BigImage = styled.img`
-  // width: 641px;
-  // height: 430px;
+  width: 641px;
+  height: 430px;
+  object-fit: contain;
   flex: 3;
   border-radius: 10px;
 `;

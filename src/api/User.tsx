@@ -8,6 +8,7 @@ export interface User {
   email: string;
   profileImage: string;
   tel: string;
+  nickName: string;
 }
 
 export const getUserMe = async () => {

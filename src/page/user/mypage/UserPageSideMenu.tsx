@@ -47,9 +47,11 @@ const UserPageSideMenu = () => {
           </Content>
         </ProfileDiv>
         <SideMenuDiv>
-          <MyPageSpan color="#000000" size="16px">
-            내 페이지
-          </MyPageSpan>
+          <TitleBox onClick={() => history.push('/userPage')}>
+            <Title height="16px" fontSize="16px" lineHeight="10px">
+              내 페이지
+            </Title>
+          </TitleBox>
           <Line />
           {sideMenuItem.map((item) => {
             return (
@@ -152,4 +154,10 @@ const SideMenuItemContainer = styled.div`
   height: 32px;
   align-items: center;
   justify-content: center;
+`;
+
+const TitleBox = styled.div`
+  width: 63px;
+  height: 24px;
+  cursor: pointer;
 `;

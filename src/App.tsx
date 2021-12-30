@@ -29,11 +29,11 @@ import { TermsOfUse } from './page/signup-detail/TermsOfUse';
 import { PrivacyPolicy } from './page/signup-detail/PrivacyPolicy';
 import MyPage from './page/planner-mypage';
 import PlannerProfile from './page/planner-mypage/profile';
-import PlannerSetting from './component/PlannerSetting';
+import PlannerSetting from './page/user-mypage/PlannerSetting';
 import PlannerReview from './page/planner-review';
 import PlannerMyEstimate from './page/planner-my-estimate';
 import UserMyPage from './page/user-mypage';
-import UserSetting from './component/Setting';
+import UserSetting from './page/user-mypage/UserSetting';
 
 export const queryClient = new QueryClient();
 

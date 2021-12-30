@@ -29,18 +29,6 @@ const UserProfile = ({ name, type, profileImage }: Props) => {
     }
   };
 
-  const setImageFromFile = (file: any) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const image = reader.result;
-      if (image) {
-        setPreviewImage(image.toString());
-      }
-    };
-    
-    reader.readAsDataURL(file);
-  };
-
   return (
     <FlexDiv justify="flex-start" margin="0 0 0 0">
       <Box>

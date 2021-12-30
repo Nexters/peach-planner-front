@@ -325,27 +325,24 @@ const Page = styled.div`
   width: 100%;
 `;
 
-interface RowProps {
+const Row = styled.div<{
   height?: string;
-}
-
-const Row = styled.div<RowProps>`
+}>`
   display: table-row;
   width: 100%;
-  height: ${(props: RowProps) => props.height};
+  height: ${(props) => props.height};
   justify-content: center;
   align-items: center;
   flex-direction: row;
   margin: 20px 0;
 `;
 
-interface CellProps {
-  width: string;
-}
 
-const Cell = styled.div<CellProps>`
+const Cell = styled.div<{
+  width: string;
+}>`
   display: table-cell;
-  width: ${(props: CellProps) => props.width};
+  width: ${(props) => props.width};
   border: 1px solid;
   border-color: #d8d8d8;
   vertical-align: top;
@@ -381,16 +378,14 @@ const ChatRoomTitleLine = styled.div`
   justify-content: space-between;
 `;
 
-interface ChatCardProps {
+const ChatCard = styled.div<{
   selected?: boolean;
-}
-
-const ChatCard = styled.div<ChatCardProps>`
+}>`
   display: flex;
   margin: 8px 8px 8px 8px;
   height: 76px;
   border-radius: 8px;
-  background-color: ${(props: ChatCardProps) => (props.selected ? '#F1F3F5' : 'inherit')};
+  background-color: ${(props) => (props.selected ? '#F1F3F5' : 'inherit')};
 `;
 
 const ChatProfileImg = styled.img`
@@ -455,11 +450,9 @@ cursor: initial;
 `;
 
 
-interface PlannerProfileCTAProps {
+const PlannerProfileCTA = styled.p<{
   color: string;
-}
-
-const PlannerProfileCTA = styled.p<PlannerProfileCTAProps>`
+}>`
   font-family: SpoqaHanSans;
   font-size: 12px;
   font-weight: normal;
@@ -468,7 +461,7 @@ const PlannerProfileCTA = styled.p<PlannerProfileCTAProps>`
   line-height: normal;
   letter-spacing: normal;
   text-align: center;
-  color: ${(props: PlannerProfileCTAProps) => props.color};
+  color: ${(props) => props.color};
 `;
 
 

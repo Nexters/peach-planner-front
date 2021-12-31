@@ -4,6 +4,7 @@ import { Content } from './style/style';
 
 interface Props {
   id: number;
+  plannerId: number;
   size: string;
   image: string;
   plannerName: string;
@@ -11,11 +12,11 @@ interface Props {
   margin?: string;
 }
 
-const PlannerMiniCard = ({ id, size, image, plannerName, companyName, margin }: Props) => {
+const PlannerMiniCard = ({ id, plannerId, size, image, plannerName, companyName, margin }: Props) => {
   const history = useHistory();
 
   const handleClick = () => {
-    history.push(`/planner/${id}`);
+    history.push(`/planner/${plannerId}`);
   };
   return (
     <Container margin={margin} onClick={handleClick}>

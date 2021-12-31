@@ -12,6 +12,7 @@ interface PickList {
 
 interface Pick {
   id: number;
+  plannerId: number;
   imageUrlPath: string;
   name: string;
   subName: string;

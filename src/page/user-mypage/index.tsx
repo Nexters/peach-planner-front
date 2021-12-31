@@ -11,7 +11,7 @@ import RightArrow from 'src/assets/svg/ic_arrow_right.svg';
 import { fetchEstimateList } from 'src/api/Estimate';
 import MyEstimate from './Estimate';
 
-const UserMyPage = () => {
+export const UserMyPage = () => {
   const { data: picks } = useQuery(['picks'], fetchPicks);
   const { data: estimates } = useQuery(['estimate'], fetchEstimateList);
   const [slider, setSlider] = useState<Slick>();
@@ -53,6 +53,7 @@ const UserMyPage = () => {
                     <PlannerMiniCard
                       key={pick.id}
                       id={pick.id}
+                      plannerId={pick.plannerId}
                       size="130px"
                       image={pick.imageUrlPath}
                       plannerName={pick.name}
@@ -70,6 +71,7 @@ const UserMyPage = () => {
                           <PlannerMiniCard
                             key={pick.id}
                             id={pick.id}
+                            plannerId={pick.plannerId}
                             size="130px"
                             image={pick.imageUrlPath}
                             plannerName={pick.name}
@@ -138,8 +140,6 @@ const UserMyPage = () => {
     </Container>
   );
 };
-
-export default UserMyPage;
 
 const Container = styled.div`
   display: flex;

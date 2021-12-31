@@ -32,7 +32,7 @@ import PlannerProfile from './page/planner-mypage/profile';
 import PlannerSetting from './page/user-mypage/PlannerSetting';
 import PlannerReview from './page/planner-review';
 import PlannerMyEstimate from './page/planner-my-estimate';
-import UserMyPage from './page/user-mypage';
+import { UserMyPage } from './page/user-mypage';
 import UserSetting from './page/user-mypage/UserSetting';
 
 export const queryClient = new QueryClient();

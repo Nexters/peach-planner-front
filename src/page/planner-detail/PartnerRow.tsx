@@ -23,7 +23,7 @@ const PartnerRow: FC<PartnerRowProps> = ({ title, partner }) => {
     arrows: false
   });
 
-  return partner ? (
+  return partner && partner.length > 0 ? (
     <Container>
       <TopContainer>
         <Title>{title}</Title>

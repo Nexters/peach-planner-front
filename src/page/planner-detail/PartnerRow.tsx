@@ -34,11 +34,22 @@ const PartnerRow: FC<PartnerRowProps> = ({ title, partner }) => {
       </TopContainer>
       <BottomContainer>
         <FlexContainer>
-          <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
-            {partner.map((item, i) => {
-              return <PartnerItem data={item} key={i} />;
-            })}
-          </Slider>
+          {
+            (partner.length > 5) ? (
+              <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
+                {partner.map((item, i) => {
+                  return <PartnerItem data={item} key={i} />;
+                })}
+              </Slider>
+            ) : (
+              <>
+                {partner.map((item, i) => {
+                  return <PartnerItem data={item} key={i} />;
+                })}
+              </>
+            )
+          }
+
         </FlexContainer>
       </BottomContainer>
     </Container>

@@ -1,15 +1,22 @@
 import { Content } from 'src/component/style/style';
 import styled from 'styled-components';
+import { ReactComponent as Close } from '../../assets/svg/ic_close_w.svg';
 
 interface Props {
   name: string;
   image: string;
+  handleOrgClose: () => void;
 }
 
-const Organization = ({ name, image }: Props) => {
+const Organization = ({ name, image, handleOrgClose }: Props) => {
   return (
     <Container>
-      <Image src={image}></Image>
+      <ImageContainer>
+        <Image src={image} />
+        <ImageCloseContainer onClick={() => { handleOrgClose(); }}>
+          <Close/>
+        </ImageCloseContainer>
+      </ImageContainer>
       <Content
         height={'19px'}
         width={'auto'}
@@ -38,13 +45,20 @@ const Container = styled.div`
   }
 `;
 
-interface ImageProps {
-  src: string;
-}
-
-const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
-  height: 120px;
-  width: 120px;
-  margin: 6px 0px 6px 0;
+const ImageContainer = styled.div`
+  position: relative;
+`
+const ImageCloseContainer = styled.div`
+  position: absolute;
+  background: grey;
+  bottom: 2px;
+  right: 0;
   cursor: pointer;
+`
+
+
+const Image = styled.img`
+  height: 100px;
+  width: 100px;
+  margin: 0px 0px 0px 0;
 `;

@@ -14,6 +14,7 @@ const PartnerInfo: FC<PartnerInfoProps> = ({ plannerId }) => {
   return partnerInfo && Object.keys(partnerInfo).length ? (
     <Container title="제휴 업체 정보">
       <PartnerRow title="스튜디오" partner={partnerInfo.STUDIO} />
+      <PartnerRow title="드레스" partner={partnerInfo.DRESS} />
       <PartnerRow title="메이크업" partner={partnerInfo.MAKEUP} />
     </Container>
   ) : (

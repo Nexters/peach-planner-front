@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import UserInfoIcon from '../../component/UserInfoIcon';
 import Container from './Container';
-import { Company } from '../../api/Planner';
 import { useHistory } from 'react-router-dom';
+import { Company } from 'src/api/Company';
 
 interface CompanyInfoProps {
   companyInfo: Company;

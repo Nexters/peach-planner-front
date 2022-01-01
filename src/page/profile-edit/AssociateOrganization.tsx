@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Content, FlexDiv } from '../../component/style/style';
 import LineAndTitle from './LindAndTitle';
 import PButton from '../../component/PButton';
@@ -13,37 +13,36 @@ interface Props {
   id: string;
   name: string;
   margin: string;
-  handleStores: (store: SupportStore) => void;
+  stores: SupportStore[];
+  setStores: Dispatch<SetStateAction<SupportStore[]>>;
 }
 
-interface OrganizationInformation {
-  name: string;
-  previewImage: string;
-  imageFile: any;
-}
-
-const AssociateOrganization = ({ id, name, margin, handleStores }: Props) => {
+const AssociateOrganization = ({ id, name, margin, stores, setStores }: Props) => {
   const [organizationName, setOrganizationName] = useState('');
   const [previewImage, setPreviewImage] = useState('');
   const [imageFile, setImageFile] = useState(null);
-  const [organizations, setOrganizations] = useState<OrganizationInformation[]>([]);
 
-  const registOrganization = async () => {
-    if (!organizationName || organizations.length >= 10) return;
+  const registerOrganization = async () => {
+    if (stores.length >= 10) {
+      alert("10개 이상으로는 등록하실 수 없어요!");
+      return;
+    }
+    if (!organizationName ) {
+      alert("업체 이름을 입력해주세요!");
+      return;
+    }
+    if (!imageFile) {
+      alert("업체 사진을 등록해주세요!");
+      return;
+    }
 
-    const organization = {
-      name: organizationName,
-      previewImage: previewImage,
-      imageFile: imageFile
-    };
     const s3ImageUrl = await upload(imageFile);
     const store: SupportStore = {
       name: organizationName,
       previewImage: previewImage,
       imageUrl: s3ImageUrl
     };
-    setOrganizations(organizations?.concat(organization));
-    handleStores(store);
+    setStores(stores?.concat(store));
   };
 
   const handleChangeOrganizationName = (e: any) => {
@@ -88,22 +87,20 @@ const AssociateOrganization = ({ id, name, margin, handleStores }: Props) => {
         previewImage={previewImage}
         setPreviewImage={changePreviewImage}
         setImageFile={changeImageFile}
-      ></ImageUpload>
+      />
       <HorizontalLine color="#dee2e6"></HorizontalLine>
       <FlexDiv margin="15px 0 72px 0" direction="row" justify="space-between" align="start">
-        <PButton color="black" fontSize="14px" height="45px" width="126px" onClick={registOrganization}>
+        <PButton color="black" fontSize="14px" height="45px" width="126px" onClick={registerOrganization}>
           업체 등록하기
         </PButton>
         <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-end" align="start"></FlexDiv>
       </FlexDiv>
       <OrganizationLists>
-        {organizations ? (
-          organizations.map((organization, index) => {
-            return <Organization key={index} name={organization.name} image={organization.previewImage}></Organization>;
-          })
-        ) : (
-          <></>
-        )}
+        {stores?.map((organization, index) => {
+            return <Organization key={index} name={organization.name} image={organization.previewImage} handleOrgClose={() => {
+              setStores(stores.filter((e, i) => i !== index));
+            }} />;
+          }) ?? <></>}
       </OrganizationLists>
       <HorizontalLine color="#868E96"></HorizontalLine>
     </FlexDiv>

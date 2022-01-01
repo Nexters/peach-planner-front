@@ -35,6 +35,7 @@ interface Sns {
 }
 
 export interface SupportStore {
+  id?: number;
   name: string;
   previewImage: string;
   imageUrl: string;
@@ -56,9 +57,10 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     }
   });
 
+  const [images, setImages] = useState<string[]>([]);
   const [description, setDescription] = useState<PlannerDescription>({
     summary: '',
-    description: ''
+    description: '',
   });
   const [sns, setSns] = useState<Sns>({ webUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' });
   const [regions, setRegions] = useState<Item[]>([]);
@@ -109,21 +111,6 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     setInputCompanyName(value);
   };
 
-  const handleStudio = (studio: SupportStore) => {
-    studios.push(studio);
-    setStudios(studios);
-  };
-
-  const handleDress = (dress: SupportStore) => {
-    dresses.push(dress);
-    setDresses(dresses);
-  };
-
-  const handleMakeUp = (makeUp: SupportStore) => {
-    makeUps.push(makeUp);
-    setMakeUps(makeUps);
-  };
-
   const handleRegister = () => {
     if (description.description === '' || description.summary === '') {
       alert('플래너 한줄 소개와 플래너 소개는 필수 값 입니다.');
@@ -131,6 +118,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     }
     const affilicatedDress: AffiliatedCompany[] = dresses.map((dress) => {
       return {
+        id: dress.id,
         companyName: dress.name,
         description: '',
         location: '',
@@ -141,6 +129,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     });
     const affilicatedStudios: AffiliatedCompany[] = studios.map((studio) => {
       return {
+        id: studio.id,
         companyName: studio.name,
         description: '',
         location: '',
@@ -151,6 +140,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     });
     const affilicatedMakeUps: AffiliatedCompany[] = makeUps.map((makeUp) => {
       return {
+        id: makeUp.id,
         companyName: makeUp.name,
         description: '',
         location: '',
@@ -161,6 +151,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     });
 
     const request: PlannerRequest = {
+      portfolioImages: images,
       affiliatedCompanyInfo: {
         affiliatedCompanyId: company?.id!!
       },
@@ -187,10 +178,41 @@ const Profile = ({ isUpdate }: ProfileProps) => {
   };
 
   useEffect(() => {
+    setImages(planner?.images ?? []);
     const plannerRegions = allRegions.filter((region) => planner?.locations.includes(region.display));
     setRegions(plannerRegions);
     const plannerOffers = allOffers.filter((offer) => planner?.supportInfos.includes(offer.display));
     setOffers(plannerOffers);
+    setDescription({
+      summary: planner?.summary ?? '',
+      description: planner?.summary ?? '',
+    });
+    setCompany(planner?.company ?? undefined);
+    setInputCompanyName(planner?.company.name ?? '');
+    setStudios(planner?.partners?.STUDIO?.map(e => {
+      return {
+        id: e.id,
+        name: e.name,
+        previewImage: e.primaryImage,
+        imageUrl: e.primaryImage,
+      };
+    }) ?? []);
+    setDresses(planner?.partners?.DRESS?.map(e => {
+      return {
+        id: e.id,
+        name: e.name,
+        previewImage: e.primaryImage,
+        imageUrl: e.primaryImage,
+      };
+    }) ?? []);
+    setMakeUps(planner?.partners?.MAKEUP?.map(e => {
+      return {
+        id: e.id,
+        name: e.name,
+        previewImage: e.primaryImage,
+        imageUrl: e.primaryImage,
+      };
+    }) ?? []);
   }, [planner]);
 
   return (
@@ -200,56 +222,61 @@ const Profile = ({ isUpdate }: ProfileProps) => {
       </InnerContainer>
       <InnerContainer>
         <FlexDiv width="310px" height="auto" justify="flex-start" align="start" direction="column" margin="0 105px 0 0">
-          <UserProfile name={user?.name} type={user?.userType} profileImage={user?.profileImage}></UserProfile>
+          <UserProfile name={user?.name} type={user?.userType} profileImage={user?.profileImage} />
           {/* TODO 인증 기능 없어서 주석 처리*/}
           {/* <UserCertification></UserCertification> */}
         </FlexDiv>
         <FlexDiv direction="column" margin="0" width="990px">
           <MyProfile
             summary={planner?.summary!!}
-            description={planner?.description!!}
+            description={planner?.summary!!}
             handleDescription={handleDescription}
-          ></MyProfile>
+            images={images}
+            setImages={setImages}
+          />
           <SnsSetting
             instagram={planner?.externalLinks?.instagramLink!!}
             blog={planner?.externalLinks?.blogLink!!}
             facebook={planner?.externalLinks?.facebookLink!!}
             handleSns={handleSns}
-          ></SnsSetting>
+          />
           <PlannerArea
             plannerRegions={planner?.locations}
             regions={regions}
             handleRegions={handleRegions}
-          ></PlannerArea>
+          />
           <PlannerOfferList
             plannerOffers={planner?.supportInfos}
             offers={offers}
             handleOffers={handleOffers}
-          ></PlannerOfferList>
+          />
           <PlannerCompany
             defaultCompanyName={planner?.company?.name!!}
             companyName={inputCompanyName}
             handleCompanyName={handleCompanyName}
             handleCompanyItem={handleCompany}
-          ></PlannerCompany>
+          />
           <AssociateOrganization
             id="studio"
             name="스튜디오"
             margin="0 0 72px 0"
-            handleStores={handleStudio}
-          ></AssociateOrganization>
+            stores={studios}
+            setStores={setStudios}
+          />
           <AssociateOrganization
             id="dress"
             name="드레스"
             margin="0 0 72px 0"
-            handleStores={handleDress}
-          ></AssociateOrganization>
+            stores={dresses}
+            setStores={setDresses}
+          />
           <AssociateOrganization
             id="makeup"
             name="메이크업"
             margin="0 0 24px 0"
-            handleStores={handleMakeUp}
-          ></AssociateOrganization>
+            stores={makeUps}
+            setStores={setMakeUps}
+          />
           <FlexDiv direction="row" margin="0 0 320px 48px" justify="flex-start">
             <PButton
               color="pink"

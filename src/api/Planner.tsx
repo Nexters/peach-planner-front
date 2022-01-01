@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { QueryFunctionContext } from 'react-query';
+import { Company } from './Company';
 import { Estimate } from './Estimate';
 import { MyReview } from './Review';
 
@@ -25,9 +26,9 @@ export interface Planner {
   description: string;
   company: Company;
   partners: {
-    additionalProp1: AdditionalProp;
-    additionalProp2: AdditionalProp;
-    additionalProp3: AdditionalProp;
+    DRESS?: Partner[];
+    STUDIO?: Partner[];
+    MAKEUP?: Partner[];
   };
   summary: string;
   supportInfos: string[];
@@ -52,16 +53,7 @@ interface PlannerMyReviewStats {
   new: number;
 }
 
-export interface Company {
-  id: number;
-  certificated: boolean;
-  location: string;
-  name: string;
-  profilePath: string;
-  tel: string;
-}
-
-interface AdditionalProp {
+interface Partner {
   id: number;
   locations: string;
   name: string;
@@ -75,11 +67,12 @@ export interface PartnerInfo {
   pick: boolean;
   primaryImage: string;
   tel: string;
-  type: 'STUDIO' | 'MAKEUP';
+  type: 'STUDIO' | 'DRESS' | 'MAKEUP';
 }
 
 export interface Partners {
   MAKEUP: PartnerInfo[];
+  DRESS: PartnerInfo[];
   STUDIO: PartnerInfo[];
 }
 
@@ -171,6 +164,7 @@ export const fetchPlannerMyReviews = async ({ queryKey }: QueryFunctionContext) 
 
 
 export interface AffiliatedCompany {
+  id?: number;
   companyName: string;
   description: string;
   location: string;
@@ -180,6 +174,7 @@ export interface AffiliatedCompany {
 }
 
 export interface PlannerRequest {
+  portfolioImages?: string[];
   affiliatedCompanyInfo: {
     affiliatedCompanyId: number;
   };
@@ -207,7 +202,7 @@ export interface PlannerRequest {
 }
 
 export const updateProfile = async (plannerRequest: PlannerRequest) => {
-  const { data } = await axios.post(`planners`, plannerRequest, {
+  const { data } = await axios.post(`/inhouse/planners/me`, plannerRequest, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
     }

@@ -4,23 +4,27 @@ import styled from 'styled-components';
 import PlannerInputTitle from './PlannerInputTitle';
 import { PlannerDescription } from '.';
 import { PortfolioCollect } from './components/PortfolioCollect';
+import { Dispatch, SetStateAction } from 'react';
 
 interface Props {
   summary: string;
   description: string;
   handleDescription: (e: any) => void;
+  images: string[];
+  setImages: Dispatch<SetStateAction<string[]>>;
 }
 
-const MyProfile = ({ summary, description, handleDescription }: Props) => {
+const MyProfile = ({ summary, description, handleDescription, images, setImages }: Props) => {
   return (
     <FlexDiv width="632px" margin="0 0 72px 0" direction="column" justify="flex-start" align="start">
       <LineAndTitle title="내 프로필"></LineAndTitle>
       <PlannerInputTitle name="포트폴리오" margin="20px 0 8px 0"></PlannerInputTitle>
       <PortfolioCollect
         id="makeup"
-        name="왓더"
         margin="0 0 24px 0"
-        handleStores={() => {}} />
+        images={images}
+        setImages={setImages}
+        />
       <PlannerInputTitle name="플래너 한줄 소개" margin="20px 0 8px 0"></PlannerInputTitle>
       <Input name="summary" defaultValue={summary} onChange={handleDescription}></Input>
       <PlannerInputTitle name="플래너 소개" margin="24px 0 8px 0"></PlannerInputTitle>

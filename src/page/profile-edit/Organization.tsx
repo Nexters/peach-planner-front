@@ -47,15 +47,15 @@ const Container = styled.div`
 
 const ImageContainer = styled.div`
   position: relative;
-`
+`;
+
 const ImageCloseContainer = styled.div`
   position: absolute;
   background: grey;
   bottom: 2px;
   right: 0;
   cursor: pointer;
-`
-
+`;
 
 const Image = styled.img`
   height: 100px;

@@ -174,6 +174,7 @@ export interface AffiliatedCompany {
 }
 
 export interface PlannerRequest {
+  portfolioImages?: string[];
   affiliatedCompanyInfo: {
     affiliatedCompanyId: number;
   };
@@ -201,7 +202,7 @@ export interface PlannerRequest {
 }
 
 export const updateProfile = async (plannerRequest: PlannerRequest) => {
-  const { data } = await axios.post(`planners`, plannerRequest, {
+  const { data } = await axios.post(`/inhouse/planners/me`, plannerRequest, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
     }

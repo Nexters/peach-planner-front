@@ -8,47 +8,28 @@ import ImageUpload from '../ImageUpload';
 import Organization from '../Organization';
 import { SupportStore } from '../';
 import { upload } from 'src/api/Image';
+import { Dispatch, SetStateAction } from 'react';
+import { ReactComponent as Close } from '../../../assets/svg/ic_close_w.svg';
 
 interface Props {
   id: string;
-  name: string;
   margin: string;
-  handleStores: (store: SupportStore) => void;
+  images: string[];
+  setImages: Dispatch<SetStateAction<string[]>>;
 }
 
-interface OrganizationInformation {
-  name: string;
-  previewImage: string;
-  imageFile: any;
-}
-
-export const PortfolioCollect = ({ id, name, margin, handleStores }: Props) => {
-  const [organizationName, setOrganizationName] = useState('');
+export const PortfolioCollect = ({ id, margin, images, setImages }: Props) => {
   const [previewImage, setPreviewImage] = useState('');
   const [imageFile, setImageFile] = useState(null);
-  const [organizations, setOrganizations] = useState<OrganizationInformation[]>([]);
 
   const registerOrganization = async () => {
-    if (!organizationName || organizations.length >= 10) return;
+    if (images.length >= 6) {
+        alert("포트폴리오는 6장까지만 등록이 가능해요!");
+        return;
+    } 
 
-    const organization = {
-      name: organizationName,
-      previewImage: previewImage,
-      imageFile: imageFile
-    };
     const s3ImageUrl = await upload(imageFile);
-    const store: SupportStore = {
-      name: organizationName,
-      previewImage: previewImage,
-      imageUrl: s3ImageUrl
-    };
-    setOrganizations(organizations?.concat(organization));
-    handleStores(store);
-  };
-
-  const handleChangeOrganizationName = (e: any) => {
-    const value = e.target.value;
-    setOrganizationName(value);
+    setImages(images?.concat(s3ImageUrl));
   };
 
   const changePreviewImage = (image: string) => {
@@ -83,9 +64,14 @@ export const PortfolioCollect = ({ id, name, margin, handleStores }: Props) => {
         <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-end" align="start"></FlexDiv>
       </FlexDiv>
       <ImageLists>
-        {organizations ? (
-          organizations.map((organization, index) => {
-            return <Organization key={index} name={organization.name} image={organization.previewImage} handleOrgClose={() => {}}></Organization>;
+        {images ? (
+          images.map((image, index) => {
+              return <ImageContainer>
+                <Image src={image} />
+                <ImageCloseContainer onClick={() => { setImages(images.filter((e, i) => i !== index)); }}>
+                  <Close/>
+                </ImageCloseContainer>
+              </ImageContainer>
           })
         ) : (
           <></>
@@ -99,4 +85,22 @@ const ImageLists = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-flow: row wrap;
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+`;
+
+const ImageCloseContainer = styled.div`
+  position: absolute;
+  background: grey;
+  bottom: 2px;
+  right: 0;
+  cursor: pointer;
+`;
+
+const Image = styled.img`
+  height: 100px;
+  width: 100px;
+  margin: 0px 0px 0px 0;
 `;

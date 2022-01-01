@@ -57,6 +57,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     }
   });
 
+  const [images, setImages] = useState<string[]>([]);
   const [description, setDescription] = useState<PlannerDescription>({
     summary: '',
     description: '',
@@ -150,6 +151,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     });
 
     const request: PlannerRequest = {
+      portfolioImages: images,
       affiliatedCompanyInfo: {
         affiliatedCompanyId: company?.id!!
       },
@@ -176,6 +178,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
   };
 
   useEffect(() => {
+    setImages(planner?.images ?? []);
     const plannerRegions = allRegions.filter((region) => planner?.locations.includes(region.display));
     setRegions(plannerRegions);
     const plannerOffers = allOffers.filter((offer) => planner?.supportInfos.includes(offer.display));
@@ -228,6 +231,8 @@ const Profile = ({ isUpdate }: ProfileProps) => {
             summary={planner?.summary!!}
             description={planner?.summary!!}
             handleDescription={handleDescription}
+            images={images}
+            setImages={setImages}
           />
           <SnsSetting
             instagram={planner?.externalLinks?.instagramLink!!}

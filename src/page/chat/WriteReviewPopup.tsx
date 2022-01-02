@@ -12,13 +12,13 @@ import ImageUpload from '../profile-edit/ImageUpload';
 import { upload } from 'src/api/Image';
 import { postReview } from 'src/api/Review';
 
-interface ReviewModalProps {
+interface WriteReviewModalProps {
   showReviewModal: boolean;
   closeReviewModal(): void;
   plannerId: string;
 }
 
-const ReviewPopup: FC<ReviewModalProps> = ({ showReviewModal, closeReviewModal, plannerId }) => {
+export const WriteReviewPopup: FC<WriteReviewModalProps> = ({ showReviewModal, closeReviewModal, plannerId }) => {
   const history = useHistory();
   const { data: plannerInfo } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
   const [reviewMessage, setReviewMessage] = React.useState('');
@@ -82,8 +82,6 @@ const ReviewPopup: FC<ReviewModalProps> = ({ showReviewModal, closeReviewModal, 
     </StyledPopup>
   );
 };
-
-export default ReviewPopup;
 
 const StyledPopup = styled(Popup)`
   &-overlay {

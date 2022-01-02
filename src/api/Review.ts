@@ -16,6 +16,12 @@ export const fetchReview = async (plannerId: string) => {
   return data;
 };
 
+export const fetchReviewDetail = async (reviewId: string) => {
+  const { data } = await axios.get<ReviewData>(`/reviews/${reviewId}`);
+  return data;
+}
+
+
 interface CreateReviewReq {
   comment: string,
   plannerId: number,

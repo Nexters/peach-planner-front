@@ -7,11 +7,12 @@ interface Props {
   picture?: string;
   reviewContent: string;
   reviewCreatedAt: string;
+  onClick: () => any;
 }
 
-const Review = ({ reviewState, reviewWriter, picture, reviewContent, reviewCreatedAt }: Props) => {
+const Review = ({ reviewState, reviewWriter, picture, reviewContent, reviewCreatedAt, onClick }: Props) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <ReviewStateBox>
         <Content height="19px" width="auto" fontSize="13px" lineHeight="normal" color="#495057">
           {reviewState}

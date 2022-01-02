@@ -12,7 +12,7 @@ import { Client, Message, IFrame, ActivationState, StompSocketState } from '@sto
 import { useMemo } from 'react';
 import { User, getUserMe } from 'src/api/User';
 import axios from 'axios';
-import ReviewPopup from './ReviewPopup';
+import { WriteReviewPopup } from './WriteReviewPopup';
 
 const client = new Client({
   brokerURL: 'wss://api.peachplanner.com/websocket',
@@ -303,7 +303,7 @@ const ChatContainer = () => {
           </Cell>
         </Row>
       </Page>
-      <ReviewPopup 
+      <WriteReviewPopup 
         plannerId={chatRoomParticipant.current ? Object.values(chatRoomParticipant.current!).filter(a => a.participantType == 'PLANNER')[0].participantTypeId.toString() : ''} 
         showReviewModal={showReviewModal} 
         closeReviewModal={(() => { setShowReviewModal(false); })} />

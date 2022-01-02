@@ -10,7 +10,6 @@ interface Props {
 }
 
 const Review = ({ reviewState, reviewWriter, picture, reviewContent, reviewCreatedAt }: Props) => {
-  //   fetchMyReview();
   return (
     <Container>
       <ReviewStateBox>

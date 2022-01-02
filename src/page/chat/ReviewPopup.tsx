@@ -41,7 +41,7 @@ const ReviewPopup: FC<ReviewModalProps> = ({ showReviewModal, closeReviewModal, 
       {/* <div>사진 첨부하기</div>
       <SizedBox height={"137px"}/> */}
       <CTAButton onClick={async () => {
-        await axios.post(`/review`, {
+        await axios.post(`/reviews`, {
           comment: reviewMessage,
           plannerId: parseInt(plannerId),
         }, {

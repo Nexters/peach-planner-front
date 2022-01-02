@@ -13,14 +13,9 @@ export interface MyReview {
 }
 
 export const fetchReview = async (plannerId: string) => {
-  const { data } = await axios.get<ReviewData[]>(`/review/list/${plannerId}`);
-  return data;
-};
-
-export const fetchMyReview = async () => {
-  const { data } = await axios.get<MyReview[]>(`/review/list/review`, {
-    headers: {
-      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
+  const { data } = await axios.get<ReviewData[]>(`/reviews`, {
+    params: {
+      plannerId: plannerId,
     }
   });
   return data;

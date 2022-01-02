@@ -4,7 +4,7 @@ export interface ReviewData {
   comment: string;
   userName: string;
   writeDate: string;
-  imageUrl?: null;
+  imageUrl?: string;
 }
 
 export const fetchReview = async (plannerId: string) => {

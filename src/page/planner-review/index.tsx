@@ -53,7 +53,7 @@ const PlannerReview = () => {
                 reviewState="상담완료"
                 reviewWriter={review.userName}
                 reviewContent={review.comment}
-                picture={Test}
+                picture={review.imageUrl}
                 reviewCreatedAt={new Date(review.writeDate).toLocaleDateString()}
               ></Review>
             );

@@ -15,7 +15,7 @@ interface ReviewDetailModalProps {
 }
 
 export const ReviewDetailPopup: FC<ReviewDetailModalProps> = ({ reviewDetailIndex, reviews, showModal, closeModal }) => {
-    const reviewData = reviews[reviewDetailIndex];
+    const reviewData = reviews[reviewDetailIndex] || {};
 
     return (
         <StyledPopup open={showModal} closeOnDocumentClick onClose={closeModal}>

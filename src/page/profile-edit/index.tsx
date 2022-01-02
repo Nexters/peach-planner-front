@@ -188,7 +188,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
       description: planner?.summary ?? '',
     });
     setCompany(planner?.company ?? undefined);
-    setInputCompanyName(planner?.company.name ?? '');
+    setInputCompanyName(planner?.company?.name ?? '');
     setStudios(planner?.partners?.STUDIO?.map(e => {
       return {
         id: e.id,

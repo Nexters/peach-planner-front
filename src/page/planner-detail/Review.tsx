@@ -17,8 +17,9 @@ const Review: FC<ReviewProps> = ({ data, noLine = false }) => {
         {/* <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs33kicMrwTO3bQTdskuUlvJRK9JAgmaGjZw&usqp=CAU" /> */}
         <RightContainer>
           <Name>{data.userName}</Name>
-          <Date>{'2021년 6월 12일'}</Date>
+          <DateDiv>{new Date(data.writeDate).toLocaleDateString()}</DateDiv>
           <Comment>{data.comment}</Comment>
+          {data.imageUrl && <Image src={data.imageUrl} />}
         </RightContainer>
       </Container>
       {!noLine && <HorizontalLine height="0.1px" color="#dee2e6" />}
@@ -51,7 +52,7 @@ const Name = styled.div`
   margin-bottom: 10px;
 `;
 
-const Date = styled.div`
+const DateDiv = styled.div`
   font-size: 13px;
   margin-bottom: 13px;
   color: #868e96;

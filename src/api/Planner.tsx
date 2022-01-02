@@ -2,7 +2,7 @@ import axios from 'axios';
 import { QueryFunctionContext } from 'react-query';
 import { Company } from './Company';
 import { Estimate } from './Estimate';
-import { MyReview } from './Review';
+import { ReviewData } from './Review';
 
 export interface Paged<T> {
   content: T[];
@@ -154,7 +154,7 @@ export const fetchPlannerMyEstimations = async ({ queryKey }: QueryFunctionConte
 
 export const fetchPlannerMyReviews = async ({ queryKey }: QueryFunctionContext) => {
   const [_key, params] = queryKey;
-  const { data } = await axios.get<Paged<MyReview>>(`/inhouse/planners/my/reviews`, {
+  const { data } = await axios.get<Paged<ReviewData>>(`/inhouse/planners/my/reviews`, {
     headers: {
       Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
     }

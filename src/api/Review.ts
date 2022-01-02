@@ -1,15 +1,10 @@
 import axios from 'axios';
 
 export interface ReviewData {
-  planner_id: number;
-  userName: string;
-  comment: string;
-}
-
-export interface MyReview {
   comment: string;
   userName: string;
   writeDate: string;
+  imageUrl?: null;
 }
 
 export const fetchReview = async (plannerId: string) => {
@@ -20,3 +15,19 @@ export const fetchReview = async (plannerId: string) => {
   });
   return data;
 };
+
+interface CreateReviewReq {
+  comment: string,
+  plannerId: number,
+  imageUrl?: string,
+}
+
+export const postReview = async (req: CreateReviewReq) => {
+  const { data } = await axios.post(`/reviews`, req, {
+    headers: {
+      Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
+    }
+  });
+
+  return data;
+}

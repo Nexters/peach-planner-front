@@ -51,6 +51,7 @@ export interface ContentProps {
   lineHeight: string;
   margin?: string;
   onClick?: () => void;
+  fontFamily?: string;
 }
 
 export const Content = styled.span<ContentProps>`
@@ -59,6 +60,7 @@ export const Content = styled.span<ContentProps>`
   color: ${(props: ContentProps) => props.color};
   font-size: ${(props: ContentProps) => props.fontSize};
   line-height: ${(props: ContentProps) => props.lineHeight};
+  font-family: ${(props: ContentProps) => props.fontFamily};
   margin: ${(props: ContentProps) => props.margin};
   -webkit-user-select: none;
   cursor: ${(props: ContentProps) => (props.onClick ? 'pointer' : null)};

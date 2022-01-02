@@ -22,7 +22,7 @@ export const PortfolioCollect = ({ id, margin, images, setImages }: Props) => {
   const [previewImage, setPreviewImage] = useState('');
   const [imageFile, setImageFile] = useState(null);
 
-  const registerOrganization = async () => {
+  const registerPortfolioImages = async () => {
     if (images.length >= 6) {
         alert("포트폴리오는 6장까지만 등록이 가능해요!");
         return;
@@ -55,10 +55,10 @@ export const PortfolioCollect = ({ id, margin, images, setImages }: Props) => {
         previewImage={previewImage}
         setPreviewImage={changePreviewImage}
         setImageFile={changeImageFile}
-      ></ImageUpload>
-      <HorizontalLine color="#dee2e6"></HorizontalLine>
+      />
+      <HorizontalLine color="#dee2e6"/>
       <FlexDiv margin="15px 0 72px 0" direction="row" justify="space-between" align="start">
-        <PButton color="black" fontSize="14px" height="45px" width="126px" onClick={registerOrganization}>
+        <PButton color="black" fontSize="14px" height="45px" width="126px" onClick={registerPortfolioImages}>
           사진 등록하기
         </PButton>
         <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-end" align="start"></FlexDiv>

@@ -20,7 +20,7 @@ const MyProfile = ({ summary, description, handleDescription, images, setImages 
       <LineAndTitle title="내 프로필"></LineAndTitle>
       <PlannerInputTitle name="포트폴리오" margin="20px 0 8px 0"></PlannerInputTitle>
       <PortfolioCollect
-        id="makeup"
+        id="my-profile-portfolio"
         margin="0 0 24px 0"
         images={images}
         setImages={setImages}

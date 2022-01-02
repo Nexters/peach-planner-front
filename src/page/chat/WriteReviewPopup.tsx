@@ -7,17 +7,36 @@ import { useHistory } from 'react-router';
 import { fetchPlanner } from 'src/api/Planner';
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import { Content } from 'src/component/style/style';
+import ImageUpload from '../profile-edit/ImageUpload';
+import { upload } from 'src/api/Image';
+import { postReview } from 'src/api/Review';
 
-interface ReviewModalProps {
+interface WriteReviewModalProps {
   showReviewModal: boolean;
   closeReviewModal(): void;
   plannerId: string;
 }
 
-const ReviewPopup: FC<ReviewModalProps> = ({ showReviewModal, closeReviewModal, plannerId }) => {
+export const WriteReviewPopup: FC<WriteReviewModalProps> = ({ showReviewModal, closeReviewModal, plannerId }) => {
   const history = useHistory();
   const { data: plannerInfo } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
   const [reviewMessage, setReviewMessage] = React.useState('');
+  const [previewImage, setPreviewImage] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+
+  const registerReview = async () => {
+    const s3ImageUrl = imageFile ? await upload(imageFile) : null;
+
+    console.log(s3ImageUrl);
+    await postReview({
+      comment: reviewMessage,
+      plannerId: parseInt(plannerId),
+      imageUrl: s3ImageUrl,
+    });
+    closeReviewModal();
+    history.push(`/planner/${plannerId}`);
+  };
 
   return (
     <StyledPopup open={showReviewModal} closeOnDocumentClick onClose={closeReviewModal}>
@@ -33,32 +52,36 @@ const ReviewPopup: FC<ReviewModalProps> = ({ showReviewModal, closeReviewModal, 
       <SizedBox height={"15px"} />
       <WriteReviewTitle>플래너님의 리뷰를 남겨주세요</WriteReviewTitle>
       <SizedBox height={"6px"} />
-      <WriteReviewArea 
-        placeholder='최소 10자 이상 입력해 주세요.' 
+      <WriteReviewArea
+        placeholder='최소 10자 이상 입력해 주세요.'
         onChange={(e) => setReviewMessage(e.target.value)}
         value={reviewMessage} />
-      <SizedBox height={"20px"}/>
-      {/* <div>사진 첨부하기</div>
-      <SizedBox height={"137px"}/> */}
-      <CTAButton onClick={async () => {
-        await axios.post(`/reviews`, {
-          comment: reviewMessage,
-          plannerId: parseInt(plannerId),
-        }, {
-          headers: {
-            Authorization: localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : ``
-          }
-        });
-        closeReviewModal();
-        history.push(`/planner/${plannerId}`);
-      }}>
+      <SizedBox height={"20px"} />
+      <div>
+        <Content
+          height={'21px'}
+          width={'auto'}
+          color={'#495057'}
+          fontSize={'14px'}
+          lineHeight={'21px'}
+          margin={'0'}
+        >사진 첨부하기</Content>
+      </div>
+      <div>
+        <ImageUpload 
+          id={"review-image-upload"}
+          previewImage={previewImage}
+          setPreviewImage={setPreviewImage}
+          setImageFile={setImageFile}
+        />
+      </div>
+      <SizedBox height={"40px"} />
+      <CTAButton onClick={registerReview}>
         <CTA color="#FFFFFF">등록하기</CTA>
       </CTAButton>
     </StyledPopup>
   );
 };
-
-export default ReviewPopup;
 
 const StyledPopup = styled(Popup)`
   &-overlay {
@@ -103,7 +126,7 @@ const PopupSubtitle = styled.div`
 `;
 
 const Divider = styled.div`
-  width: 440px;
+  width: 80%;
   height: 1px;
   flex-grow: 0;
   margin: 6px 252px 8px 0;

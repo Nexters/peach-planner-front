@@ -4,14 +4,15 @@ import styled from 'styled-components';
 interface Props {
   reviewState: string;
   reviewWriter: string;
-  picture: string;
+  picture?: string;
   reviewContent: string;
   reviewCreatedAt: string;
+  onClick: () => any;
 }
 
-const Review = ({ reviewState, reviewWriter, picture, reviewContent, reviewCreatedAt }: Props) => {
+const Review = ({ reviewState, reviewWriter, picture, reviewContent, reviewCreatedAt, onClick }: Props) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <ReviewStateBox>
         <Content height="19px" width="auto" fontSize="13px" lineHeight="normal" color="#495057">
           {reviewState}
@@ -23,7 +24,7 @@ const Review = ({ reviewState, reviewWriter, picture, reviewContent, reviewCreat
         </Content>
       </WriterBox>
       <PictureBox>
-        <Image src={picture}></Image>
+        { picture && <Image src={picture}/> }
       </PictureBox>
       <ReviewContentBox>
         <Content height="19px" width="auto" fontSize="13px" lineHeight="normal" color="#495057">

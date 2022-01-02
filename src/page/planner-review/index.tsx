@@ -5,14 +5,18 @@ import Review from './Review';
 import Test from 'src/assets/svg/ic_right_gray.svg';
 import { fetchPlannerMyReviews } from 'src/api/Planner';
 import { useQuery } from 'react-query';
+import { ReviewDetailPopup } from './ReviewDetailPopup';
+import { useState } from 'react';
 
 const PlannerReview = () => {
   const { data: myReviews } = useQuery('planner/my/reviews', fetchPlannerMyReviews);
+  const [showReviewDetailModal, setShowReviewDetailModal] = useState<boolean>(false);
+  const [reviewDetailModalIndex, setReviewDetailModalIndex] = useState<number>(0);
 
   return (
     <Container>
       <InnerContainer>
-        <PlannerPageSideMenu></PlannerPageSideMenu>
+        <PlannerPageSideMenu />
         <ContentContainer>
           <TitleBox>
             <Title height="27px" fontSize="18px" lineHeight="normal" color="#000000">
@@ -53,13 +57,23 @@ const PlannerReview = () => {
                 reviewState="상담완료"
                 reviewWriter={review.userName}
                 reviewContent={review.comment}
-                picture={Test}
+                picture={review.imageUrl}
                 reviewCreatedAt={new Date(review.writeDate).toLocaleDateString()}
-              ></Review>
+                onClick={() => { 
+                  setReviewDetailModalIndex(index);
+                  setShowReviewDetailModal(true); 
+                }}
+              />
             );
           })}
         </ContentContainer>
       </InnerContainer>
+      <ReviewDetailPopup 
+        showModal={showReviewDetailModal} 
+        closeModal={(() => { setShowReviewDetailModal(false); })} 
+        reviewDetailIndex={reviewDetailModalIndex}
+        reviews={myReviews?.content ?? []}
+      />
     </Container>
   );
 };

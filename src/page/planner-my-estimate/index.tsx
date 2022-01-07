@@ -38,6 +38,8 @@ const PlannerMyEstimate = () => {
           {myEstimations?.content.map((estimation, index) => {
             return (
               <Estimate
+                key={index}
+                id={estimation.id}
                 requestDay={new Date(estimation.createDate).toLocaleDateString()}
                 customerName={estimation.userName}
                 requestContent={estimation.description}

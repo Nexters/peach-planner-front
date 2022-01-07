@@ -34,6 +34,9 @@ import PlannerReview from './page/planner-review';
 import PlannerMyEstimate from './page/planner-my-estimate';
 import { UserMyPage } from './page/user-mypage';
 import UserSetting from './page/user-mypage/UserSetting';
+import PrivateRout from './routes/PrivateRoute';
+import PrivateRoute from './routes/PrivateRoute';
+import EstimateDetail from './page/estimate-detail';
 
 export const queryClient = new QueryClient();
 
@@ -76,6 +79,9 @@ const App = () => {
                 <UserPrivateRoute path="/estimate/:id">
                   <PlannerEstimate />
                 </UserPrivateRoute>
+                <PrivateRoute path="/estimateDetail/:id">
+                  <EstimateDetail />
+                </PrivateRoute>
                 <UserPrivateRoute path="/userPage">
                   <UserMyPage />
                 </UserPrivateRoute>

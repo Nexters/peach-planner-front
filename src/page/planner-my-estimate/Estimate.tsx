@@ -1,15 +1,23 @@
+import { useHistory } from 'react-router';
 import { Content } from 'src/component/style/style';
 import styled from 'styled-components';
 
 interface Props {
+  id: number;
   requestDay: string;
   customerName: string;
   requestContent: string;
 }
 
-const Estimate = ({ requestDay, customerName, requestContent }: Props) => {
+const Estimate = ({ id, requestDay, customerName, requestContent }: Props) => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push(`/estimateDetail/${id}`);
+  };
+
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <RequestDayBox>
         <Content height="19px" width="auto" fontSize="13px" lineHeight="normal" color="#495057">
           {requestDay}
@@ -36,6 +44,7 @@ const Container = styled.div`
   flex-direction: row;
   border-bottom: 1px solid;
   border-bottom-color: #ced4da;
+  cursor: pointer;
 `;
 
 const RequestDayBox = styled.div`

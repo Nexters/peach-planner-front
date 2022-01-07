@@ -13,8 +13,9 @@ export const setAxiosDefaults = () => {
       return response;
     },
     (error) => {
+      console.log('test');
       const originalRequest = error.config;
-      if (error.response.status === 500 && originalRequest.url === '/auth/token/refresh') {
+      if (error.response.status === 400 && originalRequest.url === '/auth/token/refresh') {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         window.location.href = '/login/';
@@ -31,7 +32,9 @@ export const setAxiosDefaults = () => {
             return axios(originalRequest);
           })
           .catch((err) => {
+            console.log('test');
             console.log(err);
+            console.log('test');
           });
       }
     }

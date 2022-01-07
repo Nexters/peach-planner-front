@@ -34,7 +34,7 @@ const Header = () => {
   const handleClickMessage = () => {
     history.push('/chats');
     setIsClickedProfile(!isClickedProfile);
-  }
+  };
 
   const handleClickAccountSetting = () => {
     getUserMe()
@@ -74,8 +74,6 @@ const Header = () => {
     history.push('/plannerProfile');
     setIsClickedProfile(false);
   };
-
-  console.log(user?.profileImage);
 
   let right;
   if (isLogin) {

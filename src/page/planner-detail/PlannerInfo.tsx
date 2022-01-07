@@ -6,6 +6,7 @@ import PButton from '../../component/PButton';
 import { Planner } from '../../api/Planner';
 import { useHistory } from 'react-router';
 import axios from 'axios';
+import { useUserTypeState } from 'src/atoms/AuthStatus';
 
 interface PlannerInfoProps {
   plannerInfo: Planner;
@@ -13,6 +14,8 @@ interface PlannerInfoProps {
 
 const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
   const history = useHistory();
+
+  const [userType, _] = useUserTypeState();
 
   const PLANNER_NAME: string = plannerInfo.name;
   const DETAIL: string = plannerInfo.summary;
@@ -36,15 +39,25 @@ const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
 
   return (
     <Container title="플래너 소개">
-      <UserInfoIcon imgSrc={plannerInfo.profileImage} title={PLANNER_NAME} detail={DETAIL} likeCount={LIKES} reviewCount={REVIEWs} />
+      <UserInfoIcon
+        imgSrc={plannerInfo.profileImage}
+        title={PLANNER_NAME}
+        detail={DETAIL}
+        likeCount={LIKES}
+        reviewCount={REVIEWs}
+      />
       <Detail>
         {DESCRIPTION.map((desc, i) => (
           <div key={i}>{desc}</div>
         ))}
       </Detail>
-      <PButton width="108px" onClick={handleChat} otherBgColor="#f1f3f5" border="none">
-        1:1 문의하기
-      </PButton>
+      {userType === 'USER' ? (
+        <PButton width="108px" onClick={handleChat} otherBgColor="#f1f3f5" border="none">
+          1:1 문의하기
+        </PButton>
+      ) : (
+        <></>
+      )}
     </Container>
   );
 };

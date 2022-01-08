@@ -7,6 +7,7 @@ import { Planner } from '../../api/Planner';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { useUserTypeState } from 'src/atoms/AuthStatus';
+import { EmptyText } from './components/styles';
 
 interface PlannerInfoProps {
   plannerInfo: Planner;
@@ -18,10 +19,10 @@ const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
   const [userType, _] = useUserTypeState();
 
   const PLANNER_NAME: string = plannerInfo.name;
-  const DETAIL: string = plannerInfo.summary;
+  const DETAIL: string = plannerInfo.summary || `${PLANNER_NAME} 웨딩 플래너 입니다.`;
   const LIKES: number = plannerInfo.likes;
   const REVIEWs: number = plannerInfo.reviews;
-  const DESCRIPTION: string[] = plannerInfo.description.split('\\n');
+  const DESCRIPTION: string[] = plannerInfo.description.split('\\n').filter(e => e !== '');
 
   const handleChat = () => {
     axios
@@ -50,6 +51,7 @@ const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
         {DESCRIPTION.map((desc, i) => (
           <div key={i}>{desc}</div>
         ))}
+        {DESCRIPTION.length === 0 && <EmptyText>등록되어 있는 소개글이 없습니다.</EmptyText>}
       </Detail>
       {userType === 'USER' ? (
         <PButton width="108px" onClick={handleChat} otherBgColor="#f1f3f5" border="none">

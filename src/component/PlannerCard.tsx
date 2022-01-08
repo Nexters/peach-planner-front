@@ -119,10 +119,12 @@ interface PlannerImageProps {
 
 const PlannerImage = styled.img.attrs((props: PlannerImageProps) => ({ src: props.src }))`
   height: ${(props: PlannerImageProps) => props.height}};
-  width: 100%;
+  width: 254px;
+  height: 254px;
   border-radius: 10px;
   cursor: pointer; 
   position: relative;
+  object-fit: cover;
 `;
 
 const PickBox = styled.div`

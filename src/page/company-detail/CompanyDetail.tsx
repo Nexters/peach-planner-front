@@ -14,6 +14,8 @@ import DefaultImage from '../../assets/svg/img_photo_default.svg';
 import ImageModal from '../planner-detail/ImageModal';
 import Container from '../planner-detail/Container';
 import axios from 'axios';
+import { FaHome, FaPhone, FaPhoneAlt, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
+import { MdHome, MdHomeFilled } from 'react-icons/md';
 
 interface routeProps {
   id: string;
@@ -24,13 +26,17 @@ const CompanyDetail = () => {
   const history = useHistory();
   const { params } = useRouteMatch<routeProps>();
   const companyId = params.id;
-  
+
   const [selected, setSelected] = useState<boolean>(false);
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
 
   const fetchCompany = () => {
     axios
-      .get(`/companies/${companyId}`)
+      .get(`/companies/${companyId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      })
       .then((response) => {
         setCompanyInfo({ ...response.data });
         setSelected(response.data.pick ?? false);
@@ -44,64 +50,77 @@ const CompanyDetail = () => {
     fetchCompany();
   }, []);
 
-  const pickCompany = () => {
-    pick({ targetCategoryType: 'COMPANY', targetId: parseInt(companyId), toBePick: !selected } as PickRequest);
-    setSelected((selected) => !selected);
-  };
-
   const openImageModal = () => setShowImageModal(true);
   const closeImageModal = () => setShowImageModal(false);
 
-  const copyLocation = () => {
-    if (!companyInfo) {
+
+  const copy = (text: string) => {
+    if (!text) {
       return;
     }
-    navigator.clipboard.writeText(companyInfo?.location);
+    navigator.clipboard.writeText(text);
   };
 
   return companyInfo ? (
     <OuterContainer>
-      <TopContainer>
-        <Title>{companyInfo.name}</Title>
-        <div>
-          <PButton onClick={pickCompany} otherBgColor="#f1f3f5" border="none">
-            <Vertical>
-              <img src={selected ? FullHeart : EmptyHeart} />
-            </Vertical>{' '}
-            <Vertical>찜하기</Vertical>
-          </PButton>
-        </div>
-      </TopContainer>
-      <Information>
-        <InformationElement>
-          <Vertical>
-            <img src={Map} />
-          </Vertical>{' '}
-          <Vertical>{companyInfo.location}</Vertical>
-          <CopyLocation onClick={copyLocation}>복사</CopyLocation>
-        </InformationElement>
-        <InformationElement>
-          <Vertical>
-            <img src={Call} />
-          </Vertical>{' '}
-          <Vertical>{companyInfo.tel}</Vertical>
-        </InformationElement>
-      </Information>
       <ImageOuterContainer>
         <ImageContainer>
           {companyInfo.images.length == 0 ? <img src={DefaultBigImage} /> : <BigImage src={companyInfo.images[0]} />}
-          <ImageWrapper>
-            {companyInfo.images.slice(1, 3).map((image, i) => (
-              <SmallImage src={image} key={i} />
-            ))}
-            {companyInfo.images.length <= 1 && <Image src={DefaultImage} />}
-            {companyInfo.images.length <= 2 && <Image src={DefaultImage} />}
-          </ImageWrapper>
         </ImageContainer>
-        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={companyInfo.images} />
         {companyInfo.images.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}
+        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={companyInfo.images} />
       </ImageOuterContainer>
-      <Container title="업체 정보">{companyInfo.summary ? companyInfo.summary : '업체 정보가 없습니다.'}</Container>
+      <TopContainer>
+        <Title>{companyInfo.name}</Title>
+        <Information>
+          <InformationElement>
+            <Vertical>
+              <div style={{
+                margin: "3px 5px 2px 0",
+                padding: "2.4px 2.4px 2.4px 2.4px",
+              }}>
+                <FaPhoneAlt size={16} />
+              </div>
+            </Vertical>{' '}
+            <Vertical>{companyInfo.tel}</Vertical>
+            <CopyLocation onClick={() => copy(companyInfo?.tel)}>복사</CopyLocation>
+          </InformationElement>
+          <InformationElement>
+            <Vertical>
+              <div style={{
+                margin: "3px 5px 2px 0",
+                padding: "2.4px 2.4px 2.4px 2.4px",
+              }}>
+                <FaMapMarkerAlt size={16} />
+              </div>
+            </Vertical>{' '}
+            <Vertical>{companyInfo.location}</Vertical>
+            <CopyLocation onClick={() => copy(companyInfo?.location)}>복사</CopyLocation>
+          </InformationElement>
+          <InformationElement>
+            <Vertical>
+              <div style={{
+                margin: "3px 5px 2px 0",
+                padding: "2.4px 2.4px 2.4px 2.4px",
+              }}>
+                <MdHomeFilled size={16} />
+              </div>
+            </Vertical>{' '}
+            <Vertical>{companyInfo.homepage && <a href={companyInfo.homepage} style={{ color: '#868e96' }}>{companyInfo.homepage}</a>}</Vertical>
+          </InformationElement>
+          <InformationElement>
+            <Vertical>
+              <div style={{
+                margin: "3px 5px 2px 0",
+                padding: "2.4px 2.4px 2.4px 2.4px",
+              }}>
+                <FaClock size={16} />
+              </div>
+            </Vertical>{' '}
+            <Vertical>{companyInfo.bizHour}</Vertical>
+          </InformationElement>
+        </Information>
+      </TopContainer>
     </OuterContainer>
   ) : (
     <></>
@@ -112,16 +131,17 @@ export default CompanyDetail;
 
 const OuterContainer = styled.div`
   width: 860px;
-  margin: 40px auto 0 auto;
+  display: flex;
+  margin: 0 auto 0 auto;
 `;
 
 const ImageOuterContainer = styled.div`
   position: relative;
-  margin-bottom: 40px;
+  margin: 0 40px auto auto;
 `;
 
 const TopContainer = styled.div`
-  display: flex;
+  flex: 1;
   justify-content: space-between;
 `;
 
@@ -174,11 +194,10 @@ const ShowImageButton = styled.button`
 `;
 
 const BigImage = styled.img`
-  width: 641px;
-  height: 430px;
   object-fit: cover;
-  flex: 3;
   border-radius: 10px;
+  width: 240px;
+  height: 240px;
 `;
 
 const ImageWrapper = styled.div`

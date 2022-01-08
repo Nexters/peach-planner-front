@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import CompanyInfo from './CompanyInfo';
 import Detail from './Detail';
-import PartnerInfo from './PartnerInfo';
+import { PartnerInfo } from './PartnerInfo';
 import PlannerInfo from './PlannerInfo';
 import ReviewList from './ReviewList';
 import Summary from './Summary';

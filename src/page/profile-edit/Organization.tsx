@@ -19,7 +19,7 @@ const Organization = ({ name, image, handleOrgClose }: Props) => {
       </ImageContainer>
       <Content
         height={'19px'}
-        width={'auto'}
+        width={'100px'}
         color={'#495057'}
         fontSize={'13px'}
         lineHeight={'19px'}
@@ -61,4 +61,5 @@ const Image = styled.img`
   height: 100px;
   width: 100px;
   margin: 0px 0px 0px 0;
+  object-fit: cover;
 `;

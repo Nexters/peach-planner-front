@@ -8,6 +8,7 @@ import { ReactComponent as Blog } from '../../assets/svg/ic_blog.svg';
 import ImageModal from './ImageModal';
 import { Planner } from '../../api/Planner';
 import DefaultImage from '../../assets/svg/img_photo_default.svg';
+import { EmptyText } from './components/styles';
 
 interface SummaryProps {
   plannerInfo: Planner;
@@ -55,19 +56,28 @@ const Summary: FC<SummaryProps> = ({ plannerInfo, children }) => {
           <HorizontalLine height="0.1px" color="#dee2e6" top="12px" bottom="15px" />
 
           <BoldGray>플래너 한줄소개</BoldGray>
-          <OneLine>{summary}</OneLine>
+          <OneLine>{summary || `안녕하세요. ${plannerName} 플래너 입니다.`}</OneLine>
           <HorizontalLine height="0.1px" color="#dee2e6" top="36px" bottom="11px" />
 
+          <BoldGray>소셜미디어</BoldGray>
           {externalLinks != null && (
             <>
-              <BoldGray>소셜미디어</BoldGray>
               <SocialIcon>
-                <a href={externalLinks.instagramLink} target="_blank">
-                  <Instagram />
-                </a>
-                <a href={externalLinks.blogLink} target="_blank">
-                  <Blog />
-                </a>
+                {
+                  externalLinks.instagramLink &&
+                  <a href={externalLinks.instagramLink} target="_blank">
+                    <Instagram />
+                  </a>
+                }
+                {
+                  externalLinks.blogLink &&
+                  <a href={externalLinks.blogLink} target="_blank">
+                    <Blog />
+                  </a>
+                }
+                {
+                  !externalLinks.instagramLink && !externalLinks.blogLink && <EmptyText>등록되어 있는 소셜미디어가 없습니다.</EmptyText>
+                }
               </SocialIcon>
             </>
           )}
@@ -104,6 +114,7 @@ const Image = styled.img`
   width: 211px;
   height: 211px;
   border-radius: 10px;
+  object-fit: cover;
 `;
 
 const ShowImageButton = styled.button`

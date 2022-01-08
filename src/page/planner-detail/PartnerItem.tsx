@@ -19,7 +19,6 @@ const PartnerItem: FC<PartnerItemProps> = ({ data }) => {
 export default PartnerItem;
 
 const Container = styled.div`
-  flex: 1;
   margin-right: 15px;
 `;
 
@@ -27,6 +26,7 @@ const Image = styled.img`
   border-radius: 10px;
   width: 160px;
   height: 160px;
+  object-fit: cover;
 `;
 
 const Title = styled.div`
@@ -35,6 +35,8 @@ const Title = styled.div`
 `;
 
 const Detail = styled.div`
+width: 160px;
   font-size: 12px;
   color: #495057;
+  text-overflow:ellipsis;
 `;

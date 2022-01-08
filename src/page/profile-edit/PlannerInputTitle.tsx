@@ -21,7 +21,7 @@ const PlannerInputTitle = ({ name, margin }: Props) => {
         lineHeight={'24px'}
         margin={'0 0 0 4px'}
       >
-        필수
+        {/* 필수 */}
       </Content>
     </Container>
   );

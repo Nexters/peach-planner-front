@@ -3,12 +3,28 @@ import styled from 'styled-components';
 import LeftArrow from 'src/assets/svg/ic_arrow-left-line.svg';
 import { Title } from 'src/component/style/style';
 
-const Header = () => {
+interface Props {
+  isUser: boolean;
+}
+
+const Header = ({ isUser }: Props) => {
   const history = useHistory();
+
+  const handleClick = () => {
+    let path: string;
+    if (isUser) {
+      path = '/userPage';
+    } else {
+      path = '/plannerMyEstimate';
+    }
+
+    history.push(path);
+  };
+
   return (
     <Container>
       <Back>
-        <BackBody onClick={() => history.push('/plannerMyEstimate')}>
+        <BackBody onClick={handleClick}>
           <BackImage src={LeftArrow}></BackImage>
           <Title height="27px" width="auto" fontSize="18px" color="#000" lineHeight="27px" margin="0px 0px 0px 8px">
             리뷰 목록으로 이동

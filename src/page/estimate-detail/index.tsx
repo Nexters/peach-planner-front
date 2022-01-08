@@ -9,21 +9,42 @@ import Planner from './Planner';
 import File from './File';
 import Message from './Message';
 import Requirement from './Requirement';
+import { useQuery } from 'react-query';
+import { useRouteMatch } from 'react-router';
+import { fetchEstimate } from 'src/api/Estimate';
+
+interface routeProps {
+  id: string;
+}
 
 const EstimateDetail = () => {
+  const { params } = useRouteMatch<routeProps>();
   const [userTypeState, _] = useUserTypeState();
+  const { data: estimateDetail } = useQuery(['estimateDetail', params.id], fetchEstimate);
 
   return (
     <Container>
       <InnerContainer>
         {userTypeState === 'USER' ? <UserPageSideMenu></UserPageSideMenu> : <PlannerPageSideMenu></PlannerPageSideMenu>}
         <ContentContainer>
-          <Header></Header>
+          <Header isUser={userTypeState === 'USER'}></Header>
           {userTypeState === 'USER' ? <Planner></Planner> : <></>}
-          <CustomerInformation isUser={userTypeState === 'USER'}></CustomerInformation>
-          <Company></Company>
-          <Requirement></Requirement>
-          <File></File>
+          <CustomerInformation
+            isUser={userTypeState === 'USER'}
+            name={estimateDetail?.userName!}
+            email={estimateDetail?.email!}
+            phoneNumber={estimateDetail?.phoneNum!}
+            weddingDate={estimateDetail?.weddingDate!}
+          ></CustomerInformation>
+          <Company
+            studio={estimateDetail?.studio!}
+            dress={estimateDetail?.dress!}
+            makeup={estimateDetail?.makeup!}
+            weddingHall={estimateDetail?.weddingHall!}
+            weddingCard={estimateDetail?.weddingCard!}
+          ></Company>
+          <Requirement requirement={estimateDetail?.description!}></Requirement>
+          <File filePaths={estimateDetail?.filePath!}></File>
           <Message id={1} isUser={userTypeState === 'USER'}></Message>
         </ContentContainer>
       </InnerContainer>

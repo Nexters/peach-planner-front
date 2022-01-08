@@ -1,14 +1,18 @@
 import { Title } from 'src/component/style/style';
 import styled from 'styled-components';
 
-const Requirement = () => {
+interface Props {
+  requirement: string;
+}
+
+const Requirement = ({ requirement }: Props) => {
   return (
     <Container>
       <Title height="24px" width="auto" fontSize="16px" color="#000" lineHeight="normal" margin="8px 0px 8px 0px">
         요청사항
       </Title>
       <Row>
-        <Content>A스튜디오일 때와 B스튜디오일 때 가격이 궁금해요.</Content>
+        <Content>{requirement}</Content>
       </Row>
     </Container>
   );

@@ -3,9 +3,13 @@ import styled from 'styled-components';
 
 interface Props {
   isUser: boolean;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  weddingDate: string;
 }
 
-const CustomerInformation = ({ isUser }: Props) => {
+const CustomerInformation = ({ isUser, name, email, phoneNumber, weddingDate }: Props) => {
   return (
     <Container>
       <Title height="24px" width="auto" fontSize="16px" color="#000" lineHeight="normal" margin="8px 0px 8px 0px">
@@ -13,19 +17,19 @@ const CustomerInformation = ({ isUser }: Props) => {
       </Title>
       <Row>
         <Key>이름</Key>
-        <Value>이수영</Value>
+        <Value>{name}</Value>
       </Row>
       <Row>
         <Key>이메일</Key>
-        <Value>이수영</Value>
+        <Value>{email}</Value>
       </Row>
       <Row>
         <Key>연락처</Key>
-        <Value>이수영</Value>
+        <Value>{phoneNumber}</Value>
       </Row>
       <Row>
         <Key>예식 예정일</Key>
-        <Value>이수영</Value>
+        <Value>{weddingDate}</Value>
       </Row>
     </Container>
   );

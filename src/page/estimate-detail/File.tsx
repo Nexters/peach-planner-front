@@ -2,15 +2,24 @@ import { Title } from 'src/component/style/style';
 import styled from 'styled-components';
 import FileImage from './FileImage';
 
-const File = () => {
+interface Props {
+  filePaths: string[];
+}
+
+const File = ({ filePaths }: Props) => {
   return (
     <Container>
       <Title height="24px" width="auto" fontSize="16px" color="#000" lineHeight="normal" margin="8px 0px 24px 0px">
         첨부파일
       </Title>
       <Images>
-        <FileImage imageUrl=""></FileImage>
-        <FileImage imageUrl=""></FileImage>
+        {filePaths ? (
+          filePaths.map((filePath, index) => {
+            return <FileImage key={index} imageUrl={filePath}></FileImage>;
+          })
+        ) : (
+          <></>
+        )}
       </Images>
     </Container>
   );

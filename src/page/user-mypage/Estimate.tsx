@@ -1,7 +1,9 @@
+import { useHistory } from 'react-router';
 import { Content } from 'src/component/style/style';
 import styled from 'styled-components';
 
 interface Props {
+  id: number;
   createdAt: string;
   content: string;
   estimateNumber: number;
@@ -9,9 +11,15 @@ interface Props {
   estimateState: string;
 }
 
-const MyEstimate = ({ createdAt, content, estimateNumber, companyName, estimateState }: Props) => {
+const MyEstimate = ({ id, createdAt, content, estimateNumber, companyName, estimateState }: Props) => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push(`/estimateDetail/${id}`);
+  };
+
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <EstimateCreatedAtBox>
         <Content height="19px" width="auto" fontSize="13px" lineHeight="normal" color="#495057">
           {createdAt}
@@ -48,6 +56,7 @@ const Container = styled.div`
   flex-direction: row;
   border-bottom: 1px solid;
   border-bottom-color: #ced4da;
+  cursor: pointer;
 `;
 
 const EstimateCreatedAtBox = styled.div`

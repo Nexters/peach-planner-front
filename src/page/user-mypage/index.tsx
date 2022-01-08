@@ -121,9 +121,10 @@ export const UserMyPage = () => {
             </EstimateState>
           </TableHeader>
           {estimates ? (
-            estimates.map((estimate) => {
+            estimates.map((estimate, index) => {
               return (
                 <MyEstimate
+                  id={estimate.id}
                   createdAt={estimate.createDate}
                   content={estimate.description}
                   estimateNumber={estimate.id}

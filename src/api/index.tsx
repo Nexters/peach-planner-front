@@ -13,7 +13,11 @@ export const setAxiosDefaults = () => {
       return response;
     },
     (error) => {
-      console.log('test');
+      if (!error.status) {
+        // network error
+        return Promise.reject(error);
+      }
+
       const originalRequest = error.config;
       if (error.response.status === 400 && originalRequest.url === '/auth/token/refresh') {
         localStorage.removeItem('accessToken');

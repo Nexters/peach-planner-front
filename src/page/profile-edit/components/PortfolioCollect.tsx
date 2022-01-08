@@ -20,24 +20,19 @@ interface Props {
 
 export const PortfolioCollect = ({ id, margin, images, setImages }: Props) => {
   const [previewImage, setPreviewImage] = useState('');
-  const [imageFile, setImageFile] = useState(null);
 
-  const registerPortfolioImages = async () => {
+  const changeImageFile = async (imageFile: any) => {
     if (images.length >= 6) {
         alert("포트폴리오는 6장까지만 등록이 가능해요!");
         return;
-    } 
+    };
 
-    const s3ImageUrl = await upload(imageFile);
-    setImages(images?.concat(s3ImageUrl));
-  };
-
-  const changePreviewImage = (image: string) => {
-    setPreviewImage(image);
-  };
-
-  const changeImageFile = (imageFile: any) => {
-    setImageFile(imageFile);
+    try {
+      const s3ImageUrl = await upload(imageFile);
+      setImages(images?.concat(s3ImageUrl));
+    } catch (e) {
+      window.alert(e);
+    }
   };
 
   return (
@@ -53,20 +48,14 @@ export const PortfolioCollect = ({ id, margin, images, setImages }: Props) => {
       <ImageUpload
         id={id}
         previewImage={previewImage}
-        setPreviewImage={changePreviewImage}
+        setPreviewImage={() => {}}
         setImageFile={changeImageFile}
       />
       <HorizontalLine color="#dee2e6"/>
-      <FlexDiv margin="15px 0 72px 0" direction="row" justify="space-between" align="start">
-        <PButton color="black" fontSize="14px" height="45px" width="126px" onClick={registerPortfolioImages}>
-          사진 등록하기
-        </PButton>
-        <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-end" align="start"></FlexDiv>
-      </FlexDiv>
       <ImageLists>
         {images ? (
           images.map((image, index) => {
-              return <ImageContainer>
+              return <ImageContainer key={index}>
                 <Image src={image} />
                 <ImageCloseContainer onClick={() => { setImages(images.filter((e, i) => i !== index)); }}>
                   <Close/>
@@ -103,4 +92,5 @@ const Image = styled.img`
   height: 100px;
   width: 100px;
   margin: 0px 0px 0px 0;
+  object-fit: cover;
 `;

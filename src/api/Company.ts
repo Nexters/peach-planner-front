@@ -14,6 +14,8 @@ export interface Company {
   profilePath: string;
   images: string[];
   summary: string | null;
+  homepage?: string;
+  bizHour?: string;
 }
 
 export const fetchCompany = async (companyId: string) => {

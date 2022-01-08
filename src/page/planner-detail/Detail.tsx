@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import Container from './Container';
 import { ReactComponent as Check } from '../../assets/svg/ic_check.svg';
 import { Planner } from '../../api/Planner';
+import { EmptyText } from './components/styles';
 interface DetailProps {
   plannerInfo: Planner;
 }
 
 const Detail: FC<DetailProps> = ({ plannerInfo }) => {
-  const list = plannerInfo.locations.concat(plannerInfo.supportInfos);
+  const list = plannerInfo.locations.concat(plannerInfo.supportInfos).filter(e => e !== '');
 
   return (
     <Container title="플래너가 담당해요">
@@ -20,6 +21,7 @@ const Detail: FC<DetailProps> = ({ plannerInfo }) => {
             </Wrap>
           </DetailItem>
         ))}
+        {list.length === 0 && <EmptyText>담당하고 있는 항목이 없습니다.</EmptyText>}
       </InnerContainer>
     </Container>
   );

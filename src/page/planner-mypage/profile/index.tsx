@@ -6,7 +6,7 @@ import PButton from 'src/component/PButton';
 import { Content } from 'src/component/style/style';
 import CompanyInfo from 'src/page/planner-detail/CompanyInfo';
 import Detail from 'src/page/planner-detail/Detail';
-import PartnerInfo from 'src/page/planner-detail/PartnerInfo';
+import { PartnerInfo } from 'src/page/planner-detail/PartnerInfo';
 import PlannerInfo from 'src/page/planner-detail/PlannerInfo';
 import ReviewList from 'src/page/planner-detail/ReviewList';
 import Summary from 'src/page/planner-detail/Summary';

@@ -1,16 +1,22 @@
 import { Title } from 'src/component/style/style';
 import styled from 'styled-components';
 
-const Planner = () => {
+interface Props {
+  plannerImage: string;
+  plannerName: string;
+  companyName: string;
+}
+
+const Planner = ({ plannerImage, plannerName, companyName }: Props) => {
   return (
     <Container>
       <InnerContainer>
-        <Image></Image>
+        <Image src={plannerImage}></Image>
         <ProfileDescription>
           <Title height="27px" width="auto" fontSize="18px" color="#000" lineHeight="normal" margin="8px 0px 4px 0px">
-            XXX 플래너
+            {plannerName}
           </Title>
-          <Content>회사명</Content>
+          <Content>{companyName}</Content>
           <Noti>견적 요청이 아닌 웨딩 계약서는 플래너에게 따로 요청해 주세요.</Noti>
         </ProfileDescription>
       </InnerContainer>

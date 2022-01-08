@@ -4,26 +4,21 @@ import PButton from 'src/component/PButton';
 import styled from 'styled-components';
 
 interface Props {
-  id: number;
   isUser: boolean;
 }
 
-const Message = ({ id, isUser }: Props) => {
+const Message = ({ isUser }: Props) => {
   const history = useHistory();
   const handleChat = () => {
-    axios
-      .post(`/chat/rooms/${id}`, {}, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })
-      .then((res) => {
-        if (res.status == 200) {
-          history.push('/chats');
-        }
-      });
+    history.push('/chats');
   };
 
   return (
     <Container>
       <Content>
-        견적서 요청을 확인하셨나요?<br></br> 1:1 메시지에서 고객에게 답변해 보세요.
+        {isUser
+          ? '견적서 전달이 완료되었습니다. 1:1 메시지를 확인해 주세요.'
+          : '견적서 요청을 확인하셨나요?<br></br> 1:1 메시지에서 고객에게 답변해 보세요.'}
       </Content>
       <InnerContainer>
         <PButton color="pink" onClick={handleChat} width="176px" height="44px" margin="22px 0px 0px 0px">

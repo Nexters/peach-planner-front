@@ -28,7 +28,15 @@ const EstimateDetail = () => {
         {userTypeState === 'USER' ? <UserPageSideMenu></UserPageSideMenu> : <PlannerPageSideMenu></PlannerPageSideMenu>}
         <ContentContainer>
           <Header isUser={userTypeState === 'USER'}></Header>
-          {userTypeState === 'USER' ? <Planner></Planner> : <></>}
+          {userTypeState === 'USER' ? (
+            <Planner
+              plannerImage={estimateDetail?.planner?.images[0]!}
+              plannerName={estimateDetail?.planner?.name!}
+              companyName={estimateDetail?.planner?.company?.name!}
+            ></Planner>
+          ) : (
+            <></>
+          )}
           <CustomerInformation
             isUser={userTypeState === 'USER'}
             name={estimateDetail?.userName!}
@@ -45,7 +53,7 @@ const EstimateDetail = () => {
           ></Company>
           <Requirement requirement={estimateDetail?.description!}></Requirement>
           <File filePaths={estimateDetail?.filePath!}></File>
-          <Message id={1} isUser={userTypeState === 'USER'}></Message>
+          <Message isUser={userTypeState === 'USER'}></Message>
         </ContentContainer>
       </InnerContainer>
     </Container>

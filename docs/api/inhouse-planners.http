@@ -9,7 +9,7 @@ Content-Type: application/json
 
 ###
 GET https://api.peachplanner.com/api/inhouse/planners/me
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIyOTMiLCJpYXQiOjE2NDA0MjIyODMsImV4cCI6MTY0MDUwODY4M30.mE7mGKLN7mH7Dda7JALd2CA_k5Vx6s3IiLI5FZe-5Abu3-zNEavChDxa88SLFBrr
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIyOTMiLCJpYXQiOjE2NDE2MjgyOTksImV4cCI6MTY0MTcxNDY5OX0.MXn-mUYn7Ninn19WVYHOs_pke_mHhVcqxDK-BflSdpJLQeS0p3hHxnzsgohYeBBp
 
 
 ###

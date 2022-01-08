@@ -112,10 +112,6 @@ const Profile = ({ isUpdate }: ProfileProps) => {
   };
 
   const handleRegister = () => {
-    if (description.description === '' || description.summary === '') {
-      alert('플래너 한줄 소개와 플래너 소개는 필수 값 입니다.');
-      return;
-    }
     const affilicatedDress: AffiliatedCompany[] = dresses.map((dress) => {
       return {
         id: dress.id,

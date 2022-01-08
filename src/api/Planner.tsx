@@ -63,11 +63,12 @@ export interface PartnerInfo {
   id: number;
   location: string;
   name: string;
-  owner: 'PLANNER';
   pick: boolean;
-  primaryImage: string;
+  profilePath: string;
   tel: string;
   type: 'STUDIO' | 'DRESS' | 'MAKEUP';
+  images: string[];
+  description: string;
 }
 
 export interface Partners {
@@ -178,9 +179,9 @@ export interface PlannerRequest {
   affiliatedCompanyInfo: {
     affiliatedCompanyId: number;
   };
-  affiliatedDressCompanyList: AffiliatedCompany[];
-  affiliatedMakeupCompanyList: AffiliatedCompany[];
-  affiliatedStudioCompanyList: AffiliatedCompany[];
+  affiliatedDressCompanyList: number[];
+  affiliatedMakeupCompanyList: number[];
+  affiliatedStudioCompanyList: number[];
   areaInfo: {
     locationList: string[];
   };

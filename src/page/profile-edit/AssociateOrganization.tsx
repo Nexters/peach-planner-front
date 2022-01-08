@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect, useRef } from 'react';
 import { Content, FlexDiv } from '../../component/style/style';
 import LineAndTitle from './LindAndTitle';
 import PButton from '../../component/PButton';
@@ -8,54 +8,52 @@ import ImageUpload from './ImageUpload';
 import Organization from './Organization';
 import { SupportStore } from '.';
 import { upload } from 'src/api/Image';
+import SearchInput from './components/SearchInput';
+import { useQuery } from 'react-query';
+import { fetchPartnerCompanies } from 'src/api/partners';
+import CompanyItem from './CompanyItem';
+import { PartnerInfo } from 'src/api/Planner';
 
 interface Props {
   id: string;
   name: string;
+  type: 'STUDIO' | 'DRESS' | 'MAKEUP';
   margin: string;
   stores: SupportStore[];
   setStores: Dispatch<SetStateAction<SupportStore[]>>;
 }
 
-const AssociateOrganization = ({ id, name, margin, stores, setStores }: Props) => {
-  const [organizationName, setOrganizationName] = useState('');
-  const [previewImage, setPreviewImage] = useState('');
-  const [imageFile, setImageFile] = useState(null);
-
-  const registerOrganization = async () => {
-    if (stores.length >= 10) {
-      alert("10개 이상으로는 등록하실 수 없어요!");
-      return;
-    }
-    if (!organizationName ) {
-      alert("업체 이름을 입력해주세요!");
-      return;
-    }
-    if (!imageFile) {
-      alert("업체 사진을 등록해주세요!");
-      return;
+function useOutsideAlerter(ref: any, setFocused: any) {
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event: any) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setFocused(false);
+        // alert('You clicked outside of me!');
+      }
     }
 
-    const s3ImageUrl = await upload(imageFile);
-    const store: SupportStore = {
-      name: organizationName,
-      previewImage: previewImage,
-      imageUrl: s3ImageUrl
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-    setStores(stores?.concat(store));
-  };
+  }, [ref]);
+}
+
+const AssociateOrganization = ({ id, name, type, margin, stores, setStores }: Props) => {
+  const [focused, setFocused] = useState(false);
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setFocused);
+  const [partnerName, setPartnerName] = useState('');
+  const { data: partners } = useQuery([`partners/${partnerName},${type}`, partnerName, type], fetchPartnerCompanies, { enabled: focused });
 
   const handleChangeOrganizationName = (e: any) => {
-    const value = e.target.value;
-    setOrganizationName(value);
-  };
-
-  const changePreviewImage = (image: string) => {
-    setPreviewImage(image);
-  };
-
-  const changeImageFile = (imageFile: any) => {
-    setImageFile(imageFile);
+    let value = typeof e !== 'string' ? e.target.value : e;
+    setPartnerName(value);
   };
 
   return (
@@ -71,30 +69,52 @@ const AssociateOrganization = ({ id, name, margin, stores, setStores }: Props) =
       >
         {`${name} 업체 이름`}
       </Content>
-      <Input value={organizationName} onChange={handleChangeOrganizationName}></Input>
-      <Content
-        height={'24px'}
-        width={'auto'}
-        color={'#495057'}
-        fontSize={'16px'}
-        lineHeight={'24px'}
-        margin={'13px 0 12px 0'}
-      >
-        {`${name} 업체 사진`}
-      </Content>
-      <ImageUpload
-        id={id}
-        previewImage={previewImage}
-        setPreviewImage={changePreviewImage}
-        setImageFile={changeImageFile}
-      />
-      <HorizontalLine color="#dee2e6"></HorizontalLine>
-      <FlexDiv margin="15px 0 72px 0" direction="row" justify="space-between" align="start">
-        <PButton color="black" fontSize="14px" height="45px" width="126px" onClick={registerOrganization}>
-          업체 등록하기
-        </PButton>
-        <FlexDiv margin="8px 0 0 0" direction="row" justify="flex-end" align="start"></FlexDiv>
-      </FlexDiv>
+      <SearchContainer ref={wrapperRef}>
+        <SearchInput
+          height="41px"
+          width="421px"
+          placeholder={`제휴 ${name} 업체 이름을 입력해주세요.`}
+          handleInput={handleChangeOrganizationName}
+          onFocus={() => setFocused(true)}
+          value={partnerName}
+          defaultValue={''}
+        />
+        {focused ? (
+          <Container ref={wrapperRef}>
+            <CompanyContainer>
+              <CompanyInnerContainer>
+                {partners ? (
+                  partners.partners.map((partner: PartnerInfo) => {
+                    return (
+                      <CompanyItem
+                        key={partner.id}
+                        location={partner.location}
+                        profilePath={partner.profilePath}
+                        name={partner.name}
+                        images={partner.images}
+                        handleClick={() => {
+                          setStores(stores?.concat({
+                            id: partner.id,
+                            name: partner.name,
+                            previewImage: partner.profilePath,
+                          }));
+                          setPartnerName('');
+                          setFocused(false);
+                        }}
+                      />
+                    );
+                  })
+                ) : (
+                  <></>
+                )}
+              </CompanyInnerContainer>
+            </CompanyContainer>
+          </Container>
+        ) : (
+          <></>
+        )}
+      </SearchContainer>
+      <HorizontalLine color="#dee2e6"/>
       <OrganizationLists>
         {stores?.map((organization, index) => {
             return <Organization key={index} name={organization.name} image={organization.previewImage} handleOrgClose={() => {
@@ -102,7 +122,7 @@ const AssociateOrganization = ({ id, name, margin, stores, setStores }: Props) =
             }} />;
           }) ?? <></>}
       </OrganizationLists>
-      <HorizontalLine color="#868E96"></HorizontalLine>
+      <HorizontalLine color="#868E96"/>
     </FlexDiv>
   );
 };
@@ -127,4 +147,29 @@ const OrganizationLists = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-flow: row wrap;
+`;
+
+
+
+const CompanyContainer = styled.div`
+  height: 252px;
+  width: 420px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 #adb5bd;
+  position: absolute;
+  overflow: auto;
+  overflow-x: hidden;
+  z-index: 1;
+`;
+
+const CompanyInnerContainer = styled.div`
+  margin-top: 10px;
+  margin-left: 10px;
+`;
+
+const SearchContainer = styled.div``;
+
+const Container = styled.div`
+  display: flex;
 `;

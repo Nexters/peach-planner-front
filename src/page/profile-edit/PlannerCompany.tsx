@@ -1,9 +1,8 @@
 import { Content, FlexDiv, Title } from '../../component/style/style';
-import SideText from './SideText';
 import HorizontalLine from '../../component/HorizontalLine';
 import CompanyRegisterModal from './CompanyRegisterModal';
 import { useEffect, useRef, useState } from 'react';
-import SearchInput from './SearchInput';
+import SearchInput from './components/SearchInput';
 import { Company, fetchCompanies } from 'src/api/Company';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
@@ -42,13 +41,11 @@ const PlannerCompany = ({ defaultCompanyName, companyName, handleCompanyName, ha
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setFocused);
   const { data } = useQuery(['companies', companyName], fetchCompanies, { enabled: focused });
-  const onFocus = () => setFocused(true);
-  const onBlur = () => setFocused(false);
-  const [showImageModal, setShowImageModal] = useState<boolean>(false);
-  const openImageModal = () => setShowImageModal(true);
-  const closeImageModal = () => {
-    setShowImageModal(false);
-  };
+  // const [showImageModal, setShowImageModal] = useState<boolean>(false);
+  // const openImageModal = () => setShowImageModal(true);
+  // const closeImageModal = () => {
+  //   setShowImageModal(false);
+  // };
 
   return (
     <FlexDiv width="632px" margin="0 0 72px 0" direction="column" justify="flex-start" align="start">
@@ -84,10 +81,10 @@ const PlannerCompany = ({ defaultCompanyName, companyName, handleCompanyName, ha
           width="421px"
           placeholder="웨딩 업체 이름을 입력해주세요."
           handleInput={handleCompanyName}
-          onFocus={onFocus}
+          onFocus={() => setFocused(true)}
           value={companyName}
           defaultValue={defaultCompanyName}
-        ></SearchInput>
+        />
         {focused ? (
           <Container ref={wrapperRef}>
             <CompanyContainer>
@@ -97,18 +94,25 @@ const PlannerCompany = ({ defaultCompanyName, companyName, handleCompanyName, ha
                     return (
                       <CompanyItem
                         key={company.id}
-                        id={company.id}
-                        tel={company.tel}
                         location={company.location}
-                        certificated={company.certificated}
                         profilePath={company.profilePath}
                         name={company.name}
                         images={company.images}
-                        summary={company.summary}
-                        handleInput={handleCompanyItem}
-                        handleCompanyName={handleCompanyName}
-                        handleClick={onBlur}
-                      ></CompanyItem>
+                        handleClick={() => {
+                          handleCompanyItem({
+                            id: company.id,
+                            name: company.name,
+                            tel: company.tel,
+                            location: company.location,
+                            profilePath: company.profilePath,
+                            certificated: company.certificated,
+                            summary: company.summary,
+                            images: company.images
+                          });
+                          handleCompanyName(company.name);
+                          setFocused(false);
+                        }}
+                      />
                     );
                   })
                 ) : (
@@ -144,6 +148,7 @@ const CompanyContainer = styled.div`
   position: absolute;
   overflow: auto;
   overflow-x: hidden;
+  z-index: 1;
 `;
 
 const CompanyInnerContainer = styled.div`

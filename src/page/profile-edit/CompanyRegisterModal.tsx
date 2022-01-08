@@ -3,7 +3,7 @@ import Popup from 'reactjs-popup';
 import { Content, FlexDiv, Title } from '../../component/style/style';
 import Close from '../../assets/svg/ic_close_b.svg';
 import PButton from '../../component/PButton';
-import SearchInput from './SearchInput';
+import SearchInput from './components/SearchInput';
 import HorizontalLine from 'src/component/HorizontalLine';
 import ImageUpload from './ImageUpload';
 import { useState } from 'react';

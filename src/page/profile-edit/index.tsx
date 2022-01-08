@@ -35,10 +35,9 @@ interface Sns {
 }
 
 export interface SupportStore {
-  id?: number;
+  id: number;
   name: string;
   previewImage: string;
-  imageUrl: string;
 }
 
 export interface Item {
@@ -112,43 +111,9 @@ const Profile = ({ isUpdate }: ProfileProps) => {
   };
 
   const handleRegister = () => {
-    if (description.description === '' || description.summary === '') {
-      alert('플래너 한줄 소개와 플래너 소개는 필수 값 입니다.');
-      return;
-    }
-    const affilicatedDress: AffiliatedCompany[] = dresses.map((dress) => {
-      return {
-        id: dress.id,
-        companyName: dress.name,
-        description: '',
-        location: '',
-        primaryImageUrl: dress.imageUrl,
-        tel: '',
-        type: 'DRESS'
-      };
-    });
-    const affilicatedStudios: AffiliatedCompany[] = studios.map((studio) => {
-      return {
-        id: studio.id,
-        companyName: studio.name,
-        description: '',
-        location: '',
-        primaryImageUrl: studio.imageUrl,
-        tel: '',
-        type: 'STUDIO'
-      };
-    });
-    const affilicatedMakeUps: AffiliatedCompany[] = makeUps.map((makeUp) => {
-      return {
-        id: makeUp.id,
-        companyName: makeUp.name,
-        description: '',
-        location: '',
-        primaryImageUrl: makeUp.imageUrl,
-        tel: '',
-        type: 'MAKEUP'
-      };
-    });
+    const affilicatedDress: number[] = dresses.map((dress) => dress.id);
+    const affilicatedStudios: number[] = studios.map((studio) => studio.id);
+    const affilicatedMakeUps: number[] = makeUps.map((makeUp) => makeUp.id);
 
     const request: PlannerRequest = {
       portfolioImages: images,
@@ -259,6 +224,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
           <AssociateOrganization
             id="studio"
             name="스튜디오"
+            type="STUDIO"
             margin="0 0 72px 0"
             stores={studios}
             setStores={setStudios}
@@ -266,6 +232,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
           <AssociateOrganization
             id="dress"
             name="드레스"
+            type="DRESS"
             margin="0 0 72px 0"
             stores={dresses}
             setStores={setDresses}
@@ -273,6 +240,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
           <AssociateOrganization
             id="makeup"
             name="메이크업"
+            type="MAKEUP"
             margin="0 0 24px 0"
             stores={makeUps}
             setStores={setMakeUps}

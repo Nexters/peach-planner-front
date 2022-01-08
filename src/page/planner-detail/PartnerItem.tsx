@@ -9,7 +9,7 @@ interface PartnerItemProps {
 const PartnerItem: FC<PartnerItemProps> = ({ data }) => {
   return (
     <Container>
-      <Image src={data.primaryImage} />
+      <Image src={data.profilePath} />
       <Title>{data.name}</Title>
       <Detail>{data.location}</Detail>
     </Container>

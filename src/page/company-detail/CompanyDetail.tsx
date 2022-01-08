@@ -24,9 +24,7 @@ const CompanyDetail = () => {
   const history = useHistory();
   const { params } = useRouteMatch<routeProps>();
   const companyId = params.id;
-
-  // const { data: companyInfo, error } = useQuery(['company', companyId], () => fetchCompany(companyId));
-
+  
   const [selected, setSelected] = useState<boolean>(false);
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
 
@@ -35,6 +33,7 @@ const CompanyDetail = () => {
       .get(`/companies/${companyId}`)
       .then((response) => {
         setCompanyInfo({ ...response.data });
+        setSelected(response.data.pick ?? false);
       })
       .catch((err) => {
         history.push('/');
@@ -177,7 +176,7 @@ const ShowImageButton = styled.button`
 const BigImage = styled.img`
   width: 641px;
   height: 430px;
-  object-fit: contain;
+  object-fit: cover;
   flex: 3;
   border-radius: 10px;
 `;
@@ -187,10 +186,11 @@ const ImageWrapper = styled.div`
 `;
 
 const SmallImage = styled.img`
-  // width: 211px;
-  // height: 211px;
+  width: 211px;
+  height: 211px;
   // flex: 1;
   border-radius: 10px;
+  object-fit: cover;
 `;
 
 const Image = styled.img`

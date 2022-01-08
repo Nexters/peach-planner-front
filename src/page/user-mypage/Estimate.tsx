@@ -22,7 +22,7 @@ const MyEstimate = ({ id, createdAt, content, estimateNumber, companyName, estim
     <Container onClick={handleClick}>
       <EstimateCreatedAtBox>
         <Content height="19px" width="auto" fontSize="13px" lineHeight="normal" color="#495057">
-          {createdAt}
+          {new Date(createdAt).toLocaleDateString()}
         </Content>
       </EstimateCreatedAtBox>
       <EstimateContentBox>
@@ -56,6 +56,7 @@ const Container = styled.div`
   flex-direction: row;
   border-bottom: 1px solid;
   border-bottom-color: #ced4da;
+  align-items: center;
   cursor: pointer;
 `;
 
@@ -70,10 +71,9 @@ const EstimateCreatedAtBox = styled.div`
 const EstimateContentBox = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   height: 64px;
   width: 436px;
-  margin-left: 42px;
 `;
 
 const EstimateNumberBox = styled.div`

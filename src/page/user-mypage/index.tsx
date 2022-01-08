@@ -59,7 +59,7 @@ export const UserMyPage = () => {
                       plannerName={pick.name}
                       companyName={pick.subName}
                       margin={'0 16px 0 0'}
-                    ></PlannerMiniCard>
+                    />
                   );
                 });
               } else {
@@ -77,7 +77,7 @@ export const UserMyPage = () => {
                             plannerName={pick.name}
                             companyName={pick.subName}
                             margin={'0 16px 0 0'}
-                          ></PlannerMiniCard>
+                          />
                         );
                       })
                     ) : (
@@ -130,7 +130,7 @@ export const UserMyPage = () => {
                   estimateNumber={estimate.id}
                   companyName={estimate.companyName}
                   estimateState={estimate.companyName}
-                ></MyEstimate>
+                />
               );
             })
           ) : (

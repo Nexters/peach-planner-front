@@ -16,7 +16,7 @@ const PlannerMiniCard = ({ id, plannerId, size, image, plannerName, companyName,
   const history = useHistory();
 
   const handleClick = () => {
-    history.push(`/planner/${plannerId}`);
+    history.push(`/planner/${plannerId}/detail`);
   };
   return (
     <Container margin={margin} onClick={handleClick}>

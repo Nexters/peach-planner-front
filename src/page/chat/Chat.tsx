@@ -156,7 +156,7 @@ const ChatContainer = () => {
               <PlannerProfileTitleDiv>
                 {
                   chatRoomParticipant.current &&
-                  <PlannerProfileLink href={`/planner/${Object.values(chatRoomParticipant.current).filter(a => a.participantType == 'PLANNER')[0].participantTypeId}`}>
+                  <PlannerProfileLink href={`/planner/${Object.values(chatRoomParticipant.current).filter(a => a.participantType == 'PLANNER')[0].participantTypeId}/detail`}>
                     <PlannerProfileCTA color="#000000">프로필 보기</PlannerProfileCTA>
                   </PlannerProfileLink>
                 }

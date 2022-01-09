@@ -19,9 +19,9 @@ export const UserMyPage = () => {
   const [slickSettings, setSlickSettings] = useState<Settings>({
     draggable: false,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    infinite: true,
+    slidesToShow: 6,
+    slidesToScroll: 6,
+    infinite: false,
     variableWidth: true,
     arrows: false
   });

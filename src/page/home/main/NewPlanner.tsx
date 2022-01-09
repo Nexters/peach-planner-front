@@ -21,7 +21,7 @@ const NewPlanner = () => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
-    infinite: true,
+    infinite: false,
     variableWidth: true,
     arrows: false
   });

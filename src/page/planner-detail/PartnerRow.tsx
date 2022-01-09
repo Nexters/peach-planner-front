@@ -16,9 +16,9 @@ const PartnerRow: FC<PartnerRowProps> = ({ title, partner }) => {
   const [slickSettings, setSlickSettings] = useState<Settings>({
     draggable: false,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    infinite: true,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    infinite: false,
     variableWidth: true,
     arrows: false
   });

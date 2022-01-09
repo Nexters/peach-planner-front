@@ -66,7 +66,7 @@ const AccordionItem = styled.div<AccordionProps>`
   transition: ${(props: AccordionProps) =>
     props.isOpen ? 'max-height 1s cubic-bezier(0, 1, 0, 1)' : 'max-height 1s cubic-bezier(1, 0, 1, 0);'};
   height: auto;
-  max-height: ${(props: AccordionProps) => (props.isOpen ? 9999 : 0)}; ;
+  max-height: ${(props: AccordionProps) => (props.isOpen ? 9999 : 0)};
 `;
 
 interface ImageProps {

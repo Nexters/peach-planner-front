@@ -25,7 +25,7 @@ const EstimateDetail = () => {
   return (
     <Container>
       <InnerContainer>
-        {userTypeState === 'USER' ? <UserPageSideMenu></UserPageSideMenu> : <PlannerPageSideMenu></PlannerPageSideMenu>}
+        {userTypeState === 'USER' ? <UserPageSideMenu /> : <PlannerPageSideMenu />}
         <ContentContainer>
           <Header isUser={userTypeState === 'USER'}></Header>
           {userTypeState === 'USER' ? (
@@ -43,17 +43,17 @@ const EstimateDetail = () => {
             email={estimateDetail?.email!}
             phoneNumber={estimateDetail?.phoneNum!}
             weddingDate={estimateDetail?.weddingDate!}
-          ></CustomerInformation>
+          />
           <Company
             studio={estimateDetail?.studio!}
             dress={estimateDetail?.dress!}
             makeup={estimateDetail?.makeup!}
             weddingHall={estimateDetail?.weddingHall!}
             weddingCard={estimateDetail?.weddingCard!}
-          ></Company>
-          <Requirement requirement={estimateDetail?.description!}></Requirement>
-          <File filePaths={estimateDetail?.filePath!}></File>
-          <Message isUser={userTypeState === 'USER'}></Message>
+          />
+          <Requirement requirement={estimateDetail?.description!} />
+          <File filePaths={estimateDetail?.filePath!} />
+          <Message isUser={userTypeState === 'USER'} />
         </ContentContainer>
       </InnerContainer>
     </Container>

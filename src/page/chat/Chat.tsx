@@ -13,6 +13,9 @@ import { useMemo } from 'react';
 import { User, getUserMe } from 'src/api/User';
 import axios from 'axios';
 import { WriteReviewPopup } from './WriteReviewPopup';
+import { useLocation } from 'react-router';
+import { EmptyText } from '../planner-detail/components/styles';
+import { BsFillChatFill } from 'react-icons/bs';
 
 const client = new Client({
   brokerURL: 'wss://api.peachplanner.com/websocket',
@@ -40,10 +43,14 @@ interface ChatMessageModel {
 }
 
 const ChatContainer = () => {
+  const location = useLocation();
+
+  const chatRoom = location.state;
+
   const [selected, setSelected] = React.useState(-1);
   const { data: rooms } = useQuery(['rooms'], fetchChatRooms);
   const { data: user } = useQuery(['getUser'], getUserMe);
-  const currentRoom = React.useRef<ChatRoom>({} as ChatRoom);
+  const currentRoom = React.useRef<ChatRoom>((chatRoom || {}) as ChatRoom);
   const [typingMessage, setTypingMessage] = React.useState('');
 
   const chatRoomParticipant = React.useRef<{ [key: string]: ChatRoomParticipant }>();
@@ -63,7 +70,31 @@ const ChatContainer = () => {
 
   useEffect(() => {
     const subscribeRooms = () => {
-      rooms?.forEach((room) => {
+      rooms?.forEach((room, index) => {
+        if (selected == -1 && room.id == currentRoom.current?.id) {
+          setSelected(index);
+          (async () => {
+            await Promise.all([
+              fetchChatMessages(currentRoom.current.id),
+              fetchChatRoomParticipant(currentRoom.current.id)
+            ]).then(([messages, roomParticipants]) => {
+              setChatMessages(
+                messages.map((message) => {
+                  return {
+                    id: message.id,
+                    sender: roomParticipants[message.senderId],
+                    senderId: message.senderId,
+                    messageType: message.messageType,
+                    senderType: message.senderType,
+                    message: message.message,
+                    dateTime: message.dateTime
+                  } as ChatMessageModel;
+                })
+              );
+              chatRoomParticipant.current = roomParticipants;
+            });
+          })();
+        }
         if (subscribeIds.has(room.id)) return;
 
         if (client.state === ActivationState.ACTIVE) {
@@ -123,32 +154,32 @@ const ChatContainer = () => {
                 {currentRoom.current.roomName}
               </Title>
               <PlannerProfileTitleDiv>
-              {
-                chatRoomParticipant.current &&
-                <PlannerProfileLink href={`/planner/${Object.values(chatRoomParticipant.current).filter(a => a.participantType == 'PLANNER')[0].participantTypeId}`}>
-                  <PlannerProfileCTA color="#000000">프로필 보기</PlannerProfileCTA>
-                </PlannerProfileLink>
-              }
-              {
-                me.current?.userType == 'PLANNER' && currentRoom.current.estimationId != null && currentRoom.current.chatRoomStatus == 'OPEN' &&
-                <PlannerProfileEndConsult onClick={() => {
-                  axios
-                    .post(
-                      `/estimate/${currentRoom.current.estimationId}/complete`,
-                      {},
-                      { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
-                    )
-                  console.log('상담 완료 ' + currentRoom.current.estimationId);
-                }}>
-                  <PlannerProfileCTA color="#FFFFFF">상담 완료하기</PlannerProfileCTA>
-                </PlannerProfileEndConsult>
-              }
-              {
-                me.current?.userType == 'PLANNER' && currentRoom.current.estimationId != null && currentRoom.current.chatRoomStatus == 'CLOSED' &&
-                <PlannerProfileEndedConsult>
-                  <PlannerProfileCTA color="#FFFFFF">완료됨</PlannerProfileCTA>
-                </PlannerProfileEndedConsult>
-              }
+                {
+                  chatRoomParticipant.current &&
+                  <PlannerProfileLink href={`/planner/${Object.values(chatRoomParticipant.current).filter(a => a.participantType == 'PLANNER')[0].participantTypeId}`}>
+                    <PlannerProfileCTA color="#000000">프로필 보기</PlannerProfileCTA>
+                  </PlannerProfileLink>
+                }
+                {
+                  me.current?.userType == 'PLANNER' && currentRoom.current.estimationId != null && currentRoom.current.chatRoomStatus == 'OPEN' &&
+                  <PlannerProfileEndConsult onClick={() => {
+                    axios
+                      .post(
+                        `/estimate/${currentRoom.current.estimationId}/complete`,
+                        {},
+                        { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+                      )
+                    console.log('상담 완료 ' + currentRoom.current.estimationId);
+                  }}>
+                    <PlannerProfileCTA color="#FFFFFF">상담 완료하기</PlannerProfileCTA>
+                  </PlannerProfileEndConsult>
+                }
+                {
+                  me.current?.userType == 'PLANNER' && currentRoom.current.estimationId != null && currentRoom.current.chatRoomStatus == 'CLOSED' &&
+                  <PlannerProfileEndedConsult>
+                    <PlannerProfileCTA color="#FFFFFF">완료됨</PlannerProfileCTA>
+                  </PlannerProfileEndedConsult>
+                }
               </PlannerProfileTitleDiv>
             </ChatRoomTitleLine>
           </Cell>
@@ -157,7 +188,7 @@ const ChatContainer = () => {
         <Row height="60vh">
           <Cell width="35%">
             <CellContent>
-              {rooms ? (
+              {rooms && rooms.length > 0 ? (
                 rooms.map((room, index) => {
                   return (
                     <ChatCard
@@ -189,7 +220,7 @@ const ChatContainer = () => {
                         })();
                       }}
                     >
-                      <ChatProfileImg src={room.profileImage || shape}/>
+                      <ChatProfileImg src={room.profileImage || shape} />
                       <ChatProfileText>
                         <ChatProfileLine>
                           <ChatProfileName>{room.roomName}</ChatProfileName>
@@ -201,7 +232,7 @@ const ChatContainer = () => {
                   );
                 })
               ) : (
-                <></>
+                <EmptyText flex={1} textAlign='center' padding='99px 0 0 0'>받은 메시지가 없습니다.</EmptyText>
               )}
             </CellContent>
           </Cell>
@@ -212,7 +243,7 @@ const ChatContainer = () => {
               ) : (
                 <></>
               )}
-              {chatMessages ? (
+              {chatMessages && chatMessages.length > 0 ? (
                 chatMessages.map((message) => {
                   if (message.messageType === 'SYSTEM_START') {
                     return (
@@ -274,7 +305,16 @@ const ChatContainer = () => {
                   );
                 })
               ) : (
-                <></>
+                <div style={{
+                  flex: 1,
+                  textAlign: 'center',
+                  padding: '139px 0 0 0',
+                }}>
+                  <BsFillChatFill size={20} color='#ced4da' />
+                  <EmptyText textAlign='center' padding='12px 0 0 0'>
+                    진행중인 대화가 없습니다.
+                  </EmptyText>
+                </div>
               )}
             </CellContent>
             <ChatMessageBoxDiv>
@@ -303,9 +343,9 @@ const ChatContainer = () => {
           </Cell>
         </Row>
       </Page>
-      <WriteReviewPopup 
-        plannerId={chatRoomParticipant.current ? Object.values(chatRoomParticipant.current!).filter(a => a.participantType == 'PLANNER')[0].participantTypeId.toString() : ''} 
-        showReviewModal={showReviewModal} 
+      <WriteReviewPopup
+        plannerId={chatRoomParticipant.current ? Object.values(chatRoomParticipant.current!).filter(a => a.participantType == 'PLANNER')[0].participantTypeId.toString() : ''}
+        showReviewModal={showReviewModal}
         closeReviewModal={(() => { setShowReviewModal(false); })} />
     </Container>
   );
@@ -355,7 +395,7 @@ const CellContent = styled.div`
   overflow-y: auto;
   position: relative;
   display: flex;
-  max-height: 500px;
+  height: 500px;
   flex-direction: column;
   padding-bottom: 24px;
 
@@ -493,6 +533,7 @@ const ChatLastMessage = styled.p`
   font-size: 13px;
   letter-spacing: 0;
   line-height: 19px;
+  overflow: hidden;
 `;
 
 const ChatMessageDate = styled.p`

@@ -29,7 +29,7 @@ export const UserMyPage = () => {
   return (
     <Container>
       <InnerContainer>
-        <UserPageSideMenu></UserPageSideMenu>
+        <UserPageSideMenu />
         <ContentContainer>
           <PickTitleBox>
             <Title height="27px" fontSize="18px" width="100px" lineHeight="normal" color="#000000">
@@ -50,10 +50,7 @@ export const UserMyPage = () => {
             {(() => {
               if (picks?.pickLists?.length == 0) {
                 return (
-                  <EmptyText style={{
-                    flex: 1,
-                    textAlign: 'center',
-                  }}>찜한 목록이 없습니다.</EmptyText>
+                  <EmptyText flex={1} textAlign='cetner'>찜한 목록이 없습니다.</EmptyText>
                 )
               }
 
@@ -143,11 +140,7 @@ export const UserMyPage = () => {
               );
             })
           ) : (
-            <EmptyText style={{
-              flex: 1,
-              textAlign: 'center',
-              paddingTop: '30px',
-            }}>견적서 내용이 없습니다.</EmptyText>
+            <EmptyText flex={1} textAlign='cetner' padding='30px 0 0 0'>견적서 내용이 없습니다.</EmptyText>
           )}
         </ContentContainer>
       </InnerContainer>

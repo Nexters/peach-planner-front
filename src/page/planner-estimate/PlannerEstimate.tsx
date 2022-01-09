@@ -47,18 +47,19 @@ const PlannerEstimate = () => {
     setCompanyInfo({ ...companyInfo, [e.target.name]: e.target.value });
   };
 
-  const handleChat = () => {
-    axios
-      .post(
+  const handleChat = async () => {
+    const res = await axios.post(
         `/chat/rooms/${plannerId}`,
         {},
         { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
-      )
-      .then((res) => {
-        if (res.status == 200) {
-          history.push('/chats');
-        }
+      );
+    
+    if (res.status === 200) {
+      history.push({
+        pathname: "/chats",
+        state: res.data,
       });
+    }
   };
 
   return (
@@ -110,32 +111,32 @@ const PlannerEstimate = () => {
       </EstimateBox>
       {/* <EstimateBox title="첨부파일">첨부파일</EstimateBox> */}
       <EstimateBox>
-        <PButton color="pink" onClick={() => {
-          axios
-            .post(
-              `/estimate/upload`,
-              {
-                plannerId: plannerId,
-                userName: myInfo.name,
-                email: myInfo.email,
-                phoneNum: `${myInfo.phone1}${myInfo.phone2}${myInfo.phone3}`,
-                weddingDate: myInfo.date,
-                studio: companyInfo.name,
-                dress: companyInfo.dress,
-                makeup: companyInfo.makeup,
-                // TODO:: Add below input fields
-                weddingHall: false,
-                weddingCard: false,
-                description: '웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. ',
-                filePath: [],
-              },
-              { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
-            )
-            .then((res) => {
-              if (res.status == 200) {
-                history.push('/chats');
-              }
+        <PButton color="pink" onClick={async () => {
+          const res = await axios.post(
+            `/estimate/upload`,
+            {
+              plannerId: plannerId,
+              userName: myInfo.name,
+              email: myInfo.email,
+              phoneNum: `${myInfo.phone1}${myInfo.phone2}${myInfo.phone3}`,
+              weddingDate: myInfo.date,
+              studio: companyInfo.name,
+              dress: companyInfo.dress,
+              makeup: companyInfo.makeup,
+              // TODO:: Add below input fields
+              weddingHall: false,
+              weddingCard: false,
+              description: '웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. ',
+              filePath: [],
+            },
+            { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+          );
+          if (res.status == 200) {
+            history.push({
+              pathname: "/chats",
+              state: res.data.chatRoom,
             });
+          }
         }}>전적 요청하기</PButton>
         <SaveButton>임시저장</SaveButton>
       </EstimateBox>

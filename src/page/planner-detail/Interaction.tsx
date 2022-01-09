@@ -40,19 +40,21 @@ const Interaction = ({ plannerInfo, setPlannerInfo }: Props) => {
     }
   };
 
-  const handleChat = () => {
+  const handleChat = async () => {
     handleNoneUser();
-    axios
+    const res = await axios
       .post(
         `/chat/rooms/${plannerInfo.id}`,
         {},
         { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          history.push('/chats');
-        }
+      );
+
+    if (res.status === 200) {
+      history.push({
+        pathname: "/chats",
+        state: res.data,
       });
+    }
   };
 
   return (

@@ -10,6 +10,7 @@ import LeftArrow from 'src/assets/svg/ic_arrow_left.svg';
 import RightArrow from 'src/assets/svg/ic_arrow_right.svg';
 import { fetchEstimateList } from 'src/api/Estimate';
 import MyEstimate from './Estimate';
+import { EmptyText } from '../planner-detail/components/styles';
 
 export const UserMyPage = () => {
   const { data: picks } = useQuery(['picks'], fetchPicks);
@@ -46,7 +47,16 @@ export const UserMyPage = () => {
             </FlexDiv>
           </PickTitleBox>
           <PickListBox style={{ overflow: 'hidden' }}>
-            {(function () {
+            {(() => {
+              if (picks?.pickLists?.length == 0) {
+                return (
+                  <EmptyText style={{
+                    flex: 1,
+                    textAlign: 'center',
+                  }}>찜한 목록이 없습니다.</EmptyText>
+                )
+              }
+
               if (picks !== undefined && picks.pickLists.length <= 6) {
                 return picks.pickLists.map((pick) => {
                   return (
@@ -62,30 +72,29 @@ export const UserMyPage = () => {
                     />
                   );
                 });
-              } else {
-                return (
-                  <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
-                    {picks ? (
-                      picks?.pickLists.map((pick) => {
-                        return (
-                          <PlannerMiniCard
-                            key={pick.id}
-                            id={pick.id}
-                            plannerId={pick.plannerId}
-                            size="130px"
-                            image={pick.imageUrlPath}
-                            plannerName={pick.name}
-                            companyName={pick.subName}
-                            margin={'0 16px 0 0'}
-                          />
-                        );
-                      })
-                    ) : (
-                      <></>
-                    )}
-                  </Slider>
-                );
               }
+              return (
+                <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
+                  {picks ? (
+                    picks?.pickLists.map((pick) => {
+                      return (
+                        <PlannerMiniCard
+                          key={pick.id}
+                          id={pick.id}
+                          plannerId={pick.plannerId}
+                          size="130px"
+                          image={pick.imageUrlPath}
+                          plannerName={pick.name}
+                          companyName={pick.subName}
+                          margin={'0 16px 0 0'}
+                        />
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
+                </Slider>
+              );
             })()}
           </PickListBox>
           <MyEstimateTitle>
@@ -120,7 +129,7 @@ export const UserMyPage = () => {
               </Title>
             </EstimateState>
           </TableHeader>
-          {estimates ? (
+          {estimates && estimates.length > 0 ? (
             estimates.map((estimate, index) => {
               return (
                 <MyEstimate
@@ -134,7 +143,11 @@ export const UserMyPage = () => {
               );
             })
           ) : (
-            <></>
+            <EmptyText style={{
+              flex: 1,
+              textAlign: 'center',
+              paddingTop: '30px',
+            }}>견적서 내용이 없습니다.</EmptyText>
           )}
         </ContentContainer>
       </InnerContainer>

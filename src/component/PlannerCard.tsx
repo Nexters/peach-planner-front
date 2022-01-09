@@ -37,7 +37,7 @@ const PlannerCard = (props: PlannerProps) => {
 
   const handlePlannerClick = () => {
     const plannerId = props.id;
-    history.push(`/planner/${plannerId}`);
+    history.push(`/planner/${plannerId}/detail`);
   };
 
   const handlePickClick = () => {
@@ -64,6 +64,7 @@ const PlannerCard = (props: PlannerProps) => {
       <PlannerImageContainer>
         <PlannerImage
           src={props.imagePath ? props.imagePath : PhotoDefault}
+          width={props.size}
           height={props.size}
           onClick={handlePlannerClick}
         />
@@ -114,13 +115,13 @@ const PlannerImageContainer = styled.div`
 `;
 interface PlannerImageProps {
   src: string;
+  width: string;
   height: string;
 }
 
 const PlannerImage = styled.img.attrs((props: PlannerImageProps) => ({ src: props.src }))`
+  width: ${(props: PlannerImageProps) => props.width}};
   height: ${(props: PlannerImageProps) => props.height}};
-  width: 254px;
-  height: 254px;
   border-radius: 10px;
   cursor: pointer; 
   position: relative;

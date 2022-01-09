@@ -75,7 +75,7 @@ const SearchResult = ({ location, support }: Props) => {
               facebookLink={planner.externalLinks?.facebookLink}
               postLiked={planner.postLiked}
               mutate={mutate}
-            ></PlannerCard>
+            />
           );
         })}
       </SearchResultList>

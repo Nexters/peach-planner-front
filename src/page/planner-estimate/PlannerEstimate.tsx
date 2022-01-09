@@ -127,7 +127,7 @@ const PlannerEstimate = () => {
                 weddingHall: false,
                 weddingCard: false,
                 description: '웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. ',
-                filePath: '',
+                filePath: [],
               },
               { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
             )

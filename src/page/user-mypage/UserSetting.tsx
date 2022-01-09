@@ -158,7 +158,7 @@ export default () => {
                   <SettingInfoBox focus={focus}>
                     <SettingInfo>
                       {focus ? (
-                        <Input name="nickname" onChange={onChangeInput} value={nickName} ref={inputRef} />
+                        <Input name="nickName" onChange={onChangeInput} value={nickName} ref={inputRef} />
                       ) : (
                         <>{user?.nickName}</>
                       )}
@@ -382,12 +382,10 @@ const ImgBox = styled.img`
   border-radius: 100%;
 `;
 
-const Input = styled.input.attrs((props) => ({
-  type: props.type
-}))`
+const Input = styled.input`
   width: 279px;
   height: 40px;
   background: transparent;
-  border: 1px solid #ced4da;
+  border: none;
   outline: none;
 `;

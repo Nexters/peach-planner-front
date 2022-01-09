@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Main from './page/home/main';
 import PlannerDetail from './page/planner-detail';
 import PlannerEstimate from './page/planner-estimate/PlannerEstimate';
@@ -67,18 +67,18 @@ const App = () => {
                   <ScrollToTop />
                   <Search />
                 </Route>
-                <Route path="/planner/:id">
+                <Route path="/planner/:id/detail">
                   <PlannerDetail />
                 </Route>
+                <UserPrivateRoute path="/planner/:id/estimate">
+                  <PlannerEstimate />
+                </UserPrivateRoute>
                 <Route path="/company/:id">
                   <CompanyDetail />
                 </Route>
                 <PublicOnlyRoute path="/login">
                   <Login />
                 </PublicOnlyRoute>
-                <UserPrivateRoute path="/estimate/:id">
-                  <PlannerEstimate />
-                </UserPrivateRoute>
                 <PrivateRoute path="/estimateDetail/:id">
                   <EstimateDetail />
                 </PrivateRoute>

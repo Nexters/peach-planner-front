@@ -30,10 +30,10 @@ const EstimateDetail = () => {
           <Header isUser={userTypeState === 'USER'}></Header>
           {userTypeState === 'USER' ? (
             <Planner
-              plannerImage={estimateDetail?.planner?.images[0]!}
+              plannerImage={estimateDetail?.planner?.profileImage!}
               plannerName={estimateDetail?.planner?.name!}
               companyName={estimateDetail?.planner?.company?.name!}
-            ></Planner>
+            />
           ) : (
             <></>
           )}

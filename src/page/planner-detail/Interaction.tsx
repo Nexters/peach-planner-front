@@ -18,7 +18,7 @@ const Interaction = ({ plannerInfo, setPlannerInfo }: Props) => {
 
   const handleEstimateClick = () => {
     const plannerId = plannerInfo.id;
-    history.push(`/estimate/${plannerId}`);
+    history.push(`/planner/${plannerId}/estimate`);
   };
 
   const pickPlanner = () => {

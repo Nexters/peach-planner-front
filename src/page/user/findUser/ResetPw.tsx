@@ -2,16 +2,34 @@ import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import PButton from 'src/component/PButton';
 import { FlexDiv, Content, Title } from 'src/component/style/style';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { ResetPw } from 'src/api/User';
+import queryString from 'querystring';
+import { resetPw, validateToken } from 'src/api/ResetPw';
 
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
 const ResetPwPage = () => {
+
   const history = useHistory();
   const [inputs, setInputs] = useState({ password: '', passwordConfirm: '' });
   const { password, passwordConfirm } = inputs;
   const [isValidPassword, setIsValidPassword] = useState(true);
+  const location = useLocation();
+  const token = queryString.parse(location.search.slice(1)).token as string;
+  if (!token) {
+    alert("유효하지 않은 접근입니다.");
+    history.push('/');
+  }
+
+  validateToken(token)
+    .then(result => {
+      if (!result) {
+        alert("토큰이 유효하지 않습니다.");
+        history.push('/');
+      }
+    });
+
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -21,7 +39,7 @@ const ResetPwPage = () => {
     });
   };
 
-  const handleReset = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleReset = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!password) {
       alert('비밀번호를 입력해주세요.');
@@ -30,14 +48,14 @@ const ResetPwPage = () => {
     } else if (password !== passwordConfirm) {
       setIsValidPassword(false);
     } else {
-      // ResetPw('test1@naver.com', { originalPassword: password, updatePassword: passwordConfirm })
-      //   .then((res) => {
-      //     console.log(res, 'gggssdfsdf');
-      //   })
-      //   .catch((err) => {
-      //     console.log(err, 'err');
-      //   });
-      return;
+      const resetResult = await resetPw({
+        token: token,
+        password: password,
+      });
+      if (resetResult) {
+        alert("비밀번호가 변경되었습니다!");
+        history.push('/login');
+      }
     }
     return;
   };

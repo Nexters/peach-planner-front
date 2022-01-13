@@ -1,0 +1,13 @@
+POST https://api.peachplanner.com/api/user/verify/email?email=actumn@naver.com
+
+###
+GET https://api.peachplanner.com/api/user/verify/validate?token=0565613a-b0df-44c0-9fd5-13b3d32f929d
+
+###
+POST https://api.peachplanner.com/api/user/verify/resetpw
+Content-Type: application/json
+
+{
+  "token": "11591b10-b196-4dd7-8bb2-30642afbefc8",
+  "password": "11111"
+}

@@ -32,9 +32,9 @@ const ImageUpload = ({ id, previewImage, setPreviewImage, setImageFile }: ImageU
 
   return (
     <>
-      <Input id={`${id}-file`} type="file" onChange={handleFile}></Input>
+      <Input id={`${id}-file`} type="file" onChange={handleFile}/>
       <Label htmlFor={`${id}-file`}>
-        <Image src={previewImage ? previewImage : AddPhoto}></Image>
+        <Image src={previewImage ? previewImage : AddPhoto}/>
       </Label>
       <Content height={'36px'} width={'auto'} color={'#868E96'} fontSize={'12px'} lineHeight={'18px'} margin={'0'}>
         권장 크기 : 00 x 00 <br></br> jpg,jpeg,gif,png,bmp 형식의 이미지만 등록됩니다.

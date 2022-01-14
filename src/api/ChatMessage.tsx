@@ -3,7 +3,7 @@ import axios from 'axios';
 export interface ChatMessage {
     id: number;
     senderId: number;
-    messageType: "SYSTEM_START" | "NORMAL" | "SYSTEM_END";
+    messageType: "SYSTEM_START" | "NORMAL" | "SYSTEM_END" | "FILE";
     senderType: "SYSTEM" | "USER" | "PLANNER";
     message: string;
     dateTime: string;
@@ -21,7 +21,7 @@ export const fetchChatMessages = async (roomId: number): Promise<ChatMessage[]> 
 
 export interface ChatMessageReq {
     roomId: number;
-    messageType: "NORMAL";
+    messageType: "NORMAL" | "FILE";
     message: string;
 }
 

@@ -16,6 +16,7 @@ import { WriteReviewPopup } from './WriteReviewPopup';
 import { useLocation } from 'react-router';
 import { EmptyText } from '../planner-detail/components/styles';
 import { BsFillChatFill } from 'react-icons/bs';
+import { upload } from 'src/api/Image';
 
 const client = new Client({
   brokerURL: 'wss://api.peachplanner.com/websocket',
@@ -36,7 +37,7 @@ interface ChatMessageModel {
   id: number;
   sender: ChatRoomParticipant;
   senderId: number;
-  messageType: 'SYSTEM_START' | 'NORMAL' | 'SYSTEM_END';
+  messageType: 'SYSTEM_START' | 'NORMAL' | 'SYSTEM_END' | 'FILE';
   senderType: 'SYSTEM' | 'USER' | 'PLANNER';
   message: string;
   dateTime: string;
@@ -264,6 +265,7 @@ const ChatContainer = () => {
                     );
                   }
 
+
                   if (me.current?.id === message.senderId) {
                     return (
                       <MyChatMessageDiv>
@@ -278,12 +280,13 @@ const ChatContainer = () => {
                               })}
                             </ChatMessageProfileDatetime>
                           </MyChatMessageTitle>
-                          <MyChatMessageText>{message.message}</MyChatMessageText>
+                          {message.messageType === 'FILE' ? <ChatMessageImage src={message.message}/> : <MyChatMessageText>{message.message}</MyChatMessageText>}
                         </MyChatMessageCard>
                         <ChatMessageProfileImg src={message.sender.profileImage || shape} />
                       </MyChatMessageDiv>
                     );
                   }
+
 
                   return (
                     <ChatMessageDiv>
@@ -299,7 +302,7 @@ const ChatContainer = () => {
                             })}
                           </ChatMessageProfileDatetime>
                         </ChatMessageTitle>
-                        <ChatMessageText>{message.message}</ChatMessageText>
+                        {message.messageType === 'FILE' ? <ChatMessageImage src={message.message}/> : <ChatMessageText>{message.message}</ChatMessageText>}
                       </ChatMessageCard>
                     </ChatMessageDiv>
                   );
@@ -319,7 +322,17 @@ const ChatContainer = () => {
             </CellContent>
             <ChatMessageBoxDiv>
               <ChatMessageClipDiv>
-                <FontAwesomeIconDiv icon={faPaperclip}></FontAwesomeIconDiv>
+                <input style={{ display: 'none' }} type='file' accept="image/*" id='chat-file-id' onChange={async (e: any) => {
+                  const file = e.target.files[0];
+                  const s3FileUrl = await upload(file);
+
+                  await sendMessage({
+                    roomId: currentRoom.current.id,
+                    message: s3FileUrl,
+                    messageType: "FILE",
+                  } as ChatMessageReq);
+                }} />
+                <label htmlFor='chat-file-id'><FontAwesomeIconDiv icon={faPaperclip} /></label>
               </ChatMessageClipDiv>
               <ChatMessageInputForm
                 onSubmit={(e) => {
@@ -327,7 +340,8 @@ const ChatContainer = () => {
 
                   sendMessage({
                     roomId: currentRoom.current.id,
-                    message: typingMessage
+                    message: typingMessage,
+                    messageType: "NORMAL"
                   } as ChatMessageReq);
                   setTypingMessage('');
                   return false;
@@ -392,6 +406,7 @@ const Cell = styled.div<{
 
 const CellContent = styled.div`
   overflow-anchor: none;
+  overflow-x: hidden;
   overflow-y: auto;
   position: relative;
   display: flex;
@@ -625,6 +640,7 @@ const FontAwesomeIconDiv = styled(FontAwesomeIcon)`
   padding: 16px;
   background-color: #dddddddd;
   border-radius: 10px;
+  cursor: pointer;
 `;
 
 const ChatMessageProfileImg = styled.img`
@@ -656,6 +672,12 @@ const ChatMessageText = styled.pre`
   line-height: 19px;
 `;
 
+const ChatMessageImage = styled.img`
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+`
+
 const ChatMessageCard = styled.div``;
 
 const SystemMessageLink = styled.p`
@@ -683,3 +705,4 @@ const MyChatMessageTitle = styled(ChatMessageTitle)`
 const MyChatMessageText = styled(ChatMessageText)`
   text-align: right;
 `;
+

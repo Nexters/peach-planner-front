@@ -55,7 +55,7 @@ const PlannerReview = () => {
             return (
               <Review
                 reviewState="상담완료"
-                reviewWriter={review.userName}
+                reviewWriter={review.user.nickName}
                 reviewContent={review.comment}
                 picture={review.imageUrl}
                 reviewCreatedAt={new Date(review.writeDate).toLocaleDateString()}

@@ -1,44 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory, useRouteMatch } from 'react-router';
-import { useQuery } from 'react-query';
-import { Company, fetchCompany } from '../../api/Company';
-import { PickRequest, pick } from 'src/api/Pick';
-import PButton from 'src/component/PButton';
-import EmptyHeart from '../../assets/svg/ic_heart_black.svg';
-import FullHeart from '../../assets/svg/ic_heart.svg';
-import Map from '../../assets/svg/ic_map.svg';
-import Call from '../../assets/svg/ic_call.svg';
 import DefaultBigImage from '../../assets/svg/img_defult_wedding.svg';
-import DefaultImage from '../../assets/svg/img_photo_default.svg';
 import ImageModal from '../planner-detail/ImageModal';
-import Container from '../planner-detail/Container';
 import axios from 'axios';
 import { FaHome, FaPhone, FaPhoneAlt, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import { MdHome, MdHomeFilled } from 'react-icons/md';
+import { PartnerInfo } from 'src/api/Planner';
 
 interface routeProps {
   id: string;
 }
 
-const CompanyDetail = () => {
-  const [companyInfo, setCompanyInfo] = useState<Company | null>(null);
+export const PartnerDetail = () => {
+  const [partnerInfo, setPartnerInfo] = useState<PartnerInfo | null>(null);
   const history = useHistory();
   const { params } = useRouteMatch<routeProps>();
-  const companyId = params.id;
+  const partnerId = params.id;
 
   const [selected, setSelected] = useState<boolean>(false);
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
 
   const fetchCompany = () => {
     axios
-      .get(`/companies/${companyId}`, {
+      .get(`/partners/${partnerId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
       })
       .then((response) => {
-        setCompanyInfo({ ...response.data });
+        setPartnerInfo({ ...response.data });
         setSelected(response.data.pick ?? false);
       })
       .catch((err) => {
@@ -61,17 +52,17 @@ const CompanyDetail = () => {
     navigator.clipboard.writeText(text);
   };
 
-  return companyInfo ? (
+  return partnerInfo ? (
     <OuterContainer>
       <ImageOuterContainer>
         <ImageContainer>
-          {companyInfo.images.length == 0 ? <img src={DefaultBigImage} /> : <BigImage src={companyInfo.images[0]} />}
+          {partnerInfo.images.length == 0 ? <img src={DefaultBigImage} /> : <BigImage src={partnerInfo.images[0]} />}
         </ImageContainer>
-        {companyInfo.images.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}
-        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={companyInfo.images} />
+        {partnerInfo.images.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}
+        <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={partnerInfo.images} />
       </ImageOuterContainer>
       <TopContainer>
-        <Title>{companyInfo.name}</Title>
+        <Title>{partnerInfo.name}</Title>
         <Information>
           <InformationElement>
             <Vertical>
@@ -82,8 +73,8 @@ const CompanyDetail = () => {
                 <FaPhoneAlt size={16} />
               </div>
             </Vertical>{' '}
-            <Vertical>{companyInfo.tel}</Vertical>
-            <CopyLocation onClick={() => copy(companyInfo?.tel)}>복사</CopyLocation>
+            <Vertical>{partnerInfo.tel}</Vertical>
+            <CopyLocation onClick={() => copy(partnerInfo?.tel)}>복사</CopyLocation>
           </InformationElement>
           <InformationElement>
             <Vertical>
@@ -94,8 +85,8 @@ const CompanyDetail = () => {
                 <FaMapMarkerAlt size={16} />
               </div>
             </Vertical>{' '}
-            <Vertical>{companyInfo.location}</Vertical>
-            <CopyLocation onClick={() => copy(companyInfo?.location)}>복사</CopyLocation>
+            <Vertical>{partnerInfo.location}</Vertical>
+            <CopyLocation onClick={() => copy(partnerInfo?.location)}>복사</CopyLocation>
           </InformationElement>
           <InformationElement>
             <Vertical>
@@ -106,7 +97,7 @@ const CompanyDetail = () => {
                 <MdHomeFilled size={16} />
               </div>
             </Vertical>{' '}
-            <Vertical>{companyInfo.homepage && <a href={companyInfo.homepage} style={{ color: '#868e96' }}>{companyInfo.homepage}</a>}</Vertical>
+            <Vertical>{partnerInfo.homepage && <a href={partnerInfo.homepage} style={{ color: '#868e96' }}>{partnerInfo.homepage}</a>}</Vertical>
           </InformationElement>
           <InformationElement>
             <Vertical>
@@ -117,7 +108,7 @@ const CompanyDetail = () => {
                 <FaClock size={16} />
               </div>
             </Vertical>{' '}
-            <Vertical>{companyInfo.bizHour}</Vertical>
+            <Vertical>{partnerInfo.bizHour}</Vertical>
           </InformationElement>
         </Information>
       </TopContainer>
@@ -127,7 +118,6 @@ const CompanyDetail = () => {
   );
 };
 
-export default CompanyDetail;
 
 const OuterContainer = styled.div`
   width: 860px;

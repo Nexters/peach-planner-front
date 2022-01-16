@@ -9,6 +9,7 @@ export interface Estimate {
   description: string;
   plannerName: string;
   userName: string;
+  status: string;
 }
 
 export interface EstimateDetail {

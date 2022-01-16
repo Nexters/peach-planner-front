@@ -37,6 +37,7 @@ import UserSetting from './page/user-mypage/UserSetting';
 import PrivateRout from './routes/PrivateRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import EstimateDetail from './page/estimate-detail';
+import { PartnerDetail } from './page/partner-detail/PartnerDetail';
 
 export const queryClient = new QueryClient();
 
@@ -75,6 +76,9 @@ const App = () => {
                 </UserPrivateRoute>
                 <Route path="/company/:id">
                   <CompanyDetail />
+                </Route>
+                <Route path="/partner/:id">
+                  <PartnerDetail />
                 </Route>
                 <PublicOnlyRoute path="/login">
                   <Login />

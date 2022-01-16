@@ -69,6 +69,8 @@ export interface PartnerInfo {
   type: 'STUDIO' | 'DRESS' | 'MAKEUP';
   images: string[];
   description: string;
+  bizHour: string;
+  homepage: string;
 }
 
 export interface Partners {

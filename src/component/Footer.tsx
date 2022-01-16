@@ -30,6 +30,7 @@ const Container = styled.footer`
   justify-content: center;
   margin-top: 100px;
   padding: 35px 10%;
+  top: 100vh;
   border-top: 1px solid;
   border-top-color: #f1f3f5;
 `;

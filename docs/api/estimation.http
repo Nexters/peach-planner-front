@@ -10,7 +10,7 @@ Content-Type: application/json
 ###
 POST https://api.peachplanner.com/api/estimate/upload
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MDQyNjYzNCwiZXhwIjoxNjQwNTEzMDM0fQ.Wh7Qt1hoG2uIEObaJ6KHZ_-njzWW-ZmS-EtR2NRuqktqISSOHOJoSVeIrwxZ-tLd
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MjI1ODYyOCwiZXhwIjoxNjQyMzQ1MDI4fQ.BJgp9hCg2P42XyckYcvpscKUufdI7KJiiu5wkh62eh3Ui1o5ttq-5WOrOu3OU9Fz
 
 {
    "plannerId":"203",
@@ -24,13 +24,13 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MDQyNjYzN
    "weddingHall":false,
    "weddingCard":false,
    "description":"웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. ",
-   "filePath":""
+   "filePath":[]
 }
 
 ###
 GET https://api.peachplanner.com/api/estimate/list
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MTU3NDQ0OCwiZXhwIjoxNjQxNjYwODQ4fQ.VppD9GQgqHYorUZfPYHpqya1o3kvIyZgyA6Xj3RXDqI_vwC-NyOmHKq0cBPNM_4_
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MjM1MDEwMCwiZXhwIjoxNjQyNDM2NTAwfQ.O6Yb-XmsVAzgCWGII283x55SETI3LCFQ6T9ec2bXieD3DavPmvEwCHOw0ezusaUg
 
 ###
-GET https://api.peachplanner.com/api/estimate/52
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MTU3NDQ0OCwiZXhwIjoxNjQxNjYwODQ4fQ.VppD9GQgqHYorUZfPYHpqya1o3kvIyZgyA6Xj3RXDqI_vwC-NyOmHKq0cBPNM_4_
+GET https://api.peachplanner.com/api/estimate/54
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MjM1MDEwMCwiZXhwIjoxNjQyNDM2NTAwfQ.O6Yb-XmsVAzgCWGII283x55SETI3LCFQ6T9ec2bXieD3DavPmvEwCHOw0ezusaUg

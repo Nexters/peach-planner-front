@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useHistory } from 'react-router';
 import { PartnerInfo } from 'src/api/Planner';
 import styled from 'styled-components';
 
@@ -7,8 +8,12 @@ interface PartnerItemProps {
 }
 
 const PartnerItem: FC<PartnerItemProps> = ({ data }) => {
+  const history = useHistory();
+
   return (
-    <Container>
+    <Container onClick={() => {
+      history.push(`/partner/${data.id}`);
+    }}>
       <Image src={data.profilePath} />
       <Title>{data.name}</Title>
       <Detail>{data.location}</Detail>
@@ -20,6 +25,7 @@ export default PartnerItem;
 
 const Container = styled.div`
   margin-right: 15px;
+  cursor: pointer;
 `;
 
 const Image = styled.img`

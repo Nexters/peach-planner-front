@@ -50,7 +50,7 @@ export const UserMyPage = () => {
             {(() => {
               if (picks?.pickLists?.length == 0) {
                 return (
-                  <EmptyText flex={1} textAlign='cetner'>찜한 목록이 없습니다.</EmptyText>
+                  <EmptyText flex={10} textAlign='center'>찜한 목록이 없습니다.</EmptyText>
                 )
               }
 
@@ -117,7 +117,7 @@ export const UserMyPage = () => {
             </EstimateNumber>
             <Company>
               <Title height="18px" fontSize="12px" width="auto" lineHeight="normal" color="#212529">
-                업체
+                플래너
               </Title>
             </Company>
             <EstimateState>
@@ -134,13 +134,13 @@ export const UserMyPage = () => {
                   createdAt={estimate.createDate}
                   content={estimate.description}
                   estimateNumber={estimate.id}
-                  companyName={estimate.companyName}
-                  estimateState={estimate.companyName}
+                  plannerName={estimate.plannerName}
+                  status={estimate.status}
                 />
               );
             })
           ) : (
-            <EmptyText flex={1} textAlign='cetner' padding='30px 0 0 0'>견적서 내용이 없습니다.</EmptyText>
+            <EmptyText flex={1} textAlign='center' padding='30px 0 0 0'>견적서 내용이 없습니다.</EmptyText>
           )}
         </ContentContainer>
       </InnerContainer>

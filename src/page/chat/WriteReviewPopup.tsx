@@ -35,7 +35,7 @@ export const WriteReviewPopup: FC<WriteReviewModalProps> = ({ showReviewModal, c
       imageUrl: s3ImageUrl,
     });
     closeReviewModal();
-    history.push(`/planner/${plannerId}`);
+    history.push(`/planner/${plannerId}/detail/#planner-review`);
   };
 
   return (

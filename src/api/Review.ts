@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export interface ReviewData {
+  user: any;
   comment: string;
-  userName: string;
   writeDate: string;
   imageUrl?: string;
 }

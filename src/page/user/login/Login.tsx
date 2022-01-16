@@ -45,6 +45,7 @@ const Login = () => {
     .then((res) => {
       const accessToken = res.data.accessToken;
       const refreshToken = res.data.refreshToken;
+      axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
     setPeachTokenState(accessToken);
@@ -55,7 +56,8 @@ const Login = () => {
         const errorMessage = error?.response?.data?.message;
         alert(errorMessage);
         return;
-      } 
+      }
+      console.error(error);
       alert('아이디나 비밀번호를 확인해주세요');
       return;
     });

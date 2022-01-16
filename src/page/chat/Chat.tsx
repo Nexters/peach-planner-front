@@ -2,7 +2,7 @@ import { Title } from '../../component/style/style';
 import styled from 'styled-components';
 import shape from 'src/images/Shape 2.png';
 import imgWedding from 'src/images/img_wedding_1.png';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { useQuery, QueryFunctionContext } from 'react-query';
 import { ChatRoom, ChatRoomParticipant, fetchChatRoomParticipant, fetchChatRooms } from 'src/api/ChatRoom';
 import { ChatMessage, ChatMessageReq, fetchChatMessages, sendMessage } from 'src/api/ChatMessage';
@@ -140,16 +140,20 @@ const ChatContainer = () => {
     }
   }, [chatMessages]);
 
+
+  // for manual update
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+
   return (
     <Container>
       <Page>
         <Row>
-          <Cell width="35%">
+          <Cell width="375px">
             <Title height="27px" width="auto" fontSize="18px" lineHeight="27px" padding="24px 0 24px 16px">
               메시지
             </Title>
           </Cell>
-          <Cell width="65%">
+          <Cell width="725px">
             <ChatRoomTitleLine>
               <Title height="20px" width="auto" fontSize="14px" lineHeight="20px" padding="24px 0 24px 16px">
                 {currentRoom.current.roomName}
@@ -170,7 +174,10 @@ const ChatContainer = () => {
                         {},
                         { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
                       )
-                    console.log('상담 완료 ' + currentRoom.current.estimationId);
+                      .then(() => {
+                        currentRoom.current.chatRoomStatus = 'CLOSED';
+                        forceUpdate();
+                      });
                   }}>
                     <PlannerProfileCTA color="#FFFFFF">상담 완료하기</PlannerProfileCTA>
                   </PlannerProfileEndConsult>
@@ -187,8 +194,8 @@ const ChatContainer = () => {
         </Row>
 
         <Row height="60vh">
-          <Cell width="35%">
-            <CellContent>
+          <Cell width="375px">
+            <CellContent height="600px">
               {rooms && rooms.length > 0 ? (
                 rooms.map((room, index) => {
                   return (
@@ -203,6 +210,7 @@ const ChatContainer = () => {
                             fetchChatMessages(currentRoom.current.id),
                             fetchChatRoomParticipant(currentRoom.current.id)
                           ]).then(([messages, roomParticipants]) => {
+                            chatRoomParticipant.current = roomParticipants;
                             setChatMessages(
                               messages.map((message) => {
                                 return {
@@ -216,7 +224,6 @@ const ChatContainer = () => {
                                 } as ChatMessageModel;
                               })
                             );
-                            chatRoomParticipant.current = roomParticipants;
                           });
                         })();
                       }}
@@ -225,7 +232,7 @@ const ChatContainer = () => {
                       <ChatProfileText>
                         <ChatProfileLine>
                           <ChatProfileName>{room.roomName}</ChatProfileName>
-                          <ChatLastMessageDate>{new Date(room.lastMessageDateTime).toDateString()}</ChatLastMessageDate>
+                          <ChatLastMessageDate>{new Date(room.lastMessageDateTime).toLocaleDateString('ko-KR')}</ChatLastMessageDate>
                         </ChatProfileLine>
                         <ChatLastMessage>{room.lastMessage}</ChatLastMessage>
                       </ChatProfileText>
@@ -237,7 +244,7 @@ const ChatContainer = () => {
               )}
             </CellContent>
           </Cell>
-          <Cell width="65%">
+          <Cell width="725px">
             <CellContent ref={messagesEndRef}>
               {chatMessages && chatMessages.length > 0 ? (
                 <ChatMessageDate>{new Date(chatMessages[0].dateTime).toLocaleDateString('ko-KR')}</ChatMessageDate>
@@ -368,15 +375,14 @@ const ChatContainer = () => {
 export default ChatContainer;
 
 const Container = styled.div`
+  display: flex;
   background-color: white;
-  padding: 0 21vw;
+  justify-content: center;
 `;
 
 const Page = styled.div`
   display: table;
   background-color: white;
-  height: 100%;
-  width: 100%;
 `;
 
 const Row = styled.div<{
@@ -400,17 +406,17 @@ const Cell = styled.div<{
   border: 1px solid;
   border-color: #d8d8d8;
   vertical-align: top;
-  max-height: 340px;
   position: relative;
 `;
 
-const CellContent = styled.div`
+const CellContent = styled.div<{ height?: string }>`
   overflow-anchor: none;
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
   display: flex;
-  height: 500px;
+  height: ${({ height }) => (height ?? '500px')};
+  /* height: 500px; */
   flex-direction: column;
   padding-bottom: 24px;
 
@@ -670,6 +676,7 @@ const ChatMessageText = styled.pre`
   font-size: 13px;
   letter-spacing: 0;
   line-height: 19px;
+  white-space: pre-wrap;
 `;
 
 const ChatMessageImage = styled.img`

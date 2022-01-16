@@ -4,14 +4,15 @@ import styled from 'styled-components';
 import HorizontalLine from '../../component/HorizontalLine';
 
 interface ContainerProps {
+  id?: string;
   title: string;
   children: ReactNode;
 }
 
-const Container: FC<ContainerProps> = ({ title, children }) => {
+const Container: FC<ContainerProps> = ({ id, title, children }) => {
   return (
     <>
-      <Title>{title}</Title>
+      <Title id={id}>{title}</Title>
       {children}
       <HorizontalLine height="0.1px" color="#dee2e6" top="40px" bottom="40px" />
     </>

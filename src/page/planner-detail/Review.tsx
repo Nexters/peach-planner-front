@@ -13,10 +13,11 @@ const Review: FC<ReviewProps> = ({ data, noLine = false }) => {
   return (
     <OuterContainer>
       <Container>
-        <AccountDefault />
+        {/* <AccountDefault /> */}
+        <Image src={data.user.imagePathUrl}/>
         {/* <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs33kicMrwTO3bQTdskuUlvJRK9JAgmaGjZw&usqp=CAU" /> */}
         <RightContainer>
-          <Name>{data.userName}</Name>
+          <Name>{data.user.nickName}</Name>
           <DateDiv>{new Date(data.writeDate).toLocaleDateString()}</DateDiv>
           <Comment>{data.comment}</Comment>
           {data.imageUrl && <Image src={data.imageUrl} />}
@@ -40,6 +41,7 @@ const Container = styled.div`
 const Image = styled.img`
   width: 53.33px;
   height: 53.33px;
+  border-radius: 45px;
 `;
 
 const RightContainer = styled.div`

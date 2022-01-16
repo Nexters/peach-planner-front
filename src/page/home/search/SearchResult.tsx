@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useSelectedSortingState } from 'src/atoms/SelectStatus';
 import { pick } from 'src/api/Pick';
 import { queryClient } from 'src/App';
+import { EmptyText } from 'src/page/planner-detail/components/styles';
 
 interface Props {
   location: string;
@@ -56,29 +57,35 @@ const SearchResult = ({ location, support }: Props) => {
         <option value="pick,DESC">인기순</option>
         <option value="review,DESC">리뷰순</option>
       </select>
-      <SearchResultList>
-        {planners?.content.map((planner, index) => {
-          return (
-            <PlannerCard
-              key={planner.id}
-              margin={'0 12px 32px 0'}
-              size={'206px'}
-              imagePath={planner.images[0]}
-              heartCount={planner.likes}
-              reviewCount={planner.reviews}
-              name={planner.name}
-              organization={planner.company?.name}
-              region={planner.locations.join(',')}
-              id={planner.id}
-              blogLink={planner.externalLinks?.blogLink}
-              instagramLink={planner.externalLinks?.instagramLink}
-              facebookLink={planner.externalLinks?.facebookLink}
-              postLiked={planner.postLiked}
-              mutate={mutate}
-            />
-          );
-        })}
-      </SearchResultList>
+      {planners && planners.content.length > 0 ?
+        <SearchResultList>
+          {
+            planners.content.map((planner, index) => {
+              return (
+                <PlannerCard
+                  key={planner.id}
+                  margin={'0 12px 32px 0'}
+                  size={'206px'}
+                  imagePath={planner.images[0]}
+                  heartCount={planner.likes}
+                  reviewCount={planner.reviews}
+                  name={planner.name}
+                  organization={planner.company?.name}
+                  region={planner.locations.join(',')}
+                  id={planner.id}
+                  blogLink={planner.externalLinks?.blogLink}
+                  instagramLink={planner.externalLinks?.instagramLink}
+                  facebookLink={planner.externalLinks?.facebookLink}
+                  postLiked={planner.postLiked}
+                  mutate={mutate}
+                />
+              );
+            })
+          }
+        </SearchResultList>
+        :
+        <EmptyText flex={1} textAlign='center' padding='120px 0 0 0'>플래너가 없습니다.</EmptyText>
+      }
     </FlexDiv>
   );
 };

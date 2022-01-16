@@ -13,7 +13,7 @@ const colors: IStringObject = {
 };
 
 const theme = {
-  colors
+  colors,
 };
 
 export default theme;

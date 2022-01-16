@@ -14,8 +14,8 @@ export const EmptyText = styled.div<EmptyTextProps>`
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    text-align: left;
     color: #adb5bd;
+    width: 100%;
     
     padding: ${(props: EmptyTextProps) => (props.padding)};
     text-align: ${(props: EmptyTextProps) => (props.textAlign)};

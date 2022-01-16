@@ -7,11 +7,11 @@ interface Props {
   createdAt: string;
   content: string;
   estimateNumber: number;
-  companyName: string;
-  estimateState: string;
+  plannerName: string;
+  status: string;
 }
 
-const MyEstimate = ({ id, createdAt, content, estimateNumber, companyName, estimateState }: Props) => {
+const MyEstimate = ({ id, createdAt, content, estimateNumber, plannerName, status }: Props) => {
   const history = useHistory();
 
   const handleClick = () => {
@@ -37,12 +37,12 @@ const MyEstimate = ({ id, createdAt, content, estimateNumber, companyName, estim
       </EstimateNumberBox>
       <CompanyBox>
         <Content height="19px" width="auto" fontSize="13px" lineHeight="normal" color="#495057">
-          {companyName}
+          {plannerName}
         </Content>
       </CompanyBox>
       <EstimateStateBox>
         <Content height="19px" width="auto" fontSize="13px" lineHeight="normal" color="#495057">
-          {estimateState}
+          {status}
         </Content>
       </EstimateStateBox>
     </Container>

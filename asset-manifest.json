@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "https://peachplanner.com/static/js/main.aa3c09bb.chunk.js",
-    "main.js.map": "https://peachplanner.com/static/js/main.aa3c09bb.chunk.js.map",
+    "main.js": "https://peachplanner.com/static/js/main.6d52d563.chunk.js",
+    "main.js.map": "https://peachplanner.com/static/js/main.6d52d563.chunk.js.map",
     "runtime-main.js": "https://peachplanner.com/static/js/runtime-main.6003f771.js",
     "runtime-main.js.map": "https://peachplanner.com/static/js/runtime-main.6003f771.js.map",
     "static/js/2.7255f4b3.chunk.js": "https://peachplanner.com/static/js/2.7255f4b3.chunk.js",
@@ -26,6 +26,7 @@
     "static/media/ic_close_w.7a3474d9.svg": "https://peachplanner.com/static/media/ic_close_w.7a3474d9.svg",
     "static/media/ic_fill.d4f6bb26.svg": "https://peachplanner.com/static/media/ic_fill.d4f6bb26.svg",
     "static/media/ic_heart.ed1cb932.svg": "https://peachplanner.com/static/media/ic_heart.ed1cb932.svg",
+    "static/media/ic_heart_black.54e35599.svg": "https://peachplanner.com/static/media/ic_heart_black.54e35599.svg",
     "static/media/ic_heart_fill.5568e171.svg": "https://peachplanner.com/static/media/ic_heart_fill.5568e171.svg",
     "static/media/ic_heart_line.37e61b56.svg": "https://peachplanner.com/static/media/ic_heart_line.37e61b56.svg",
     "static/media/ic_instagram.d49b0047.svg": "https://peachplanner.com/static/media/ic_instagram.d49b0047.svg",
@@ -45,6 +46,6 @@
   "entrypoints": [
     "static/js/runtime-main.6003f771.js",
     "static/js/2.7255f4b3.chunk.js",
-    "static/js/main.aa3c09bb.chunk.js"
+    "static/js/main.6d52d563.chunk.js"
   ]
 }

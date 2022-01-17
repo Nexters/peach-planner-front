@@ -29,7 +29,7 @@ export interface EditInfo {
 }
 
 export const EditUserInfo = async (reqBody: EditInfo) => {
-  const { data } = await axios.patch(`/users/me`, reqBody, {
+  const { data } = await axios.put(`/users/me`, reqBody, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
     }

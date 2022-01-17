@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Planner } from 'src/api/Planner';
 import { pick, PickRequest } from 'src/api/Pick';
 import FullHeart from 'src/assets/svg/ic_heart_fill.svg';
-import EmptyHeart from 'src/assets/svg/ic_heart_line.svg';
+import EmptyHeart from 'src/assets/svg/ic_heart_black.svg';
 
 interface Props {
   plannerInfo: Planner;
@@ -68,9 +68,8 @@ const Interaction = ({ plannerInfo, setPlannerInfo }: Props) => {
         </PButton>
         <PButton onClick={pickPlanner} otherBgColor="#f1f3f5" border="none">
           <Vertical>
-            <img src={plannerInfo.postLiked ? FullHeart : EmptyHeart} />
-          </Vertical>{' '}
-          <Vertical>찜하기</Vertical>
+            <Icon src={plannerInfo.postLiked ? FullHeart : EmptyHeart} />&nbsp; 찜하기
+          </Vertical>
         </PButton>
       </ButtonContainer>
     </Container>
@@ -91,6 +90,12 @@ const ButtonContainer = styled.div`
 `;
 
 const Vertical = styled.div`
-  vertical-align: middle;
-  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`;
+
+const Icon = styled.img`
+  width: 16px;
+  height: 16px;
 `;

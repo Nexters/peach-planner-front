@@ -29,6 +29,7 @@ export interface TitleProps {
   lineHeight: string;
   margin?: string;
   padding?: string;
+  fontFamily?: string;
 }
 
 export const Title = styled.div<TitleProps>`
@@ -36,6 +37,7 @@ export const Title = styled.div<TitleProps>`
   width: ${(props: TitleProps) => props.width};
   color: ${(props: TitleProps) => (props.color ? props.color : '#000000')};
   font-size: ${(props: TitleProps) => props.fontSize};
+  font-family: ${(props: TitleProps) => props.fontFamily};
   font-weight: bold;
   letter-spacing: 0;
   line-height: ${(props: TitleProps) => props.lineHeight};

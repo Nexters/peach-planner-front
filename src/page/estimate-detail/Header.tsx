@@ -25,7 +25,7 @@ const Header = ({ isUser }: Props) => {
     <Container>
       <Back>
         <BackBody onClick={handleClick}>
-          <BackImage src={LeftArrow}></BackImage>
+          <BackIcon src={LeftArrow} />
           <Title height="27px" width="auto" fontSize="18px" color="#000" lineHeight="27px" margin="0px 0px 0px 8px">
             리뷰 목록으로 이동
           </Title>
@@ -61,7 +61,7 @@ interface ImageProps {
   src: string;
 }
 
-const BackImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const BackIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   height: 24px;
   width: 24px;
 `;

@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect, ChangeEvent, HtmlHTMLAttributes } f
 import { getUserMe, EditUserInfo, DeleteUser, User, editUserProfileImage } from 'src/api/User';
 import { useQuery } from 'react-query';
 import { Link, useHistory } from 'react-router-dom';
-import { ReactComponent as LeftArrow } from '../../assets/svg/ic_arrow_left.svg';
+import { ReactComponent as LeftArrow } from '../../assets/svg/ic_arrow-left-line.svg';
 import styled, { css } from 'styled-components';
 import UserPageSideMenu from '../user/mypage/UserPageSideMenu';
 import DefaultProfileImage from '../../assets/svg/ic_account_default.svg';
 import { upload } from 'src/api/Image';
+import { Title } from 'src/component/style/style';
 
 export default () => {
   // const { data: user } = useQuery(['getUser'], getUser);
@@ -113,30 +114,39 @@ export default () => {
   return (
     <Container>
       <InnerContainer>
-        <UserPageSideMenu></UserPageSideMenu>
+        <UserPageSideMenu />
         <ContentContainer>
 
           {changePw ? (
             <FlexDiv direction={'column'}>
+
+              <FlexDiv margin='0' justify='none' align='none' cursor='pointer' onClick={() => setChangePw(false)} >
+                <LeftArrow/>
+                <Title width='100%' height='27px' fontFamily='SpoqaHanSans' fontSize='18px' lineHeight='27px' margin='0 0 15px 0' color='#000'>
+                  계정 설정으로 돌아가기
+                </Title>
+              </FlexDiv>
+
               <SettingBox>
-                <LeftArrow onClick={() => setChangePw(false)} style={{ cursor: 'pointer' }} />
                 <SettingTitle>비밀번호 변경</SettingTitle>
 
                 <SettingLabel>현재 비밀번호</SettingLabel>
-                <SettingInfo>
+                <SettingInfoBox focus={true}>
                   <Input name="originalPassword" onChange={onChangeInput} value={originalPassword} type="password" />
-                </SettingInfo>
+                </SettingInfoBox>
 
                 <SettingLabel>새 비밀번호</SettingLabel>
-                <SettingInfo>
+                <SettingInfoBox focus={true}>
                   <Input name="password" onChange={onChangeInput} value={password} type="password" />
-                </SettingInfo>
+                </SettingInfoBox>
+
 
                 <SettingLabel>새 비밀번호 확인</SettingLabel>
-                <SettingInfo>
+                <SettingInfoBox focus={true}>
                   <Input name="passwordConfirm" onChange={onChangeInput} value={passwordConfirm} type="password" />
-                </SettingInfo>
-
+                </SettingInfoBox>
+              </SettingBox>
+              <SettingBox>
                 <SettingButton onClick={changePassword}>
                   <SettingButtonText>변경하기</SettingButtonText>
                 </SettingButton>
@@ -144,7 +154,26 @@ export default () => {
             </FlexDiv>
           ) : (
             <FlexDiv direction="column">
-              <Title>계정 설정</Title>
+
+              {
+
+                // const Title = styled.div`
+                //   /* display: inline-block; */
+                //   width: 100%;
+                //   height: 27px;
+                //   font-family: SpoqaHanSans;
+                //   font-size: 18px;
+                //   font-weight: bold;
+                //   font-stretch: normal;
+                //   font-style: normal;
+                //   line-height: normal;
+                //   letter-spacing: normal;
+                //   text-align: left;
+                //   color: #000;
+                //   margin-bottom: 15px;
+                // `;
+              }
+              <Title width='100%' height='27px' fontFamily='SpoqaHanSans' fontSize='18px' lineHeight='normal' margin='0 0 15px 0' color='#000'>계정 설정</Title>
               <SettingBox>
                 <SettingTitle>회원정보</SettingTitle>
 
@@ -252,6 +281,7 @@ const FlexDiv = styled.div<{
   align?: string;
   direction?: string;
   margin?: string;
+  cursor?: string;
 }>`
   width: 100%;
   display: flex;
@@ -259,22 +289,7 @@ const FlexDiv = styled.div<{
   align-items: ${(props) => props.align || 'center'};
   flex-direction: ${(props) => props.direction || 'row'};
   margin: ${(props) => props.margin || '20px 0'};
-`;
-
-const Title = styled.span`
-  display: inline-block;
-  width: 100%;
-  height: 27px;
-  font-family: SpoqaHanSans;
-  font-size: 18px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: #000;
-  margin-bottom: 15px;
+  cursor: ${(props) => props.cursor};
 `;
 
 const SettingTitle = styled.span<{ margin?: string }>`
@@ -388,4 +403,10 @@ const Input = styled.input`
   background: transparent;
   border: none;
   outline: none;
+`;
+
+const SizedBox = styled.div<{ width?: string; height?: string; }>`
+  width: ${(props) => (props.width)};
+  height: ${(props) => (props.height)};
+  display: inline-block;
 `;

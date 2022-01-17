@@ -32,3 +32,18 @@ export const sendMessage = async (chatMessageReq: ChatMessageReq) => {
         },
     });
 }
+
+export const sendFile = async (roomId: number, file: any) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('roomId', roomId.toString());
+  
+    const { data } = await axios.post(`/chat/file`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return data;
+  };
+  

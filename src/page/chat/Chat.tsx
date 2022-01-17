@@ -5,7 +5,7 @@ import imgWedding from 'src/images/img_wedding_1.png';
 import React, { useEffect, useReducer, useState } from 'react';
 import { useQuery, QueryFunctionContext } from 'react-query';
 import { ChatRoom, ChatRoomParticipant, fetchChatRoomParticipant, fetchChatRooms } from 'src/api/ChatRoom';
-import { ChatMessage, ChatMessageReq, fetchChatMessages, sendMessage } from 'src/api/ChatMessage';
+import { ChatMessage, ChatMessageReq, fetchChatMessages, sendFile, sendMessage } from 'src/api/ChatMessage';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Client, Message, IFrame, ActivationState, StompSocketState } from '@stomp/stompjs';
@@ -141,7 +141,7 @@ const ChatContainer = () => {
   }, [chatMessages]);
 
 
-  // for manual update
+  // for manual rerender
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   return (
@@ -287,7 +287,15 @@ const ChatContainer = () => {
                               })}
                             </ChatMessageProfileDatetime>
                           </MyChatMessageTitle>
-                          {message.messageType === 'FILE' ? <ChatMessageImage src={message.message}/> : <MyChatMessageText>{message.message}</MyChatMessageText>}
+                          {
+                            message.messageType === 'FILE' ? (() => {
+                              const fileList = JSON.parse(message.message);
+                              console.log(fileList);
+                              return fileList.map((f: any) => f.mimeType.startsWith("image") ? <ChatMessageImage src={f.filePath} /> : <a href={f.filePath}>문서</a>);
+                            })()
+                            :
+                            <MyChatMessageText>{message.message}</MyChatMessageText>
+                          }
                         </MyChatMessageCard>
                         <ChatMessageProfileImg src={message.sender.profileImage || shape} />
                       </MyChatMessageDiv>
@@ -309,7 +317,15 @@ const ChatContainer = () => {
                             })}
                           </ChatMessageProfileDatetime>
                         </ChatMessageTitle>
-                        {message.messageType === 'FILE' ? <ChatMessageImage src={message.message}/> : <ChatMessageText>{message.message}</ChatMessageText>}
+                        {
+                            message.messageType === 'FILE' ? (() => {
+                              const fileList = JSON.parse(message.message);
+                              console.log(fileList);
+                              return fileList.map((f: any) => f.mimeType.startsWith("image") ? <ChatMessageImage src={f.filePath} /> : <a href={f.filePath}>문서</a>);
+                            })()
+                            :
+                            <ChatMessageText>{message.message}</ChatMessageText>
+                          }
                       </ChatMessageCard>
                     </ChatMessageDiv>
                   );
@@ -331,13 +347,7 @@ const ChatContainer = () => {
               <ChatMessageClipDiv>
                 <input style={{ display: 'none' }} type='file' accept="image/*" id='chat-file-id' onChange={async (e: any) => {
                   const file = e.target.files[0];
-                  const s3FileUrl = await upload(file);
-
-                  await sendMessage({
-                    roomId: currentRoom.current.id,
-                    message: s3FileUrl,
-                    messageType: "FILE",
-                  } as ChatMessageReq);
+                  await sendFile(currentRoom.current.id, file);
                 }} />
                 <label htmlFor='chat-file-id'><FontAwesomeIconDiv icon={faPaperclip} /></label>
               </ChatMessageClipDiv>
@@ -349,7 +359,7 @@ const ChatContainer = () => {
                     roomId: currentRoom.current.id,
                     message: typingMessage,
                     messageType: "NORMAL"
-                  } as ChatMessageReq);
+                  });
                   setTypingMessage('');
                   return false;
                 }}

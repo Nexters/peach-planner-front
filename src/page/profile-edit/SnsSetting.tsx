@@ -3,13 +3,14 @@ import { Content, FlexDiv } from '../../component/style/style';
 import LineAndTitle from './LindAndTitle';
 import SnsSite from './SnsSite';
 interface Props {
+  website: string;
   instagram: string;
   facebook: string;
   blog: string;
   handleSns: (e: any) => void;
 }
 
-const SnsSetting = ({ instagram, facebook, blog, handleSns }: Props) => {
+const SnsSetting = ({ website, instagram, facebook, blog, handleSns }: Props) => {
   return (
     <FlexDiv width="632px" margin="0 0 72px 0" direction="column" justify="flex-start" align="start">
       <LineAndTitle title="SNS 설정" content="연결된 SNS는 웨딩플래너 페이지에 노출됩니다."></LineAndTitle>
@@ -23,7 +24,7 @@ const SnsSetting = ({ instagram, facebook, blog, handleSns }: Props) => {
       >
         웹 사이트
       </Content>
-      <Input name="webUrl" onChange={handleSns}></Input>
+      <Input name="websiteUrl" defaultValue={website} onChange={handleSns}/>
       <SnsSite
         title="인스타그램"
         url="https://www.instagram.com/"
@@ -31,15 +32,15 @@ const SnsSetting = ({ instagram, facebook, blog, handleSns }: Props) => {
         inputName="instagramUrl"
         handleSns={handleSns}
         defaultValue={instagram}
-      ></SnsSite>
+      />
       <SnsSite
         title="페이스북"
-        url="http://facebook.com/"
+        url="https://facebook.com/"
         margin="24px 0 0 0"
         inputName="facebookUrl"
         handleSns={handleSns}
         defaultValue={facebook}
-      ></SnsSite>
+      />
       <SnsSite
         title="블로그"
         url="https://blog.naver.com/"
@@ -47,7 +48,7 @@ const SnsSetting = ({ instagram, facebook, blog, handleSns }: Props) => {
         inputName="blogUrl"
         handleSns={handleSns}
         defaultValue={blog}
-      ></SnsSite>
+      />
     </FlexDiv>
   );
 };

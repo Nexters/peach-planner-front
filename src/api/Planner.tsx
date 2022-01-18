@@ -16,6 +16,7 @@ export interface Planner {
   images: string[];
   name: string;
   externalLinks: {
+    websiteLink?: string;
     blogLink?: string;
     instagramLink?: string;
     facebookLink?: string;
@@ -192,12 +193,10 @@ export interface PlannerRequest {
     summary: string;
   };
   snsInfo: {
-    externalLinks: {
-      blogLink: string;
-      facebookLink: string;
-      instagramLink: string;
-    };
-    webSiteUrl: string;
+    blogLink: string;
+    facebookLink: string;
+    instagramLink: string;
+    websiteLink: string;
   };
   supportInfo: {
     supportInfoList: string[];

@@ -28,7 +28,7 @@ export interface PlannerDescription {
 }
 
 interface Sns {
-  webUrl: string;
+  websiteUrl: string;
   instagramUrl: string;
   facebookUrl: string;
   blogUrl: string;
@@ -52,7 +52,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
   const { mutate, isLoading } = useMutation(updateProfile, {
     onSuccess: (data) => {
       alert(`프로필 ${isUpdate ? '수정' : '등록'}이 완료되었습니다.`);
-      history.push('/');
+      history.goBack();
     }
   });
 
@@ -61,7 +61,7 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     summary: '',
     description: '',
   });
-  const [sns, setSns] = useState<Sns>({ webUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' });
+  const [sns, setSns] = useState<Sns>({ websiteUrl: '', instagramUrl: '', facebookUrl: '', blogUrl: '' });
   const [regions, setRegions] = useState<Item[]>([]);
   const [offers, setOffers] = useState<Item[]>([]);
   const [company, setCompany] = useState<Company>();
@@ -128,12 +128,10 @@ const Profile = ({ isUpdate }: ProfileProps) => {
       },
       myProfile: description,
       snsInfo: {
-        externalLinks: {
-          blogLink: sns.blogUrl,
-          facebookLink: sns.facebookUrl,
-          instagramLink: sns.instagramUrl
-        },
-        webSiteUrl: sns.webUrl
+        websiteLink: sns.websiteUrl,
+        blogLink: sns.blogUrl ? `https://blog.naver.com/${sns.blogUrl}` : '',
+        facebookLink: sns.facebookUrl ? `https://facebook.com/${sns.facebookUrl}` : '',
+        instagramLink: sns.instagramUrl ? `https://www.instagram.com/${sns.instagramUrl}` : '',
       },
       supportInfo: {
         supportInfoList: offers.map((value) => value.value)
@@ -152,6 +150,12 @@ const Profile = ({ isUpdate }: ProfileProps) => {
       summary: planner?.summary ?? '',
       description: planner?.summary ?? '',
     });
+    setSns({ 
+      websiteUrl: planner?.externalLinks?.websiteLink ?? '', 
+      instagramUrl: planner?.externalLinks?.instagramLink?.replace("https://www.instagram.com/", '') ?? '', 
+      blogUrl: planner?.externalLinks?.blogLink?.replace("https://blog.naver.com/", '') ?? '', 
+      facebookUrl: planner?.externalLinks?.facebookLink?.replace("https://facebook.com/", '') ?? '', 
+    })
     setCompany(planner?.company ?? undefined);
     setInputCompanyName(planner?.company?.name ?? '');
     setStudios(planner?.partners?.STUDIO?.map(e => {
@@ -200,9 +204,10 @@ const Profile = ({ isUpdate }: ProfileProps) => {
             setImages={setImages}
           />
           <SnsSetting
-            instagram={planner?.externalLinks?.instagramLink!!}
-            blog={planner?.externalLinks?.blogLink!!}
-            facebook={planner?.externalLinks?.facebookLink!!}
+            website={planner?.externalLinks?.websiteLink ?? ''}
+            instagram={planner?.externalLinks?.instagramLink?.replace("https://www.instagram.com/", '') ?? ''}
+            blog={planner?.externalLinks?.blogLink?.replace("https://blog.naver.com/", '') ?? ''}
+            facebook={planner?.externalLinks?.facebookLink?.replace("https://facebook.com/", '') ?? ''}
             handleSns={handleSns}
           />
           <PlannerArea

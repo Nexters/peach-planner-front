@@ -89,7 +89,8 @@ export default () => {
     } else {
       EditUserInfo({ originalPassword, password })
         .then((data) => {
-          console.log(data, 'dataaaaa');
+          alert("비밀번호가 변경되었습니다.");
+          setChangePw(false);
         })
         .catch((err) => {
           console.log(err, 'err');

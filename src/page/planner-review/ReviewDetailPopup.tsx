@@ -29,7 +29,7 @@ export const ReviewDetailPopup: FC<ReviewDetailModalProps> = ({ reviewDetailInde
             <Divider />
             <SizedBox height={"8px"} />
             <ReviewTopLine>
-                <div>{reviewData.user.nickName}</div>
+                <div>{reviewData.user?.nickName}</div>
                 <div>{new Date(reviewData.writeDate).toLocaleDateString()}</div>
             </ReviewTopLine>
             <SizedBox height={"9px"} />

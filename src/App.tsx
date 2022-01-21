@@ -38,6 +38,7 @@ import PrivateRout from './routes/PrivateRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import EstimateDetail from './page/estimate-detail';
 import { PartnerDetail } from './page/partner-detail/PartnerDetail';
+import SEO from './component/SEO';
 
 export const queryClient = new QueryClient();
 
@@ -58,6 +59,7 @@ const App = () => {
           <ThemeProvider theme={theme}>
             <GlobalStyle />
             <Router>
+              <SEO />
               <Header />
               <Switch>
                 <Route exact path="/">

@@ -55,10 +55,6 @@ const PlannerCard = (props: PlannerProps) => {
     return regions.length > 3 ? `${regions[0]}, ${regions[1]}, ${regions[2]}, ...` : origin;
   };
 
-  const handleClick = (url: string) => {
-    window.location.href = url;
-  };
-
   return (
     <FlexDiv width={props.size} direction="column" margin={props.margin}>
       <PlannerImageContainer>
@@ -97,11 +93,11 @@ const PlannerCard = (props: PlannerProps) => {
       </FlexDiv>
       <FlexDiv justify="flex-start" margin={'12px 0 0 0'}>
         {props.instagramLink ? (
-          <SnsIcon src={instagram} onClick={() => handleClick(props.instagramLink!!)}></SnsIcon>
+          <a href={props.instagramLink}><SnsIcon src={instagram} /></a>
         ) : (
           <></>
         )}
-        {props.blogLink ? <SnsIcon src={blog} onClick={() => handleClick(props.blogLink!!)}></SnsIcon> : <></>}
+        {props.blogLink ? <a href={props.blogLink}><SnsIcon src={blog} /></a> : <></>}
       </FlexDiv>
     </FlexDiv>
   );

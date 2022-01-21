@@ -13,10 +13,11 @@ export const setAxiosDefaults = () => {
       return response;
     },
     (error) => {
-      if (!error.status) {
-        // network error
+      console.log("xxxxzzx");
+      if (!error.response || !error.response.status) {
         return Promise.reject(error);
       }
+      console.log("xxxxxx");
 
       const originalRequest = error.config;
       if (error.response.status === 400 && originalRequest.url === '/auth/token/refresh') {
@@ -38,7 +39,9 @@ export const setAxiosDefaults = () => {
           .catch((err) => {
             console.log('test');
             console.log(err);
-            console.log('test');
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            window.location.href = '/login/';
           });
       }
     }

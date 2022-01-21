@@ -12,6 +12,8 @@ import { Planner } from '../../api/Planner';
 import axios from 'axios';
 import Interaction from './Interaction';
 import { useUserTypeState } from 'src/atoms/AuthStatus';
+import { Helmet } from "react-helmet";
+import SEO from 'src/component/SEO';
 
 interface routeProps {
   id: string;
@@ -47,6 +49,11 @@ const PlannerDetail = () => {
 
   return plannerInfo ? (
     <Container>
+      <SEO 
+        ogTitle={`웨딩플래너 - ${plannerInfo.name} 플래너`}
+        description={plannerInfo.description || "한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요."}
+        image={plannerInfo.images.length > 0 ? plannerInfo.images[0] : undefined}
+      />
       <Summary plannerInfo={plannerInfo}>
         {userType === 'USER' ? (
           <Interaction plannerInfo={plannerInfo} setPlannerInfo={setPlannerInfo}></Interaction>

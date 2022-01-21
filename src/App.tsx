@@ -38,8 +38,7 @@ import PrivateRout from './routes/PrivateRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import EstimateDetail from './page/estimate-detail';
 import { PartnerDetail } from './page/partner-detail/PartnerDetail';
-import { Helmet } from "react-helmet";
-import backgroundImage from "./assets/img/img_background.png";
+import SEO from './component/SEO';
 
 export const queryClient = new QueryClient();
 
@@ -60,20 +59,7 @@ const App = () => {
           <ThemeProvider theme={theme}>
             <GlobalStyle />
             <Router>
-            <Helmet>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-                <title>피치플래너</title>
-                <meta name="description" content="한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요."/>
-                <meta name="robots" content="ALL"/>
-                <meta name="robots" content="웨딩플래너,웨딩업체,결혼준비,결혼,웨딩플래너업체" />
-                <meta name="author" content="피치플래너"/>
-                <meta property="og:type" content="website"/>
-                <meta property="og:title" content="웨딩플래너 비교서비스, 피치플래너"/>
-                <meta property="og:description" content="한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요."/>
-                <meta property="og:image" content={backgroundImage}/>
-                <meta property="og:url" content="http://peachplanner.com/"/>
-                <meta charSet="utf-8" />
-            </Helmet>
+              <SEO />
               <Header />
               <Switch>
                 <Route exact path="/">

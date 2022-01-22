@@ -2,8 +2,8 @@ import heart from '../assets/svg/ic_heart.svg';
 import review from '../assets/svg/ic_review.svg';
 import blog from '../assets/svg/ic_blog.svg';
 import instagram from '../assets/svg/ic_instagram.svg';
-import EmptyHeart from '../assets/svg/ic_heart_line.svg';
-import FillHeart from '../assets/svg/ic_heart_fill.svg';
+import FillHeart from 'src/assets/svg/ic_heart_fill.svg';
+import EmptyHeart from 'src/assets/svg/ic_heart_black.svg';
 import { FlexDiv } from './style/style';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
@@ -66,7 +66,11 @@ const PlannerCard = (props: PlannerProps) => {
         />
         {userState[0] && userState[0] === 'USER' ? (
           <PickBox onClick={handlePickClick}>
-            {props.postLiked ? <PickIcon src={FillHeart}></PickIcon> : <PickIcon src={EmptyHeart}></PickIcon>}
+            {props.postLiked ? (
+              <PickIcon src={FillHeart}></PickIcon>
+            ) : (
+              <EmptyHeartIcon src={EmptyHeart}></EmptyHeartIcon>
+            )}
           </PickBox>
         ) : (
           <></>
@@ -93,11 +97,19 @@ const PlannerCard = (props: PlannerProps) => {
       </FlexDiv>
       <FlexDiv justify="flex-start" margin={'12px 0 0 0'}>
         {props.instagramLink ? (
-          <a href={props.instagramLink}><SnsIcon src={instagram} /></a>
+          <a href={props.instagramLink}>
+            <SnsIcon src={instagram} />
+          </a>
         ) : (
           <></>
         )}
-        {props.blogLink ? <a href={props.blogLink}><SnsIcon src={blog} /></a> : <></>}
+        {props.blogLink ? (
+          <a href={props.blogLink}>
+            <SnsIcon src={blog} />
+          </a>
+        ) : (
+          <></>
+        )}
       </FlexDiv>
     </FlexDiv>
   );
@@ -127,7 +139,7 @@ const PlannerImage = styled.img.attrs((props: PlannerImageProps) => ({ src: prop
 const PickBox = styled.div`
   height: 32px;
   width: 32px;
-  background-color: rgba(0, 0, 0, 0.3);
+  /* background-color: rgba(0, 0, 0, 0.3); */
   border-radius: 3px;
   /* background-color: #212529; */
   display: flex;
@@ -140,6 +152,11 @@ const PickBox = styled.div`
 `;
 
 const PickIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+  height: 26px;
+  width: 26px;
+`;
+
+const EmptyHeartIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   height: 26px;
   width: 26px;
 `;

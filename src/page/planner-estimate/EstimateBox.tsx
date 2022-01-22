@@ -18,8 +18,9 @@ const EstimateBox: FC<EstimateBoxProps> = ({ title, children }) => {
 export default EstimateBox;
 
 const Container = styled.div`
-  margin: 0 auto 24px auto;
-  padding: 24px;
+  width:812px;
+  margin-bottom:10px;
+  padding:24px;
   background-color: white;
 `;
 

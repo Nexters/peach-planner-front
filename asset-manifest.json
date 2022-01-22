@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "https://peachplanner.com/static/js/main.48f64322.js",
+    "main.js": "https://peachplanner.com/static/js/main.2da40e1f.js",
     "static/js/787.f6f01751.chunk.js": "https://peachplanner.com/static/js/787.f6f01751.chunk.js",
     "static/media/snap1.png": "https://peachplanner.com/static/media/snap1.7c42c878fc62bd685c17.png",
     "static/media/img_background.png": "https://peachplanner.com/static/media/img_background.bbc7b922b015873c7ac2.png",
@@ -17,7 +17,6 @@
     "static/media/ic_review.svg": "https://peachplanner.com/static/media/ic_review.f465c58bbb5c05ff2180c734e99af15d.svg",
     "index.html": "https://peachplanner.com/index.html",
     "static/media/ic_account_default.svg": "https://peachplanner.com/static/media/ic_account_default.c5466f51981c7614b692c7e52bc3aea3.svg",
-    "static/media/ic_heart_line.svg": "https://peachplanner.com/static/media/ic_heart_line.37e61b56d319622bcf6cbdc9e55dcf2b.svg",
     "static/media/ic_arrow_right.svg": "https://peachplanner.com/static/media/ic_arrow_right.6458d2d4ecd937f761e53c805bc26b6d.svg",
     "static/media/ic_right_img.svg": "https://peachplanner.com/static/media/ic_right_img.fd67d45ec4fe0763f075b4e01de18993.svg",
     "static/media/ic_arrow_left.svg": "https://peachplanner.com/static/media/ic_arrow_left.80cc756bc1fd1789798825c6a71dd38d.svg",
@@ -35,10 +34,10 @@
     "static/media/ic_changephoto.svg": "https://peachplanner.com/static/media/ic_changephoto.e59f0b3fe9b813b298d0c05e5245dd5a.svg",
     "static/media/ic_heart_black.svg": "https://peachplanner.com/static/media/ic_heart_black.54e35599890cffb08543be2000d30811.svg",
     "static/media/ic_arrow-left-line.svg": "https://peachplanner.com/static/media/ic_arrow-left-line.b91cdc2c31b49d06a9a2728b5f4cf10a.svg",
-    "main.48f64322.js.map": "https://peachplanner.com/static/js/main.48f64322.js.map",
+    "main.2da40e1f.js.map": "https://peachplanner.com/static/js/main.2da40e1f.js.map",
     "787.f6f01751.chunk.js.map": "https://peachplanner.com/static/js/787.f6f01751.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.48f64322.js"
+    "static/js/main.2da40e1f.js"
   ]
 }

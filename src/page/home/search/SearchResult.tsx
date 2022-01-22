@@ -49,7 +49,13 @@ const SearchResult = ({ location, support }: Props) => {
     <FlexDiv justify="flex-start" align="start" width="880px" margin={'0'} direction="column">
       <FlexDiv align="start" height="56px" margin={'0'} direction="column">
         <Title height={'24px'} width={'auto'} fontSize={'16px'} lineHeight={'24px'} margin={'0'}>
-          {sortingParam ? (sortingParam === 'new' ? '신규 플래너' : '인기 플래너') : '전체'}
+          {sortingParam
+            ? sortingParam === 'new'
+              ? '신규 플래너'
+              : '인기 플래너'
+            : location === ''
+            ? '전체'
+            : location}
         </Title>
       </FlexDiv>
       <select name="select" id="select" onChange={handleChange} value={selectedSortingState}>
@@ -57,35 +63,35 @@ const SearchResult = ({ location, support }: Props) => {
         <option value="pick,DESC">인기순</option>
         <option value="review,DESC">리뷰순</option>
       </select>
-      {planners && planners.content.length > 0 ?
+      {planners && planners.content.length > 0 ? (
         <SearchResultList>
-          {
-            planners.content.map((planner, index) => {
-              return (
-                <PlannerCard
-                  key={planner.id}
-                  margin={'0 12px 32px 0'}
-                  size={'206px'}
-                  imagePath={planner.images[0]}
-                  heartCount={planner.likes}
-                  reviewCount={planner.reviews}
-                  name={planner.name}
-                  organization={planner.company?.name}
-                  region={planner.locations.join(',')}
-                  id={planner.id}
-                  blogLink={planner.externalLinks?.blogLink}
-                  instagramLink={planner.externalLinks?.instagramLink}
-                  facebookLink={planner.externalLinks?.facebookLink}
-                  postLiked={planner.postLiked}
-                  mutate={mutate}
-                />
-              );
-            })
-          }
+          {planners.content.map((planner, index) => {
+            return (
+              <PlannerCard
+                key={planner.id}
+                margin={'0 12px 32px 0'}
+                size={'206px'}
+                imagePath={planner.images[0]}
+                heartCount={planner.likes}
+                reviewCount={planner.reviews}
+                name={planner.name}
+                organization={planner.company?.name}
+                region={planner.locations.join(',')}
+                id={planner.id}
+                blogLink={planner.externalLinks?.blogLink}
+                instagramLink={planner.externalLinks?.instagramLink}
+                facebookLink={planner.externalLinks?.facebookLink}
+                postLiked={planner.postLiked}
+                mutate={mutate}
+              />
+            );
+          })}
         </SearchResultList>
-        :
-        <EmptyText flex={1} textAlign='center' padding='120px 0 0 0'>플래너가 없습니다.</EmptyText>
-      }
+      ) : (
+        <EmptyText flex={1} textAlign="center" padding="120px 0 0 0">
+          플래너가 없습니다.
+        </EmptyText>
+      )}
     </FlexDiv>
   );
 };

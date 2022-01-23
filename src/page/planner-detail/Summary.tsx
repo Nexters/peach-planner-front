@@ -115,6 +115,7 @@ const Image = styled.img`
   height: 211px;
   border-radius: 10px;
   object-fit: cover;
+  /* overflow: hidden; */
 `;
 
 const ShowImageButton = styled.button`

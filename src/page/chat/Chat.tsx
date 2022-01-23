@@ -1,7 +1,6 @@
 import { Title } from '../../component/style/style';
 import styled from 'styled-components';
-import shape from 'src/images/Shape 2.png';
-import imgWedding from 'src/images/img_wedding_1.png';
+import shape from '../../assets/svg/ic_account_default.svg';
 import React, { useEffect, useReducer, useState } from 'react';
 import { useQuery, QueryFunctionContext } from 'react-query';
 import { ChatRoom, ChatRoomParticipant, fetchChatRoomParticipant, fetchChatRooms } from 'src/api/ChatRoom';

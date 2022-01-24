@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import logo from 'public/assets/svg/ic_logo.svg';
 import styled from 'styled-components';
 
@@ -5,7 +6,7 @@ const Footer = () => {
   return (
     <Container>
       <InnerContainer>
-        <Image src={logo} />
+        <Img src={logo} />
         <BottomContainer>
           <Item>
             <TermsPolicy href="/termsOfUse" target="_blank">
@@ -56,7 +57,7 @@ interface ImageProps {
   src: string;
 }
 
-const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const Img = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
   height: 24.55px;
   width: 140.58px;
   margin: 0;

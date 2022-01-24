@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { Content } from './style/style';
@@ -49,7 +50,7 @@ interface PlannerImageProps {
   size: string;
 }
 
-const PlannerImage = styled.img.attrs((props: PlannerImageProps) => ({ src: props.src }))`
+const PlannerImage = styled(Image).attrs((props: PlannerImageProps) => ({ src: props.src }))`
   height: ${(props: PlannerImageProps) => props.size}};
   width: ${(props: PlannerImageProps) => props.size}};
   border-radius: 10px;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import HorizontalLine from './HorizontalLine';
 import ArrowUp from 'public/assets/svg/ic_arrow_up.svg';
 import ArrowDown from 'public/assets/svg/ic_arrow_down.svg';
+import Image from 'next/image';
 
 interface Props {
   title: string;
@@ -17,7 +18,7 @@ const Accordion: FC<Props> = ({ title, margin, children }) => {
       <AccordionTitle onClick={() => setOpen(!isOpen)}>
         <TitleContainer>
           <Title>{title}</Title>
-          <Image src={isOpen ? ArrowDown : ArrowUp}></Image>
+          <Img src={isOpen ? ArrowDown : ArrowUp} />
         </TitleContainer>
       </AccordionTitle>
       <AccordionItem isOpen={isOpen}>{children}</AccordionItem>
@@ -73,7 +74,7 @@ interface ImageProps {
   src: string;
 }
 
-const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const Img = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
   height: 24px;
   width: 24px;
   margin: 0;

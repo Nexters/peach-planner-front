@@ -91,8 +91,8 @@ const Header = () => {
             <ProfileContainer>
               {/* <NotiImage src={NotiDefault}></NotiImage> */ }
               <ProfileBox onClick={ handleClickProfile }>
-                <ProfileImage src={ user?.profileImage ?? DefaultProfileImage }></ProfileImage>
-                <DropdownImage src={ DownArrowImage }></DropdownImage>
+                <ProfileImage src={ user?.profileImage ?? DefaultProfileImage } />
+                <DropdownImage src={ DownArrowImage } />
               </ProfileBox>
             </ProfileContainer>
             { isClickedProfile ? (
@@ -144,7 +144,7 @@ const Header = () => {
 export default Header;
 
 const CustomLink: FC<{ href: string; children: ReactNode, isLeft?: boolean }> = ({ href, children, isLeft }) => {
-  return <Link prefetch href="/login" passHref>
+  return <Link prefetch href={href} passHref>
     {
       isLeft ? <LeftLink>{ children }</LeftLink> : <RightLink>{ children }</RightLink>
     }
@@ -221,20 +221,20 @@ interface ImageProps {
   src: string;
 }
 
-const ProfileImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const ProfileImage = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
   height: 32px;
   width: 32px;
   margin: 0 0 0 7px;
   border-radius: 100%;
 `;
 
-const DropdownImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const DropdownImage = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
   height: 24px;
   width: 24px;
   margin: 0 10px 0 0;
 `;
 
-const NotiImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const NotiImage = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
   height: 24px;
   width: 24px;
   margin: 0 10px 0 0;

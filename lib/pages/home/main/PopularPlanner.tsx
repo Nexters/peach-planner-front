@@ -1,18 +1,20 @@
-import { FlexDiv } from '../../../component/style/style';
-import PlannerCard from '../../../component/PlannerCard';
-import LeftArrow from '../../../assets/svg/ic_arrow_left.svg';
-import RightArrow from '../../../assets/svg/ic_arrow_right.svg';
+import { FlexDiv } from 'lib/pages/components/style/style';
+import PlannerCard from 'lib/pages/components/PlannerCard';
+import LeftArrow from 'public/assets/svg/ic_arrow_left.svg';
+import RightArrow from 'public/assets/svg/ic_arrow_right.svg';
 import styled from 'styled-components';
 import Slick, { Settings } from 'react-slick';
 import { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { fetchPopularPlanners } from '../../../api/Planner';
-import { Link, useHistory } from 'react-router-dom';
-import { pick } from 'src/api/Pick';
-import { queryClient } from 'src/App';
+import { fetchPopularPlanners } from 'lib/api/Planner';
+import { pick } from 'lib/api/Pick';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { queryClient } from 'pages/_app';
+import Image from 'next/image';
 
 const PopularPlanner = () => {
-  const history = useHistory();
+  const history = useRouter();
   const { data: planners } = useQuery(['popularPlanners'], fetchPopularPlanners);
   const [slider, setSlider] = useState<Slick>();
   const [slickSettings, setSlickSettings] = useState<Settings>({
@@ -41,10 +43,10 @@ const PopularPlanner = () => {
         <Title>인기 플래너</Title>
         <FlexDiv justify="flex-end">
           <More>
-            <StyledLink to="/search?sort=popular">더 보기</StyledLink>
+            <Link prefetch passHref href="/search?sort=popular"><StyledLink>더 보기</StyledLink></Link>
           </More>
-          <ArrowButton src={LeftArrow} onClick={slider?.slickPrev} margin="0 8px 0 0"></ArrowButton>
-          <ArrowButton src={RightArrow} onClick={slider?.slickNext} margin="0"></ArrowButton>
+          <ArrowButton src={LeftArrow} onClick={slider?.slickPrev} margin="0 8px 0 0" />
+          <ArrowButton src={RightArrow} onClick={slider?.slickNext} margin="0" />
         </FlexDiv>
       </FlexDiv>
       <FlexDiv
@@ -89,7 +91,7 @@ const PopularPlanner = () => {
 
 export default PopularPlanner;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.a`
   text-decoration: none;
   color: #495057;
   font-size: 13px;
@@ -109,7 +111,7 @@ interface ImageProps {
   margin: string;
 }
 
-const ArrowButton = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const ArrowButton = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
   margin: ${(props: ImageProps) => props.margin};
   height: 24px;
   width: 24px;

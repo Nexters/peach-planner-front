@@ -11,6 +11,7 @@ import { pick, PickRequest } from 'lib/api/Pick';
 import PhotoDefault from 'public/assets/svg/img_photo_default.svg';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 interface PlannerProps {
   size: string;
@@ -126,7 +127,7 @@ interface PlannerImageProps {
   height: string;
 }
 
-const PlannerImage = styled.img.attrs((props: PlannerImageProps) => ({ src: props.src }))`
+const PlannerImage = styled(Image).attrs((props: PlannerImageProps) => ({ src: props.src }))`
   width: ${(props: PlannerImageProps) => props.width}};
   height: ${(props: PlannerImageProps) => props.height}};
   border-radius: 10px;
@@ -150,7 +151,7 @@ const PickBox = styled.div`
   cursor: pointer;
 `;
 
-const PickIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const PickIcon = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
   height: 26px;
   width: 26px;
 `;
@@ -164,19 +165,19 @@ interface ImageProps {
   src: string;
 }
 
-const HeartIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const HeartIcon = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
   height: 13.29px;
   width: 14.43px;
   margin: 0 4px 0 0;
 `;
 
-const ReviewIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const ReviewIcon = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
   height: 16px;
   width: 16px;
   margin: 0 4px 0 16px;
 `;
 
-const SnsIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const SnsIcon = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
   height: 20px;
   width: 20px;
   margin: 0 8px 0 0;

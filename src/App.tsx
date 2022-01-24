@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import Main from './page/home/main';
+import Main from '../lib/pages/home/main';
 import PlannerDetail from './page/planner-detail';
 import PlannerEstimate from './page/planner-estimate/PlannerEstimate';
 import GlobalStyle from './styles/globalStyle';
 import theme from './styles/theme';
 import { ThemeProvider } from 'styled-components';
-import Search from './page/home/search';
+import Search from '../lib/pages/home/search';
 import Header from '../lib/pages/components/Header';
 import Footer from './component/Footer';
 import Profile from './page/profile-edit';
@@ -60,10 +60,6 @@ const App = () => {
             <Router>
               <Header />
               <Switch>
-                <Route exact path="/">
-                  <ScrollToTop />
-                  <Main />
-                </Route>
                 <Route path="/search">
                   <ScrollToTop />
                   <Search />

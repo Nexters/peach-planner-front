@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import SearchResult from './SearchResult';
-import SearchSideBar from './SearchSideBar';
+import SearchResult from 'lib/pages/home/search/SearchResult';
+import SearchSideBar from 'lib/pages/home/search/SearchSideBar';
 
 const Search = () => {
   const [location, setLocation] = useState('');

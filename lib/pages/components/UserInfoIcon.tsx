@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PButton from './PButton';
 import { ReactComponent as Heart } from 'public/assets/svg/ic_heart.svg';
 import { ReactComponent as Review } from 'public/assets/svg/ic_review.svg';
+import Image from 'next/image';
 
 interface UserInfoIconProps {
   imgSrc: string;
@@ -17,7 +18,7 @@ interface UserInfoIconProps {
 const UserInfoIcon: FC<UserInfoIconProps> = ({ imgSrc, title, detail, buttonText, likeCount, reviewCount, onButtonClick }) => {
   return (
     <Container>
-      <Image src={imgSrc} />
+      <Img src={imgSrc} />
 
       <InnerContainer>
         <Title detail={detail}>{title}</Title>
@@ -55,7 +56,7 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Image = styled.img`
+const Img = styled(Image)`
   width: 80px;
   height: 80px;
   border-radius: 100%;

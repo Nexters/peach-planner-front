@@ -1,14 +1,14 @@
-import { FlexDiv, Title } from '../../../component/style/style';
-import PlannerCard from '../../../component/PlannerCard';
+import { FlexDiv, Title } from 'lib/pages/components/style/style';
+import PlannerCard from 'lib/pages/components/PlannerCard';
 import { useMutation, useQuery } from 'react-query';
-import { fetchPlanners, fetchPopularPlanners } from '../../../api/Planner';
+import { fetchPlanners, fetchPopularPlanners } from 'lib/api/Planner';
 import styled from 'styled-components';
-import { useHistory, useLocation } from 'react-router';
 import { useState } from 'react';
-import { useSelectedSortingState } from 'src/atoms/SelectStatus';
-import { pick } from 'src/api/Pick';
-import { queryClient } from 'src/App';
-import { EmptyText } from 'src/page/planner-detail/components/styles';
+import { useSelectedSortingState } from 'lib/atoms/SelectStatus';
+import { pick } from 'lib/api/Pick';
+import { queryClient } from 'pages/_app';
+import { EmptyText } from 'lib/pages/components/EmptyText';
+import { useRouter } from 'next/router';
 
 interface Props {
   location: string;
@@ -16,9 +16,8 @@ interface Props {
 }
 
 const SearchResult = ({ location, support }: Props) => {
-  const history = useHistory();
-  const hookLocation = useLocation();
-  const sortingParam = new URLSearchParams(hookLocation.search).get('sort');
+  const history = useRouter();
+  const sortingParam = history.query.sort;
   const supportInfos = support.join();
   const getPlanners = sortingParam === 'popular' ? fetchPopularPlanners : fetchPlanners;
   const [sort, setSort] = useState('');

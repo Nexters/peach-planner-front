@@ -1,19 +1,21 @@
 import styled from 'styled-components';
 import Slick, { Settings } from 'react-slick';
-import { FlexDiv } from '../../../component/style/style';
-import PlannerCard from '../../../component/PlannerCard';
-import LeftArrow from '../../../assets/svg/ic_arrow_left.svg';
-import RightArrow from '../../../assets/svg/ic_arrow_right.svg';
+import { FlexDiv } from 'lib/pages/components/style/style';
+import PlannerCard from 'lib/pages/components/PlannerCard';
+import LeftArrow from 'public/assets/svg/ic_arrow_left.svg';
+import RightArrow from 'public/assets/svg/ic_arrow_right.svg';
 
 import { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { fetchPlanners } from '../../../api/Planner';
-import { Link, useHistory } from 'react-router-dom';
-import { pick } from 'src/api/Pick';
-import { queryClient } from 'src/App';
+import { fetchPlanners } from 'lib/api/Planner';
+import { pick } from 'lib/api/Pick';
+import { queryClient } from 'pages/_app';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const NewPlanner = () => {
-  const history = useHistory();
+  const history = useRouter();
   const { data: planners } = useQuery(['newPlanners', { isNew: true }], fetchPlanners);
   const [slider, setSlider] = useState<Slick>();
   const [slickSettings, setSlickSettings] = useState<Settings>({
@@ -37,21 +39,21 @@ const NewPlanner = () => {
   });
 
   return (
-    <FlexDiv margin={'40px 0 0 0'} direction="column">
-      <FlexDiv height={'56px'} justify="space-between" margin={'0 0 8px 0'}>
+    <FlexDiv margin={ '40px 0 0 0' } direction="column">
+      <FlexDiv height={ '56px' } justify="space-between" margin={ '0 0 8px 0' }>
         <Title>신규 플래너</Title>
         <FlexDiv justify="flex-end">
           <More>
-            <StyledLink to="/search?sort=new">더 보기</StyledLink>
+            <Link prefetch passHref href="/search?sort=new"><StyledLink>더 보기</StyledLink></Link>
           </More>
-          {planners?.totalElements! > 4 ? (
+          { planners?.totalElements! > 4 ? (
             <>
-              <ArrowButton src={LeftArrow} onClick={slider?.slickPrev} margin="0 8px 0 0"></ArrowButton>
-              <ArrowButton src={RightArrow} onClick={slider?.slickNext} margin="0"></ArrowButton>
+              <ArrowButton src={ LeftArrow } onClick={ slider?.slickPrev } margin="0 8px 0 0" />
+              <ArrowButton src={ RightArrow } onClick={ slider?.slickNext } margin="0" />
             </>
           ) : (
             <></>
-          )}
+          ) }
         </FlexDiv>
       </FlexDiv>
       <FlexDiv
@@ -60,34 +62,34 @@ const NewPlanner = () => {
         direction="row"
         margin="0"
         width="1100px"
-        style={{ overflow: 'hidden' }}
+        style={ { overflow: 'hidden' } }
       >
-        <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
-          {planners ? (
+        <Slider { ...slickSettings } ref={ (ref) => setSlider(ref!) }>
+          { planners ? (
             planners.content.map((planner) => {
               return (
                 <PlannerCard
-                  key={planner.id}
-                  margin={'0 28px 0 0'}
-                  size={'254px'}
-                  imagePath={planner.images[0]}
-                  heartCount={planner.likes}
-                  reviewCount={planner.reviews}
-                  name={planner.name}
-                  organization={planner.company?.name}
-                  region={planner.locations.join(',')}
-                  id={planner.id}
-                  blogLink={planner.externalLinks?.blogLink}
-                  instagramLink={planner.externalLinks?.instagramLink}
-                  facebookLink={planner.externalLinks?.facebookLink}
-                  postLiked={planner.postLiked}
-                  mutate={mutate}
+                  key={ planner.id }
+                  margin={ '0 28px 0 0' }
+                  size={ '254px' }
+                  imagePath={ planner.images[0] }
+                  heartCount={ planner.likes }
+                  reviewCount={ planner.reviews }
+                  name={ planner.name }
+                  organization={ planner.company?.name }
+                  region={ planner.locations.join(',') }
+                  id={ planner.id }
+                  blogLink={ planner.externalLinks?.blogLink }
+                  instagramLink={ planner.externalLinks?.instagramLink }
+                  facebookLink={ planner.externalLinks?.facebookLink }
+                  postLiked={ planner.postLiked }
+                  mutate={ mutate }
                 />
               );
             })
           ) : (
             <></>
-          )}
+          ) }
         </Slider>
       </FlexDiv>
     </FlexDiv>
@@ -96,7 +98,7 @@ const NewPlanner = () => {
 
 export default NewPlanner;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.a`
   text-decoration: none;
   color: #495057;
   font-size: 13px;
@@ -149,7 +151,7 @@ interface ImageProps {
   margin: string;
 }
 
-const ArrowButton = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const ArrowButton = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
   margin: ${(props: ImageProps) => props.margin};
   height: 24px;
   width: 24px;

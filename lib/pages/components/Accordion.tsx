@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 import HorizontalLine from './HorizontalLine';
-import ArrowUp from '../assets/svg/ic_arrow_up.svg';
-import ArrowDown from '../assets/svg/ic_arrow_down.svg';
+import ArrowUp from 'public/assets/svg/ic_arrow_up.svg';
+import ArrowDown from 'public/assets/svg/ic_arrow_down.svg';
 
 interface Props {
   title: string;

@@ -6,7 +6,7 @@ import GlobalStyle from './styles/globalStyle';
 import theme from './styles/theme';
 import { ThemeProvider } from 'styled-components';
 import Search from './page/home/search';
-import Header from './component/Header';
+import Header from '../lib/pages/components/Header';
 import Footer from './component/Footer';
 import Profile from './page/profile-edit';
 import Login from './page/user/login/Login';
@@ -58,7 +58,6 @@ const App = () => {
           <ThemeProvider theme={theme}>
             <GlobalStyle />
             <Router>
-              <SEO />
               <Header />
               <Switch>
                 <Route exact path="/">

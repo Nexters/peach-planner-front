@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import PButton from './PButton';
-import { ReactComponent as Heart } from '../assets/svg/ic_heart.svg';
-import { ReactComponent as Review } from '../assets/svg/ic_review.svg';
+import { ReactComponent as Heart } from 'public/assets/svg/ic_heart.svg';
+import { ReactComponent as Review } from 'public/assets/svg/ic_review.svg';
 
 interface UserInfoIconProps {
   imgSrc: string;

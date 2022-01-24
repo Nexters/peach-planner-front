@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { Content } from './style/style';
 
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const PlannerMiniCard = ({ id, plannerId, size, image, plannerName, companyName, margin }: Props) => {
-  const history = useHistory();
+  const history = useRouter();
 
   const handleClick = () => {
     history.push(`/planner/${plannerId}/detail`);

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styled from 'styled-components';
-import { FlexDiv } from '../../src/component/style/style';
+import { FlexDiv } from './components/style/style';
 import Error from 'public/assets/img/img_error.png';
 
 const Mobile = () => {

@@ -1,7 +1,9 @@
+import Header from "lib/pages/components/Header";
 import Document, { Html, Head, Main, NextScript, DocumentContext } from "next/document";
 import { ServerStyleSheet } from 'styled-components';
 
 export default class CustomDocument extends Document {
+    // for styled-component
     static async getInitialProps(ctx: DocumentContext) {
         const sheet = new ServerStyleSheet();
         const originalRenderPage = ctx.renderPage;

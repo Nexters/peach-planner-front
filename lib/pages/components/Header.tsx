@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useRef, MouseEvent } from 'react';
+import React, { useState, useEffect, useRef, MouseEvent, ReactNode, FC } from 'react';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
-import { ReactComponent as Logo } from '../assets/svg/logo_peachplanner.svg';
+import Logo from 'public/assets/svg/logo_peachplanner.svg';
 import PButton from './PButton';
-import { usePeachTokenState, useUserTypeState } from 'src/atoms/AuthStatus';
-import DefaultProfileImage from '../assets/svg/ic_account_default.svg';
-import DownArrowImage from '../assets/svg/ic_arrow_down.svg';
-import NotiDefault from '../assets/svg/ic_noti_default.svg';
-import HorizontalLine from './HorizontalLine';
-import { getUserMe } from 'src/api/User';
+import { usePeachTokenState, useUserTypeState } from 'lib/atoms/AuthStatus';
+import DefaultProfileImage from 'public/assets/svg/ic_account_default.svg';
+import DownArrowImage from 'public/assets/svg/ic_arrow_down.svg';
+import NotiDefault from 'public/assets/svg/ic_noti_default.svg';
+import { getUserMe } from 'lib/api/User';
 import { useQuery } from 'react-query';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const Header = () => {
-  let history = useHistory();
+  let history = useRouter();
   const handleSignUp = () => history.push('/signUp');
   const [peachTokenState] = usePeachTokenState();
   const [userTypeState, setUserTypeState] = useUserTypeState();
@@ -75,78 +76,95 @@ const Header = () => {
     setIsClickedProfile(false);
   };
 
-  let right;
-  if (isLogin) {
-    right = (
-      <InnerContainer>
-        <ProfileContainer>
-          {/* <NotiImage src={NotiDefault}></NotiImage> */}
-          <ProfileBox onClick={handleClickProfile}>
-            <ProfileImage src={user?.profileImage ?? DefaultProfileImage}></ProfileImage>
-            <DropdownImage src={DownArrowImage}></DropdownImage>
-          </ProfileBox>
-        </ProfileContainer>
-        {isClickedProfile ? (
-          <DropdownContainer>
-            <MenuTop>
-              <Menu onClick={handleClickMessage}>
-                <DropdownMessage>메시지</DropdownMessage>
-              </Menu>
-            </MenuTop>
-            <MenuBody>
-              <Menu onClick={handleMyPage}>
-                <MenuName>내 페이지</MenuName>
-              </Menu>
-              {userTypeState === 'USER' ? (
-                <></>
-              ) : (
-                <Menu onClick={hanldeMyProfile}>
-                  <MenuName>프로필 관리</MenuName>
-                </Menu>
-              )}
-              <Menu onClick={handleClickAccountSetting}>
-                <MenuName>계정 설정</MenuName>
-              </Menu>
-            </MenuBody>
-            <MenuBottom>
-              <Menu>
-                <MenuName onClick={logout}>로그아웃</MenuName>
-              </Menu>
-            </MenuBottom>
-          </DropdownContainer>
-        ) : (
-          <></>
-        )}
-      </InnerContainer>
-    );
-  } else {
-    right = (
-      <InnerContainer>
-        <RightLink to="/plannerSignUp">플래너 가입</RightLink>
-        <RightLink to="/login">로그인</RightLink>
-        <PButton color="pink" width="114px" height="33px" fontSize="12px" padding="0" onClick={handleSignUp}>
-          무료 회원가입
-        </PButton>
-      </InnerContainer>
-    );
-  }
 
   return (
     <Container>
       <HeaderContainer>
         <InnerContainer>
-          <Link to="/">
-            <Logo />
+          <Link href="/">
+            <a><Image src={ Logo } /></a>
           </Link>
-          <LeftLink to="/search">웨딩플래너 찾기</LeftLink>
+          <CustomLink href="/search" isLeft={ true }>웨딩플래너 찾기</CustomLink>
         </InnerContainer>
-        {right}
+        { isLogin ? (
+          <InnerContainer>
+            <ProfileContainer>
+              {/* <NotiImage src={NotiDefault}></NotiImage> */ }
+              <ProfileBox onClick={ handleClickProfile }>
+                <ProfileImage src={ user?.profileImage ?? DefaultProfileImage }></ProfileImage>
+                <DropdownImage src={ DownArrowImage }></DropdownImage>
+              </ProfileBox>
+            </ProfileContainer>
+            { isClickedProfile ? (
+              <DropdownContainer>
+                <MenuTop>
+                  <Menu onClick={ handleClickMessage }>
+                    <DropdownMessage>메시지</DropdownMessage>
+                  </Menu>
+                </MenuTop>
+                <MenuBody>
+                  <Menu onClick={ handleMyPage }>
+                    <MenuName>내 페이지</MenuName>
+                  </Menu>
+                  { userTypeState === 'USER' ? (
+                    <></>
+                  ) : (
+                    <Menu onClick={ hanldeMyProfile }>
+                      <MenuName>프로필 관리</MenuName>
+                    </Menu>
+                  ) }
+                  <Menu onClick={ handleClickAccountSetting }>
+                    <MenuName>계정 설정</MenuName>
+                  </Menu>
+                </MenuBody>
+                <MenuBottom>
+                  <Menu>
+                    <MenuName onClick={ logout }>로그아웃</MenuName>
+                  </Menu>
+                </MenuBottom>
+              </DropdownContainer>
+            ) : (
+              <></>
+            ) }
+          </InnerContainer>
+        ) : (
+          <InnerContainer>
+            <CustomLink href="/plannerSignUp">플래너 가입</CustomLink>
+            <CustomLink href="/login">로그인</CustomLink>
+            <PButton color="pink" width="114px" height="33px" fontSize="12px" padding="0" onClick={ handleSignUp }>
+              무료 회원가입
+            </PButton>
+          </InnerContainer>
+        ) }
       </HeaderContainer>
     </Container>
   );
 };
 
 export default Header;
+
+const CustomLink: FC<{ href: string; children: ReactNode, isLeft?: boolean }> = ({ href, children, isLeft }) => {
+  return <Link prefetch href="/login" passHref>
+    {
+      isLeft ? <LeftLink>{ children }</LeftLink> : <RightLink>{ children }</RightLink>
+    }
+  </Link>
+}
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  color: #495057;
+  font-size: 13px;
+  line-height: 19px;
+`;
+
+const LeftLink = styled(StyledLink)`
+  margin-left: 35px;
+`;
+
+const RightLink = styled(StyledLink)`
+  margin-right: 32px;
+`;
 
 const Container = styled.header`
   width: auto;
@@ -175,20 +193,6 @@ const ProfileContainer = styled.div`
   align-items: center;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: #495057;
-  font-size: 13px;
-  line-height: 19px;
-`;
-
-const LeftLink = styled(StyledLink)`
-  margin-left: 35px;
-`;
-
-const RightLink = styled(StyledLink)`
-  margin-right: 32px;
-`;
 
 const DropdownContainer = styled.div`
   position: absolute;

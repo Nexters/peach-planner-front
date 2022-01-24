@@ -1,4 +1,4 @@
-import logo from '../assets/svg/ic_logo.svg';
+import logo from 'public/assets/svg/ic_logo.svg';
 import styled from 'styled-components';
 
 const Footer = () => {

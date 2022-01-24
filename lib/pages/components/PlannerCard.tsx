@@ -1,17 +1,16 @@
-import heart from '../assets/svg/ic_heart.svg';
-import review from '../assets/svg/ic_review.svg';
-import blog from '../assets/svg/ic_blog.svg';
-import instagram from '../assets/svg/ic_instagram.svg';
-import FillHeart from 'src/assets/svg/ic_heart_fill.svg';
-import EmptyHeart from 'src/assets/svg/ic_heart_black.svg';
+import heart from 'public/assets/svg/ic_heart.svg';
+import review from 'public/assets/svg/ic_review.svg';
+import blog from 'public/assets/svg/ic_blog.svg';
+import instagram from 'public/assets/svg/ic_instagram.svg';
+import EmptyHeart from 'public/assets/svg/ic_heart_line.svg';
+import FillHeart from 'public/assets/svg/ic_heart_fill.svg';
 import { FlexDiv } from './style/style';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import { QueryClient, useMutation } from 'react-query';
-import { usePeachTokenState, useUserTypeState } from 'src/atoms/AuthStatus';
-import { pick, PickRequest } from 'src/api/Pick';
-import PhotoDefault from '../assets/svg/img_photo_default.svg';
+import { usePeachTokenState, useUserTypeState } from 'lib/atoms/AuthStatus';
+import { pick, PickRequest } from 'lib/api/Pick';
+import PhotoDefault from 'public/assets/svg/img_photo_default.svg';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 interface PlannerProps {
   size: string;
@@ -31,7 +30,7 @@ interface PlannerProps {
 }
 
 const PlannerCard = (props: PlannerProps) => {
-  const history = useHistory();
+  const history = useRouter();
   const [isClickedHeart, setIsClickedHeart] = useState(false);
   const userState = useUserTypeState();
 

@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import HorizontalLine from '../../component/HorizontalLine';
-import { ReactComponent as AccountDefault } from '../../assets/svg/ic_account_default.svg';
-import { ReviewData } from 'src/api/Review';
+import HorizontalLine from 'lib/pages/components/HorizontalLine';
+import { ReviewData } from 'lib/api/Review';
 
 interface ReviewProps {
   data: ReviewData;
@@ -13,9 +12,7 @@ const Review: FC<ReviewProps> = ({ data, noLine = false }) => {
   return (
     <OuterContainer>
       <Container>
-        {/* <AccountDefault /> */}
         <Image src={data.user.imagePathUrl}/>
-        {/* <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs33kicMrwTO3bQTdskuUlvJRK9JAgmaGjZw&usqp=CAU" /> */}
         <RightContainer>
           <Name>{data.user.nickName}</Name>
           <DateDiv>{new Date(data.writeDate).toLocaleDateString()}</DateDiv>

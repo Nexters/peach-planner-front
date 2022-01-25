@@ -2,7 +2,7 @@ import heart from 'public/assets/svg/ic_heart.svg';
 import review from 'public/assets/svg/ic_review.svg';
 import blog from 'public/assets/svg/ic_blog.svg';
 import instagram from 'public/assets/svg/ic_instagram.svg';
-import EmptyHeart from 'public/assets/svg/ic_heart_line.svg';
+import EmptyHeart from 'public/assets/svg/ic_heart_black.svg';
 import FillHeart from 'public/assets/svg/ic_heart_fill.svg';
 import { FlexDiv } from './style/style';
 import styled from 'styled-components';
@@ -32,7 +32,6 @@ interface PlannerProps {
 
 const PlannerCard = (props: PlannerProps) => {
   const history = useRouter();
-  const [isClickedHeart, setIsClickedHeart] = useState(false);
   const userState = useUserTypeState();
 
   const handlePlannerClick = () => {
@@ -59,18 +58,14 @@ const PlannerCard = (props: PlannerProps) => {
     <FlexDiv width={props.size} direction="column" margin={props.margin}>
       <PlannerImageContainer>
         <PlannerImage
-          src={props.imagePath ? props.imagePath : PhotoDefault}
+          src={props.imagePath || PhotoDefault.src}
           width={props.size}
           height={props.size}
           onClick={handlePlannerClick}
         />
         {userState[0] && userState[0] === 'USER' ? (
           <PickBox onClick={handlePickClick}>
-            {props.postLiked ? (
-              <PickIcon src={FillHeart}></PickIcon>
-            ) : (
-              <EmptyHeartIcon src={EmptyHeart}></EmptyHeartIcon>
-            )}
+            {props.postLiked ? <Image src={FillHeart} height='26px' width='26px'/> : <Image src={EmptyHeart} height='26px' width='26px'/>}
           </PickBox>
         ) : (
           <></>
@@ -78,9 +73,9 @@ const PlannerCard = (props: PlannerProps) => {
       </PlannerImageContainer>
       <FlexDiv justify="flex-start" align="start" width={props.size} margin={'0'} direction="column">
         <FlexDiv justify="flex-start" margin={'13px 0 0 0'}>
-          <HeartIcon src={heart}></HeartIcon>
+          <HeartIcon children={<Image src={heart} height='13.29px' width='14.43px' />}/>
           <Count>{props.heartCount}</Count>
-          <ReviewIcon src={review}></ReviewIcon>
+          <ReviewIcon children={<Image src={review} height='16px' width='16px'/>} />
           <Count>{props.reviewCount}</Count>
         </FlexDiv>
         <FlexDiv justify="flex-start" margin={'5px 0 0 0'}>
@@ -97,19 +92,11 @@ const PlannerCard = (props: PlannerProps) => {
       </FlexDiv>
       <FlexDiv justify="flex-start" margin={'12px 0 0 0'}>
         {props.instagramLink ? (
-          <a href={props.instagramLink}>
-            <SnsIcon src={instagram} />
-          </a>
+          <a href={props.instagramLink}><SnsIcon children={<Image src={instagram} height='20px' width='20px' />} /></a>
         ) : (
           <></>
         )}
-        {props.blogLink ? (
-          <a href={props.blogLink}>
-            <SnsIcon src={blog} />
-          </a>
-        ) : (
-          <></>
-        )}
+        {props.blogLink ? <a href={props.blogLink}><SnsIcon children={<Image src={blog} height='20px' width='20px' />} /></a> : <></>}
       </FlexDiv>
     </FlexDiv>
   );
@@ -127,7 +114,7 @@ interface PlannerImageProps {
   height: string;
 }
 
-const PlannerImage = styled(Image).attrs((props: PlannerImageProps) => ({ src: props.src }))`
+const PlannerImage = styled.img.attrs((props: PlannerImageProps) => ({ src: props.src }))`
   width: ${(props: PlannerImageProps) => props.width}};
   height: ${(props: PlannerImageProps) => props.height}};
   border-radius: 10px;
@@ -151,35 +138,19 @@ const PickBox = styled.div`
   cursor: pointer;
 `;
 
-const PickIcon = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
-  height: 26px;
-  width: 26px;
-`;
-
-const EmptyHeartIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
-  height: 26px;
-  width: 26px;
-`;
-
 interface ImageProps {
   src: string;
 }
 
-const HeartIcon = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
-  height: 13.29px;
-  width: 14.43px;
+const HeartIcon = styled.div`
   margin: 0 4px 0 0;
 `;
 
-const ReviewIcon = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
-  height: 16px;
-  width: 16px;
+const ReviewIcon = styled.div`
   margin: 0 4px 0 16px;
 `;
 
-const SnsIcon = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
-  height: 20px;
-  width: 20px;
+const SnsIcon = styled.div`
   margin: 0 8px 0 0;
   cursor: pointer;
 `;

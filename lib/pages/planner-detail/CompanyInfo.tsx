@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
-import UserInfoIcon from '../../component/UserInfoIcon';
+import UserInfoIcon from 'lib/pages/components/UserInfoIcon';
 import Container from './Container';
-import { useHistory } from 'react-router-dom';
-import { Company } from 'src/api/Company';
+import { Company } from 'lib/api/Company';
+import { useRouter } from 'next/router';
 
 interface CompanyInfoProps {
   companyInfo: Company;
 }
 
 const CompanyInfo: FC<CompanyInfoProps> = ({ companyInfo }) => {
-  const history = useHistory();
+  const history = useRouter();
 
   const showCompanyDetail = () => {
     const companyId = companyInfo.id;

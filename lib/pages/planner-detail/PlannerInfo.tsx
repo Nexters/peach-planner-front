@@ -1,20 +1,20 @@
 import React, { FC } from 'react';
-import UserInfoIcon from '../../component/UserInfoIcon';
+import UserInfoIcon from 'lib/pages/components/UserInfoIcon';
 import Container from './Container';
 import styled from 'styled-components';
-import PButton from '../../component/PButton';
-import { Planner } from '../../api/Planner';
-import { useHistory } from 'react-router';
+import PButton from 'lib/pages/components/PButton';
+import { Planner } from 'lib/api/Planner';
 import axios from 'axios';
-import { useUserTypeState } from 'src/atoms/AuthStatus';
-import { EmptyText } from './components/styles';
+import { useUserTypeState } from 'lib/atoms/AuthStatus';
+import { EmptyText } from 'lib/pages/components/EmptyText';
+import { useRouter } from 'next/router';
 
 interface PlannerInfoProps {
   plannerInfo: Planner;
 }
 
 const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
-  const history = useHistory();
+  const history = useRouter();
 
   const [userType, _] = useUserTypeState();
 
@@ -34,7 +34,7 @@ const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
     if (res.status == 200) {
       history.push({
         pathname: "/chats",
-        state: res.data,
+        query: { state: res.data },
       });
     }
   };

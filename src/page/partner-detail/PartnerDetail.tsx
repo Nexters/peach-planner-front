@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory, useRouteMatch } from 'react-router';
 import DefaultBigImage from '../../assets/svg/img_defult_wedding.svg';
-import ImageModal from '../planner-detail/ImageModal';
+import ImageModal from '../../../lib/pages/planner-detail/ImageModal';
 import axios from 'axios';
 import { FaHome, FaPhone, FaPhoneAlt, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import { MdHome, MdHomeFilled } from 'react-icons/md';

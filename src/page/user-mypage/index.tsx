@@ -10,7 +10,7 @@ import LeftArrow from 'src/assets/svg/ic_arrow_left.svg';
 import RightArrow from 'src/assets/svg/ic_arrow_right.svg';
 import { fetchEstimateList } from 'src/api/Estimate';
 import MyEstimate from './Estimate';
-import { EmptyText } from '../planner-detail/components/styles';
+import { EmptyText } from '../../../lib/pages/planner-detail/components/styles';
 
 export const UserMyPage = () => {
   const { data: picks } = useQuery(['picks'], fetchPicks);

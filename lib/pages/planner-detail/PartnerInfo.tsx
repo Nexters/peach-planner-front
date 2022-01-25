@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import { fetchPlannerPartners } from 'src/api/Planner';
+import { fetchPlannerPartners } from 'lib/api/Planner';
 import Container from './Container';
 import PartnerRow from './PartnerRow';
 import { useQuery } from 'react-query';
-import { EmptyText } from './components/styles';
+import { EmptyText } from 'lib/pages/components/EmptyText';
 
 interface PartnerInfoProps {
   plannerId: string;

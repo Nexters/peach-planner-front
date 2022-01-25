@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
-import { useHistory } from 'react-router';
-import { PartnerInfo } from 'src/api/Planner';
+import { PartnerInfo } from 'lib/api/Planner';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 interface PartnerItemProps {
   data: PartnerInfo;
 }
 
 const PartnerItem: FC<PartnerItemProps> = ({ data }) => {
-  const history = useHistory();
+  const history = useRouter();
 
   return (
     <Container onClick={() => {

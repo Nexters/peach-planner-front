@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react';
-import BoldTitle from '../../component/BoldTitle';
+import BoldTitle from 'lib/pages/components/BoldTitle';
 import styled from 'styled-components';
-import HorizontalLine from '../../component/HorizontalLine';
+import HorizontalLine from 'lib/pages/components/HorizontalLine';
 
 interface ContainerProps {
   id?: string;

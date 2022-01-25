@@ -1,14 +1,15 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
-import BoldTitle from '../../component/BoldTitle';
-import HorizontalLine from '../../component/HorizontalLine';
-import { ReactComponent as Heart } from '../../assets/svg/ic_heart.svg';
-import { ReactComponent as Instagram } from '../../assets/svg/ic_instagram.svg';
-import { ReactComponent as Blog } from '../../assets/svg/ic_blog.svg';
+import BoldTitle from 'lib/pages/components/BoldTitle';
+import HorizontalLine from 'lib/pages/components/HorizontalLine';
+import Heart from 'public/assets/svg/ic_heart.svg';
+import Instagram from 'public/assets/svg/ic_instagram.svg';
+import Blog from 'public/assets/svg/ic_blog.svg';
 import ImageModal from './ImageModal';
-import { Planner } from '../../api/Planner';
-import DefaultImage from '../../assets/svg/img_photo_default.svg';
-import { EmptyText } from './components/styles';
+import { Planner } from 'lib/api/Planner';
+import DefaultImage from 'public/assets/svg/img_photo_default.svg';
+import { EmptyText } from 'lib/pages/components/EmptyText';
+import Image from 'next/image';
 
 interface SummaryProps {
   plannerInfo: Planner;
@@ -28,17 +29,17 @@ const Summary: FC<SummaryProps> = ({ plannerInfo, children }) => {
       <ImageContainer>
         <ImageWrapper>
           {images.slice(0, 2).map((image, i) => (
-            <Image src={image} key={i} />
+            <Img src={image} key={i} />
           ))}
-          {images.length == 0 && <Image src={DefaultImage} />}
-          {images.length <= 1 && <Image src={DefaultImage} />}
+          {images.length == 0 && <Img src={DefaultImage.src} />}
+          {images.length <= 1 && <Img src={DefaultImage.src} />}
         </ImageWrapper>
         <ImageWrapper>
           {images.slice(2, 4).map((image, i) => (
-            <Image src={image} key={i} />
+            <Img src={image} key={i} />
           ))}
-          {images.length <= 2 && <Image src={DefaultImage} />}
-          {images.length <= 3 && <Image src={DefaultImage} />}
+          {images.length <= 2 && <Img src={DefaultImage.src} />}
+          {images.length <= 3 && <Img src={DefaultImage.src} />}
         </ImageWrapper>
         {images.length != 0 && <ShowImageButton onClick={openImageModal}>사진 모두 보기</ShowImageButton>}
         <ImageModal showImageModal={showImageModal} closeImageModal={closeImageModal} imageList={images} />
@@ -48,8 +49,7 @@ const Summary: FC<SummaryProps> = ({ plannerInfo, children }) => {
           <NameContainer>
             <BoldTitle size={20}>{plannerName} 플래너</BoldTitle>
             <HeartContainer>
-              <Heart />
-              {plannerInfo.likes}
+              <Image src={Heart} layout='fixed' />&nbsp; {plannerInfo.likes}
             </HeartContainer>
           </NameContainer>
           <CompanyName>{companyName}</CompanyName>
@@ -66,13 +66,13 @@ const Summary: FC<SummaryProps> = ({ plannerInfo, children }) => {
                 {
                   externalLinks.instagramLink &&
                   <a href={externalLinks.instagramLink} target="_blank">
-                    <Instagram />
+                    <Image src={Instagram} />
                   </a>
                 }
                 {
                   externalLinks.blogLink &&
                   <a href={externalLinks.blogLink} target="_blank">
-                    <Blog />
+                    <Image src={Blog} />
                   </a>
                 }
                 {
@@ -110,7 +110,7 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const Image = styled.img`
+const Img = styled.img`
   width: 211px;
   height: 211px;
   border-radius: 10px;

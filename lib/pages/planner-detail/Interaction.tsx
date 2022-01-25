@@ -1,12 +1,12 @@
-import PButton from 'src/component/PButton';
-import { checkAuth } from 'src/routes/checkAuth';
+import PButton from 'lib/pages/components/PButton';
+import { checkAuth } from 'lib/atoms/checkAuth';
 import styled from 'styled-components';
-import { useHistory } from 'react-router';
 import axios from 'axios';
-import { Planner } from 'src/api/Planner';
-import { pick, PickRequest } from 'src/api/Pick';
-import FullHeart from 'src/assets/svg/ic_heart_fill.svg';
-import EmptyHeart from 'src/assets/svg/ic_heart_black.svg';
+import { Planner } from 'lib/api/Planner';
+import { pick, PickRequest } from 'lib/api/Pick';
+import FullHeart from 'public/assets/svg/ic_heart_fill.svg';
+import EmptyHeart from 'public/assets/svg/ic_heart_black.svg';
+import { useRouter } from 'next/router';
 
 interface Props {
   plannerInfo: Planner;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Interaction = ({ plannerInfo, setPlannerInfo }: Props) => {
-  const history = useHistory();
+  const history = useRouter();
 
   const handleEstimateClick = () => {
     const plannerId = plannerInfo.id;
@@ -52,7 +52,7 @@ const Interaction = ({ plannerInfo, setPlannerInfo }: Props) => {
     if (res.status === 200) {
       history.push({
         pathname: "/chats",
-        state: res.data,
+        query: { state: res.data },
       });
     }
   };

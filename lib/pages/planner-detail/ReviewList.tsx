@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { useQuery } from 'react-query';
-import { Planner } from 'src/api/Planner';
-import { fetchReview } from 'src/api/Review';
-import { EmptyText } from './components/styles';
+import { Planner } from 'lib/api/Planner';
+import { fetchReview } from 'lib/api/Review';
+import { EmptyText } from 'lib/pages/components/EmptyText';
 import Container from './Container';
 import Review from './Review';
 

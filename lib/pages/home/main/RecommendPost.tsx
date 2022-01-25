@@ -7,7 +7,6 @@ import Image from 'next/image';
 
 const RecommendPost = () => {
   const { data: posts } = useQuery(['recommendedPost'], fetchRecommendedPost);
-  console.log(posts);
 
   return (
     <FlexDiv margin={ '40px 0 0 0' } direction="column">

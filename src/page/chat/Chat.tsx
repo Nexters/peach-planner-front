@@ -13,7 +13,7 @@ import { User, getUserMe } from 'src/api/User';
 import axios from 'axios';
 import { WriteReviewPopup } from './WriteReviewPopup';
 import { useLocation } from 'react-router';
-import { EmptyText } from '../planner-detail/components/styles';
+import { EmptyText } from '../../../lib/pages/planner-detail/components/styles';
 import { BsFillChatFill } from 'react-icons/bs';
 import { upload } from 'src/api/Image';
 

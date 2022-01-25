@@ -1,10 +1,11 @@
 import React, { useState, FC } from 'react';
 import styled from 'styled-components';
 import PartnerItem from './PartnerItem';
-import { ReactComponent as LeftArrow } from '../../assets/svg/ic_arrow_left.svg';
-import { ReactComponent as RightArrow } from '../../assets/svg/ic_arrow_right.svg';
-import { PartnerInfo } from 'src/api/Planner';
+import LeftArrow from 'public/assets/svg/ic_arrow_left.svg';
+import RightArrow from 'public/assets/svg/ic_arrow_right.svg';
+import { PartnerInfo } from 'lib/api/Planner';
 import Slick, { Settings } from 'react-slick';
+import Image from 'next/image';
 
 interface PartnerRowProps {
   title: string;
@@ -28,8 +29,8 @@ const PartnerRow: FC<PartnerRowProps> = ({ title, partner }) => {
       <TopContainer>
         <Title>{title}</Title>
         <TopRightContainer>
-          <LeftArrow onClick={slider?.slickPrev} style={{ cursor: 'pointer' }} />
-          <RightArrow onClick={slider?.slickNext} style={{ cursor: 'pointer' }} />
+          <div style={{ cursor: 'pointer' }}><Image src={LeftArrow} onClick={slider?.slickPrev} /></div>
+          <div style={{ cursor: 'pointer' }}><Image src={RightArrow} onClick={slider?.slickNext} /></div>
         </TopRightContainer>
       </TopContainer>
       <BottomContainer>
@@ -82,11 +83,6 @@ const TopRightContainer = styled.div`
   svg {
     margin-left: 8px;
   }
-`;
-
-const ViewMore = styled.div`
-  text-decoration: underline;
-  margin-right: 16px;
 `;
 
 const BottomContainer = styled.div`

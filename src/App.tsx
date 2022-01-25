@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Main from '../lib/pages/home/main';
-import PlannerDetail from './page/planner-detail';
+import PlannerDetail from '../lib/pages/planner-detail';
 import PlannerEstimate from './page/planner-estimate/PlannerEstimate';
 import GlobalStyle from './styles/globalStyle';
 import theme from './styles/theme';
@@ -25,8 +25,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { UserPrivateRoute, PlannerPrivateRoute, PublicOnlyRoute } from './routes';
 import CompanyDetail from './page/company-detail/CompanyDetail';
 import ScrollToTop from './component/ScrollToTop';
-import { TermsOfUse } from './page/signup-detail/TermsOfUse';
-import { PrivacyPolicy } from './page/signup-detail/PrivacyPolicy';
+import { TermsOfUse } from '../lib/pages/signup-detail/TermsOfUse';
+import { PrivacyPolicy } from '../lib/pages/signup-detail/PrivacyPolicy';
 import MyPage from './page/planner-mypage';
 import PlannerProfile from './page/planner-mypage/profile';
 import PlannerSetting from './page/user-mypage/PlannerSetting';
@@ -34,10 +34,8 @@ import PlannerReview from './page/planner-review';
 import PlannerMyEstimate from './page/planner-my-estimate';
 import { UserMyPage } from './page/user-mypage';
 import UserSetting from './page/user-mypage/UserSetting';
-import PrivateRoute from './routes/PrivateRoute';
 import EstimateDetail from './page/estimate-detail';
 import { PartnerDetail } from './page/partner-detail/PartnerDetail';
-import SEO from './component/SEO';
 
 export const queryClient = new QueryClient();
 
@@ -60,28 +58,24 @@ const App = () => {
             <Router>
               <Header />
               <Switch>
-                <Route path="/search">
-                  <ScrollToTop />
-                  <Search />
-                </Route>
                 <Route path="/planner/:id/detail">
                   <PlannerDetail />
                 </Route>
-                <UserPrivateRoute path="/planner/:id/estimate">
-                  <PlannerEstimate />
-                </UserPrivateRoute>
                 <Route path="/company/:id">
                   <CompanyDetail />
                 </Route>
                 <Route path="/partner/:id">
                   <PartnerDetail />
                 </Route>
+                <UserPrivateRoute path="/planner/:id/estimate">
+                  <PlannerEstimate />
+                </UserPrivateRoute>
                 <PublicOnlyRoute path="/login">
                   <Login />
                 </PublicOnlyRoute>
-                <PrivateRoute path="/estimateDetail/:id">
+                <UserPrivateRoute path="/estimateDetail/:id">
                   <EstimateDetail />
-                </PrivateRoute>
+                </UserPrivateRoute>
                 <UserPrivateRoute path="/userPage">
                   <UserMyPage />
                 </UserPrivateRoute>
@@ -118,12 +112,6 @@ const App = () => {
                 <PublicOnlyRoute path="/signUp">
                   <UserSignUp />
                 </PublicOnlyRoute>
-                <Route path="/termsOfUse">
-                  <TermsOfUse />
-                </Route>
-                <Route path="/privacyPolicy">
-                  <PrivacyPolicy />
-                </Route>
                 <Route path="/api/auth/login/kakao">
                   <Kakao />
                 </Route>
@@ -132,9 +120,6 @@ const App = () => {
                 </Route>
                 <Route path="/resetPw">
                   <ResetPw />
-                </Route>
-                <Route>
-                  <Redirect to="/" />
                 </Route>
               </Switch>
               <Footer />

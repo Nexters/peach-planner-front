@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import Container from './Container';
-import { ReactComponent as Check } from '../../assets/svg/ic_check.svg';
-import { Planner } from '../../api/Planner';
-import { EmptyText } from './components/styles';
+import Check from 'public/assets/svg/ic_check.svg';
+import { Planner } from 'lib/api/Planner';
+import { EmptyText } from 'lib/pages/components/EmptyText';
+import Image from 'next/image';
 interface DetailProps {
   plannerInfo: Planner;
 }
@@ -17,7 +18,7 @@ const Detail: FC<DetailProps> = ({ plannerInfo }) => {
         {list.map((detail, i) => (
           <DetailItem key={i}>
             <Wrap>
-              <Check /> {detail}
+              <Image src={Check} layout='fixed' /> {detail}
             </Wrap>
           </DetailItem>
         ))}

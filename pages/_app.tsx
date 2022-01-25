@@ -8,6 +8,7 @@ import { setAxiosDefaults } from '../lib/api';
 import GlobalStyle from 'lib/styles/globalStyle';
 import Mobile from 'lib/pages/mobile';
 import Header from 'lib/pages/components/Header';
+import Footer from 'lib/pages/components/Footer';
 
 export const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <>
                 <Header />
                 <Component { ...pageProps } />
+                <Footer />
               </>
           }
         </ThemeProvider>

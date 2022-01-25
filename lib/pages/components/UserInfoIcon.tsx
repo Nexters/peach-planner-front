@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import PButton from './PButton';
-import { ReactComponent as Heart } from 'public/assets/svg/ic_heart.svg';
-import { ReactComponent as Review } from 'public/assets/svg/ic_review.svg';
+import Heart from 'public/assets/svg/ic_heart.svg';
+import Review from 'public/assets/svg/ic_review.svg';
 import Image from 'next/image';
 
 interface UserInfoIconProps {
@@ -26,8 +26,8 @@ const UserInfoIcon: FC<UserInfoIconProps> = ({ imgSrc, title, detail, buttonText
           <>
             <Detail>{detail}</Detail>
             <IconContainer>
-              <Heart /> {likeCount}
-              <Review /> {reviewCount}
+              <div><Image src={Heart} layout='fixed' /></div> &nbsp; {likeCount}
+              <div><Image src={Review} layout='fixed' /></div> &nbsp; {reviewCount}
             </IconContainer>
           </>
         )}
@@ -56,7 +56,7 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Img = styled(Image)`
+const Img = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 100%;
@@ -82,11 +82,11 @@ const IconContainer = styled.div`
   display: flex;
   font-size: 14px;
 
-  svg {
+  div {
     margin-right: 4px;
   }
 
-  svg:last-child {
+  div:last-child {
     margin-left: 16px;
   }
 `;

@@ -7,6 +7,7 @@ import { pick, PickRequest } from 'lib/api/Pick';
 import FullHeart from 'public/assets/svg/ic_heart_fill.svg';
 import EmptyHeart from 'public/assets/svg/ic_heart_black.svg';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 interface Props {
   plannerInfo: Planner;
@@ -68,7 +69,7 @@ const Interaction = ({ plannerInfo, setPlannerInfo }: Props) => {
         </PButton>
         <PButton onClick={pickPlanner} otherBgColor="#f1f3f5" border="none">
           <Vertical>
-            <Icon src={plannerInfo.postLiked ? FullHeart : EmptyHeart} />&nbsp; 찜하기
+            <Image width={'16px'} height={'16px'} src={plannerInfo.postLiked ? FullHeart : EmptyHeart} />&nbsp; 찜하기
           </Vertical>
         </PButton>
       </ButtonContainer>
@@ -93,9 +94,4 @@ const Vertical = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
-`;
-
-const Icon = styled.img`
-  width: 16px;
-  height: 16px;
 `;

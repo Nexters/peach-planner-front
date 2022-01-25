@@ -5,7 +5,7 @@ import HorizontalLine from 'lib/pages/components/HorizontalLine';
 import Heart from 'public/assets/svg/ic_heart.svg';
 import Instagram from 'public/assets/svg/ic_instagram.svg';
 import Blog from 'public/assets/svg/ic_blog.svg';
-import ImageModal from './ImageModal';
+import ImageModal from '../components/ImageModal';
 import { Planner } from 'lib/api/Planner';
 import DefaultImage from 'public/assets/svg/img_photo_default.svg';
 import { EmptyText } from 'lib/pages/components/EmptyText';

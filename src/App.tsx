@@ -1,11 +1,7 @@
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import Main from '../lib/pages/home/main';
-import PlannerDetail from '../lib/pages/planner-detail';
 import PlannerEstimate from './page/planner-estimate/PlannerEstimate';
 import GlobalStyle from './styles/globalStyle';
 import theme from './styles/theme';
 import { ThemeProvider } from 'styled-components';
-import Search from '../lib/pages/home/search';
 import Header from '../lib/pages/components/Header';
 import Footer from './component/Footer';
 import Profile from './page/profile-edit';
@@ -23,10 +19,6 @@ import ResetPw from './page/user/findUser/ResetPw';
 import { setAxiosDefaults } from './api';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { UserPrivateRoute, PlannerPrivateRoute, PublicOnlyRoute } from './routes';
-import CompanyDetail from './page/company-detail/CompanyDetail';
-import ScrollToTop from './component/ScrollToTop';
-import { TermsOfUse } from '../lib/pages/signup-detail/TermsOfUse';
-import { PrivacyPolicy } from '../lib/pages/signup-detail/PrivacyPolicy';
 import MyPage from './page/planner-mypage';
 import PlannerProfile from './page/planner-mypage/profile';
 import PlannerSetting from './page/user-mypage/PlannerSetting';
@@ -35,7 +27,6 @@ import PlannerMyEstimate from './page/planner-my-estimate';
 import { UserMyPage } from './page/user-mypage';
 import UserSetting from './page/user-mypage/UserSetting';
 import EstimateDetail from './page/estimate-detail';
-import { PartnerDetail } from './page/partner-detail/PartnerDetail';
 
 export const queryClient = new QueryClient();
 
@@ -58,15 +49,6 @@ const App = () => {
             <Router>
               <Header />
               <Switch>
-                <Route path="/planner/:id/detail">
-                  <PlannerDetail />
-                </Route>
-                <Route path="/company/:id">
-                  <CompanyDetail />
-                </Route>
-                <Route path="/partner/:id">
-                  <PartnerDetail />
-                </Route>
                 <UserPrivateRoute path="/planner/:id/estimate">
                   <PlannerEstimate />
                 </UserPrivateRoute>

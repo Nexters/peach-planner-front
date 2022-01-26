@@ -6,9 +6,11 @@ import PlannerPageSideMenu from 'lib/pages/planner-mypage/PlannerPageSideMenu';
 import ContentBox from 'lib/pages/planner-mypage/ContentBox';
 import ContentNotification from 'lib/pages/planner-mypage/ContentNotification';
 import { useRouter } from 'next/router';
+import { authOnly } from 'lib/atoms/checkAuth';
 
 export default () => {
-  const history = useRouter();
+  authOnly();
+  const router = useRouter();
   const { data: myStats } = useQuery('planner/myStats', fetchPlannerMyStats);
 
   return (
@@ -16,12 +18,12 @@ export default () => {
       <InnerContainer>
         <PlannerPageSideMenu></PlannerPageSideMenu>
         <ContentContainer>
-          <ContentBox title="1:1 문의" viewName="메시지" handleClick={() => history.push('/chats')}>
-            <ContentNotification content="진행 중" count={myStats?.chats.open ?? 0}></ContentNotification>
-            <ContentNotification content="완료" count={myStats?.chats.closed ?? 0}></ContentNotification>
+          <ContentBox title="1:1 문의" viewName="메시지" handleClick={() => router.push('/chats')}>
+            <ContentNotification content="진행 중" count={myStats?.chats.open ?? 0} />
+            <ContentNotification content="완료" count={myStats?.chats.closed ?? 0} />
           </ContentBox>
-          <ContentBox title="견적" viewName="견적서" handleClick={() => history.push('/plannerMyEstimate')}>
-            <ContentNotification content="새로 받은 견적서" count={myStats?.estimations.new ?? 0}></ContentNotification>
+          <ContentBox title="견적" viewName="견적서" handleClick={() => router.push('/plannerMyEstimate')}>
+            <ContentNotification content="새로 받은 견적서" count={myStats?.estimations.new ?? 0}/>
             <Content
               height="18px"
               width="auto"
@@ -33,8 +35,8 @@ export default () => {
               최근 일주일 기준
             </Content>
           </ContentBox>
-          <ContentBox title="리뷰" viewName="리뷰" handleClick={() => history.push('/plannerReview')}>
-            <ContentNotification content="새로 받은 리뷰" count={myStats?.reviews.new ?? 0}></ContentNotification>
+          <ContentBox title="리뷰" viewName="리뷰" handleClick={() => router.push('/plannerReview')}>
+            <ContentNotification content="새로 받은 리뷰" count={myStats?.reviews.new ?? 0} />
             <Content
               height="18px"
               width="auto"

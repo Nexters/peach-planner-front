@@ -21,8 +21,8 @@ interface routeProps {
 export default () => {
   const [plannerInfo, setPlannerInfo] = useState<Planner | null>(null);
   const [userType, _] = useUserTypeState();
-  const history = useRouter();
-  const plannerId = history.query.id as string;
+  const router = useRouter();
+  const plannerId = router.query.id as string;
 
   // const { data: plannerInfo, error } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
 
@@ -37,7 +37,7 @@ export default () => {
         setPlannerInfo({ ...response.data });
       })
       .catch((err) => {
-        history.push('/');
+        router.push('/');
       });
   };
 

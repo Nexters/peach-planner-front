@@ -6,8 +6,13 @@ import { fetchPlannerMyReviews } from 'lib/api/Planner';
 import { useQuery } from 'react-query';
 import { ReviewDetailPopup } from 'lib/pages/planner-review/ReviewDetailPopup';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { authOnly } from 'lib/atoms/checkAuth';
 
 export default () => {
+  authOnly();
+  const router = useRouter();
+
   const { data: myReviews } = useQuery('planner/my/reviews', fetchPlannerMyReviews);
   const [showReviewDetailModal, setShowReviewDetailModal] = useState<boolean>(false);
   const [reviewDetailModalIndex, setReviewDetailModalIndex] = useState<number>(0);

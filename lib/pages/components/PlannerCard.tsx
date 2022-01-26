@@ -31,12 +31,12 @@ interface PlannerProps {
 }
 
 const PlannerCard = (props: PlannerProps) => {
-  const history = useRouter();
+  const router = useRouter();
   const userState = useUserTypeState();
 
   const handlePlannerClick = () => {
     const plannerId = props.id;
-    history.push(`/planner/${plannerId}/detail`);
+    router.push(`/planner/${plannerId}/detail`);
   };
 
   const handlePickClick = () => {

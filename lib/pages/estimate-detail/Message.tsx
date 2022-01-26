@@ -8,9 +8,9 @@ interface Props {
 }
 
 const Message = ({ isUser }: Props) => {
-  const history = useRouter();
+  const router = useRouter();
   const handleChat = () => {
-    history.push('/chats');
+    router.push('/chats');
   };
 
   return (

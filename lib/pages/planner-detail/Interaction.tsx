@@ -15,11 +15,11 @@ interface Props {
 }
 
 const Interaction = ({ plannerInfo, setPlannerInfo }: Props) => {
-  const history = useRouter();
+  const router = useRouter();
 
   const handleEstimateClick = () => {
     const plannerId = plannerInfo.id;
-    history.push(`/planner/${plannerId}/estimate`);
+    router.push(`/planner/${plannerId}/estimate`);
   };
 
   const pickPlanner = () => {
@@ -36,7 +36,7 @@ const Interaction = ({ plannerInfo, setPlannerInfo }: Props) => {
   const handleNoneUser = () => {
     const auth = checkAuth();
     if (!auth) {
-      history.push('/login');
+      router.push('/login');
       return;
     }
   };
@@ -51,7 +51,7 @@ const Interaction = ({ plannerInfo, setPlannerInfo }: Props) => {
       );
 
     if (res.status === 200) {
-      history.push({
+      router.push({
         pathname: "/chats",
         query: { state: res.data },
       });

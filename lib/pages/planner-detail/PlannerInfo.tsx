@@ -14,7 +14,7 @@ interface PlannerInfoProps {
 }
 
 const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
-  const history = useRouter();
+  const router = useRouter();
 
   const [userType, _] = useUserTypeState();
 
@@ -32,7 +32,7 @@ const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
     );
 
     if (res.status == 200) {
-      history.push({
+      router.push({
         pathname: "/chats",
         query: { state: res.data },
       });

@@ -8,12 +8,15 @@ import logo from 'public/assets/img/ic_share_kakao.png';
 import { getUserMe } from 'lib/api/User';
 import { useRouter } from 'next/router';
 import { UserLogin } from 'lib/interface/user';
+import { checkAuth, publicOnly } from 'lib/atoms/checkAuth';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
 export default () => {
-    const history = useRouter();
+    const router = useRouter();
+    publicOnly();
+
     const [, setPeachTokenState] = usePeachTokenState();
     const [, setUserTypeState] = useUserTypeState();
     const [isValidEmail, setIsValidEmail] = useState(true);
@@ -79,7 +82,7 @@ export default () => {
         getUserMe()
             .then((res) => {
                 setUserTypeState(res.userType ? res.userType : 'USER');
-                history.push('/');
+                router.push('/');
                 alert('로그인되었습니다.');
             })
     }
@@ -145,7 +148,7 @@ export default () => {
             <FlexDiv margin="8px 0 20px 0" justify="flex-end" width={ '313px' }>
                 <div
                     style={ { display: 'flex', alignItems: 'center', cursor: 'pointer' } }
-                    onClick={ () => history.push('/findEmail') }
+                    onClick={ () => router.push('/findEmail') }
                 >
                     <Span weight="normal" cursor="pointer">
                         이메일
@@ -176,7 +179,7 @@ export default () => {
                 width="312px"
                 height="40px"
                 margin="0 0 17.5px"
-                onClick={ () => history.push('/signUp') }
+                onClick={ () => router.push('/signUp') }
             >
                 <Span color="#000" weight="normal" cursor="pointer">
                     계정이 없으신가요?{ ' ' }
@@ -194,7 +197,7 @@ export default () => {
                     color="#E64980"
                     cursor="pointer"
                     onClick={ () => {
-                        history.push('/plannerSignUp');
+                        router.push('/plannerSignUp');
                     } }
                 >
                     플래너 가입

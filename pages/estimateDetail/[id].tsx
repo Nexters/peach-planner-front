@@ -12,9 +12,12 @@ import Requirement from 'lib/pages/estimate-detail/Requirement';
 import { useQuery } from 'react-query';
 import { fetchEstimate } from 'lib/api/Estimate';
 import { useRouter } from 'next/router';
+import { authOnly } from 'lib/atoms/checkAuth';
 
 export default () => {
   const router = useRouter();
+  authOnly();
+
   const id = router.query.id as string;
   const [userTypeState, _] = useUserTypeState();
   const { data: estimateDetail } = useQuery(['estimateDetail', id], fetchEstimate);

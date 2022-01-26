@@ -19,7 +19,7 @@ interface WriteReviewModalProps {
 }
 
 export const WriteReviewPopup: FC<WriteReviewModalProps> = ({ showReviewModal, closeReviewModal, plannerId }) => {
-  const history = useRouter();
+  const router = useRouter();
   const { data: plannerInfo } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
   const [reviewMessage, setReviewMessage] = React.useState('');
   const [previewImage, setPreviewImage] = useState('');
@@ -35,7 +35,7 @@ export const WriteReviewPopup: FC<WriteReviewModalProps> = ({ showReviewModal, c
       imageUrl: s3ImageUrl,
     });
     closeReviewModal();
-    history.push(`/planner/${plannerId}/detail/#planner-review`);
+    router.push(`/planner/${plannerId}/detail/#planner-review`);
   };
 
   return (

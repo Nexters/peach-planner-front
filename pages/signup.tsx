@@ -9,12 +9,15 @@ import logo from 'public/assets/img/ic_share_kakao.png';
 import { FindUserByEmail, User } from 'lib/api/User';
 import { useRouter } from 'next/router';
 import { UserLogin, UserSignup } from 'lib/interface/user';
+import { checkAuth, publicOnly } from 'lib/atoms/checkAuth';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
 const UserSignUp = () => {
-  const history = useRouter();
+  publicOnly();
+  const router = useRouter();
+
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isExistEmail, setIsExistEmail] = useState(false);
   const [isValidPassword, setIsValidPassword] = useState(true);
@@ -129,7 +132,7 @@ const UserSignUp = () => {
     const res = await axios.post('/auth/login', data);
     localStorage.setItem('accessToken', res?.data?.accessToken);
     localStorage.setItem('refreshToken', res?.data?.refreshToken);
-    history.push('/');
+    router.push('/');
     window.location.reload();
     alert('회원가입 및 로그인이 완료되었습니다.');
     // axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;

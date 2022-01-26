@@ -5,9 +5,12 @@ import { FlexDiv, Content, Title } from 'lib/pages/components/style/style';
 import { FindUserByEmail } from 'lib/api/User';
 import { sendResetEmail } from 'lib/api/ResetPw';
 import { useRouter } from 'next/router';
+import { publicOnly } from 'lib/atoms/checkAuth';
 
 export default () => {
-  const history = useRouter();
+  const router = useRouter();
+  publicOnly();
+
   const [email, setEmail] = useState('');
   const [check, setCheck] = useState(false);
   const [exist, setExist] = useState(false);
@@ -83,7 +86,7 @@ export default () => {
                 height="40px"
                 fontSize="12px"
                 padding="0"
-                onClick={() => history.push('/login')}
+                onClick={() => router.push('/login')}
                 margin={'5px 0 10px '}
               >
                 로그인하기

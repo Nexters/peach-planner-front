@@ -32,7 +32,7 @@ const ContentBox: FC<Props> = ({ title, viewName, handleClick, children }) => {
           >
             전체 {viewName} 보기
           </Content>
-          <ArrowButton src={ArrowRight}></ArrowButton>
+          <ArrowButton src={ArrowRight.src}/>
         </MoveButtonBox>
       </Body>
     </Box>

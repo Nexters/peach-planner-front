@@ -16,8 +16,8 @@ interface Props {
 }
 
 const SearchResult = ({ location, support }: Props) => {
-  const history = useRouter();
-  const sortingParam = history.query.sort;
+  const router = useRouter();
+  const sortingParam = router.query.sort;
   const supportInfos = support.join();
   const getPlanners = sortingParam === 'popular' ? fetchPopularPlanners : fetchPlanners;
   const [sort, setSort] = useState('');
@@ -33,7 +33,7 @@ const SearchResult = ({ location, support }: Props) => {
     },
     onError: (error: any) => {
       if (error.response.status === 401) {
-        history.push('/login');
+        router.push('/login');
       }
     }
   });

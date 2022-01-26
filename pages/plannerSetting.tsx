@@ -5,8 +5,12 @@ import PlannerPageSideMenu from 'lib/pages/planner-mypage/PlannerPageSideMenu';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { authOnly } from 'lib/atoms/checkAuth';
 
 export default () => {
+  authOnly();
+  const router = useRouter();
+
   const [user, setUser] = useState<User | null>(null);
   const [inputs, setInputs] = useState({
     originalPassword: '',
@@ -15,7 +19,6 @@ export default () => {
   });
   const { originalPassword, password, passwordConfirm } = inputs;
 
-  const history = useRouter();
   const [changePw, setChangePw] = useState(false);
 
   useEffect(() => {

@@ -10,10 +10,10 @@ interface Props {
 }
 
 const Estimate = ({ id, requestDay, customerName, requestContent }: Props) => {
-  const history = useRouter();
+  const router = useRouter();
 
   const handleClick = () => {
-    history.push(`/estimateDetail/${id}`);
+    router.push(`/estimateDetail/${id}`);
   };
 
   return (

@@ -10,16 +10,20 @@ import { getUserMe } from 'lib/api/User';
 import { FiSearch } from 'react-icons/fi';
 import { FiPaperclip } from 'react-icons/fi'
 import { useRouter } from 'next/router';
+import { authOnly } from 'lib/atoms/checkAuth';
 
 interface routeProps {
   id: string;
 }
 
 export default () => {
-  const history = useRouter();
+  const router = useRouter();
+  authOnly();
+
+
   const { data: user } = useQuery(['getUser'], getUserMe);
 
-  const plannerId = history.query.id as string;
+  const plannerId = router.query.id as string;
 
   const { data: plannerInfo } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
 
@@ -55,7 +59,7 @@ export default () => {
       );
     
     if (res.status === 200) {
-      history.push({
+      router.push({
         pathname: "/chats",
         query: { state: res.data },
       });
@@ -165,7 +169,7 @@ export default () => {
             { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
           );
           if (res.status == 200) {
-            history.push({
+            router.push({
               pathname: "/chats",
               query: { state: res.data.chatRoom },
             });

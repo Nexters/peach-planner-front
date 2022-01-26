@@ -14,10 +14,10 @@ interface Props {
 }
 
 const PlannerMiniCard = ({ id, plannerId, size, image, plannerName, companyName, margin }: Props) => {
-  const history = useRouter();
+  const router = useRouter();
 
   const handleClick = () => {
-    history.push(`/planner/${plannerId}/detail`);
+    router.push(`/planner/${plannerId}/detail`);
   };
   return (
     <Container margin={margin} onClick={handleClick}>
@@ -50,7 +50,7 @@ interface PlannerImageProps {
   size: string;
 }
 
-const PlannerImage = styled(Image).attrs((props: PlannerImageProps) => ({ src: props.src }))`
+const PlannerImage = styled.img.attrs((props: PlannerImageProps) => ({ src: props.src }))`
   height: ${(props: PlannerImageProps) => props.size}};
   width: ${(props: PlannerImageProps) => props.size}};
   border-radius: 10px;

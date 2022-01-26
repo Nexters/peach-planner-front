@@ -8,11 +8,11 @@ interface PartnerItemProps {
 }
 
 const PartnerItem: FC<PartnerItemProps> = ({ data }) => {
-  const history = useRouter();
+  const router = useRouter();
 
   return (
     <Container onClick={() => {
-      history.push(`/partner/${data.id}`);
+      router.push(`/partner/${data.id}`);
     }}>
       <Image src={data.profilePath} />
       <Title>{data.name}</Title>

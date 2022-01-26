@@ -12,10 +12,13 @@ import Summary from 'lib/pages/planner-detail/Summary';
 import styled from 'styled-components';
 import LeftArrow from 'public/assets/svg/ic_arrow-left-line.svg';
 import { useRouter } from 'next/router';
+import { authOnly } from 'lib/atoms/checkAuth';
 
 export default () => {
+  authOnly();
+  const router = useRouter();
+  
   const [plannerInfo, setPlannerInfo] = useState<Planner | null>(null);
-  const history = useRouter();
 
   // const { data: plannerInfo, error } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
 
@@ -30,12 +33,12 @@ export default () => {
         setPlannerInfo({ ...response.data });
       })
       .catch((err) => {
-        history.push('/');
+        router.push('/');
       });
   };
 
   const handleProfileEdit = () => {
-    history.push('/editProfile');
+    router.push('/editProfile');
   };
 
   useEffect(() => {
@@ -45,7 +48,7 @@ export default () => {
   return plannerInfo ? (
     <Container>
       <Back>
-        <BackBody onClick={() => history.push('/plannerPage')}>
+        <BackBody onClick={() => router.push('/plannerPage')}>
           <BackImage src={LeftArrow}></BackImage>
           <Content
             height="21px"

@@ -15,7 +15,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const NewPlanner = () => {
-  const history = useRouter();
+  const router = useRouter();
   const { data: planners } = useQuery(['newPlanners', { isNew: true }], fetchPlanners);
   const [slider, setSlider] = useState<Slick>();
   const [slickSettings, setSlickSettings] = useState<Settings>({
@@ -33,7 +33,7 @@ const NewPlanner = () => {
     },
     onError: (error: any) => {
       if (error.response.status === 401) {
-        history.push('/login');
+        router.push('/login');
       }
     }
   });

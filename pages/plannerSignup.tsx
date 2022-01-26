@@ -7,6 +7,7 @@ import axios from 'axios';
 import { UserSignup, UserLogin } from 'lib/interface/user';
 import { FindUserByEmail } from 'lib/api/User';
 import { useRouter } from 'next/router';
+import { publicOnly } from 'lib/atoms/checkAuth';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -41,7 +42,8 @@ const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#
 // };
 
 export default () => {
-  const history = useRouter();
+  const router = useRouter();
+  publicOnly();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -170,7 +172,7 @@ export default () => {
     const res = await axios.post('/auth/login', data);
     localStorage.setItem('accessToken', res.data.accessToken);
     localStorage.setItem('refreshToken', res.data.refreshToken);
-    history.push('/registerProfile');
+    router.push('/registerProfile');
     window.location.reload();
     alert('회원가입 및 로그인이 완료되었습니다.');
     // const expireTime = Date.parse(res.data.expireDateTime);

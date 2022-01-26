@@ -27,20 +27,20 @@ const sideMenuItem = [
 ];
 
 const PlannerPageSideMenu = () => {
-  const history = useRouter();
+  const router = useRouter();
   const { data: user } = useQuery(['getUser'], getUserMe);
   const [selectedItem, setSelectedItem] = useState('');
 
   const handleSideMenuItem = (item: string) => {
     setSelectedItem(item);
     if (item === 'profile') {
-      history.push('/plannerProfile');
+      router.push('/plannerProfile');
     } else if (item === 'reviews') {
-      history.push('/plannerReview');
+      router.push('/plannerReview');
     } else if (item === 'setting') {
-      history.push('/plannerSetting');
+      router.push('/plannerSetting');
     } else if (item === 'estimate') {
-      history.push('/plannerMyEstimate');
+      router.push('/plannerMyEstimate');
     }
   };
 
@@ -66,7 +66,7 @@ const PlannerPageSideMenu = () => {
           </Content>
         </ProfileDiv>
         <SideMenuDiv>
-          <TitleBox onClick={() => history.push('/plannerPage')}>
+          <TitleBox onClick={() => router.push('/plannerPage')}>
             <Title height="16px" fontSize="16px" lineHeight="10px">
               내 페이지
             </Title>

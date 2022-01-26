@@ -18,7 +18,7 @@ const sideMenuItem = [
 ];
 
 const UserPageSideMenu = () => {
-  const history = useRouter();
+  const router = useRouter();
   const { data: user } = useQuery(['getUser'], getUserMe);
   const [selectedItem, setSelectedItem] = useState('');
 
@@ -26,9 +26,9 @@ const UserPageSideMenu = () => {
     setSelectedItem(item);
 
     if (item === 'setting') {
-      history.push('/userSetting');
+      router.push('/userSetting');
     } else if (item == 'chat') {
-      history.push('/chats');
+      router.push('/chats');
     }
   };
 
@@ -47,7 +47,7 @@ const UserPageSideMenu = () => {
           </Content>
         </ProfileDiv>
         <SideMenuDiv>
-          <TitleBox onClick={() => history.push('/userPage')}>
+          <TitleBox onClick={() => router.push('/userPage')}>
             <Title height="16px" fontSize="16px" lineHeight="10px">
               내 페이지
             </Title>

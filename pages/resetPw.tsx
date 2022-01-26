@@ -8,21 +8,21 @@ import { useRouter } from 'next/router';
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
 export default () => {
-  const history = useRouter();
+  const router = useRouter();
   const [inputs, setInputs] = useState({ password: '', passwordConfirm: '' });
   const { password, passwordConfirm } = inputs;
   const [isValidPassword, setIsValidPassword] = useState(true);
-  const token = history.query.token as string;
+  const token = router.query.token as string;
   if (!token) {
     alert("유효하지 않은 접근입니다.");
-    history.push('/');
+    router.push('/');
   }
 
   validateToken(token)
     .then(result => {
       if (!result) {
         alert("토큰이 유효하지 않습니다.");
-        history.push('/');
+        router.push('/');
       }
     });
 
@@ -50,7 +50,7 @@ export default () => {
       });
       if (resetResult) {
         alert("비밀번호가 변경되었습니다!");
-        history.push('/login');
+        router.push('/login');
       }
     }
     return;

@@ -14,7 +14,7 @@ import { queryClient } from 'pages/_app';
 import Image from 'next/image';
 
 const PopularPlanner = () => {
-  const history = useRouter();
+  const router = useRouter();
   const { data: planners } = useQuery(['popularPlanners'], fetchPopularPlanners);
   const [slider, setSlider] = useState<Slick>();
   const [slickSettings, setSlickSettings] = useState<Settings>({
@@ -32,7 +32,7 @@ const PopularPlanner = () => {
     },
     onError: (error: any) => {
       if (error.response.status === 401) {
-        history.push('/login');
+        router.push('/login');
       }
     }
   });

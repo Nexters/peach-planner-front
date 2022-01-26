@@ -9,11 +9,11 @@ interface CompanyInfoProps {
 }
 
 const CompanyInfo: FC<CompanyInfoProps> = ({ companyInfo }) => {
-  const history = useRouter();
+  const router = useRouter();
 
   const showCompanyDetail = () => {
     const companyId = companyInfo.id;
-    history.push(`/company/${companyId}`);
+    router.push(`/company/${companyId}`);
   };
 
   return (

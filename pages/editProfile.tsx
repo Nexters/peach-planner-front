@@ -19,24 +19,20 @@ import { useRouter } from 'next/router';
 import { Item } from 'lib/pages/profile-edit/interface/item';
 import { PlannerDescription } from 'lib/pages/profile-edit/interface/planner-description';
 import { SupportStore } from 'lib/pages/profile-edit/interface/support-store';
+import Sns from 'lib/pages/profile-edit/interface/sns';
+import { authOnly } from 'lib/atoms/checkAuth';
 
 
-interface Sns {
-  websiteUrl: string;
-  instagramUrl: string;
-  facebookUrl: string;
-  blogUrl: string;
-}
+export default () => {
+  const router = useRouter();
+  authOnly();
 
-// isUpdate = true
-export default ({ isUpdate }: ProfileProps) => {
   const { data: user } = useQuery(['user'], getUserMe);
   const { data: planner } = useQuery(['planner'], fetchPlannerMe);
-  const history = useRouter();
   const { mutate, isLoading } = useMutation(updateProfile, {
     onSuccess: (data) => {
-      alert(`프로필 ${isUpdate ? '수정' : '등록'}이 완료되었습니다.`);
-      history.back();
+      alert(`프로필 수정이 완료되었습니다.`);
+      router.back();
     }
   });
 
@@ -171,7 +167,7 @@ export default ({ isUpdate }: ProfileProps) => {
   return (
     <Container>
       <InnerContainer>
-        <ProfileHeader isUpdate={isUpdate}></ProfileHeader>
+        <ProfileHeader isUpdate={true}/>
       </InnerContainer>
       <InnerContainer>
         <FlexDiv width="310px" height="auto" justify="flex-start" align="start" direction="column" margin="0 105px 0 0">
@@ -243,7 +239,7 @@ export default ({ isUpdate }: ProfileProps) => {
               fontWeight="bold"
               onClick={handleRegister}
             >
-              {isUpdate ? '수정하기' : '등록하기'}
+              수정하기
             </PButton>
           </FlexDiv>
         </FlexDiv>

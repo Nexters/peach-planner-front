@@ -10,8 +10,8 @@ import { useRouter } from 'next/router';
 
 export default () => {
   const [partnerInfo, setPartnerInfo] = useState<PartnerInfo | null>(null);
-  const history = useRouter();
-  const partnerId = history.query.id as string;
+  const router = useRouter();
+  const partnerId = router.query.id as string;
 
   const [selected, setSelected] = useState<boolean>(false);
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
@@ -28,7 +28,7 @@ export default () => {
         setSelected(response.data.pick ?? false);
       })
       .catch((err) => {
-        history.push('/');
+        router.push('/');
       });
   };
 

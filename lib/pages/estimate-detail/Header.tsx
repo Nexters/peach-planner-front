@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Header = ({ isUser }: Props) => {
-  const history = useRouter();
+  const router = useRouter();
 
   const handleClick = () => {
     let path: string;
@@ -18,7 +18,7 @@ const Header = ({ isUser }: Props) => {
       path = '/plannerMyEstimate';
     }
 
-    history.push(path);
+    router.push(path);
   };
 
   return (

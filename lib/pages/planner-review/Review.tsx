@@ -47,6 +47,7 @@ const Container = styled.div`
   flex-direction: row;
   border-bottom: 1px solid;
   border-bottom-color: #ced4da;
+  cursor: pointer;
 `;
 
 const ReviewStateBox = styled.div`

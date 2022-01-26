@@ -12,10 +12,10 @@ interface Props {
 }
 
 const MyEstimate = ({ id, createdAt, content, estimateNumber, plannerName, status }: Props) => {
-  const history = useRouter();
+  const router = useRouter();
 
   const handleClick = () => {
-    history.push(`/estimateDetail/${id}`);
+    router.push(`/estimateDetail/${id}`);
   };
 
   return (

@@ -8,8 +8,12 @@ import { upload } from 'lib/api/Image';
 import { Title } from 'lib/pages/components/style/style';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { authOnly } from 'lib/atoms/checkAuth';
 
 export default () => {
+  authOnly();
+  const router = useRouter();
+
   // const { data: user } = useQuery(['getUser'], getUser);
   const [user, setUser] = useState<User | null>(null);
   const [focus, setFocus] = useState(false);
@@ -23,7 +27,6 @@ export default () => {
   const [userImage, setUserImage] = useState<string | null>(null);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const history = useRouter();
   const [changePw, setChangePw] = useState(false);
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const [editedProfileImage, setEditedProfileImage] = useState('');
@@ -107,7 +110,7 @@ export default () => {
     DeleteUser();
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    history.push('/');
+    router.push('/');
     window.location.reload();
     alert('회원탈퇴가 완료되었습니다.');
   };

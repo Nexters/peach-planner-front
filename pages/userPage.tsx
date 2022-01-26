@@ -11,8 +11,13 @@ import RightArrow from 'public/assets/svg/ic_arrow_right.svg';
 import { fetchEstimateList } from 'lib/api/Estimate';
 import MyEstimate from 'lib/pages/user-mypage/Estimate';
 import { EmptyText } from 'lib/pages/components/EmptyText';
+import { authOnly } from 'lib/atoms/checkAuth';
+import { useRouter } from 'next/router';
 
 export default () => {
+  const router = useRouter();
+  authOnly();
+
   const { data: picks } = useQuery(['picks'], fetchPicks);
   const { data: estimates } = useQuery(['estimate'], fetchEstimateList);
   const [slider, setSlider] = useState<Slick>();

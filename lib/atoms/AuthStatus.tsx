@@ -8,7 +8,7 @@ const peachTokenState = atom<string | null>({
 
 export function usePeachTokenState(): [string | null, SetterOrUpdater<string | null>] {
   const [peachToken, setPeachToken] = useRecoilState(peachTokenState);
-  useEffect(()=> {
+  useEffect(() => {
     setPeachToken(localStorage.getItem('accessToken'));
   }, [])
   return [peachToken, setPeachToken];

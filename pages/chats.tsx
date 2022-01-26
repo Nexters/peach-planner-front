@@ -14,21 +14,7 @@ import { WriteReviewPopup } from 'lib/pages/chat/WriteReviewPopup';
 import { EmptyText } from 'lib/pages/components/EmptyText';
 import { BsFillChatFill } from 'react-icons/bs';
 import { useRouter } from 'next/router';
-
-const client = new Client({
-  brokerURL: 'wss://api.peachplanner.com/websocket',
-  connectHeaders: {
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-  },
-  // debug: (str) => console.log(str),
-  reconnectDelay: 4000, //자동 재 연결
-  heartbeatIncoming: 3000,
-  heartbeatOutgoing: 3000,
-  onConnect: (receipt: IFrame) => {
-    console.log(receipt.body);
-  }
-});
-const subscribeIds = new Set();
+import { authOnly } from 'lib/atoms/checkAuth';
 
 interface ChatMessageModel {
   id: number;
@@ -40,9 +26,11 @@ interface ChatMessageModel {
   dateTime: string;
 }
 
+
 // TODO:: private route
 export default () => {
   const router = useRouter();
+  authOnly();
 
   const chatRoom = router.query.state;
 
@@ -60,6 +48,25 @@ export default () => {
   const me = React.useRef<User>();
   const [showReviewModal, setShowReviewModal] = useState<boolean>(false);
 
+
+  const client = new Client({
+    brokerURL: 'wss://api.peachplanner.com/websocket',
+    connectHeaders: {
+      // Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    },
+    // debug: (str) => console.log(str),
+    reconnectDelay: 4000, //자동 재 연결
+    heartbeatIncoming: 3000,
+    heartbeatOutgoing: 3000,
+    onConnect: (receipt: IFrame) => {
+      console.log(receipt.body);
+    },
+    onStompError: console.log,
+    onWebSocketError: console.log,
+  });
+  
+  const subscribeIds = new Set();
+
   useEffect(() => {
     client.activate();
     if (user) {
@@ -70,6 +77,7 @@ export default () => {
   useEffect(() => {
     const subscribeRooms = () => {
       rooms?.forEach((room, index) => {
+        console.log(subscribeIds);
         if (selected == -1 && room.id == currentRoom.current?.id) {
           setSelected(index);
           (async () => {
@@ -94,9 +102,11 @@ export default () => {
             });
           })();
         }
+        console.log("Asdf", client.state, ActivationState.ACTIVE, client.state === ActivationState.ACTIVE);
         if (subscribeIds.has(room.id)) return;
 
         if (client.state === ActivationState.ACTIVE) {
+          console.log(`subscribe /topic/chat/${room.id}`)
           client.subscribe(`/topic/chat/${room.id}`, (message: IFrame) => {
             console.log(currentRoom.current.id);
             if (currentRoom.current.id === room.id) {
@@ -125,7 +135,7 @@ export default () => {
     if (client.state === ActivationState.ACTIVE && client.webSocket?.readyState === StompSocketState.OPEN) {
       subscribeRooms();
     }
-    if (client.state === ActivationState.INACTIVE) {
+    if (client.webSocket?.readyState !== StompSocketState.OPEN || client.state === ActivationState.INACTIVE) {
       client.onConnect = (receipt: IFrame) => {
         subscribeRooms();
       };

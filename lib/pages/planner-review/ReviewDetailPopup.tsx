@@ -3,7 +3,7 @@
 import React, { useState, FC } from 'react';
 import styled from 'styled-components';
 import Popup from 'reactjs-popup';
-import Close from 'lib/pages/assets/svg/ic_close_b.svg';
+import Close from 'public/assets/svg/ic_close_b.svg';
 import { ReviewData } from 'lib/api/Review';
 import { Content } from 'lib/pages/components/style/style';
 import Image from 'next/image';

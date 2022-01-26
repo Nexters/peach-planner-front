@@ -92,7 +92,7 @@ const Header = () => {
               {/* <NotiImage src={NotiDefault}></NotiImage> */ }
               <ProfileBox onClick={ handleClickProfile }>
                 <ProfileImage src={ user?.profileImage ?? DefaultProfileImage } />
-                <DropdownImage src={ DownArrowImage } />
+                <DropdownImage src={ DownArrowImage.src } />
               </ProfileBox>
             </ProfileContainer>
             { isClickedProfile ? (
@@ -221,20 +221,20 @@ interface ImageProps {
   src: string;
 }
 
-const ProfileImage = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
+const ProfileImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   height: 32px;
   width: 32px;
   margin: 0 0 0 7px;
   border-radius: 100%;
 `;
 
-const DropdownImage = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
+const DropdownImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   height: 24px;
   width: 24px;
   margin: 0 10px 0 0;
 `;
 
-const NotiImage = styled(Image).attrs((props: ImageProps) => ({ src: props.src }))`
+const NotiImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   height: 24px;
   width: 24px;
   margin: 0 10px 0 0;

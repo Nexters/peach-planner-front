@@ -18,7 +18,7 @@ const Message = ({ isUser }: Props) => {
       <Content>
         {isUser
           ? '견적서 전달이 완료되었습니다. 1:1 메시지를 확인해 주세요.'
-          : '견적서 요청을 확인하셨나요?<br></br> 1:1 메시지에서 고객에게 답변해 보세요.'}
+          : '견적서 요청을 확인하셨나요? \n 1:1 메시지에서 고객에게 답변해 보세요.'}
       </Content>
       <InnerContainer>
         <PButton color="pink" onClick={handleChat} width="176px" height="44px" margin="22px 0px 0px 0px">
@@ -52,4 +52,5 @@ const Content = styled.div`
   text-align: center;
   line-height: normal;
   margin: 40px 0px 0px 0px;
+  white-space: pre-line;
 `;

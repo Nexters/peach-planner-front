@@ -7,7 +7,7 @@ import ContentBox from 'lib/pages/planner-mypage/ContentBox';
 import ContentNotification from 'lib/pages/planner-mypage/ContentNotification';
 import { useRouter } from 'next/router';
 
-const MyPage = () => {
+export default () => {
   const history = useRouter();
   const { data: myStats } = useQuery('planner/myStats', fetchPlannerMyStats);
 
@@ -51,8 +51,6 @@ const MyPage = () => {
     </Container>
   );
 };
-
-export default MyPage;
 
 const Container = styled.div`
   display: flex;

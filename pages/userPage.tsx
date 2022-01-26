@@ -6,13 +6,13 @@ import PlannerMiniCard from 'lib/pages/components/PlannerMiniCard';
 import { FlexDiv, Title } from 'lib/pages/components/style/style';
 import styled from 'styled-components';
 import UserPageSideMenu from 'lib/pages/user-mypage/UserPageSideMenu';
-import LeftArrow from 'src/assets/svg/ic_arrow_left.svg';
-import RightArrow from 'src/assets/svg/ic_arrow_right.svg';
+import LeftArrow from 'public/assets/svg/ic_arrow_left.svg';
+import RightArrow from 'public/assets/svg/ic_arrow_right.svg';
 import { fetchEstimateList } from 'lib/api/Estimate';
 import MyEstimate from 'lib/pages/user-mypage/Estimate';
 import { EmptyText } from 'lib/pages/components/EmptyText';
 
-export const UserMyPage = () => {
+export default () => {
   const { data: picks } = useQuery(['picks'], fetchPicks);
   const { data: estimates } = useQuery(['estimate'], fetchEstimateList);
   const [slider, setSlider] = useState<Slick>();

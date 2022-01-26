@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SearchResult from 'lib/pages/home/search/SearchResult';
 import SearchSideBar from 'lib/pages/home/search/SearchSideBar';
 
-const Search = () => {
+export default () => {
   const [location, setLocation] = useState('');
   const [support, setSupport] = useState<string[]>([]);
 
@@ -29,8 +29,6 @@ const Search = () => {
     </Container>
   );
 };
-
-export default Search;
 
 const Container = styled.div``;
 

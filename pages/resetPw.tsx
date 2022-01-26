@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
-const ResetPwPage = () => {
+export default () => {
   const history = useRouter();
   const [inputs, setInputs] = useState({ password: '', passwordConfirm: '' });
   const { password, passwordConfirm } = inputs;
@@ -103,8 +103,6 @@ const ResetPwPage = () => {
     </FlexDiv>
   );
 };
-
-export default ResetPwPage;
 
 const Span = styled.span`
   height: 21px;

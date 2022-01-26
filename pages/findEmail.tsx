@@ -6,7 +6,7 @@ import { FindUserByEmail } from 'lib/api/User';
 import { sendResetEmail } from 'lib/api/ResetPw';
 import { useRouter } from 'next/router';
 
-const FindEmailPage = () => {
+export default () => {
   const history = useRouter();
   const [email, setEmail] = useState('');
   const [check, setCheck] = useState(false);
@@ -128,8 +128,6 @@ const FindEmailPage = () => {
     </FlexDiv>
   );
 };
-
-export default FindEmailPage;
 
 const Span = styled.span`
   width: 498px;

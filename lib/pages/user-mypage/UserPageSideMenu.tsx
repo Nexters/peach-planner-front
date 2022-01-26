@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getUserMe } from 'lib/api/User';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import AccountDefault from 'src/assets/svg/ic_account_default.svg';
+import AccountDefault from 'public/assets/svg/ic_account_default.svg';
 import { Content, Title } from 'lib/pages/components/style/style';
 import { useRouter } from 'next/router';
 
@@ -36,7 +36,7 @@ const UserPageSideMenu = () => {
     <FlexDiv justify="center" width="200px">
       <FlexDiv justify="flex-start" direction="column">
         <ProfileDiv>
-          <ProfileImgBox src={user?.profileImage ?? AccountDefault}></ProfileImgBox>
+          <ProfileImgBox src={user?.profileImage ?? AccountDefault.src} />
           <FlexDiv height="20px" margin="8px 0px 8px 0px">
             <Title fontSize="14px" height="21px" color="#212529" lineHeight="20px" margin="0px 4px 0px 0px">
               {user?.name}

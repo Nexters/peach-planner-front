@@ -12,7 +12,7 @@ import { UserLogin } from 'lib/interface/user';
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
-const Login = () => {
+export default () => {
     const history = useRouter();
     const [, setPeachTokenState] = usePeachTokenState();
     const [, setUserTypeState] = useUserTypeState();
@@ -203,8 +203,6 @@ const Login = () => {
         </FlexDiv>
     );
 };
-
-export default Login;
 
 interface Props {
     margin?: string;

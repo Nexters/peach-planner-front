@@ -29,7 +29,7 @@ interface Sns {
 }
 
 // isUpdate = true
-const Profile = ({ isUpdate }: ProfileProps) => {
+export default ({ isUpdate }: ProfileProps) => {
   const { data: user } = useQuery(['user'], getUserMe);
   const { data: planner } = useQuery(['planner'], fetchPlannerMe);
   const history = useRouter();
@@ -251,8 +251,6 @@ const Profile = ({ isUpdate }: ProfileProps) => {
     </Container>
   );
 };
-
-export default Profile;
 
 const Container = styled.div`
   margin: 16px auto;

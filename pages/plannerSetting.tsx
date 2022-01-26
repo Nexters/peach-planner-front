@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
-const PlannerSetting = () => {
+export default () => {
   const [user, setUser] = useState<User | null>(null);
   const [inputs, setInputs] = useState({
     originalPassword: '',
@@ -126,8 +126,6 @@ const PlannerSetting = () => {
     </Container>
   );
 };
-
-export default PlannerSetting;
 
 const Container = styled.div`
   display: flex;

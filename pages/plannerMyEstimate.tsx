@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import PlannerPageSideMenu from 'lib/pages/planner-mypage/PlannerPageSideMenu';
 import Estimate from 'lib/pages/planner-my-estimate/Estimate';
 
-const PlannerMyEstimate = () => {
+export default () => {
   const { data: myEstimations } = useQuery('planner/my/estimations', fetchPlannerMyEstimations);
 
   return (
@@ -51,8 +51,6 @@ const PlannerMyEstimate = () => {
     </Container>
   );
 };
-
-export default PlannerMyEstimate;
 
 const Container = styled.div`
   display: flex;

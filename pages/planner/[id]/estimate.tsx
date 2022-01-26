@@ -15,7 +15,7 @@ interface routeProps {
   id: string;
 }
 
-const PlannerEstimate = () => {
+export default () => {
   const history = useRouter();
   const { data: user } = useQuery(['getUser'], getUserMe);
 
@@ -178,8 +178,6 @@ const PlannerEstimate = () => {
     </Section>
   );
 };
-
-export default PlannerEstimate;
 
 const Section = styled.div`
   background-color: #f8f9fa;

@@ -8,7 +8,7 @@ import { FaPhoneAlt, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import { MdHomeFilled } from 'react-icons/md';
 import { useRouter } from 'next/router';
 
-const CompanyDetail = () => {
+export default () => {
   const [companyInfo, setCompanyInfo] = useState<Company | null>(null);
   const history = useRouter();
   const companyId = history.query.id as string;
@@ -112,8 +112,6 @@ const CompanyDetail = () => {
     <></>
   );
 };
-
-export default CompanyDetail;
 
 const OuterContainer = styled.div`
   width: 860px;

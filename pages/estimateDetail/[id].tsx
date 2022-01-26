@@ -13,11 +13,7 @@ import { useQuery } from 'react-query';
 import { fetchEstimate } from 'lib/api/Estimate';
 import { useRouter } from 'next/router';
 
-interface routeProps {
-  id: string;
-}
-
-const EstimateDetail = () => {
+export default () => {
   const router = useRouter();
   const id = router.query.id as string;
   const [userTypeState, _] = useUserTypeState();
@@ -60,8 +56,6 @@ const EstimateDetail = () => {
     </Container>
   );
 };
-
-export default EstimateDetail;
 
 const Container = styled.div`
   display: flex;

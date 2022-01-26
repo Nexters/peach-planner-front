@@ -41,7 +41,7 @@ interface ChatMessageModel {
 }
 
 // TODO:: private route
-const ChatContainer = () => {
+export default () => {
   const router = useRouter();
 
   const chatRoom = router.query.state;
@@ -379,8 +379,6 @@ const ChatContainer = () => {
     </Container>
   );
 };
-
-export default ChatContainer;
 
 const Container = styled.div`
   display: flex;

@@ -2,13 +2,12 @@ import { Title } from 'lib/pages/components/style/style';
 import styled from 'styled-components';
 import PlannerPageSideMenu from 'lib/pages/planner-mypage/PlannerPageSideMenu';
 import Review from 'lib/pages/planner-review/Review';
-import Test from 'src/assets/svg/ic_right_gray.svg';
 import { fetchPlannerMyReviews } from 'lib/api/Planner';
 import { useQuery } from 'react-query';
 import { ReviewDetailPopup } from 'lib/pages/planner-review/ReviewDetailPopup';
 import { useState } from 'react';
 
-const PlannerReview = () => {
+export default () => {
   const { data: myReviews } = useQuery('planner/my/reviews', fetchPlannerMyReviews);
   const [showReviewDetailModal, setShowReviewDetailModal] = useState<boolean>(false);
   const [reviewDetailModalIndex, setReviewDetailModalIndex] = useState<number>(0);
@@ -77,8 +76,6 @@ const PlannerReview = () => {
     </Container>
   );
 };
-
-export default PlannerReview;
 
 const Container = styled.div`
   display: flex;

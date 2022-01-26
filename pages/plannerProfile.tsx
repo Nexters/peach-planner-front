@@ -10,10 +10,10 @@ import PlannerInfo from 'lib/pages/planner-detail/PlannerInfo';
 import ReviewList from 'lib/pages/planner-detail/ReviewList';
 import Summary from 'lib/pages/planner-detail/Summary';
 import styled from 'styled-components';
-import LeftArrow from 'src/assets/svg/ic_arrow-left-line.svg';
+import LeftArrow from 'public/assets/svg/ic_arrow-left-line.svg';
 import { useRouter } from 'next/router';
 
-const PlannerProfile = () => {
+export default () => {
   const [plannerInfo, setPlannerInfo] = useState<Planner | null>(null);
   const history = useRouter();
 
@@ -74,8 +74,6 @@ const PlannerProfile = () => {
     <></>
   );
 };
-
-export default PlannerProfile;
 
 const Container = styled.div`
   width: 860px;

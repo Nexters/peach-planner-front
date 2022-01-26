@@ -40,7 +40,7 @@ const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#
 //   return num;
 // };
 
-const PlannerSignUp = () => {
+export default () => {
   const history = useRouter();
 
   const [email, setEmail] = useState('');
@@ -319,8 +319,6 @@ const PlannerSignUp = () => {
     </FlexDiv>
   );
 };
-
-export default PlannerSignUp;
 
 const Span = styled.span`
   height: 20px;

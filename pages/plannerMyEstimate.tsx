@@ -4,12 +4,11 @@ import { Title } from 'lib/pages/components/style/style';
 import styled from 'styled-components';
 import PlannerPageSideMenu from 'lib/pages/planner-mypage/PlannerPageSideMenu';
 import Estimate from 'lib/pages/planner-my-estimate/Estimate';
-import { authOnly } from 'lib/atoms/checkAuth';
 import { useRouter } from 'next/router';
+import { authOnly } from 'lib/routes/withAuth';
 
-export default () => {
+export default authOnly(() => {
   const router = useRouter();
-  authOnly();
 
   const { data: myEstimations } = useQuery('planner/my/estimations', fetchPlannerMyEstimations);
 
@@ -55,7 +54,7 @@ export default () => {
       </InnerContainer>
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   display: flex;

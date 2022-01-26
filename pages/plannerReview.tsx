@@ -7,10 +7,9 @@ import { useQuery } from 'react-query';
 import { ReviewDetailPopup } from 'lib/pages/planner-review/ReviewDetailPopup';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { authOnly } from 'lib/atoms/checkAuth';
+import { authOnly } from 'lib/routes/withAuth';
 
-export default () => {
-  authOnly();
+export default authOnly(() => {
   const router = useRouter();
 
   const { data: myReviews } = useQuery('planner/my/reviews', fetchPlannerMyReviews);
@@ -80,7 +79,7 @@ export default () => {
       />
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   display: flex;

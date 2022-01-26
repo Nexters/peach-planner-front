@@ -8,14 +8,13 @@ import logo from 'public/assets/img/ic_share_kakao.png';
 import { getUserMe } from 'lib/api/User';
 import { useRouter } from 'next/router';
 import { UserLogin } from 'lib/interface/user';
-import { checkAuth, publicOnly } from 'lib/atoms/checkAuth';
+import { publicOnly } from 'lib/routes/withAuth';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
-export default () => {
+export default publicOnly(() => {
     const router = useRouter();
-    publicOnly();
 
     const [, setPeachTokenState] = usePeachTokenState();
     const [, setUserTypeState] = useUserTypeState();
@@ -205,7 +204,7 @@ export default () => {
             </FlexDiv>
         </FlexDiv>
     );
-};
+});
 
 interface Props {
     margin?: string;

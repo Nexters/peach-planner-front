@@ -5,11 +5,10 @@ import { FlexDiv, Content, Title } from 'lib/pages/components/style/style';
 import { FindUserByEmail } from 'lib/api/User';
 import { sendResetEmail } from 'lib/api/ResetPw';
 import { useRouter } from 'next/router';
-import { publicOnly } from 'lib/atoms/checkAuth';
+import { publicOnly } from 'lib/routes/withAuth';
 
-export default () => {
+export default publicOnly(() => {
   const router = useRouter();
-  publicOnly();
 
   const [email, setEmail] = useState('');
   const [check, setCheck] = useState(false);
@@ -130,7 +129,7 @@ export default () => {
       )}
     </FlexDiv>
   );
-};
+});
 
 const Span = styled.span`
   width: 498px;

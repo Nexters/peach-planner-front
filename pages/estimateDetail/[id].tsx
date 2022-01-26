@@ -12,11 +12,10 @@ import Requirement from 'lib/pages/estimate-detail/Requirement';
 import { useQuery } from 'react-query';
 import { fetchEstimate } from 'lib/api/Estimate';
 import { useRouter } from 'next/router';
-import { authOnly } from 'lib/atoms/checkAuth';
+import { authOnly } from 'lib/routes/withAuth';
 
-export default () => {
+export default authOnly(() => {
   const router = useRouter();
-  authOnly();
 
   const id = router.query.id as string;
   const [userTypeState, _] = useUserTypeState();
@@ -58,7 +57,7 @@ export default () => {
       </InnerContainer>
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   display: flex;

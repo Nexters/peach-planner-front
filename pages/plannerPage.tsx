@@ -6,10 +6,9 @@ import PlannerPageSideMenu from 'lib/pages/planner-mypage/PlannerPageSideMenu';
 import ContentBox from 'lib/pages/planner-mypage/ContentBox';
 import ContentNotification from 'lib/pages/planner-mypage/ContentNotification';
 import { useRouter } from 'next/router';
-import { authOnly } from 'lib/atoms/checkAuth';
+import { authOnly } from 'lib/routes/withAuth';
 
-export default () => {
-  authOnly();
+export default authOnly(() => {
   const router = useRouter();
   const { data: myStats } = useQuery('planner/myStats', fetchPlannerMyStats);
 
@@ -52,7 +51,7 @@ export default () => {
       </InnerContainer>
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   display: flex;

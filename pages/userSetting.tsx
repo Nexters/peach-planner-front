@@ -8,10 +8,9 @@ import { upload } from 'lib/api/Image';
 import { Title } from 'lib/pages/components/style/style';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { authOnly } from 'lib/atoms/checkAuth';
+import { authOnly } from 'lib/routes/withAuth';
 
-export default () => {
-  authOnly();
+export default authOnly(() => {
   const router = useRouter();
 
   // const { data: user } = useQuery(['getUser'], getUser);
@@ -241,7 +240,7 @@ export default () => {
       </InnerContainer>
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   display: flex;

@@ -14,7 +14,7 @@ import { WriteReviewPopup } from 'lib/pages/chat/WriteReviewPopup';
 import { EmptyText } from 'lib/pages/components/EmptyText';
 import { BsFillChatFill } from 'react-icons/bs';
 import { useRouter } from 'next/router';
-import { authOnly } from 'lib/atoms/checkAuth';
+import { authOnly } from 'lib/routes/withAuth';
 
 interface ChatMessageModel {
   id: number;
@@ -28,9 +28,8 @@ interface ChatMessageModel {
 
 
 // TODO:: private route
-export default () => {
+export default authOnly(() => {
   const router = useRouter();
-  authOnly();
 
   const chatRoom = router.query.state;
 
@@ -388,7 +387,7 @@ export default () => {
         closeReviewModal={(() => { setShowReviewModal(false); })} />
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   display: flex;

@@ -12,10 +12,9 @@ import Summary from 'lib/pages/planner-detail/Summary';
 import styled from 'styled-components';
 import LeftArrow from 'public/assets/svg/ic_arrow-left-line.svg';
 import { useRouter } from 'next/router';
-import { authOnly } from 'lib/atoms/checkAuth';
+import { authOnly } from 'lib/routes/withAuth';
 
-export default () => {
-  authOnly();
+export default authOnly(() => {
   const router = useRouter();
   
   const [plannerInfo, setPlannerInfo] = useState<Planner | null>(null);
@@ -76,7 +75,7 @@ export default () => {
   ) : (
     <></>
   );
-};
+});
 
 const Container = styled.div`
   width: 860px;

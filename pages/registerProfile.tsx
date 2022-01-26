@@ -20,11 +20,10 @@ import { Item } from 'lib/pages/profile-edit/interface/item';
 import { PlannerDescription } from 'lib/pages/profile-edit/interface/planner-description';
 import { SupportStore } from 'lib/pages/profile-edit/interface/support-store';
 import Sns from 'lib/pages/profile-edit/interface/sns';
-import { authOnly } from 'lib/atoms/checkAuth';
+import { authOnly } from 'lib/routes/withAuth';
 
-export default () => {
+export default authOnly(() => {
   const router = useRouter();
-  authOnly();
 
   const { data: user } = useQuery(['user'], getUserMe);
   const { data: planner } = useQuery(['planner'], fetchPlannerMe);
@@ -245,7 +244,7 @@ export default () => {
       </InnerContainer>
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   margin: 16px auto;

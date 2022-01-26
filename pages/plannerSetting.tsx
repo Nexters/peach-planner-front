@@ -5,10 +5,9 @@ import PlannerPageSideMenu from 'lib/pages/planner-mypage/PlannerPageSideMenu';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { authOnly } from 'lib/atoms/checkAuth';
+import { authOnly } from 'lib/routes/withAuth';
 
-export default () => {
-  authOnly();
+export default authOnly(() => {
   const router = useRouter();
 
   const [user, setUser] = useState<User | null>(null);
@@ -128,7 +127,7 @@ export default () => {
       </InnerContainer>
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   display: flex;

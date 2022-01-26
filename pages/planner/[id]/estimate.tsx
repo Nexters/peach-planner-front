@@ -8,17 +8,13 @@ import { fetchPlanner } from 'lib/api/Planner';
 import axios from 'axios';
 import { getUserMe } from 'lib/api/User';
 import { FiSearch } from 'react-icons/fi';
-import { FiPaperclip } from 'react-icons/fi'
+import { FiPaperclip } from 'react-icons/fi';
 import { useRouter } from 'next/router';
-import { authOnly } from 'lib/atoms/checkAuth';
+import { authOnly } from 'lib/routes/withAuth';
 
-interface routeProps {
-  id: string;
-}
 
-export default () => {
+export default authOnly(() => {
   const router = useRouter();
-  authOnly();
 
 
   const { data: user } = useQuery(['getUser'], getUserMe);
@@ -181,7 +177,7 @@ export default () => {
       </Container>
     </Section>
   );
-};
+});
 
 const Section = styled.div`
   background-color: #f8f9fa;

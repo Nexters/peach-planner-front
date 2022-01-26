@@ -7,7 +7,7 @@ import axios from 'axios';
 import { UserSignup, UserLogin } from 'lib/interface/user';
 import { FindUserByEmail } from 'lib/api/User';
 import { useRouter } from 'next/router';
-import { publicOnly } from 'lib/atoms/checkAuth';
+import { publicOnly } from 'lib/routes/withAuth';
 
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -41,9 +41,8 @@ const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#
 //   return num;
 // };
 
-export default () => {
+export default publicOnly(() => {
   const router = useRouter();
-  publicOnly();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -320,7 +319,7 @@ export default () => {
       </FlexDiv>
     </FlexDiv>
   );
-};
+});
 
 const Span = styled.span`
   height: 20px;

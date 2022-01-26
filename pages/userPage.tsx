@@ -11,12 +11,11 @@ import RightArrow from 'public/assets/svg/ic_arrow_right.svg';
 import { fetchEstimateList } from 'lib/api/Estimate';
 import MyEstimate from 'lib/pages/user-mypage/Estimate';
 import { EmptyText } from 'lib/pages/components/EmptyText';
-import { authOnly } from 'lib/atoms/checkAuth';
 import { useRouter } from 'next/router';
+import { authOnly } from 'lib/routes/withAuth';
 
-export default () => {
+export default authOnly(() => {
   const router = useRouter();
-  authOnly();
 
   const { data: picks } = useQuery(['picks'], fetchPicks);
   const { data: estimates } = useQuery(['estimate'], fetchEstimateList);
@@ -151,7 +150,7 @@ export default () => {
       </InnerContainer>
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   display: flex;

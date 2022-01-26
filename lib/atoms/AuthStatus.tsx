@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { atom, useRecoilState } from 'recoil';
+import { atom, SetterOrUpdater, useRecoilState } from 'recoil';
 
 const peachTokenState = atom<string | null>({
   key: 'peachTokenState',
   default: null,
 });
 
-export function usePeachTokenState() {
+export function usePeachTokenState(): [string | null, SetterOrUpdater<string | null>] {
   const [peachToken, setPeachToken] = useRecoilState(peachTokenState);
   useEffect(()=> {
     setPeachToken(localStorage.getItem('accessToken'));

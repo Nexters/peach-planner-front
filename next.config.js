@@ -1,4 +1,5 @@
 module.exports = {
+    // swcMinify: true,
     images: {
         domains: [
             "peach-planner-static.s3.ap-northeast-2.amazonaws.com",

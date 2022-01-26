@@ -13,7 +13,6 @@
     "axios": "^0.25.0",
     "gh-pages": "^3.2.3",
     "next": "^12.0.8",
-    "querystring": "^0.2.1",
     "react": "^17.0.2",
     "react-device-detect": "^1.17.0",
     "react-dom": "^17.0.2",
@@ -30,7 +29,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "start": "next dev",
     "build": "next build",
     "server": "next start",
@@ -65,6 +64,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-slick": "^0.23.5",
-    "@types/styled-components": "^5.1.11"
+    "@types/styled-components": "^5.1.11",
+    "cross-env": "^7.0.3"
   }
 }

@@ -32,9 +32,7 @@ export default class CustomDocument extends Document {
     render() {
         return (
             <Html>
-                <Head>
-                    
-                </Head>
+                <Head />
                 <body>
                     <Main />
                 </body>

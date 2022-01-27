@@ -15,7 +15,7 @@ export default authOnly(() => {
   return (
     <Container>
       <InnerContainer>
-        <PlannerPageSideMenu></PlannerPageSideMenu>
+        <PlannerPageSideMenu />
         <ContentContainer>
           <ContentBox title="1:1 문의" viewName="메시지" handleClick={() => router.push('/chats')}>
             <ContentNotification content="진행 중" count={myStats?.chats.open ?? 0} />

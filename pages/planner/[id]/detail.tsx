@@ -42,13 +42,12 @@ const page = ({ plannerForSeo }: { plannerForSeo: Planner}) => {
   return plannerInfo ? (
     <Container>
       <Head>
-        
         <title>피치플래너 - {plannerForSeo.name} 플래너</title>
         <meta key="description" name="description" content={ plannerForSeo.description || "한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." } />
         <meta key="og:type" property="og:type" content="website" />
         <meta key="og:title" property="og:title" content={`피치플래너 - ${plannerForSeo.name} 플래너`} />
         <meta key="og:description" property="og:description" content={ plannerForSeo.description || "한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." } />
-        <meta key="og:image" property="og:image" content={ plannerForSeo.images.length > 0 ? plannerForSeo.images[0] : undefined } />
+        <meta key="og:image" property="og:image" content={ plannerForSeo.images?.length > 0 ? plannerForSeo.images[0] : undefined } />
         <meta key="og:url" property="og:url" content="http://peachplanner.com/" />
       </Head>
       <Summary plannerInfo={ plannerInfo }>
@@ -65,16 +64,25 @@ const page = ({ plannerForSeo }: { plannerForSeo: Planner}) => {
       <ReviewList plannerId={ plannerId } />
     </Container>
   ) : (
-    <></>
+    <>
+      <Head>
+        <title>피치플래너 - {plannerForSeo.name} 플래너</title>
+        <meta key="description" name="description" content={ plannerForSeo.description || "한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." } />
+        <meta key="og:type" property="og:type" content="website" />
+        <meta key="og:title" property="og:title" content={`피치플래너 - ${plannerForSeo.name} 플래너`} />
+        <meta key="og:description" property="og:description" content={ plannerForSeo.description || "한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." } />
+        <meta key="og:image" property="og:image" content={ plannerForSeo.images?.length > 0 ? plannerForSeo.images[0] : undefined } />
+        <meta key="og:url" property="og:url" content="http://peachplanner.com/" />
+      </Head>
+    </>
   );
 };
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const plannerId = context.params?.id as string;
   const planner = await axios.get(`/planners/${plannerId}`)
   return { props: { plannerForSeo: planner.data } };
 }
-
-
 
 export default page;
 

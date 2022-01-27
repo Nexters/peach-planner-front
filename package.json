@@ -29,8 +29,8 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
-    "start": "next dev",
+    "dev": "next dev",
+    "start": "next start",
     "build": "next build",
     "server": "next start",
     "test": "react-scripts test",
@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^4.2.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -65,6 +66,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-slick": "^0.23.5",
     "@types/styled-components": "^5.1.11",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "eslint": "^8.7.0"
   }
 }

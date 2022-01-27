@@ -41,7 +41,7 @@ export default class CustomDocument extends Document {
                     <meta property="og:type" content="website" />
                     <meta property="og:title" content="웨딩플래너 비교서비스, 피치플래너" />
                     <meta property="og:description" content="한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." />
-                    <meta property="og:image" content="%PUBLIC_URL%/og_img.png" />
+                    <meta property="og:image" content="/og_img.png" />
                     <meta property="og:url" content="http://peachplanner.com/" />
                 </Head>
                 <body>

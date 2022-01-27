@@ -48,7 +48,7 @@ const page = ({ plannerForSeo }: { plannerForSeo: Planner}) => {
         <meta key="og:title" property="og:title" content={`피치플래너 - ${plannerForSeo.name} 플래너`} />
         <meta key="og:description" property="og:description" content={ plannerForSeo.description || "한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." } />
         <meta key="og:image" property="og:image" content={ plannerForSeo.images?.length > 0 ? plannerForSeo.images[0] : undefined } />
-        <meta key="og:url" property="og:url" content="http://peachplanner.com/" />
+        <meta key="og:url" property="og:url" content={`http://peachplanner.com/planner/${plannerForSeo.id}/detail`} />
       </Head>
       <Summary plannerInfo={ plannerInfo }>
         { userType === 'USER' ? (
@@ -72,7 +72,7 @@ const page = ({ plannerForSeo }: { plannerForSeo: Planner}) => {
         <meta key="og:title" property="og:title" content={`피치플래너 - ${plannerForSeo.name} 플래너`} />
         <meta key="og:description" property="og:description" content={ plannerForSeo.description || "한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." } />
         <meta key="og:image" property="og:image" content={ plannerForSeo.images?.length > 0 ? plannerForSeo.images[0] : undefined } />
-        <meta key="og:url" property="og:url" content="http://peachplanner.com/" />
+        <meta key="og:url" property="og:url" content={`http://peachplanner.com/planner/${plannerForSeo.id}/detail`} />
       </Head>
     </>
   );

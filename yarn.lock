@@ -1577,7 +1577,7 @@
   "resolved" "https://registry.npmjs.org/globalyzer/-/globalyzer-0.1.0.tgz"
   "version" "0.1.0"
 
-"globby@^11.0.4":
+"globby@^11.0.4", "globby@^11.1.0":
   "integrity" "sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g=="
   "resolved" "https://registry.npmjs.org/globby/-/globby-11.1.0.tgz"
   "version" "11.1.0"

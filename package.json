@@ -34,8 +34,7 @@
     "build": "next build",
     "server": "next start",
     "test": "react-scripts test",
-    "deploy": "gh-pages -d build",
-    "postbuild": "cross-env next-sitemap"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

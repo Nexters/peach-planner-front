@@ -21,15 +21,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Head>
             <link rel="icon" href="/favicon.ico" />
             <title>피치플래너</title>
-            <meta name="description" content="한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." />
-            <meta name="robots" content="ALL" />
-            <meta name="robots" content="웨딩플래너,웨딩업체,결혼준비,결혼,웨딩플래너업체" />
-            <meta name="author" content="피치플래너" />
-            <meta property="og:type" content="website" />
-            <meta property="og:title" content="웨딩플래너 비교서비스, 피치플래너" />
-            <meta property="og:description" content="한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." />
-            <meta property="og:image" content="/og_img.png" />
-            <meta property="og:url" content="http://peachplanner.com/" />
+            <meta key="description" name="description" content="한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." />
+            <meta key="robots" name="robots" content="ALL" />
+            <meta key="robots2" name="robots" content="웨딩플래너,웨딩업체,결혼준비,결혼,웨딩플래너업체" />
+            <meta key="author" name="author" content="피치플래너" />
+            <meta key="og:type" property="og:type" content="website" />
+            <meta key="og:title" property="og:title" content="웨딩플래너 비교서비스, 피치플래너" />
+            <meta key="og:description" property="og:description" content="한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." />
+            <meta key="og:image" property="og:image" content="/og_img.png" />
+            <meta key="og:url" property="og:url" content="http://peachplanner.com/" />
         </Head>
         <GlobalStyle />
         <ThemeProvider theme={ theme }>

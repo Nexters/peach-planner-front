@@ -6,25 +6,19 @@ import { PartnerInfo } from 'lib/pages/planner-detail/PartnerInfo';
 import PlannerInfo from 'lib/pages/planner-detail/PlannerInfo';
 import ReviewList from 'lib/pages/planner-detail/ReviewList';
 import Summary from 'lib/pages/planner-detail/Summary';
-import { useQuery } from 'react-query';
 import { Planner } from 'lib/api/Planner';
 import axios from 'axios';
 import Interaction from 'lib/pages/planner-detail/Interaction';
 import { useUserTypeState } from 'lib/atoms/AuthStatus';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { GetServerSideProps } from 'next';
 
-interface routeProps {
-  id: string;
-}
-
-export default () => {
+const page = ({ plannerForSeo }: { plannerForSeo: Planner}) => {
   const [plannerInfo, setPlannerInfo] = useState<Planner | null>(null);
   const [userType, _] = useUserTypeState();
   const router = useRouter();
   const plannerId = router.query.id as string;
-
-  // const { data: plannerInfo, error } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
 
   const fetchPlanner = () => {
     axios
@@ -49,12 +43,12 @@ export default () => {
     <Container>
       <Head>
         
-        <title>피치플래너 - {plannerInfo.name} 플래너</title>
-        <meta name="description" content={ plannerInfo.description || "한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." } />
+        <title>피치플래너 - {plannerForSeo.name} 플래너</title>
+        <meta name="description" content={ plannerForSeo.description || "한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." } />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={`피치플래너 - ${plannerInfo.name} 플래너`} />
-        <meta property="og:description" content={ plannerInfo.description || "한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." } />
-        <meta property="og:image" content={ plannerInfo.images.length > 0 ? plannerInfo.images[0] : undefined } />
+        <meta property="og:title" content={`피치플래너 - ${plannerForSeo.name} 플래너`} />
+        <meta property="og:description" content={ plannerForSeo.description || "한번뿐인 결혼식, 믿을 수 있는 웨딩플래너를 피치플래너에서 찾아보세요." } />
+        <meta property="og:image" content={ plannerForSeo.images.length > 0 ? plannerForSeo.images[0] : undefined } />
         <meta property="og:url" content="http://peachplanner.com/" />
       </Head>
       <Summary plannerInfo={ plannerInfo }>
@@ -74,6 +68,15 @@ export default () => {
     <></>
   );
 };
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const plannerId = context.params?.id as string;
+  const planner = await axios.get(`/planners/${plannerId}`)
+  return { props: { plannerForSeo: planner.data } };
+}
+
+
+
+export default page;
 
 const Container = styled.div`
   width: 860px;

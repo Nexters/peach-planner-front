@@ -26,8 +26,6 @@ interface ChatMessageModel {
   dateTime: string;
 }
 
-
-// TODO:: private route
 export default authOnly(() => {
   const router = useRouter();
 
@@ -57,88 +55,63 @@ export default authOnly(() => {
     reconnectDelay: 4000, //자동 재 연결
     heartbeatIncoming: 3000,
     heartbeatOutgoing: 3000,
-    onConnect: (receipt: IFrame) => {
-      console.log(receipt.body);
-    },
     onStompError: console.log,
     onWebSocketError: console.log,
   });
-  
-  const subscribeIds = new Set();
 
   useEffect(() => {
-    client.activate();
     if (user) {
       me.current = user;
+      client.onConnect = (receipt: IFrame) => {
+        client.subscribe(`/topic/chat/${user.id}`, (message: IFrame) => {
+          const chatMessage = JSON.parse(message.body) as ChatMessage;
+          if (currentRoom.current.id === chatMessage.roomId) {
+            setChatMessages((draft) => [
+              ...draft,
+              {
+                id: chatMessage.id,
+                sender: chatRoomParticipant.current?.[chatMessage.senderId],
+                senderId: chatMessage.senderId,
+                messageType: chatMessage.messageType,
+                senderType: chatMessage.senderType,
+                message: chatMessage.message,
+                dateTime: chatMessage.dateTime
+              } as ChatMessageModel
+            ]);
+          }
+        });
+      }
+      client.activate();
     }
   }, [user]);
 
   useEffect(() => {
-    const subscribeRooms = () => {
-      rooms?.forEach((room, index) => {
-        console.log(subscribeIds);
-        if (selected == -1 && room.id == currentRoom.current?.id) {
-          setSelected(index);
-          (async () => {
-            await Promise.all([
-              fetchChatMessages(currentRoom.current.id),
-              fetchChatRoomParticipant(currentRoom.current.id)
-            ]).then(([messages, roomParticipants]) => {
-              setChatMessages(
-                messages.map((message) => {
-                  return {
-                    id: message.id,
-                    sender: roomParticipants[message.senderId],
-                    senderId: message.senderId,
-                    messageType: message.messageType,
-                    senderType: message.senderType,
-                    message: message.message,
-                    dateTime: message.dateTime
-                  } as ChatMessageModel;
-                })
-              );
-              chatRoomParticipant.current = roomParticipants;
-            });
-          })();
-        }
-        console.log("Asdf", client.state, ActivationState.ACTIVE, client.state === ActivationState.ACTIVE);
-        if (subscribeIds.has(room.id)) return;
-
-        if (client.state === ActivationState.ACTIVE) {
-          console.log(`subscribe /topic/chat/${room.id}`)
-          client.subscribe(`/topic/chat/${room.id}`, (message: IFrame) => {
-            console.log(currentRoom.current.id);
-            if (currentRoom.current.id === room.id) {
-              const chatMessage = JSON.parse(message.body) as ChatMessage;
-              setChatMessages((draft) => [
-                ...draft,
-                {
-                  id: chatMessage.id,
-                  sender: chatRoomParticipant.current?.[chatMessage.senderId],
-                  senderId: chatMessage.senderId,
-                  messageType: chatMessage.messageType,
-                  senderType: chatMessage.senderType,
-                  message: chatMessage.message,
-                  dateTime: chatMessage.dateTime
-                } as ChatMessageModel
-              ]);
-              console.log(chatMessages);
-            }
+    rooms?.forEach((room, index) => {
+      if (selected == -1 && room.id == currentRoom.current?.id) {
+        setSelected(index);
+        (async () => {
+          await Promise.all([
+            fetchChatMessages(currentRoom.current.id),
+            fetchChatRoomParticipant(currentRoom.current.id)
+          ]).then(([messages, roomParticipants]) => {
+            setChatMessages(
+              messages.map((message) => {
+                return {
+                  id: message.id,
+                  sender: roomParticipants[message.senderId],
+                  senderId: message.senderId,
+                  messageType: message.messageType,
+                  senderType: message.senderType,
+                  message: message.message,
+                  dateTime: message.dateTime
+                } as ChatMessageModel;
+              })
+            );
+            chatRoomParticipant.current = roomParticipants;
           });
-        }
-
-        subscribeIds.add(room.id);
-      });
-    };
-
-    if (client.state === ActivationState.ACTIVE && client.webSocket?.readyState === StompSocketState.OPEN) {
-      subscribeRooms();
-    }
-    if (client.webSocket?.readyState !== StompSocketState.OPEN || client.state === ActivationState.INACTIVE) {
-      client.onConnect = (receipt: IFrame) => {
-        subscribeRooms();
-      };
-    }
+        })();
+      }
+    });
   }, [rooms]);
 
   useEffect(() => {
@@ -163,18 +136,18 @@ export default authOnly(() => {
           <Cell width="725px">
             <ChatRoomTitleLine>
               <Title height="20px" width="auto" fontSize="14px" lineHeight="20px" padding="24px 0 24px 16px">
-                {currentRoom.current.roomName}
+                { currentRoom.current.roomName }
               </Title>
               <PlannerProfileTitleDiv>
                 {
-                  chatRoomParticipant.current &&
-                  <PlannerProfileLink href={`/planner/${Object.values(chatRoomParticipant.current).filter(a => a.participantType == 'PLANNER')[0].participantTypeId}/detail`}>
+                  chatRoomParticipant.current && me.current?.userType == 'USER' &&
+                  <PlannerProfileLink href={ `/planner/${Object.values(chatRoomParticipant.current).filter(a => a.participantType == 'PLANNER')[0].participantTypeId}/detail` }>
                     <PlannerProfileCTA color="#000000">프로필 보기</PlannerProfileCTA>
                   </PlannerProfileLink>
                 }
                 {
                   me.current?.userType == 'PLANNER' && currentRoom.current.estimationId != null && currentRoom.current.chatRoomStatus == 'OPEN' &&
-                  <PlannerProfileEndConsult onClick={() => {
+                  <PlannerProfileEndConsult onClick={ () => {
                     axios
                       .post(
                         `/estimate/${currentRoom.current.estimationId}/complete`,
@@ -185,12 +158,12 @@ export default authOnly(() => {
                         currentRoom.current.chatRoomStatus = 'CLOSED';
                         forceUpdate();
                       });
-                  }}>
+                  } }>
                     <PlannerProfileCTA color="#FFFFFF">상담 완료하기</PlannerProfileCTA>
                   </PlannerProfileEndConsult>
                 }
                 {
-                  me.current?.userType == 'PLANNER' && currentRoom.current.estimationId != null && currentRoom.current.chatRoomStatus == 'CLOSED' &&
+                  currentRoom.current.estimationId != null && currentRoom.current.chatRoomStatus == 'CLOSED' &&
                   <PlannerProfileEndedConsult>
                     <PlannerProfileCTA color="#FFFFFF">완료됨</PlannerProfileCTA>
                   </PlannerProfileEndedConsult>
@@ -203,13 +176,12 @@ export default authOnly(() => {
         <Row height="60vh">
           <Cell width="375px">
             <CellContent height="600px">
-              {rooms && rooms.length > 0 ? (
+              { rooms && rooms.length > 0 ? (
                 rooms.map((room, index) => {
                   return (
                     <ChatCard
-                      selected={selected === index}
-                      onClick={() => {
-                        setSelected(index);
+                      selected={ selected === index }
+                      onClick={ () => {
                         currentRoom.current = rooms[index];
 
                         (async () => {
@@ -233,37 +205,38 @@ export default authOnly(() => {
                             );
                           });
                         })();
-                      }}
+                        setSelected(index);
+                      } }
                     >
-                      <ChatProfileImg src={room.profileImage || shape} />
+                      <ChatProfileImg src={ room.profileImage || shape } />
                       <ChatProfileText>
                         <ChatProfileLine>
-                          <ChatProfileName>{room.roomName}</ChatProfileName>
-                          <ChatLastMessageDate>{new Date(room.lastMessageDateTime).toLocaleDateString('ko-KR')}</ChatLastMessageDate>
+                          <ChatProfileName>{ room.roomName }</ChatProfileName>
+                          <ChatLastMessageDate>{ new Date(room.lastMessageDateTime).toLocaleDateString('ko-KR') }</ChatLastMessageDate>
                         </ChatProfileLine>
-                        <ChatLastMessage>{room.lastMessage}</ChatLastMessage>
+                        <ChatLastMessage>{ room.lastMessage }</ChatLastMessage>
                       </ChatProfileText>
                     </ChatCard>
                   );
                 })
               ) : (
-                <EmptyText flex={1} textAlign='center' padding='99px 0 0 0'>받은 메시지가 없습니다.</EmptyText>
-              )}
+                <EmptyText flex={ 1 } textAlign='center' padding='99px 0 0 0'>받은 메시지가 없습니다.</EmptyText>
+              ) }
             </CellContent>
           </Cell>
           <Cell width="725px">
-            <CellContent ref={messagesEndRef}>
-              {chatMessages && chatMessages.length > 0 ? (
-                <ChatMessageDate>{new Date(chatMessages[0].dateTime).toLocaleDateString('ko-KR')}</ChatMessageDate>
+            <CellContent ref={ messagesEndRef }>
+              { chatMessages && chatMessages.length > 0 ? (
+                <ChatMessageDate>{ new Date(chatMessages[0].dateTime).toLocaleDateString('ko-KR') }</ChatMessageDate>
               ) : (
                 <></>
-              )}
-              {chatMessages && chatMessages.length > 0 ? (
+              ) }
+              { chatMessages && chatMessages.length > 0 ? (
                 chatMessages.map((message) => {
                   if (message.messageType === 'SYSTEM_START') {
                     return (
                       <SystemMessageDiv>
-                        <SystemMessage>{message.message}</SystemMessage>
+                        <SystemMessage>{ message.message }</SystemMessage>
                       </SystemMessageDiv>
                     );
                   }
@@ -271,10 +244,10 @@ export default authOnly(() => {
                   if (message.messageType === 'SYSTEM_END') {
                     return (
                       <SystemMessageDiv>
-                        <SystemMessage>{me.current?.userType == 'PLANNER' ? message.message : '상담에 만족하셨나요? 플래너 리뷰를 작성하실 수 있습니다.'}</SystemMessage>
-                        {me.current?.userType != 'PLANNER' && <a onClick={() => { setShowReviewModal(true); }}>
+                        <SystemMessage>{ me.current?.userType == 'PLANNER' ? message.message : '상담에 만족하셨나요? 플래너 리뷰를 작성하실 수 있습니다.' }</SystemMessage>
+                        { me.current?.userType != 'PLANNER' && <a onClick={ () => { setShowReviewModal(true); } }>
                           <SystemMessageLink>플래너 리뷰 작성하기</SystemMessageLink>
-                        </a>}
+                        </a> }
                       </SystemMessageDiv>
                     );
                   }
@@ -285,26 +258,26 @@ export default authOnly(() => {
                       <MyChatMessageDiv>
                         <MyChatMessageCard>
                           <MyChatMessageTitle>
-                            <ChatMessageProfileName>{message.sender.name}</ChatMessageProfileName>
+                            <ChatMessageProfileName>{ message.sender.name }</ChatMessageProfileName>
                             <ChatMessageProfileDatetime>
-                              {new Date(message.dateTime).toLocaleTimeString('ko-KR', {
+                              { new Date(message.dateTime).toLocaleTimeString('ko-KR', {
                                 hour12: true,
                                 hour: '2-digit',
                                 minute: '2-digit'
-                              })}
+                              }) }
                             </ChatMessageProfileDatetime>
                           </MyChatMessageTitle>
                           {
                             message.messageType === 'FILE' ? (() => {
                               const fileList = JSON.parse(message.message);
                               console.log(fileList);
-                              return fileList.map((f: any) => f.mimeType.startsWith("image") ? <ChatMessageImage src={f.filePath} /> : <a href={f.filePath}>문서</a>);
+                              return fileList.map((f: any) => f.mimeType.startsWith("image") ? <ChatMessageImage src={ f.filePath } /> : <a href={ f.filePath }>문서</a>);
                             })()
-                            :
-                            <MyChatMessageText>{message.message}</MyChatMessageText>
+                              :
+                              <MyChatMessageText>{ message.message }</MyChatMessageText>
                           }
                         </MyChatMessageCard>
-                        <ChatMessageProfileImg src={message.sender.profileImage || shape} />
+                        <ChatMessageProfileImg src={ message.sender.profileImage || shape } />
                       </MyChatMessageDiv>
                     );
                   }
@@ -312,54 +285,53 @@ export default authOnly(() => {
 
                   return (
                     <ChatMessageDiv>
-                      <ChatMessageProfileImg src={message.sender.profileImage || shape} />
+                      <ChatMessageProfileImg src={ message.sender.profileImage || shape } />
                       <ChatMessageCard>
                         <ChatMessageTitle>
-                          <ChatMessageProfileName>{message.sender.name}</ChatMessageProfileName>
+                          <ChatMessageProfileName>{ message.sender.name }</ChatMessageProfileName>
                           <ChatMessageProfileDatetime>
-                            {new Date(message.dateTime).toLocaleTimeString('ko-KR', {
+                            { new Date(message.dateTime).toLocaleTimeString('ko-KR', {
                               hour12: true,
                               hour: '2-digit',
                               minute: '2-digit'
-                            })}
+                            }) }
                           </ChatMessageProfileDatetime>
                         </ChatMessageTitle>
                         {
-                            message.messageType === 'FILE' ? (() => {
-                              const fileList = JSON.parse(message.message);
-                              console.log(fileList);
-                              return fileList.map((f: any) => f.mimeType.startsWith("image") ? <ChatMessageImage src={f.filePath} /> : <a href={f.filePath}>문서</a>);
-                            })()
+                          message.messageType === 'FILE' ? (() => {
+                            const fileList = JSON.parse(message.message);
+                            return fileList.map((f: any) => f.mimeType.startsWith("image") ? <ChatMessageImage src={ f.filePath } /> : <a href={ f.filePath }>문서</a>);
+                          })()
                             :
-                            <ChatMessageText>{message.message}</ChatMessageText>
-                          }
+                            <ChatMessageText>{ message.message }</ChatMessageText>
+                        }
                       </ChatMessageCard>
                     </ChatMessageDiv>
                   );
                 })
               ) : (
-                <div style={{
+                <div style={ {
                   flex: 1,
                   textAlign: 'center',
                   padding: '139px 0 0 0',
-                }}>
-                  <BsFillChatFill size={20} color='#ced4da' />
+                } }>
+                  <BsFillChatFill size={ 20 } color='#ced4da' />
                   <EmptyText textAlign='center' padding='12px 0 0 0'>
                     진행중인 대화가 없습니다.
                   </EmptyText>
                 </div>
-              )}
+              ) }
             </CellContent>
             <ChatMessageBoxDiv>
               <ChatMessageClipDiv>
-                <input style={{ display: 'none' }} type='file' accept="image/*" id='chat-file-id' onChange={async (e: any) => {
+                <input style={ { display: 'none' } } type='file' accept="image/*" id='chat-file-id' onChange={ async (e: any) => {
                   const file = e.target.files[0];
                   await sendFile(currentRoom.current.id, file);
-                }} />
-                <label htmlFor='chat-file-id'><FontAwesomeIconDiv icon={faPaperclip} /></label>
+                } } />
+                <label htmlFor='chat-file-id'><FontAwesomeIconDiv icon={ faPaperclip } /></label>
               </ChatMessageClipDiv>
               <ChatMessageInputForm
-                onSubmit={(e) => {
+                onSubmit={ (e) => {
                   e.preventDefault();
 
                   sendMessage({
@@ -369,12 +341,12 @@ export default authOnly(() => {
                   });
                   setTypingMessage('');
                   return false;
-                }}
+                } }
               >
                 <ChatMessageInput
                   placeholder="메시지를 입력하세요."
-                  value={typingMessage}
-                  onChange={(e) => setTypingMessage(e.target.value)}
+                  value={ typingMessage }
+                  onChange={ (e) => setTypingMessage(e.target.value) }
                 ></ChatMessageInput>
               </ChatMessageInputForm>
             </ChatMessageBoxDiv>
@@ -382,9 +354,9 @@ export default authOnly(() => {
         </Row>
       </Page>
       <WriteReviewPopup
-        plannerId={chatRoomParticipant.current ? Object.values(chatRoomParticipant.current!).filter(a => a.participantType == 'PLANNER')[0].participantTypeId.toString() : ''}
-        showReviewModal={showReviewModal}
-        closeReviewModal={(() => { setShowReviewModal(false); })} />
+        plannerId={ chatRoomParticipant.current ? Object.values(chatRoomParticipant.current!).filter(a => a.participantType == 'PLANNER')[0].participantTypeId.toString() : '' }
+        showReviewModal={ showReviewModal }
+        closeReviewModal={ (() => { setShowReviewModal(false); }) } />
     </Container>
   );
 });

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export interface ChatMessage {
     id: number;
+    roomId: number;
     senderId: number;
     messageType: "SYSTEM_START" | "NORMAL" | "SYSTEM_END" | "FILE";
     senderType: "SYSTEM" | "USER" | "PLANNER";

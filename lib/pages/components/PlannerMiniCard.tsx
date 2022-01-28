@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { Content } from './style/style';
@@ -14,21 +15,20 @@ interface Props {
 }
 
 const PlannerMiniCard = ({ id, plannerId, size, image, plannerName, companyName, margin }: Props) => {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push(`/planner/${plannerId}/detail`);
-  };
   return (
-    <Container margin={margin} onClick={handleClick}>
-      <PlannerImage src={image} size={size}></PlannerImage>
-      <Content height="19px" width="auto" fontSize="13px" lineHeight="normal" color="#212529" margin="8px 0px 0px 0px">
-        {plannerName}
-      </Content>
-      <Content height="18px" width="auto" fontSize="12px" lineHeight="normal" color="#212529">
-        {companyName}
-      </Content>
-    </Container>
+    <Link href={ `/planner/${plannerId}/detail` }>
+      <a style={{textDecoration:'none'}}>
+        <Container margin={ margin }>
+          <PlannerImage src={ image } size={ size } />
+          <Content height="19px" width="auto" fontSize="13px" lineHeight="normal" color="#212529" margin="8px 0px 0px 0px">
+            { plannerName }
+          </Content>
+          <Content height="18px" width="auto" fontSize="12px" lineHeight="normal" color="#212529">
+            { companyName }
+          </Content>
+        </Container>
+      </a>
+    </Link>
   );
 };
 

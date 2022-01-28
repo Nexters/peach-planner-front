@@ -2,22 +2,23 @@ import React, { FC } from 'react';
 import { PartnerInfo } from 'lib/api/Planner';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface PartnerItemProps {
   data: PartnerInfo;
 }
 
 const PartnerItem: FC<PartnerItemProps> = ({ data }) => {
-  const router = useRouter();
-
   return (
-    <Container onClick={() => {
-      router.push(`/partner/${data.id}`);
-    }}>
-      <Image src={data.profilePath} />
-      <Title>{data.name}</Title>
-      <Detail>{data.location}</Detail>
-    </Container>
+    <Link href={ `/partner/${data.id}` }>
+      <a style={ { textDecoration: 'none' } }>
+        <Container>
+          <Image src={ data.profilePath } />
+          <Title>{ data.name }</Title>
+          <Detail>{ data.location }</Detail>
+        </Container>
+      </a>
+    </Link>
   );
 };
 
@@ -38,6 +39,7 @@ const Image = styled.img`
 const Title = styled.div`
   margin-top: 8px;
   font-size: 13px;
+  color: black;
 `;
 
 const Detail = styled.div`

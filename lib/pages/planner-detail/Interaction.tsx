@@ -11,10 +11,10 @@ import Image from 'next/image';
 
 interface Props {
   plannerInfo: Planner;
-  setPlannerInfo: React.Dispatch<React.SetStateAction<Planner | null>>;
+  postInteract: () => any;
 }
 
-const Interaction = ({ plannerInfo, setPlannerInfo }: Props) => {
+const Interaction = ({ plannerInfo, postInteract }: Props) => {
   const router = useRouter();
 
   const handleEstimateClick = () => {
@@ -22,15 +22,11 @@ const Interaction = ({ plannerInfo, setPlannerInfo }: Props) => {
     router.push(`/planner/${plannerId}/estimate`);
   };
 
-  const pickPlanner = () => {
+  const pickPlanner = async () => {
     handleNoneUser();
     const plannerId = plannerInfo.id;
-    pick({ targetCategoryType: 'PLANNER', targetId: plannerId, toBePick: !plannerInfo.postLiked } as PickRequest);
-    if (plannerInfo.postLiked) {
-      setPlannerInfo({ ...plannerInfo, likes: plannerInfo.likes - 1, postLiked: !plannerInfo.postLiked });
-    } else {
-      setPlannerInfo({ ...plannerInfo, likes: plannerInfo.likes + 1, postLiked: !plannerInfo.postLiked });
-    }
+    await pick({ targetCategoryType: 'PLANNER', targetId: plannerId, toBePick: !plannerInfo.postLiked } as PickRequest).then
+    (postInteract);
   };
 
   const handleNoneUser = () => {

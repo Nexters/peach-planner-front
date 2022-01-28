@@ -12,6 +12,7 @@ import PhotoDefault from 'public/assets/svg/img_photo_default.svg';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface PlannerProps {
   size: string;
@@ -31,13 +32,7 @@ interface PlannerProps {
 }
 
 const PlannerCard = (props: PlannerProps) => {
-  const router = useRouter();
   const userState = useUserTypeState();
-
-  const handlePlannerClick = () => {
-    const plannerId = props.id;
-    router.push(`/planner/${plannerId}/detail`);
-  };
 
   const handlePickClick = () => {
     const plannerId = props.id;
@@ -55,50 +50,53 @@ const PlannerCard = (props: PlannerProps) => {
   };
 
   return (
-    <FlexDiv width={props.size} direction="column" margin={props.margin}>
-      <PlannerImageContainer>
-        <PlannerImage
-          src={props.imagePath || PhotoDefault.src}
-          width={props.size}
-          height={props.size}
-          onClick={handlePlannerClick}
-        />
-        {userState[0] && userState[0] === 'USER' ? (
-          <PickBox onClick={handlePickClick}>
-            {props.postLiked ? <Image src={FillHeart} height='26px' width='26px'/> : <Image src={EmptyHeart} height='26px' width='26px'/>}
-          </PickBox>
-        ) : (
-          <></>
-        )}
-      </PlannerImageContainer>
-      <FlexDiv justify="flex-start" align="start" width={props.size} margin={'0'} direction="column">
-        <FlexDiv justify="flex-start" margin={'13px 0 0 0'}>
-          <HeartIcon children={<Image src={heart} height='13.29px' width='14.43px' />}/>
-          <Count>{props.heartCount}</Count>
-          <ReviewIcon children={<Image src={review} height='16px' width='16px'/>} />
-          <Count>{props.reviewCount}</Count>
+    <Link href={ `/planner/${props.id}/detail` }>
+      <a style={{textDecoration:'none'}}>
+        <FlexDiv width={ props.size } direction="column" margin={ props.margin } style={ { cursor: 'pointer' } }>
+          <PlannerImageContainer>
+            <PlannerImage
+              src={ props.imagePath || PhotoDefault.src }
+              width={ props.size }
+              height={ props.size }
+            />
+            { userState[0] && userState[0] === 'USER' ? (
+              <PickBox onClick={ handlePickClick }>
+                { props.postLiked ? <Image src={ FillHeart } height='26px' width='26px' /> : <Image src={ EmptyHeart } height='26px' width='26px' /> }
+              </PickBox>
+            ) : (
+              <></>
+            ) }
+          </PlannerImageContainer>
+          <FlexDiv justify="flex-start" align="start" width={ props.size } margin={ '0' } direction="column">
+            <FlexDiv justify="flex-start" margin={ '13px 0 0 0' }>
+              <HeartIcon children={ <Image src={ heart } height='13.29px' width='14.43px' /> } />
+              <Count>{ props.heartCount }</Count>
+              <ReviewIcon children={ <Image src={ review } height='16px' width='16px' /> } />
+              <Count>{ props.reviewCount }</Count>
+            </FlexDiv>
+            <FlexDiv justify="flex-start" margin={ '5px 0 0 0' }>
+              <Title>{ props.name }</Title>
+            </FlexDiv>
+            <FlexDiv justify="flex-start" margin={ '8px 0 0 0' }>
+              <DetailTitle>소속</DetailTitle>
+              <DetailContent>{ props.organization }</DetailContent>
+            </FlexDiv>
+            <FlexDiv justify="flex-start" margin={ '8px 0 0 0' }>
+              <DetailTitle>지역</DetailTitle>
+              <DetailContent>{ splitRegion(props.region) }</DetailContent>
+            </FlexDiv>
+          </FlexDiv>
+          <FlexDiv justify="flex-start" margin={ '12px 0 0 0' }>
+            { props.instagramLink ? (
+              <a href={ props.instagramLink }><SnsIcon children={ <Image src={ instagram } height='20px' width='20px' /> } /></a>
+            ) : (
+              <></>
+            ) }
+            { props.blogLink ? <a href={ props.blogLink }><SnsIcon children={ <Image src={ blog } height='20px' width='20px' /> } /></a> : <></> }
+          </FlexDiv>
         </FlexDiv>
-        <FlexDiv justify="flex-start" margin={'5px 0 0 0'}>
-          <Title onClick={handlePlannerClick}>{props.name}</Title>
-        </FlexDiv>
-        <FlexDiv justify="flex-start" margin={'8px 0 0 0'}>
-          <DetailTitle>소속</DetailTitle>
-          <DetailContent>{props.organization}</DetailContent>
-        </FlexDiv>
-        <FlexDiv justify="flex-start" margin={'8px 0 0 0'}>
-          <DetailTitle>지역</DetailTitle>
-          <DetailContent>{splitRegion(props.region)}</DetailContent>
-        </FlexDiv>
-      </FlexDiv>
-      <FlexDiv justify="flex-start" margin={'12px 0 0 0'}>
-        {props.instagramLink ? (
-          <a href={props.instagramLink}><SnsIcon children={<Image src={instagram} height='20px' width='20px' />} /></a>
-        ) : (
-          <></>
-        )}
-        {props.blogLink ? <a href={props.blogLink}><SnsIcon children={<Image src={blog} height='20px' width='20px' />} /></a> : <></>}
-      </FlexDiv>
-    </FlexDiv>
+      </a>
+    </Link>
   );
 };
 

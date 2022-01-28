@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect } from 'react';
 
 export const setAxiosDefaults = () => {
   axios.defaults.baseURL = 'https://api.peachplanner.com/api';
@@ -11,11 +12,9 @@ export const setAxiosDefaults = () => {
       return response;
     },
     (error) => {
-      console.log("xxxxzzx");
       if (!error.response || !error.response.status) {
         return Promise.reject(error);
       }
-      console.log("xxxxxx");
 
       const originalRequest = error.config;
       if (error.response.status === 400 && originalRequest.url === '/auth/token/refresh') {

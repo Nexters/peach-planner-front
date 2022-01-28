@@ -19,7 +19,6 @@ const UserInfoIcon: FC<UserInfoIconProps> = ({ imgSrc, title, detail, buttonText
   return (
     <Container>
       <Img src={imgSrc} />
-
       <InnerContainer>
         <Title detail={detail}>{title}</Title>
         {detail && (
@@ -69,6 +68,7 @@ const InnerContainer = styled.div`
 const Title = styled.div<{ detail: string | undefined }>`
   margin-bottom: ${({ detail }) => (detail ? '5px' : '10.5px')};
   font-size: 16px;
+  color: #495057;
 `;
 
 const Detail = styled.div`

@@ -26,10 +26,10 @@ export default authOnly(() => {
     {
       onSuccess: async (data) => {
         console.log('postRequestEstimate success', { data });
-        // router.push({
-        //   pathname: "/chats",
-        //   query: { state: data.chatRoom },
-        // });
+        router.push({
+          pathname: "/chats",
+          query: { roomId: data?.chatRoom?.id },
+        });
       },
       onError: async (err) => {
         console.log('postRequestEstimate err', { err });
@@ -91,7 +91,7 @@ export default authOnly(() => {
     if (res.status === 200) {
       router.push({
         pathname: "/chats",
-        query: { state: res.data },
+        query: { roomId: res.data?.id },
       });
     }
   };

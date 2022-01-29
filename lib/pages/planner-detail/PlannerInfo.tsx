@@ -34,7 +34,7 @@ const PlannerInfo: FC<PlannerInfoProps> = ({ plannerInfo }) => {
     if (res.status == 200) {
       router.push({
         pathname: "/chats",
-        query: { state: res.data },
+        query: { roomId: res.data?.id },
       });
     }
   };

@@ -3,40 +3,66 @@ import styled from 'styled-components';
 import PButton from 'lib/pages/components/PButton';
 import EstimateBox from 'lib/pages/planner-estimate/EstimateBox';
 import EstimateRow from 'lib/pages/planner-estimate/EstimateRow';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import { fetchPlanner } from 'lib/api/Planner';
 import axios from 'axios';
 import { getUserMe } from 'lib/api/User';
-import { FiSearch } from 'react-icons/fi';
 import { FiPaperclip } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import { authOnly } from 'lib/routes/withAuth';
-
+import { requestEstimate, RequestEstimateBodyParams } from 'lib/api/Estimate';
+import {MenuItem, FormControl} from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 export default authOnly(() => {
   const router = useRouter();
-
-
-  const { data: user } = useQuery(['getUser'], getUserMe);
-
+  const { data: user, isSuccess: isUserSuccess } = useQuery(['getUser'], getUserMe);
   const plannerId = router.query.id as string;
+  const { data: plannerInfo, isSuccess: isPlannerInfoSuccess } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
+  const postRequestEstimate = useMutation(
+    async (params: RequestEstimateBodyParams) => {
+      return await requestEstimate(params);
+    },
+    {
+      onSuccess: async (data) => {
+        console.log('postRequestEstimate success', { data });
+        // router.push({
+        //   pathname: "/chats",
+        //   query: { state: data.chatRoom },
+        // });
+      },
+      onError: async (err) => {
+        console.log('postRequestEstimate err', { err });
+      }
+    },
+  );
 
-  const { data: plannerInfo } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
+  useEffect(() => {
+    console.log({user})
+    setMyInfo({
+      ...myInfo,
+      name: user?.name,
+      phone: user?.tel,
+    })
+  },[user, isUserSuccess]);
+
+   useEffect(() => {
+    console.log({plannerInfo})
+  },[plannerInfo]);
 
   const [myInfo, setMyInfo] = useState({
-    name: user?.name ?? '',
-    phone: user?.tel ?? '',
-    email: user?.email ?? '',
+    name: user?.name,
+    phone: user?.tel,
     date: new Date().toISOString().split('T')[0],
     description: '',
   });
 
   const [companyInfo, setCompanyInfo] = useState({
-    name: '',
+    studio: '',
     dress: '',
     makeup: '',
-    weddingHall: true,
-    mobileInvitation: true
+    weddingHall: 'false',
+    weddingCard: 'false'
   });
 
   const handleMyInfoChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +71,14 @@ export default authOnly(() => {
 
   const handleCompanyInfoChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCompanyInfo({ ...companyInfo, [e.target.name]: e.target.value });
+  };
+
+  const handleWeddingHallChange = (e: SelectChangeEvent) => {
+    setCompanyInfo({...companyInfo, weddingHall: e.target.value});
+  };
+
+  const handleweddingCardChange = (e: SelectChangeEvent) => {
+    setCompanyInfo({...companyInfo, weddingCard: e.target.value});
   };
 
   const handleChat = async () => {
@@ -62,8 +96,33 @@ export default authOnly(() => {
     }
   };
 
+  const handlePostEstimate = async () => {
+    if (!companyInfo.studio || !companyInfo.dress || !companyInfo.makeup || !myInfo.description){
+      alert('필수값입니다.');
+      return;
+    }
+    postRequestEstimate.mutate(
+      {
+        plannerId: Number(plannerId),
+        userName: myInfo.name ?? '',
+        email: user?.email ?? '',
+        phoneNum: myInfo.phone ?? '',
+        weddingDate: myInfo.date,
+        studio: companyInfo.studio,
+        dress: companyInfo.dress,
+        makeup: companyInfo.makeup,
+        weddingHall:companyInfo.weddingHall === 'true' ? true : false,
+        weddingCard:companyInfo.weddingCard === 'true' ? true : false,
+        description: myInfo.description,
+        filePath: [],
+      }
+    );
+  };
+
   return (
     <Section>
+      {
+        isUserSuccess && isPlannerInfoSuccess && (
       <Container>
       <Title>견적 요청하기</Title>
       <EstimateBox>
@@ -94,10 +153,10 @@ export default authOnly(() => {
         </EstimateRow>
         <EstimateRow label="연락처">
         <InputBox width={230}>
-          <Input type="number" placeholder='연락처를 입력해주세요.' width={230} value={myInfo.phone} name="phone" onChange={handleMyInfoChange} />
+          <Input placeholder='연락처를 입력해주세요.' width={230} value={myInfo.phone} name="phone" onChange={handleMyInfoChange} />
           </InputBox>
         </EstimateRow>
-        <EstimateRow label="이메일">{myInfo.email}</EstimateRow>
+        <EstimateRow label="이메일">{user?.email}</EstimateRow>
         <EstimateRow label="예식 예정일">
         <InputBox width={230}>
           <Input type="date" value={myInfo.date} name="date" onChange={handleMyInfoChange} />
@@ -107,21 +166,116 @@ export default authOnly(() => {
       <EstimateBox title="업체 선택">
         <EstimateRow label="스튜디오">
           <InputBox>
-          <Input type="text" placeholder='원하시는 스튜디오 업체를 검색해 주세요.' value={companyInfo.name} name="name" onChange={handleCompanyInfoChange} />
-          <FiSearch color='#adb5bd'/>
+            <Input type="text" placeholder='원하시는 스튜디오 업체를 입력해 주세요.' value={companyInfo.studio} name="studio" onChange={handleCompanyInfoChange} />
           </InputBox>
         </EstimateRow>
         <EstimateRow label="드레스">
           <InputBox>
-          <Input type="text" placeholder='원하시는 드레스업체를 검색해 주세요.' value={companyInfo.dress} name="dress" onChange={handleCompanyInfoChange} />
-          <FiSearch color='#adb5bd'/>
+            <Input type="text" placeholder='원하시는 드레스업체를 입력해 주세요.' value={companyInfo.dress} name="dress" onChange={handleCompanyInfoChange} />
           </InputBox>
         </EstimateRow>
         <EstimateRow label="메이크업">
           <InputBox>
-            <Input type="text" placeholder='원하시는 메이크업 업체를 검색해 주세요.' value={companyInfo.makeup} name="makeup" onChange={handleCompanyInfoChange} />
-            <FiSearch color='#adb5bd'/>
+            <Input type="text" placeholder='원하시는 메이크업 업체를 입력해 주세요.' value={companyInfo.makeup} name="makeup" onChange={handleCompanyInfoChange} />
           </InputBox>
+        </EstimateRow>
+        <EstimateRow label="웨딩홀">
+          <FormControl sx={{ minWidth:400, minHeight:40, height:'40px' }}>
+            <Select
+              value={companyInfo.weddingHall}
+              onChange={handleWeddingHallChange}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+              sx={{
+                'fieldSet': {
+                  borderColor: '#ced4da !important',
+                  borderWidth:'0.5px !important',
+                },
+                '&.MuiInputBase-root': {
+                  height:'40px',
+                  color:'#212529',
+                  fontSize:'14px'
+                },
+                '&.Mui-focused': {
+                  '.MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#ced4da !important',
+                      borderWidth:'0.5px !important',
+                    }
+                  },
+                '&.MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#ced4da !important',
+                  borderWidth: '0.5px !important',
+                },
+               
+              }}
+            >
+              <MenuItem value={'false'} sx={{color:'#212529',
+                  fontSize:'14px',
+                  '&.MuiMenuItem-root': {
+                    '&.Mui-selected': {
+                      background:'#ffdeeb'
+                    }
+                  }
+                  }}>예약한 웨딩홀이 없어요.</MenuItem>
+              <MenuItem value={'true'} sx={{color:'#212529',
+                  fontSize:'14px',
+                  '&.MuiMenuItem-root': {
+                    '&.Mui-selected': {
+                      background:'#ffdeeb'
+                    }
+                  }
+                  }}>예약한 웨딩홀이 있어요.</MenuItem>
+            </Select>
+          </FormControl>
+        </EstimateRow>
+        <EstimateRow label="모바일청첩장">
+          <FormControl sx={{ minWidth:400, minHeight:40, height:'40px' }}>
+            <Select
+              value={companyInfo.weddingCard}
+              onChange={handleweddingCardChange}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+              sx={{
+                'fieldSet': {
+                  borderColor: '#ced4da !important',
+                  borderWidth:'0.5px !important',
+                },
+                '&.MuiInputBase-root': {
+                  height:'40px',
+                  color:'#212529',
+                  fontSize:'14px'
+                },
+                '&.Mui-focused': {
+                  '.MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#ced4da !important',
+                      borderWidth:'0.5px !important',
+                    }
+                  },
+                '&.MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#ced4da !important',
+                  borderWidth: '0.5px !important',
+                },
+               
+              }}
+            >
+              <MenuItem value={'false'} sx={{color:'#212529',
+                  fontSize:'14px',
+                  '&.MuiMenuItem-root': {
+                    '&.Mui-selected': {
+                      background:'#ffdeeb'
+                    }
+                  }
+                  }}>모바일청첩장이 필요하지 않아요.</MenuItem>
+              <MenuItem value={'true'} sx={{color:'#212529',
+                  fontSize:'14px',
+                  '&.MuiMenuItem-root': {
+                    '&.Mui-selected': {
+                      background:'#ffdeeb'
+                    }
+                  }
+                  }}>모바일청첩장이 필요해요.</MenuItem>
+            </Select>
+          </FormControl>
         </EstimateRow>
       </EstimateBox>
       <EstimateBox title="요청사항">
@@ -144,37 +298,13 @@ export default authOnly(() => {
       </EstimateBox>
       <EstimateBox>
         <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>        
-        <PButton color="pink" width='430px' height='44px' onClick={async () => {
-          const res = await axios.post(
-            `/estimate/upload`,
-            {
-              plannerId: plannerId,
-              userName: myInfo.name,
-              email: myInfo.email,
-              phoneNum: myInfo.phone,
-              weddingDate: myInfo.date,
-              studio: companyInfo.name,
-              dress: companyInfo.dress,
-              makeup: companyInfo.makeup,
-              // TODO:: Add below Input fields
-              weddingHall: false,
-              weddingCard: false,
-              description: '웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. ',
-              filePath: [],
-            },
-            { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
-          );
-          if (res.status == 200) {
-            router.push({
-              pathname: "/chats",
-              query: { state: res.data.chatRoom },
-            });
-          }
-        }}>견적 요청하기</PButton>
+        <PButton color="pink" width='430px' height='44px' onClick={handlePostEstimate}>견적 요청하기</PButton>
         <SaveButton>임시저장</SaveButton>
         </div>
       </EstimateBox>
       </Container>
+            )
+      }
     </Section>
   );
 });
@@ -228,6 +358,7 @@ const TextArea = styled.textarea`
   ::placeholder {
     color: #adb5bd;
   }
+ outline-color: #ffdeeb;
 `;
 
 const SaveButton = styled.button`

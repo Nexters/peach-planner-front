@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { FlexDiv } from 'lib/pages/components/style/style';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Props {
   title: string;
@@ -12,21 +13,25 @@ interface Props {
 
 const SmallRecommendPost = ({ title, content, img, tag, blogUrl }: Props) => {
   return (
-    <PostBox onClick={(e) => (window.location.href = blogUrl)}>
-      <FlexDiv margin={'0'} justify-content="flex-start" align="start" direction="column">
-        <Title>{title}</Title>
-        <Content>{content}</Content>
-        <FlexDiv margin={'0'} width={'auto'} direction="row">
-          <Tag>
-            <TagContent>{tag[0]}</TagContent>
-          </Tag>
-          <Tag>
-            <TagContent>{tag[1]}</TagContent>
-          </Tag>
-        </FlexDiv>
-      </FlexDiv>
-      <Img src={img} height='120px' width='120px'/>
-    </PostBox>
+    <Link href={ blogUrl }>
+      <a style={ { textDecoration: 'none' } }>
+        <PostBox>
+          <FlexDiv margin={ '0' } justify-content="flex-start" align="start" direction="column">
+            <Title>{ title }</Title>
+            <Content>{ content }</Content>
+            <FlexDiv margin={ '0' } width={ 'auto' } direction="row">
+              <Tag>
+                <TagContent>{ tag[0] }</TagContent>
+              </Tag>
+              <Tag>
+                <TagContent>{ tag[1] }</TagContent>
+              </Tag>
+            </FlexDiv>
+          </FlexDiv>
+          <Img src={ img } height='120px' width='120px' />
+        </PostBox>
+      </a>
+    </Link>
   );
 };
 

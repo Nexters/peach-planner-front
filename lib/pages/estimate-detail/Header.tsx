@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import LeftArrow from 'public/assets/svg/ic_arrow-left-line.svg';
 import { Title } from 'lib/pages/components/style/style';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 interface Props {
   isUser: boolean;
@@ -25,7 +26,7 @@ const Header = ({ isUser }: Props) => {
     <Container>
       <Back>
         <BackBody onClick={handleClick}>
-          <BackIcon src={LeftArrow} />
+          <Image src={LeftArrow} height='24px' width='24px'/>
           <Title height="27px" width="auto" fontSize="18px" color="#000" lineHeight="27px" margin="0px 0px 0px 8px">
             리뷰 목록으로 이동
           </Title>
@@ -60,8 +61,3 @@ const BackBody = styled.div`
 interface ImageProps {
   src: string;
 }
-
-const BackIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
-  height: 24px;
-  width: 24px;
-`;

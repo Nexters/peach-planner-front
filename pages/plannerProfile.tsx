@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import LeftArrow from 'public/assets/svg/ic_arrow-left-line.svg';
 import { useRouter } from 'next/router';
 import { authOnly } from 'lib/routes/withAuth';
+import Image from 'next/image';
 
 export default authOnly(() => {
   const router = useRouter();
@@ -48,7 +49,7 @@ export default authOnly(() => {
     <Container>
       <Back>
         <BackBody onClick={() => router.push('/plannerPage')}>
-          <BackImage src={LeftArrow}></BackImage>
+          <Image src={LeftArrow} width='24px' height='24px'/>
           <Content
             height="21px"
             width="auto"
@@ -93,13 +94,4 @@ const BackBody = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-`;
-
-interface ImageProps {
-  src: string;
-}
-
-const BackImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
-  height: 24px;
-  width: 24px;
 `;

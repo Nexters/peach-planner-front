@@ -26,7 +26,7 @@ export default authOnly(() => {
       <InnerContainer>
         {userTypeState === 'USER' ? <UserPageSideMenu /> : <PlannerPageSideMenu />}
         <ContentContainer>
-          <Header isUser={userTypeState === 'USER'}></Header>
+          <Header isUser={userTypeState === 'USER'} />
           {userTypeState === 'USER' ? (
             <Planner
               plannerImage={estimateDetail?.planner?.profileImage!}

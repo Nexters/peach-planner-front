@@ -1,6 +1,7 @@
 import { Content } from 'lib/pages/components/style/style';
 import styled from 'styled-components';
 import AddPhoto from 'public/assets/svg/ic_addphoto.svg';
+import Image from 'next/image';
 
 interface ImageUploadProps {
   id: string;
@@ -34,7 +35,10 @@ const ImageUpload = ({ id, previewImage, setPreviewImage, setImageFile }: ImageU
     <>
       <Input id={`${id}-file`} type="file" onChange={handleFile}/>
       <Label htmlFor={`${id}-file`}>
-        <Image src={previewImage ? previewImage : AddPhoto}/>
+        <div style={{
+          margin: '6px 0px 6px 0',
+          cursor: 'pointer',
+        }} children={<Image src={previewImage ? previewImage : AddPhoto} width='93px' height='93px' />} />
       </Label>
       <Content height={'36px'} width={'auto'} color={'#868E96'} fontSize={'12px'} lineHeight={'18px'} margin={'0'}>
         권장 크기 : 00 x 00 <br></br> jpg,jpeg,gif,png,bmp 형식의 이미지만 등록됩니다.
@@ -50,14 +54,3 @@ const Input = styled.input`
 `;
 
 const Label = styled.label``;
-
-interface ImageProps {
-  src: string;
-}
-
-const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
-  height: 93px;
-  width: 93px;
-  margin: 6px 0px 6px 0;
-  cursor: pointer;
-`;

@@ -7,6 +7,7 @@ import { useState } from 'react';
 import UserType from 'lib/pages/components/UserType';
 import { upload } from 'lib/api/Image';
 import { editUserProfileImage } from 'lib/api/User';
+import Image from 'next/image';
 
 interface Props {
   name: string | undefined;
@@ -34,10 +35,10 @@ const UserProfile = ({ name, type, profileImage }: Props) => {
       <Box>
         <FlexDiv margin="0" direction="column">
           <ProfileImageBox>
-            <ProfileImage src={previewImage ? previewImage : profileImage ? profileImage : AccountDefault}></ProfileImage>
+            <ProfileImage src={previewImage ? previewImage : profileImage ? profileImage : AccountDefault} />
             <Input id="profile-image-file" type="file" onChange={handleFile}></Input>
             <Label htmlFor="profile-image-file">
-              <EditIcon src={EditImage}></EditIcon>
+              <EditIcon children={<Image width='41px' height={'41px'} src={EditImage}/>}/>
             </Label>
           </ProfileImageBox>
           <Title height={'27px'} width={'auto'} fontSize={'18px'} lineHeight={'27px'} margin={'24px 0 7px 0'}>
@@ -89,10 +90,8 @@ const ProfileImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }
   position: relative;
 `;
 
-const EditIcon = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
+const EditIcon = styled.div`
   box-sizing: border-box;
-  height: 41px;
-  width: 41px;
   border: 1px solid #ffffff;
   background-color: #f1f3f5;
   border-radius: 100%;

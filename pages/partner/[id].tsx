@@ -45,7 +45,7 @@ export default ({ initialData }: { initialData: PartnerInfo }) => {
       <meta key="og:type" property="og:type" content="website" />
       <meta key="og:title" property="og:title" content={ `피치플래너 - ${initialData.name}` } />
       <meta key="og:image" property="og:image" content={ initialData.images?.length > 0 ? initialData.images[0] : undefined } />
-      <meta key="og:url" property="og:url" content={ `http://peachplanner.com/company/${initialData.id}` } />
+      <meta key="og:url" property="og:url" content={ `http://peachplanner.com/partner/${initialData.id}` } />
     </Head>
     <ImageOuterContainer>
       <ImageContainer>

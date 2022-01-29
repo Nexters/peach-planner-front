@@ -261,7 +261,7 @@ export default authOnly(() => {
                           <MyChatMessageTitle>
                             <ChatMessageProfileName>{ message.sender.name }</ChatMessageProfileName>
                             <ChatMessageProfileDatetime>
-                              { new Date(message.dateTime.getTime() + 9 * 60 * 60 * 1000).toLocaleTimeString('ko-KR', {
+                              { message.dateTime.toLocaleTimeString('ko-KR', {
                                 hour12: true,
                                 hour: '2-digit',
                                 minute: '2-digit',
@@ -292,7 +292,7 @@ export default authOnly(() => {
                         <ChatMessageTitle>
                           <ChatMessageProfileName>{ message.sender.name }</ChatMessageProfileName>
                           <ChatMessageProfileDatetime>
-                            { new Date(message.dateTime.getTime() + 9 * 60 * 60 * 1000).toLocaleTimeString('ko-KR', {
+                            { message.dateTime.toLocaleTimeString('ko-KR', {
                               hour12: true,
                               hour: '2-digit',
                               minute: '2-digit',

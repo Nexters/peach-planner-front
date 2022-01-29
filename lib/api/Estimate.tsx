@@ -27,6 +27,21 @@ export interface EstimateDetail {
   weddingHall: boolean;
 }
 
+export interface RequestEstimateBodyParams {
+  plannerId: number;
+  userName: string;
+  email: string;
+  phoneNum: string;
+  weddingDate: string;
+  studio: string;
+  dress: string;
+  makeup: string;
+  weddingHall: boolean;
+  weddingCard: boolean;
+  description: string;
+  filePath: string[];
+}
+
 export const fetchEstimateList = async () => {
   const { data } = await axios.get<Estimate[]>(`/estimate/list`, {
     headers: {
@@ -46,3 +61,16 @@ export const fetchEstimate = async ({ queryKey }: QueryFunctionContext) => {
   });
   return data;
 };
+
+export const requestEstimate = async (requestEstimateBody: RequestEstimateBodyParams) => {
+  try {
+    const {data} = await axios.post('/estimate/upload', requestEstimateBody, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  })
+  } catch (err){
+    console.log({err});
+  }
+}

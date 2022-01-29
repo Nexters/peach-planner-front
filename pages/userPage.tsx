@@ -13,6 +13,7 @@ import MyEstimate from 'lib/pages/user-mypage/Estimate';
 import { EmptyText } from 'lib/pages/components/EmptyText';
 import { useRouter } from 'next/router';
 import { authOnly } from 'lib/routes/withAuth';
+import Image from 'next/image';
 
 export default authOnly(() => {
   const router = useRouter();
@@ -42,8 +43,8 @@ export default authOnly(() => {
             <FlexDiv justify="flex-end">
               {picks?.pickLists?.length! > 6 ? (
                 <>
-                  <ArrowButton src={LeftArrow} onClick={slider?.slickPrev} margin="0 8px 0 0"></ArrowButton>
-                  <ArrowButton src={RightArrow} onClick={slider?.slickNext} margin="0"></ArrowButton>
+                  <ArrowButton children={<Image src={LeftArrow} />} onClick={slider?.slickPrev} margin="0 8px 0 0" />
+                  <ArrowButton children={<Image src={RightArrow} />} onClick={slider?.slickNext} margin="0" />
                 </>
               ) : (
                 <></>
@@ -206,15 +207,8 @@ const Slider = styled(Slick)`
   }
 `;
 
-interface ImageProps {
-  src: string;
-  margin: string;
-}
-
-const ArrowButton = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
-  margin: ${(props: ImageProps) => props.margin};
-  height: 24px;
-  width: 24px;
+const ArrowButton = styled.div<{margin: string}>`
+  margin: ${(props) => props.margin};
   cursor: pointer;
 `;
 

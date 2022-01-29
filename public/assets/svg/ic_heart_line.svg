@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 59.1 (101010) - https://sketch.com -->
+    <title>46D2127D-A124-477D-AAE0-6B84B5B5D9D6</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon" transform="translate(-944.000000, -63.000000)">
+            <g id="heart-line" transform="translate(944.000000, 63.000000)">
+                <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+                <path d="M12,22 L2.808,12.808 C0.628,10.24 0.742,6.388 3.161,3.968 C5.56724364,1.56180836 9.4220405,1.41876352 12,3.64 C14.5752332,1.41886095 18.4272577,1.55822643 20.8352472,3.9596575 C23.2432367,6.36108856 23.3931073,10.2127187 21.179,12.794 L12,22 Z M19.662,11.491 C21.1945142,9.70385806 21.0905134,7.03754247 19.4234506,5.37520145 C17.7563877,3.71286042 15.0897879,3.61642283 13.307,5.154 L12,6.282 L10.693,5.154 C8.91021211,3.61642283 6.24361226,3.71286042 4.57654942,5.37520145 C2.90948658,7.03754247 2.80548577,9.70385806 4.338,11.491 L4.452,11.623 L12,19.172 L19.548,11.623 L19.662,11.491 L19.662,11.491 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

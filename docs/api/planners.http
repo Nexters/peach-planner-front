@@ -1,0 +1,7 @@
+GET https://api.peachplanner.com/api/planners
+
+###
+
+GET https://api.peachplanner.com/api/planners/14
+
+###

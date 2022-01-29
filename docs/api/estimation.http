@@ -1,0 +1,36 @@
+POST https://api.peachplanner.com/api/auth/login
+Content-Type: application/json
+
+{
+    "loginType": "BASIC",
+    "password": 1234,
+    "userName": "test@test.com"
+}
+
+###
+POST https://api.peachplanner.com/api/estimate/upload
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MjI1ODYyOCwiZXhwIjoxNjQyMzQ1MDI4fQ.BJgp9hCg2P42XyckYcvpscKUufdI7KJiiu5wkh62eh3Ui1o5ttq-5WOrOu3OU9Fz
+
+{
+   "plannerId":"203",
+   "userName":"홍길동",
+   "email":"example@gmail.com",
+   "phoneNum":"01012341234",
+   "weddingDate":"2021-06-12",
+   "studio":"A스튜디오",
+   "dress":"A드레스",
+   "makeup":"A메이크업",
+   "weddingHall":false,
+   "weddingCard":false,
+   "description":"웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. ",
+   "filePath":[]
+}
+
+###
+GET https://api.peachplanner.com/api/estimate/list
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MjM1MDEwMCwiZXhwIjoxNjQyNDM2NTAwfQ.O6Yb-XmsVAzgCWGII283x55SETI3LCFQ6T9ec2bXieD3DavPmvEwCHOw0ezusaUg
+
+###
+GET https://api.peachplanner.com/api/estimate/54
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI5NCIsImlhdCI6MTY0MjM1MDEwMCwiZXhwIjoxNjQyNDM2NTAwfQ.O6Yb-XmsVAzgCWGII283x55SETI3LCFQ6T9ec2bXieD3DavPmvEwCHOw0ezusaUg

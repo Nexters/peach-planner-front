@@ -9,6 +9,7 @@ export interface User {
   profileImage: string;
   tel: string;
   nickName: string;
+  loginType?: 'BASIC' | string;
 }
 
 export const getUserMe = async () => {

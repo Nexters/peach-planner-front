@@ -18,6 +18,8 @@ async function generateSitemap() {
         'pages/**/*{.tsx,.js,.mdx}',
         '!pages/_*.js',
         '!pages/api',
+        '!pages/**/[id]*', // TODO:: dynamic page sitemap, https://cheatcode.co/tutorials/how-to-generate-a-dynamic-sitemap-with-next-js
+        '!pages/**/[id]/**', // TODO:: dynamic page sitemap, https://cheatcode.co/tutorials/how-to-generate-a-dynamic-sitemap-with-next-js
     ]);
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

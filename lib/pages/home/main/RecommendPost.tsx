@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { FlexDiv } from 'lib/pages/components/style/style';
 import SmallRecommendPost from './SmallRecommendPost';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const RecommendPost = () => {
   const { data: posts } = useQuery(['recommendedPost'], fetchRecommendedPost);
@@ -16,11 +17,13 @@ const RecommendPost = () => {
       <FlexDiv margin={ '0 0 0px 0' } justify="flex-start" align="start">
         {
           posts && posts.length > 0 ?
-            <PostBox onClick={ (e) => (window.location.href = posts ? posts[0].blogUrl : '') }>
-              <Img src={ posts ? posts[0].imageUrl : '' } height='385px' width='646px'/>
-              <PostTitle>{ posts ? posts[0].title : '' }</PostTitle>
-              <PostContent>{ posts ? posts[0].description : '' }</PostContent>
-            </PostBox> :
+            <Link href={ posts ? posts[0].blogUrl : '' } passHref>
+              <PostBox>
+                <Img src={ posts ? posts[0].imageUrl : '' } height='385px' width='646px' />
+                <PostTitle>{ posts ? posts[0].title : '' }</PostTitle>
+                <PostContent>{ posts ? posts[0].description : '' }</PostContent>
+              </PostBox>
+            </Link> :
             <></>
         }
         <FlexDiv margin={ '0' } width={ '414px' } justify="start" align="start" direction="column">
@@ -53,7 +56,7 @@ const RecommendPost = () => {
 
 export default RecommendPost;
 
-const PostBox = styled.div`
+const PostBox = styled.a`
   width: 100%;
   display: flex;
   justify-content: flex-start;

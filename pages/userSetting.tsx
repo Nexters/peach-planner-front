@@ -222,6 +222,7 @@ export default authOnly(() => {
                   </SettingButton> */}
                 </div>
               </SettingBox>
+              {user?.loginType === 'BASIC' && (
               <SettingBox>
                 <SettingTitle>비밀번호</SettingTitle>
                 <SettingInfo>피치플래너 로그인 시 사용하는 비밀번호를 변경할 수 있습니다.</SettingInfo>
@@ -229,6 +230,8 @@ export default authOnly(() => {
                   <SettingButtonText>비밀번호 변경</SettingButtonText>
                 </SettingButton>
               </SettingBox>
+              )
+              }
               <SettingBox>
                 <SettingButton onClick={handleDelete}>
                   <SettingButtonText>회원 탈퇴</SettingButtonText>

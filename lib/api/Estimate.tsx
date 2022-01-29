@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { QueryFunctionContext } from 'react-query';
+import { ChatRoom } from './ChatRoom';
 import { Planner } from './Planner';
 
 export interface Estimate {
@@ -25,6 +26,7 @@ export interface EstimateDetail {
   weddingCard: boolean;
   weddingDate: string;
   weddingHall: boolean;
+  chatRoom?: ChatRoom;
 }
 
 export interface RequestEstimateBodyParams {
@@ -64,13 +66,13 @@ export const fetchEstimate = async ({ queryKey }: QueryFunctionContext) => {
 
 export const requestEstimate = async (requestEstimateBody: RequestEstimateBodyParams) => {
   try {
-    const {data} = await axios.post('/estimate/upload', requestEstimateBody, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-    }
-  })
-  } catch (err){
-    console.log({err});
+    const { data } = await axios.post<EstimateDetail>('/estimate/upload', requestEstimateBody, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
+    return data;
+  } catch (err) {
+    console.log({ err });
   }
 }

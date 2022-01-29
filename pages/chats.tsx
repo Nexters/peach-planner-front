@@ -23,18 +23,18 @@ interface ChatMessageModel {
   messageType: 'SYSTEM_START' | 'NORMAL' | 'SYSTEM_END' | 'FILE';
   senderType: 'SYSTEM' | 'USER' | 'PLANNER';
   message: string;
-  dateTime: string;
+  dateTime: Date;
 }
 
 export default authOnly(() => {
   const router = useRouter();
 
-  const chatRoom = router.query.state;
+  const chatRoomId = +router.query.roomId;
 
   const [selected, setSelected] = React.useState(-1);
   const { data: rooms } = useQuery(['rooms'], fetchChatRooms);
   const { data: user } = useQuery(['getUser'], getUserMe);
-  const currentRoom = React.useRef<ChatRoom>((chatRoom || {}) as ChatRoom);
+  const currentRoom = React.useRef<ChatRoom>(({}) as ChatRoom);
   const [typingMessage, setTypingMessage] = React.useState('');
 
   const chatRoomParticipant = React.useRef<{ [key: string]: ChatRoomParticipant }>();
@@ -75,7 +75,7 @@ export default authOnly(() => {
                 messageType: chatMessage.messageType,
                 senderType: chatMessage.senderType,
                 message: chatMessage.message,
-                dateTime: chatMessage.dateTime
+                dateTime: new Date(chatMessage.dateTime),
               } as ChatMessageModel
             ]);
           }
@@ -87,7 +87,8 @@ export default authOnly(() => {
 
   useEffect(() => {
     rooms?.forEach((room, index) => {
-      if (selected == -1 && room.id == currentRoom.current?.id) {
+      if (selected == -1 && room.id == chatRoomId) { // currentRoom.current?.id) {
+        currentRoom.current = room;
         setSelected(index);
         (async () => {
           await Promise.all([
@@ -103,7 +104,7 @@ export default authOnly(() => {
                   messageType: message.messageType,
                   senderType: message.senderType,
                   message: message.message,
-                  dateTime: message.dateTime
+                  dateTime: new Date(message.dateTime),
                 } as ChatMessageModel;
               })
             );
@@ -199,7 +200,7 @@ export default authOnly(() => {
                                   messageType: message.messageType,
                                   senderType: message.senderType,
                                   message: message.message,
-                                  dateTime: message.dateTime
+                                  dateTime: new Date(message.dateTime),
                                 } as ChatMessageModel;
                               })
                             );
@@ -260,10 +261,11 @@ export default authOnly(() => {
                           <MyChatMessageTitle>
                             <ChatMessageProfileName>{ message.sender.name }</ChatMessageProfileName>
                             <ChatMessageProfileDatetime>
-                              { new Date(message.dateTime).toLocaleTimeString('ko-KR', {
+                              { new Date(message.dateTime.getTime() + 9 * 60 * 60 * 1000).toLocaleTimeString('ko-KR', {
                                 hour12: true,
                                 hour: '2-digit',
-                                minute: '2-digit'
+                                minute: '2-digit',
+                                timeZone: 'Asia/Seoul',
                               }) }
                             </ChatMessageProfileDatetime>
                           </MyChatMessageTitle>
@@ -290,10 +292,11 @@ export default authOnly(() => {
                         <ChatMessageTitle>
                           <ChatMessageProfileName>{ message.sender.name }</ChatMessageProfileName>
                           <ChatMessageProfileDatetime>
-                            { new Date(message.dateTime).toLocaleTimeString('ko-KR', {
+                            { new Date(message.dateTime.getTime() + 9 * 60 * 60 * 1000).toLocaleTimeString('ko-KR', {
                               hour12: true,
                               hour: '2-digit',
-                              minute: '2-digit'
+                              minute: '2-digit',
+                              timeZone: 'Asia/Seoul',
                             }) }
                           </ChatMessageProfileDatetime>
                         </ChatMessageTitle>

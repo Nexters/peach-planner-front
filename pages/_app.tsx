@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <GlobalStyle />
         <ThemeProvider theme={ theme }>
           {
-            pageProps.isMobile ? <Mobile /> :
+            // pageProps.isMobile ? <Mobile /> :
               <>
                 <Header />
                 <Component { ...pageProps } />

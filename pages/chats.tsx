@@ -5,14 +5,13 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { useQuery, QueryFunctionContext } from 'react-query';
 import { ChatRoom, ChatRoomParticipant, fetchChatRoomParticipant, fetchChatRooms } from 'lib/api/ChatRoom';
 import { ChatMessage, ChatMessageReq, fetchChatMessages, sendFile, sendMessage } from 'lib/api/ChatMessage';
-import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Client, Message, IFrame, ActivationState, StompSocketState } from '@stomp/stompjs';
 import { User, getUserMe } from 'lib/api/User';
 import axios from 'axios';
 import { WriteReviewPopup } from 'lib/pages/chat/WriteReviewPopup';
 import { EmptyText } from 'lib/pages/components/EmptyText';
 import { BsFillChatFill } from 'react-icons/bs';
+import { FaPaperclip } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { authOnly } from 'lib/routes/withAuth';
 
@@ -331,7 +330,7 @@ export default authOnly(() => {
                   const file = e.target.files[0];
                   await sendFile(currentRoom.current.id, file);
                 } } />
-                <label htmlFor='chat-file-id'><FontAwesomeIconDiv icon={ faPaperclip } /></label>
+                <label htmlFor='chat-file-id'><FaPaperclipDiv /></label>
               </ChatMessageClipDiv>
               <ChatMessageInputForm
                 onSubmit={ (e) => {
@@ -632,7 +631,7 @@ const ChatMessageInput = styled.input.attrs({ type: 'text' })`
   }
 `;
 
-const FontAwesomeIconDiv = styled(FontAwesomeIcon)`
+const FaPaperclipDiv = styled(FaPaperclip)`
   padding: 16px;
   background-color: #dddddddd;
   border-radius: 10px;

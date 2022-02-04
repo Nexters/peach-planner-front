@@ -21,8 +21,9 @@ export default () => {
       .then((res) => {
         const ACCESS_TOKEN = res.data.accessToken;
         localStorage.setItem('accessToken', ACCESS_TOKEN);
-        router.replace('/');
-        window.location.reload();
+        router.replace('/').then(() => {
+          window.location.reload();
+        });
         alert('로그인이 완료되었습니다.');
       })
       .catch((err) => {

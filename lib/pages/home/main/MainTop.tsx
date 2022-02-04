@@ -7,7 +7,7 @@ import Link from 'next/link';
 const MainTop = () => {
   return (
     <Link href="https://blog.naver.com/peachplanner/222637086412">
-      <a>
+      <a target={'_blank'}>
         <TopBox>
           {/* <FlexDiv margin={'97px 0 0 73px'} justify="flex-start" align="start" direction="column">
         <Title>

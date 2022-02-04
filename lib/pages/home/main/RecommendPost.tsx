@@ -62,6 +62,7 @@ const PostBox = styled.a`
   justify-content: flex-start;
   align-items: start;
   flex-direction: column;
+  text-decoration: none;
 
   cursor: pointer;
 `;

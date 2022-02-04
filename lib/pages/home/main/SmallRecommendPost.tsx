@@ -14,7 +14,7 @@ interface Props {
 const SmallRecommendPost = ({ title, content, img, tag, blogUrl }: Props) => {
   return (
     <Link href={ blogUrl }>
-      <a style={ { textDecoration: 'none' } }>
+      <a target='_blank' style={ { textDecoration: 'none' } }>
         <PostBox>
           <FlexDiv margin={ '0' } justify-content="flex-start" align="start" direction="column">
             <Title>{ title }</Title>

@@ -46,7 +46,7 @@ export default authOnly(() => {
 
 
   const client = new Client({
-    brokerURL: 'wss://api.peachplanner.com/websocket',
+    brokerURL: `wss://${process.env.NEXT_PUBLIC_API_URL}/websocket`,
     connectHeaders: {
       // Authorization: `Bearer ${localStorage.getItem('accessToken')}`
     },

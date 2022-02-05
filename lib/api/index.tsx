@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 export const setAxiosDefaults = () => {
-  axios.defaults.baseURL = 'https://api.peachplanner.com/api';
+  axios.defaults.baseURL = `https://${process.env.NEXT_PUBLIC_API_URL}/api`;
   axios.defaults.withCredentials = false;
   axios.defaults.headers.common['Content-Type'] = 'application/json';
   axios.defaults.headers.common['Accept'] = 'application/json;charset=utf-8';

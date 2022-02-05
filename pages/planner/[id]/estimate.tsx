@@ -7,28 +7,35 @@ import { useQuery, useMutation } from 'react-query';
 import { fetchPlanner } from 'lib/api/Planner';
 import axios from 'axios';
 import { getUserMe } from 'lib/api/User';
-import { FiPaperclip,FiSearch } from 'react-icons/fi';
+import { FiPaperclip, FiSearch } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import { authOnly } from 'lib/routes/withAuth';
 import { requestEstimate, RequestEstimateBodyParams } from 'lib/api/Estimate';
-import {MenuItem, FormControl} from '@mui/material';
+import { MenuItem, FormControl } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { fetchCompanies } from 'lib/api/Company';
-import {IoCloseOutline} from 'react-icons/io5';
+import { fetchPartnerCompanies } from 'lib/api/partners';
+import { IoCloseOutline } from 'react-icons/io5';
 import { upload } from 'lib/api/Image';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input/input';
+
+interface File {
+  fileName: string;
+  filePath: string;
+}
 
 export default authOnly(() => {
   const [studioName, setStudioName] = useState('');
   const [dressName, setDressName] = useState('');
   const [makeupName, setMakeupName] = useState('');
-  const [filePath, setFilePath] = useState<string[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
   const { data: user, isSuccess: isUserSuccess } = useQuery(['getUser'], getUserMe);
   const plannerId = router.query.id as string;
   const { data: plannerInfo, isSuccess: isPlannerInfoSuccess } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
-  const { data: studios } = useQuery(['studios', studioName], fetchCompanies, { enabled: studioName ? true : false });
-  const { data: dresses } = useQuery(['dresses', dressName], fetchCompanies, { enabled: dressName ? true : false });
-  const { data: makeups } = useQuery(['makeups', makeupName], fetchCompanies, { enabled: makeupName ? true : false });
+  const { data: studios } = useQuery([`partners/${studioName},STUDIO`, studioName, "STUDIO"], fetchPartnerCompanies, { enabled: studioName ? true : false });
+  const { data: dresses } = useQuery([`dresses/${studioName},DRESS`, dressName, "DRESS"], fetchPartnerCompanies, { enabled: dressName ? true : false });
+  const { data: makeups } = useQuery([`makeups/${studioName},MAKEUP`, makeupName, "MAKEUP"], fetchPartnerCompanies, { enabled: makeupName ? true : false });
   const postRequestEstimate = useMutation(
     async (params: RequestEstimateBodyParams) => {
       return await requestEstimate(params);
@@ -48,17 +55,17 @@ export default authOnly(() => {
   );
 
   useEffect(() => {
-    console.log({user})
+    console.log({ user })
     setMyInfo({
       ...myInfo,
       name: user?.name,
       phone: user?.tel,
     })
-  },[user, isUserSuccess]);
+  }, [user, isUserSuccess]);
 
-   useEffect(() => {
-    console.log({plannerInfo})
-  },[plannerInfo]);
+  useEffect(() => {
+    console.log({ plannerInfo })
+  }, [plannerInfo]);
 
   const [myInfo, setMyInfo] = useState({
     name: user?.name,
@@ -76,9 +83,9 @@ export default authOnly(() => {
   });
 
   const [searchInfo, setSearchInfo] = useState({
-    studio:'',
-    dress:'',
-    makeup:''
+    studio: '',
+    dress: '',
+    makeup: ''
   });
 
   const handleMyInfoChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -90,20 +97,20 @@ export default authOnly(() => {
   };
 
   const handleWeddingHallChange = (e: SelectChangeEvent) => {
-    setCompanyInfo({...companyInfo, weddingHall: e.target.value});
+    setCompanyInfo({ ...companyInfo, weddingHall: e.target.value });
   };
 
   const handleweddingCardChange = (e: SelectChangeEvent) => {
-    setCompanyInfo({...companyInfo, weddingCard: e.target.value});
+    setCompanyInfo({ ...companyInfo, weddingCard: e.target.value });
   };
 
   const handleChat = async () => {
     const res = await axios.post(
-        `/chat/rooms/${plannerId}`,
-        {},
-        { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
-      );
-    
+      `/chat/rooms/${plannerId}`,
+      {},
+      { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+    );
+
     if (res.status === 200) {
       router.push({
         pathname: "/chats",
@@ -113,7 +120,7 @@ export default authOnly(() => {
   };
 
   const handlePostEstimate = async () => {
-    if (!companyInfo.studio || !companyInfo.dress || !companyInfo.makeup || !myInfo.description){
+    if (!companyInfo.studio || !companyInfo.dress || !companyInfo.makeup || !myInfo.description) {
       alert('업체 선택과 요청사항은 필수값입니다.');
       return;
     }
@@ -127,10 +134,10 @@ export default authOnly(() => {
         studio: companyInfo.studio,
         dress: companyInfo.dress,
         makeup: companyInfo.makeup,
-        weddingHall:companyInfo.weddingHall === 'true' ? true : false,
-        weddingCard:companyInfo.weddingCard === 'true' ? true : false,
+        weddingHall: companyInfo.weddingHall === 'true' ? true : false,
+        weddingCard: companyInfo.weddingCard === 'true' ? true : false,
         description: myInfo.description,
-        filePath,
+        filePath: files.map(e => e.filePath),
       }
     );
   };
@@ -142,14 +149,14 @@ export default authOnly(() => {
     }
   };
 
-    const handleDress = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleDress = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchInfo.dress) {
       setDressName(searchInfo.dress);
     }
   };
 
-    const handleMakeup = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleMakeup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchInfo.makeup) {
       setMakeupName(searchInfo.makeup);
@@ -157,10 +164,10 @@ export default authOnly(() => {
   };
 
   useEffect(() => {
-    console.log({companyInfo})
-  },[companyInfo])
+    console.log({ companyInfo })
+  }, [companyInfo])
 
-  const handleCompanyInfo = (category:string,name:string) => {
+  const handleCompanyInfo = (category: string, name: string) => {
     setCompanyInfo({
       ...companyInfo,
       [category]: name
@@ -175,7 +182,10 @@ export default authOnly(() => {
     const file = e.target.files[0];
     if (file) {
       const s3ImageUrl: string = await upload(file);
-      setFilePath([s3ImageUrl]);
+      setFiles([...files, {
+        fileName: file.name,
+        filePath: s3ImageUrl,
+      }]);
     }
   };
 
@@ -183,244 +193,275 @@ export default authOnly(() => {
     <Section>
       {
         isUserSuccess && isPlannerInfoSuccess && (
-      <Container>
-      <Title>견적 요청하기</Title>
-      <EstimateBox>
-        <FlexContainer>
-          <div style={{display:'flex'}}>
-          <div style={{width:'140px', height:'140px', marginRight:'24px'}}>
-            <img src={plannerInfo?.profileImage} width={'100%'} height={'100%'} style={{borderRadius:'10px'}}/>
-          </div>
-          <div style={{marginTop:'8px'}}>
-            <PlannerName>{plannerInfo?.name ?? ''} 플래너</PlannerName>
-            <CompanyName>{plannerInfo?.company?.name ?? ''}</CompanyName>
-            <Description>견적 요청이 아닌 웨딩 계약서는 플래너에게 따로 요청해주세요.</Description>
-          </div>
-          </div>
-          <PButton width="107px" height="44px" margin='8px 0 0' onClick={handleChat}
-          otherBgColor='#f1f3f5' border='#f1f3f5'>
-            <ButtonText>
-            1:1 문의하기
-            </ButtonText>
-          </PButton>
-        </FlexContainer>
-      </EstimateBox>
-      <EstimateBox title="나의 정보">
-        <EstimateRow label="이름">
-          <InputBox width={230}>
-          <Input placeholder='이름을 입력해주세요.' value={myInfo.name} name="name" onChange={handleMyInfoChange} />
-          </InputBox>
-        </EstimateRow>
-        <EstimateRow label="연락처">
-        <InputBox width={230}>
-          <Input placeholder='연락처를 입력해주세요.' width={230} value={myInfo.phone} name="phone" onChange={handleMyInfoChange} />
-          </InputBox>
-        </EstimateRow>
-        <EstimateRow label="이메일">{user?.email}</EstimateRow>
-        <EstimateRow label="예식 예정일">
-        <InputBox width={230}>
-          <Input type="date" value={myInfo.date} name="date" onChange={handleMyInfoChange} />
-          </InputBox>
-        </EstimateRow>
-      </EstimateBox>
-      <EstimateBox title="업체 선택">
-        <EstimateRow label="스튜디오">
-          <form onSubmit={handleStudio}>
-          <InputBox>
-            <Input type="text" placeholder='원하시는 스튜디오 업체를 검색해 주세요.' value={searchInfo.studio} name="studio" onChange={handleSearchInfoChange} />
-            <FiSearch color='#adb5bd'/>
-          </InputBox>
-          </form>
-        </EstimateRow>
-        {studios &&  studios['companies'] && (
-          <div style={{marginLeft:'135px', marginBottom:'10px'}}>
-          {studios['companies']?.length>0 ? (
-          <SearchResultBox>
-            {studios['companies'].map((studio) => {
-              return (
-                <div key={studio.name} style={{marginTop:'5px', width:'400px', display:'flex', justifyContent:'space-between'}}>
-                  <span style={{cursor:'pointer',color:'#212529', fontSize:'14px'}} onClick={() => handleCompanyInfo('studio', studio.name)}>{studio.name}</span>
-                  <IoCloseOutline color='#495057'/>
+          <Container>
+            <Title>견적 요청하기</Title>
+            <EstimateBox>
+              <FlexContainer>
+                <div style={ { display: 'flex' } }>
+                  <div style={ { width: '140px', height: '140px', marginRight: '24px' } }>
+                    <img src={ plannerInfo?.profileImage } width={ '100%' } height={ '100%' } style={ { borderRadius: '10px' } } />
+                  </div>
+                  <div style={ { marginTop: '8px' } }>
+                    <PlannerName>{ plannerInfo?.name ?? '' } 플래너</PlannerName>
+                    <CompanyName>{ plannerInfo?.company?.name ?? '' }</CompanyName>
+                    <Description>견적 요청이 아닌 웨딩 계약서는 플래너에게 따로 요청해주세요.</Description>
+                  </div>
                 </div>
-              )
-            })}
-          </SearchResultBox>
-          ) : (<div style={{marginTop:'5px',color:'#212529', fontSize:'14px'}}>검색 결과가 없습니다.</div>)}
-          </div>
-        )}
-        <EstimateRow label="드레스">
-          <form onSubmit={handleDress}>
-          <InputBox>
-            <Input type="text" placeholder='원하시는 드레스업체를 검색해 주세요.' value={searchInfo.dress} name="dress" onChange={handleSearchInfoChange} />
-            <FiSearch color='#adb5bd'/>
-          </InputBox>
-          </form>
-        </EstimateRow>
-        {dresses &&  dresses['companies'] && (
-          <div  style={{marginLeft:'135px', marginBottom:'10px'}}>
-          {dresses['companies']?.length>0 ? (
-          <SearchResultBox>
-            {dresses['companies'].map((dress) => {
-              return (
-                <div key={dress.name} style={{marginTop:'5px', width:'400px', display:'flex', justifyContent:'space-between'}}>
-                  <span style={{cursor:'pointer',color:'#212529', fontSize:'14px'}} onClick={() => handleCompanyInfo('dress', dress.name)}>{dress.name}</span>
-                  <IoCloseOutline color='#495057'/>
+                <PButton width="107px" height="44px" margin='8px 0 0' onClick={ handleChat }
+                  otherBgColor='#f1f3f5' border='#f1f3f5'>
+                  <ButtonText>
+                    1:1 문의하기
+                  </ButtonText>
+                </PButton>
+              </FlexContainer>
+            </EstimateBox>
+            <EstimateBox title="나의 정보">
+              <EstimateRow label="이름">
+                <InputBox width={ 230 }>
+                  <Input placeholder='이름을 입력해주세요.' value={ myInfo.name } name="name" onChange={ handleMyInfoChange } />
+                </InputBox>
+              </EstimateRow>
+              <EstimateRow label="연락처">
+                <InputBox width={ 230 }>
+                  <PhoneInput
+                      country='KR'
+                      placeholder='연락처를 입력해주세요.'
+                      value={ myInfo.phone }
+                      onChange={ (value) => { 
+                        setMyInfo({ ...myInfo, phone: value?.toString() ?? '' });
+                      } }
+                      inputComponent={Input}
+                    />
+                  {/* <Input placeholder='연락처를 입력해주세요.' width={ 230 } value={ myInfo.phone } name="phone" onChange={ handleMyInfoChange } /> */}
+                </InputBox>
+              </EstimateRow>
+              <EstimateRow label="이메일">{ user?.email }</EstimateRow>
+              <EstimateRow label="예식 예정일">
+                <InputBox width={ 230 }>
+                  <Input type="date" value={ myInfo.date } name="date" onChange={ handleMyInfoChange } />
+                </InputBox>
+              </EstimateRow>
+            </EstimateBox>
+            <EstimateBox title="업체 선택">
+              <EstimateRow label="스튜디오">
+                <form onSubmit={ handleStudio }>
+                  <InputBox>
+                    <Input type="text" placeholder='원하시는 스튜디오 업체를 검색해 주세요.' value={ searchInfo.studio } name="studio" onChange={ handleSearchInfoChange } />
+                    <FiSearch color='#adb5bd' />
+                  </InputBox>
+                </form>
+              </EstimateRow>
+              { studios && studios.partners && (
+                <div style={ { marginLeft: '135px', marginBottom: '10px' } }>
+                  { studios.partners?.length > 0 ? (
+                    <SearchResultBox>
+                      { studios.partners.map((studio) => {
+                        return (
+                          <div key={ studio.name } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
+                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => handleCompanyInfo('studio', studio.name) }>{ studio.name }</span>
+                            <IoCloseOutline color='#495057' />
+                          </div>
+                        )
+                      }) }
+                    </SearchResultBox>
+                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>) }
                 </div>
-              )
-            })}
-          </SearchResultBox>
-          ) : (<div style={{marginTop:'5px',color:'#212529', fontSize:'14px'}}>검색 결과가 없습니다.</div>)}
-          </div>
-        )}
-        <EstimateRow label="메이크업">
-          <form onSubmit={handleMakeup}>
-          <InputBox>
-            <Input type="text" placeholder='원하시는 메이크업 업체를 검색해 주세요.' value={searchInfo.makeup} name="makeup" onChange={handleSearchInfoChange} />
-            <FiSearch color='#adb5bd'/>
-          </InputBox>
-          </form>
-        </EstimateRow>
-        {makeups &&  makeups['companies'] && (
-          <div style={{marginLeft:'135px', marginBottom:'10px'}}>
-          {makeups['companies']?.length>0 ? (
-          <SearchResultBox>
-            {makeups['companies'].map((makeup) => {
-              return (
-                <div key={makeup.name} style={{marginTop:'5px', width:'400px', display:'flex', justifyContent:'space-between'}}>
-                  <span style={{cursor:'pointer',color:'#212529', fontSize:'14px'}} onClick={() => handleCompanyInfo('makeup', makeup.name)}>{makeup.name}</span>
-                  <IoCloseOutline color='#495057'/>
+              ) }
+              <EstimateRow label="드레스">
+                <form onSubmit={ handleDress }>
+                  <InputBox>
+                    <Input type="text" placeholder='원하시는 드레스업체를 검색해 주세요.' value={ searchInfo.dress } name="dress" onChange={ handleSearchInfoChange } />
+                    <FiSearch color='#adb5bd' />
+                  </InputBox>
+                </form>
+              </EstimateRow>
+              { dresses && dresses.partners && (
+                <div style={ { marginLeft: '135px', marginBottom: '10px' } }>
+                  { dresses.partners?.length > 0 ? (
+                    <SearchResultBox>
+                      { dresses.partners.map((dress) => {
+                        return (
+                          <div key={ dress.name } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
+                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => handleCompanyInfo('dress', dress.name) }>{ dress.name }</span>
+                            <IoCloseOutline color='#495057' />
+                          </div>
+                        )
+                      }) }
+                    </SearchResultBox>
+                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>) }
                 </div>
-              )
-            })}
-          </SearchResultBox>
-          ) : (<div style={{marginTop:'5px',color:'#212529', fontSize:'14px'}}>검색 결과가 없습니다.</div>)}
-          </div>
-        )}
-        <EstimateRow label="웨딩홀">
-          <FormControl sx={{ minWidth:400, minHeight:40, height:'40px' }}>
-            <Select
-              value={companyInfo.weddingHall}
-              onChange={handleWeddingHallChange}
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-              sx={{
-                'fieldSet': {
-                  borderColor: '#ced4da !important',
-                  borderWidth:'0.5px !important',
-                },
-                '&.MuiInputBase-root': {
-                  height:'40px',
-                  color:'#212529',
-                  fontSize:'14px'
-                },
-                '&.Mui-focused': {
-                  '.MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ced4da !important',
-                      borderWidth:'0.5px !important',
-                    }
-                  },
-                '&.MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#ced4da !important',
-                  borderWidth: '0.5px !important',
-                },
-               
-              }}
-            >
-              <MenuItem value={'false'} sx={{color:'#212529',
-                  fontSize:'14px',
-                  '&.MuiMenuItem-root': {
-                    '&.Mui-selected': {
-                      background:'#ffdeeb'
-                    }
-                  }
-                  }}>예약한 웨딩홀이 없어요.</MenuItem>
-              <MenuItem value={'true'} sx={{color:'#212529',
-                  fontSize:'14px',
-                  '&.MuiMenuItem-root': {
-                    '&.Mui-selected': {
-                      background:'#ffdeeb'
-                    }
-                  }
-                  }}>예약한 웨딩홀이 있어요.</MenuItem>
-            </Select>
-          </FormControl>
-        </EstimateRow>
-        <EstimateRow label="모바일청첩장">
-          <FormControl sx={{ minWidth:400, minHeight:40, height:'40px' }}>
-            <Select
-              value={companyInfo.weddingCard}
-              onChange={handleweddingCardChange}
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-              sx={{
-                'fieldSet': {
-                  borderColor: '#ced4da !important',
-                  borderWidth:'0.5px !important',
-                },
-                '&.MuiInputBase-root': {
-                  height:'40px',
-                  color:'#212529',
-                  fontSize:'14px'
-                },
-                '&.Mui-focused': {
-                  '.MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ced4da !important',
-                      borderWidth:'0.5px !important',
-                    }
-                  },
-                '&.MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#ced4da !important',
-                  borderWidth: '0.5px !important',
-                },
-               
-              }}
-            >
-              <MenuItem value={'false'} sx={{color:'#212529',
-                  fontSize:'14px',
-                  '&.MuiMenuItem-root': {
-                    '&.Mui-selected': {
-                      background:'#ffdeeb'
-                    }
-                  }
-                  }}>모바일청첩장이 필요하지 않아요.</MenuItem>
-              <MenuItem value={'true'} sx={{color:'#212529',
-                  fontSize:'14px',
-                  '&.MuiMenuItem-root': {
-                    '&.Mui-selected': {
-                      background:'#ffdeeb'
-                    }
-                  }
-                  }}>모바일청첩장이 필요해요.</MenuItem>
-            </Select>
-          </FormControl>
-        </EstimateRow>
-      </EstimateBox>
-      <EstimateBox title="요청사항">
-        <TextArea value={myInfo.description} placeholder="웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. " name="description" onChange={(e) => {
-          setMyInfo({ ...myInfo, [e.target.name]: e.target.value });
-        }} />
-      </EstimateBox>
-      <EstimateBox title="첨부파일">
-        <Description>웨딩플래너가 참고할 사진 등이 있으시다면 업로드해 주세요.</Description>
-        <FileBox>
-          <label htmlFor='uploadFile'>
-            <FiPaperclip color='#495057'/>
-            <span>파일올리기</span>
-          </label>
-        <input type='file' name='uploadFile' id='uploadFile'
-        accept="image/jpg, image/png, image/jpeg"
-        onChange={handleFile}
-        />
-        </FileBox>
-      </EstimateBox>
-      <EstimateBox>
-        <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>        
-        <PButton color="pink" width='430px' height='44px' onClick={handlePostEstimate}>견적 요청하기</PButton>
-        <SaveButton>임시저장</SaveButton>
-        </div>
-      </EstimateBox>
-      </Container>
-            )
+              ) }
+              <EstimateRow label="메이크업">
+                <form onSubmit={ handleMakeup }>
+                  <InputBox>
+                    <Input type="text" placeholder='원하시는 메이크업 업체를 검색해 주세요.' value={ searchInfo.makeup } name="makeup" onChange={ handleSearchInfoChange } />
+                    <FiSearch color='#adb5bd' />
+                  </InputBox>
+                </form>
+              </EstimateRow>
+              { makeups && makeups.partners && (
+                <div style={ { marginLeft: '135px', marginBottom: '10px' } }>
+                  { makeups.partners?.length > 0 ? (
+                    <SearchResultBox>
+                      { makeups.partners.map((makeup) => {
+                        return (
+                          <div key={ makeup.name } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
+                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => handleCompanyInfo('makeup', makeup.name) }>{ makeup.name }</span>
+                            <IoCloseOutline color='#495057' />
+                          </div>
+                        )
+                      }) }
+                    </SearchResultBox>
+                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>) }
+                </div>
+              ) }
+              <EstimateRow label="웨딩홀">
+                <FormControl sx={ { minWidth: 400, minHeight: 40, height: '40px' } }>
+                  <Select
+                    value={ companyInfo.weddingHall }
+                    onChange={ handleWeddingHallChange }
+                    displayEmpty
+                    inputProps={ { "aria-label": "Without label" } }
+                    sx={ {
+                      'fieldSet': {
+                        borderColor: '#ced4da !important',
+                        borderWidth: '0.5px !important',
+                      },
+                      '&.MuiInputBase-root': {
+                        height: '40px',
+                        color: '#212529',
+                        fontSize: '14px'
+                      },
+                      '&.Mui-focused': {
+                        '.MuiOutlinedInput-notchedOutline': {
+                          borderColor: '#ced4da !important',
+                          borderWidth: '0.5px !important',
+                        }
+                      },
+                      '&.MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#ced4da !important',
+                        borderWidth: '0.5px !important',
+                      },
+
+                    } }
+                  >
+                    <MenuItem value={ 'false' } sx={ {
+                      color: '#212529',
+                      fontSize: '14px',
+                      '&.MuiMenuItem-root': {
+                        '&.Mui-selected': {
+                          background: '#ffdeeb'
+                        }
+                      }
+                    } }>예약한 웨딩홀이 없어요.</MenuItem>
+                    <MenuItem value={ 'true' } sx={ {
+                      color: '#212529',
+                      fontSize: '14px',
+                      '&.MuiMenuItem-root': {
+                        '&.Mui-selected': {
+                          background: '#ffdeeb'
+                        }
+                      }
+                    } }>예약한 웨딩홀이 있어요.</MenuItem>
+                  </Select>
+                </FormControl>
+              </EstimateRow>
+              <EstimateRow label="모바일청첩장">
+                <FormControl sx={ { minWidth: 400, minHeight: 40, height: '40px' } }>
+                  <Select
+                    value={ companyInfo.weddingCard }
+                    onChange={ handleweddingCardChange }
+                    displayEmpty
+                    inputProps={ { "aria-label": "Without label" } }
+                    sx={ {
+                      'fieldSet': {
+                        borderColor: '#ced4da !important',
+                        borderWidth: '0.5px !important',
+                      },
+                      '&.MuiInputBase-root': {
+                        height: '40px',
+                        color: '#212529',
+                        fontSize: '14px'
+                      },
+                      '&.Mui-focused': {
+                        '.MuiOutlinedInput-notchedOutline': {
+                          borderColor: '#ced4da !important',
+                          borderWidth: '0.5px !important',
+                        }
+                      },
+                      '&.MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#ced4da !important',
+                        borderWidth: '0.5px !important',
+                      },
+
+                    } }
+                  >
+                    <MenuItem value={ 'false' } sx={ {
+                      color: '#212529',
+                      fontSize: '14px',
+                      '&.MuiMenuItem-root': {
+                        '&.Mui-selected': {
+                          background: '#ffdeeb'
+                        }
+                      }
+                    } }>모바일청첩장이 필요하지 않아요.</MenuItem>
+                    <MenuItem value={ 'true' } sx={ {
+                      color: '#212529',
+                      fontSize: '14px',
+                      '&.MuiMenuItem-root': {
+                        '&.Mui-selected': {
+                          background: '#ffdeeb'
+                        }
+                      }
+                    } }>모바일청첩장이 필요해요.</MenuItem>
+                  </Select>
+                </FormControl>
+              </EstimateRow>
+            </EstimateBox>
+            <EstimateBox title="요청사항">
+              <TextArea value={ myInfo.description } placeholder="웨딩플래너에게 전달할 요청사항을 간단하게 작성해 주세요. " name="description" onChange={ (e) => {
+                setMyInfo({ ...myInfo, [e.target.name]: e.target.value });
+              } } />
+            </EstimateBox>
+            <EstimateBox title="첨부파일">
+              <Description>웨딩플래너가 참고할 사진 등이 있으시다면 업로드해 주세요.</Description>
+                <div style={ { marginTop: '21px', marginBottom: '19px' } }>
+                  { files?.length > 0 ? (
+                    <SearchResultBox>
+                      { files.map((file, index) => {
+                        return (
+                          <div key={ file.fileName } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
+                            <a target={'_blank'} href={file.filePath}>
+                              <span style={ { color: '#212529', fontSize: '14px' } } >{ file.fileName }</span>
+                            </a>
+                            <IoCloseOutline color='#495057' style={{ cursor: 'pointer' }} onClick={() => {
+                              setFiles(files.filter((e, i) => i !== index));
+                            }}/>
+                          </div>
+                        )
+                      }) }
+                    </SearchResultBox>
+                  ) : <></> }
+                </div>
+              <FileBox>
+                <label htmlFor='uploadFile'>
+                  <FiPaperclip color='#495057' />
+                  <span>파일올리기</span>
+                </label>
+                <input type='file' name='uploadFile' id='uploadFile'
+                  accept="image/jpg, image/png, image/jpeg"
+                  onChange={ handleFile }
+                />
+              </FileBox>
+            </EstimateBox>
+            <EstimateBox>
+              <div style={ { display: 'flex', flexDirection: 'column', alignItems: 'center' } }>
+                <PButton color="pink" width='430px' height='44px' onClick={ handlePostEstimate }>견적 요청하기</PButton>
+                {/* TODO:: <SaveButton>임시저장</SaveButton> */ }
+              </div>
+            </EstimateBox>
+          </Container>
+        )
       }
     </Section>
   );
@@ -429,8 +470,8 @@ export default authOnly(() => {
 const Section = styled.div`
   background-color: #f8f9fa;
   `;
-  
-  const Container = styled.div`
+
+const Container = styled.div`
   display:flex;
   flex-direction:column;
   align-items: center;
@@ -502,7 +543,7 @@ text-align: center;
 color: #343a40;
 `;
 
-const InputBox = styled.div<{width?:number}>`
+const InputBox = styled.div<{ width?: number }>`
 box-sizing: border-box;
 width: ${props => props.width || 400}px;
 height: 40px;

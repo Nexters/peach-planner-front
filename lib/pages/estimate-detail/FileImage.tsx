@@ -27,6 +27,7 @@ const Image = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`
   height: 140px;
   width: 140px;
   margin: 0px 0px 6px 0px;
+  object-fit: cover;
 `;
 
 const Content = styled.div`

@@ -23,7 +23,7 @@ const SearchInput = ({ height, width, placeholder, handleInput, onFocus, value, 
         value={value}
         defaultValue={defaultValue}
       />
-      <SearchIcon src={SearchIconSvg} />
+      <SearchIcon src={SearchIconSvg.src} />
     </SearchBox>
   );
 };

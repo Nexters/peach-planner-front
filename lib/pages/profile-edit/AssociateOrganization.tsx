@@ -126,20 +126,6 @@ const AssociateOrganization = ({ id, name, type, margin, stores, setStores }: Pr
 
 export default AssociateOrganization;
 
-const Input = styled.input`
-  box-sizing: border-box;
-  height: 41px;
-  width: 421px;
-  border: 1px solid #ced4da;
-  padding: 13px;
-  border-radius: 3px;
-  ::placeholder,
-  ::-webkit-input-placeholder {
-    color: ADB5BD;
-    font-size: 13px;
-  }
-`;
-
 const OrganizationLists = styled.div`
   display: flex;
   justify-content: flex-start;

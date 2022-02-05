@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PButton from 'lib/pages/components/PButton';
 import EstimateBox from 'lib/pages/planner-estimate/EstimateBox';
@@ -7,18 +7,28 @@ import { useQuery, useMutation } from 'react-query';
 import { fetchPlanner } from 'lib/api/Planner';
 import axios from 'axios';
 import { getUserMe } from 'lib/api/User';
-import { FiPaperclip } from 'react-icons/fi';
+import { FiPaperclip,FiSearch } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import { authOnly } from 'lib/routes/withAuth';
 import { requestEstimate, RequestEstimateBodyParams } from 'lib/api/Estimate';
 import {MenuItem, FormControl} from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { fetchCompanies } from 'lib/api/Company';
+import {IoCloseOutline} from 'react-icons/io5';
+import { upload } from 'lib/api/Image';
 
 export default authOnly(() => {
+  const [studioName, setStudioName] = useState('');
+  const [dressName, setDressName] = useState('');
+  const [makeupName, setMakeupName] = useState('');
+  const [filePath, setFilePath] = useState<string[]>([]);
   const router = useRouter();
   const { data: user, isSuccess: isUserSuccess } = useQuery(['getUser'], getUserMe);
   const plannerId = router.query.id as string;
   const { data: plannerInfo, isSuccess: isPlannerInfoSuccess } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
+  const { data: studios } = useQuery(['studios', studioName], fetchCompanies, { enabled: studioName ? true : false });
+  const { data: dresses } = useQuery(['dresses', dressName], fetchCompanies, { enabled: dressName ? true : false });
+  const { data: makeups } = useQuery(['makeups', makeupName], fetchCompanies, { enabled: makeupName ? true : false });
   const postRequestEstimate = useMutation(
     async (params: RequestEstimateBodyParams) => {
       return await requestEstimate(params);
@@ -65,12 +75,18 @@ export default authOnly(() => {
     weddingCard: 'false'
   });
 
+  const [searchInfo, setSearchInfo] = useState({
+    studio:'',
+    dress:'',
+    makeup:''
+  });
+
   const handleMyInfoChange = (e: ChangeEvent<HTMLInputElement>) => {
     setMyInfo({ ...myInfo, [e.target.name]: e.target.value });
   };
 
-  const handleCompanyInfoChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCompanyInfo({ ...companyInfo, [e.target.name]: e.target.value });
+  const handleSearchInfoChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchInfo({ ...searchInfo, [e.target.name]: e.target.value });
   };
 
   const handleWeddingHallChange = (e: SelectChangeEvent) => {
@@ -98,7 +114,7 @@ export default authOnly(() => {
 
   const handlePostEstimate = async () => {
     if (!companyInfo.studio || !companyInfo.dress || !companyInfo.makeup || !myInfo.description){
-      alert('필수값입니다.');
+      alert('업체 선택과 요청사항은 필수값입니다.');
       return;
     }
     postRequestEstimate.mutate(
@@ -114,9 +130,53 @@ export default authOnly(() => {
         weddingHall:companyInfo.weddingHall === 'true' ? true : false,
         weddingCard:companyInfo.weddingCard === 'true' ? true : false,
         description: myInfo.description,
-        filePath: [],
+        filePath,
       }
     );
+  };
+
+  const handleStudio = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchInfo.studio) {
+      setStudioName(searchInfo.studio);
+    }
+  };
+
+    const handleDress = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchInfo.dress) {
+      setDressName(searchInfo.dress);
+    }
+  };
+
+    const handleMakeup = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchInfo.makeup) {
+      setMakeupName(searchInfo.makeup);
+    }
+  };
+
+  useEffect(() => {
+    console.log({companyInfo})
+  },[companyInfo])
+
+  const handleCompanyInfo = (category:string,name:string) => {
+    setCompanyInfo({
+      ...companyInfo,
+      [category]: name
+    });
+    setSearchInfo({
+      ...searchInfo,
+      [category]: name
+    });
+  }
+
+  const handleFile = async (e: any) => {
+    const file = e.target.files[0];
+    if (file) {
+      const s3ImageUrl: string = await upload(file);
+      setFilePath([s3ImageUrl]);
+    }
   };
 
   return (
@@ -165,20 +225,77 @@ export default authOnly(() => {
       </EstimateBox>
       <EstimateBox title="업체 선택">
         <EstimateRow label="스튜디오">
+          <form onSubmit={handleStudio}>
           <InputBox>
-            <Input type="text" placeholder='원하시는 스튜디오 업체를 입력해 주세요.' value={companyInfo.studio} name="studio" onChange={handleCompanyInfoChange} />
+            <Input type="text" placeholder='원하시는 스튜디오 업체를 검색해 주세요.' value={searchInfo.studio} name="studio" onChange={handleSearchInfoChange} />
+            <FiSearch color='#adb5bd'/>
           </InputBox>
+          </form>
         </EstimateRow>
+        {studios &&  studios['companies'] && (
+          <div style={{marginLeft:'135px', marginBottom:'10px'}}>
+          {studios['companies']?.length>0 ? (
+          <SearchResultBox>
+            {studios['companies'].map((studio) => {
+              return (
+                <div key={studio.name} style={{marginTop:'5px', width:'400px', display:'flex', justifyContent:'space-between'}}>
+                  <span style={{cursor:'pointer',color:'#212529', fontSize:'14px'}} onClick={() => handleCompanyInfo('studio', studio.name)}>{studio.name}</span>
+                  <IoCloseOutline color='#495057'/>
+                </div>
+              )
+            })}
+          </SearchResultBox>
+          ) : (<div style={{marginTop:'5px',color:'#212529', fontSize:'14px'}}>검색 결과가 없습니다.</div>)}
+          </div>
+        )}
         <EstimateRow label="드레스">
+          <form onSubmit={handleDress}>
           <InputBox>
-            <Input type="text" placeholder='원하시는 드레스업체를 입력해 주세요.' value={companyInfo.dress} name="dress" onChange={handleCompanyInfoChange} />
+            <Input type="text" placeholder='원하시는 드레스업체를 검색해 주세요.' value={searchInfo.dress} name="dress" onChange={handleSearchInfoChange} />
+            <FiSearch color='#adb5bd'/>
           </InputBox>
+          </form>
         </EstimateRow>
+        {dresses &&  dresses['companies'] && (
+          <div  style={{marginLeft:'135px', marginBottom:'10px'}}>
+          {dresses['companies']?.length>0 ? (
+          <SearchResultBox>
+            {dresses['companies'].map((dress) => {
+              return (
+                <div key={dress.name} style={{marginTop:'5px', width:'400px', display:'flex', justifyContent:'space-between'}}>
+                  <span style={{cursor:'pointer',color:'#212529', fontSize:'14px'}} onClick={() => handleCompanyInfo('dress', dress.name)}>{dress.name}</span>
+                  <IoCloseOutline color='#495057'/>
+                </div>
+              )
+            })}
+          </SearchResultBox>
+          ) : (<div style={{marginTop:'5px',color:'#212529', fontSize:'14px'}}>검색 결과가 없습니다.</div>)}
+          </div>
+        )}
         <EstimateRow label="메이크업">
+          <form onSubmit={handleMakeup}>
           <InputBox>
-            <Input type="text" placeholder='원하시는 메이크업 업체를 입력해 주세요.' value={companyInfo.makeup} name="makeup" onChange={handleCompanyInfoChange} />
+            <Input type="text" placeholder='원하시는 메이크업 업체를 검색해 주세요.' value={searchInfo.makeup} name="makeup" onChange={handleSearchInfoChange} />
+            <FiSearch color='#adb5bd'/>
           </InputBox>
+          </form>
         </EstimateRow>
+        {makeups &&  makeups['companies'] && (
+          <div style={{marginLeft:'135px', marginBottom:'10px'}}>
+          {makeups['companies']?.length>0 ? (
+          <SearchResultBox>
+            {makeups['companies'].map((makeup) => {
+              return (
+                <div key={makeup.name} style={{marginTop:'5px', width:'400px', display:'flex', justifyContent:'space-between'}}>
+                  <span style={{cursor:'pointer',color:'#212529', fontSize:'14px'}} onClick={() => handleCompanyInfo('makeup', makeup.name)}>{makeup.name}</span>
+                  <IoCloseOutline color='#495057'/>
+                </div>
+              )
+            })}
+          </SearchResultBox>
+          ) : (<div style={{marginTop:'5px',color:'#212529', fontSize:'14px'}}>검색 결과가 없습니다.</div>)}
+          </div>
+        )}
         <EstimateRow label="웨딩홀">
           <FormControl sx={{ minWidth:400, minHeight:40, height:'40px' }}>
             <Select
@@ -292,7 +409,7 @@ export default authOnly(() => {
           </label>
         <input type='file' name='uploadFile' id='uploadFile'
         accept="image/jpg, image/png, image/jpeg"
-        // onChange={(e) => console.log(e?.target?.files[0])}
+        onChange={handleFile}
         />
         </FileBox>
       </EstimateBox>
@@ -437,3 +554,10 @@ input[type="file"] {
 }
 }`;
 
+const SearchResultBox = styled.div`
+marginTop:5px;
+max-height:150px; 
+overflow:auto;
+::-webkit-scrollbar {
+  display:none;
+}`;

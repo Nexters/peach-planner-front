@@ -90,13 +90,17 @@ const AssociateOrganization = ({ id, name, type, margin, stores, setStores }: Pr
                         name={partner.name}
                         images={partner.images}
                         handleClick={() => {
+                          setFocused(false);
+                          setPartnerName('');
+                          if (stores?.filter(e => e.id === partner.id)) {
+                            return;
+                          }
+
                           setStores(stores?.concat({
                             id: partner.id,
                             name: partner.name,
                             previewImage: partner.profilePath,
                           }));
-                          setPartnerName('');
-                          setFocused(false);
                         }}
                       />
                     );

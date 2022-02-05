@@ -5,8 +5,8 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-[[context.production.environment]]
+[context.production.environment]
   NEXT_PUBLIC_API_URL = "api.peachplanner.com"
 
-[[context."develop".environment]]
+[context."develop".environment]
   NEXT_PUBLIC_API_URL = "peach-planner-server.herokuapp.com"

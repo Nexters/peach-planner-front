@@ -16,6 +16,10 @@ const Footer = () => {
             <TermsPolicy href="/privacyPolicy" target="_blank">
               개인정보처리방침
             </TermsPolicy>
+            {'  '}|{' '}
+            <TermsPolicy href="http://pf.kakao.com/_xhxerib/chat" target="_blank">
+              제휴 및 상담하기
+            </TermsPolicy>
           </Item>
           <Item>COPYRIGHT© Peachplanner ALL RIGHT RESERVED</Item>
         </BottomContainer>

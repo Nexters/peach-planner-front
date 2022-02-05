@@ -49,10 +49,8 @@ export function publicOnly (WrappedComponent: NextComponentType) {
           return {};
       } else {
           // client
-          const userAuth = await getUserMe();
-  
           // Are you an authorized user or not?
-          if (userAuth) {
+          if (localStorage.getItem('accessToken')) {
             // Handle server-side and client-side rendering.
             if (context.res) {
               context.res?.writeHead(302, {
@@ -64,10 +62,10 @@ export function publicOnly (WrappedComponent: NextComponentType) {
             }
           } else if (WrappedComponent.getInitialProps) {
             const wrappedProps = await WrappedComponent.getInitialProps(context);
-            return { ...wrappedProps, userAuth };
+            return { ...wrappedProps };
           }
       
-          return { userAuth };
+          return {};
       }
     };
   

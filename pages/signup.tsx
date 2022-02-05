@@ -15,7 +15,8 @@ import { publicOnly } from 'lib/routes/withAuth';
 const emailRegExp = /^[0-9a-z]([-_\.]?[0-9a-z])*@[0-9a-z]([-_\.]?[0-9a-z])*\.[a-z]/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
-const UserSignUp = publicOnly(() => {
+
+export default publicOnly(() => {
   const router = useRouter();
 
   const [isValidEmail, setIsValidEmail] = useState(true);
@@ -313,8 +314,6 @@ const UserSignUp = publicOnly(() => {
     </FlexDiv>
   );
 });
-
-export default UserSignUp;
 
 interface SpanProps {
   margin?: string;

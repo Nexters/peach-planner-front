@@ -14,11 +14,9 @@ import Image from 'next/image';
 
 const Header = () => {
   let history = useRouter();
-  const handleSignUp = () => history.push('/signUp');
   const [peachTokenState] = usePeachTokenState();
   const [userTypeState, setUserTypeState] = useUserTypeState();
   const [isClickedProfile, setIsClickedProfile] = useState(false);
-  const [isAlart, setIsAlart] = useState(false);
   const isLogin = peachTokenState ? true : false;
   const { data: user } = useQuery(['getUser'], getUserMe, { enabled: isLogin });
   setUserTypeState(user?.userType ? user?.userType : 'USER');
@@ -129,11 +127,15 @@ const Header = () => {
           </InnerContainer>
         ) : (
           <InnerContainer>
-            <CustomLink href="/plannerSignUp">플래너 가입</CustomLink>
+            <CustomLink href="/plannerSignup">플래너 가입</CustomLink>
             <CustomLink href="/login">로그인</CustomLink>
-            <PButton color="pink" width="114px" height="33px" fontSize="12px" padding="0" onClick={ handleSignUp }>
-              무료 회원가입
-            </PButton>
+  {/* const handleSignUp = () => history.push('/signUp'); */}
+
+            <CustomLink href="/signup">
+              <PButton color="pink" width="114px" height="33px" fontSize="12px" padding="0" >
+                무료 회원가입
+              </PButton>
+            </CustomLink>
           </InnerContainer>
         ) }
       </HeaderContainer>

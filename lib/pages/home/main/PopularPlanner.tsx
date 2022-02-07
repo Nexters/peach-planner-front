@@ -38,21 +38,17 @@ const PopularPlanner = () => {
   });
 
   return (
-    <FlexDiv margin={'64px 0 0 0'} direction="column">
-      <FlexDiv height={'56px'} justify="between" margin={'0 0 8px 0'}>
+    <FlexDiv margin={ '64px 0 0 0' } direction="column">
+      <FlexDiv height={ '56px' } justify="between" margin={ '0 0 8px 0' }>
         <Title>인기 플래너</Title>
         <FlexDiv justify="flex-end">
           <More>
             <Link prefetch passHref href="/search?sort=popular"><StyledLink>더 보기</StyledLink></Link>
           </More>
-          { planners?.totalElements! > 4 ? (
-            <>
-              <ArrowButton src={ LeftArrow } onClick={ slider?.slickPrev } margin="0 8px 0 0" />
-              <ArrowButton src={ RightArrow } onClick={ slider?.slickNext } margin="0" />
-            </>
-          ) : (
-            <></>
-          ) }
+          <>
+            <ArrowButton src={ LeftArrow } onClick={ slider?.slickPrev } margin="0 8px 0 0" />
+            <ArrowButton src={ RightArrow } onClick={ slider?.slickNext } margin="0" />
+          </>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv
@@ -61,7 +57,7 @@ const PopularPlanner = () => {
         direction="row"
         margin="0"
         width="1100px"
-        style={{ overflow: 'hidden' }}
+        style={ { overflow: 'hidden' } }
       >
         { planners?.totalElements! > 4 ? (
           <Slider { ...slickSettings } ref={ (ref) => setSlider(ref!) }>

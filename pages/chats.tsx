@@ -271,7 +271,6 @@ export default authOnly(() => {
                           {
                             message.messageType === 'FILE' ? (() => {
                               const fileList = JSON.parse(message.message);
-                              console.log(fileList);
                               return fileList.map((f: any) => f.mimeType.startsWith("image") ? <ChatMessageImage src={ f.filePath } /> : <a href={ f.filePath }>문서</a>);
                             })()
                               :

@@ -46,14 +46,10 @@ const NewPlanner = () => {
           <More>
             <Link prefetch passHref href="/search?sort=new"><StyledLink>더 보기</StyledLink></Link>
           </More>
-          { planners?.totalElements! > 4 ? (
-            <>
-              <ArrowButton src={ LeftArrow } onClick={ slider?.slickPrev } margin="0 8px 0 0" />
-              <ArrowButton src={ RightArrow } onClick={ slider?.slickNext } margin="0" />
-            </>
-          ) : (
-            <></>
-          ) }
+          <>
+            <ArrowButton src={ LeftArrow } onClick={ slider?.slickPrev } margin="0 8px 0 0" />
+            <ArrowButton src={ RightArrow } onClick={ slider?.slickNext } margin="0" />
+          </>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv

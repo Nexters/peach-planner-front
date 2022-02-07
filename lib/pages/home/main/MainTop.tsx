@@ -4,7 +4,7 @@ import { FlexDiv } from 'lib/pages/components/style/style';
 import background from 'public/banner.png';
 import Link from 'next/link';
 
-const MainTop = () => {
+export default () => {
   return (
     <Link href="https://blog.naver.com/peachplanner/222637086412">
       <a target={'_blank'}>
@@ -23,8 +23,6 @@ const MainTop = () => {
     </Link>
   );
 };
-
-export default MainTop;
 
 const TopBox = styled.div`
   height: 320px;

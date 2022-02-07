@@ -5,34 +5,35 @@ import { getUserMe } from 'lib/api/User';
 
 const login = '/login'; // Define your login route address.
 
-export function authOnly (WrappedComponent: NextComponentType) {
-  const hocComponent = ({ ...props }) => <WrappedComponent {...props} />;
+export function authOnly(WrappedComponent: NextComponentType) {
+  const hocComponent = ({ ...props }) => <WrappedComponent { ...props } />;
 
   hocComponent.getInitialProps = async (context: NextPageContext) => {
     if (context.req) {
-        // server
-        return {};
+      // server, initial page load
+      // TODO:: auth in nextjs session
+      return {};
     } else {
-        // client
-        const userAuth = await getUserMe();
+      // client, for next/link pre load
+      const userAuth = await getUserMe();
 
-        // Are you an authorized user or not?
-        if (!userAuth) {
-          // Handle server-side and client-side rendering.
-          if (context.res) {
-            context.res?.writeHead(302, {
-              Location: login,
-            });
-            context.res?.end();
-          } else {
-            Router.replace(login);
-          }
-        } else if (WrappedComponent.getInitialProps) {
-          const wrappedProps = await WrappedComponent.getInitialProps(context);
-          return { ...wrappedProps, userAuth };
+      // Are you an authorized user or not?
+      if (!userAuth) {
+        // Handle server-side and client-side rendering.
+        if (context.res) {
+          context.res?.writeHead(302, {
+            Location: login,
+          });
+          context.res?.end();
+        } else {
+          Router.replace(login);
         }
-    
-        return { userAuth };
+      } else if (WrappedComponent.getInitialProps) {
+        const wrappedProps = await WrappedComponent.getInitialProps(context);
+        return { ...wrappedProps, userAuth };
+      }
+
+      return { userAuth };
     }
   };
 
@@ -40,35 +41,34 @@ export function authOnly (WrappedComponent: NextComponentType) {
 };
 
 
-export function publicOnly (WrappedComponent: NextComponentType) {
-    const hocComponent = ({ ...props }) => <WrappedComponent {...props} />;
-  
-    hocComponent.getInitialProps = async (context: NextPageContext) => {
-      if (context.req) {
-          // server
-          return {};
-      } else {
-          // client
-          // Are you an authorized user or not?
-          if (localStorage.getItem('accessToken')) {
-            // Handle server-side and client-side rendering.
-            if (context.res) {
-              context.res?.writeHead(302, {
-                Location: "/",
-              });
-              context.res?.end();
-            } else {
-              Router.replace("/");
-            }
-          } else if (WrappedComponent.getInitialProps) {
-            const wrappedProps = await WrappedComponent.getInitialProps(context);
-            return { ...wrappedProps };
-          }
-      
-          return {};
+export function publicOnly(WrappedComponent: NextComponentType) {
+  const hocComponent = ({ ...props }) => <WrappedComponent { ...props } />;
+
+  hocComponent.getInitialProps = async (context: NextPageContext) => {
+    if (context.req) {
+      // server
+      return {};
+    } else {
+      // client
+      // Are you an authorized user or not?
+      if (localStorage.getItem('accessToken')) {
+        // Handle server-side and client-side rendering.
+        if (context.res) {
+          context.res?.writeHead(302, {
+            Location: "/",
+          });
+          context.res?.end();
+        } else {
+          Router.replace("/");
+        }
+      } else if (WrappedComponent.getInitialProps) {
+        const wrappedProps = await WrappedComponent.getInitialProps(context);
+        return { ...wrappedProps };
       }
-    };
-  
-    return hocComponent;
+
+      return {};
+    }
   };
-  
+
+  return hocComponent;
+};

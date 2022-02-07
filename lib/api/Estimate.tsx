@@ -35,9 +35,9 @@ export interface RequestEstimateBodyParams {
   email: string;
   phoneNum: string;
   weddingDate: string;
-  studio: string;
-  dress: string;
-  makeup: string;
+  studioIds: number[];
+  dressIds: number[];
+  makeupIds: number[];
   weddingHall: boolean;
   weddingCard: boolean;
   description: string;
@@ -65,14 +65,10 @@ export const fetchEstimate = async ({ queryKey }: QueryFunctionContext) => {
 };
 
 export const requestEstimate = async (requestEstimateBody: RequestEstimateBodyParams) => {
-  try {
-    const { data } = await axios.post<EstimateDetail>('/estimate/upload', requestEstimateBody, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      }
-    });
-    return data;
-  } catch (err) {
-    console.log({ err });
-  }
+  const { data } = await axios.post<EstimateDetail>('/estimate/upload', requestEstimateBody, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+  });
+  return data;
 }

@@ -15,6 +15,12 @@ const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#
 
 export default publicOnly(() => {
     const router = useRouter();
+    useEffect(() => {
+      // Are you an authorized user or not?
+      if (localStorage.getItem('accessToken')) {
+        router.replace("/");
+      }
+    }, []);
 
     const [, setPeachTokenState] = usePeachTokenState();
     const [, setUserTypeState] = useUserTypeState();

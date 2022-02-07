@@ -43,6 +43,12 @@ const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#
 
 export default publicOnly(() => {
   const router = useRouter();
+  useEffect(() => {
+    // Are you an authorized user or not?
+    if (localStorage.getItem('accessToken')) {
+      router.replace("/");
+    }
+  }, []);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -171,7 +177,7 @@ export default publicOnly(() => {
     const res = await axios.post('/auth/login', data);
     localStorage.setItem('accessToken', res.data.accessToken);
     localStorage.setItem('refreshToken', res.data.refreshToken);
-    router.push('/registerProfile');
+    await router.push('/registerProfile');
     window.location.reload();
     alert('회원가입 및 로그인이 완료되었습니다.');
     // const expireTime = Date.parse(res.data.expireDateTime);
@@ -192,55 +198,55 @@ export default publicOnly(() => {
   };
 
   return (
-    <FlexDiv direction="column" height={'700px'} justify={'flex-start'}>
-      <Title color={'#212529'} height={'24px'} fontSize={'18px'} lineHeight={'27px'} margin={'40px 0 24px'}>
+    <FlexDiv direction="column" height={ '700px' } justify={ 'flex-start' }>
+      <Title color={ '#212529' } height={ '24px' } fontSize={ '18px' } lineHeight={ '27px' } margin={ '40px 0 24px' }>
         웨딩플래너 가입하기
       </Title>
 
       <FlexDiv justify="flex-start" align="flex-start" direction="column" width="undefined">
         <Label>이메일</Label>
-        <Input value={email} placeholder="이메일을 입력해 주세요." type="text" id="inputEmail" onChange={handleEmail} />
-        {!isValidEmail && (
+        <Input value={ email } placeholder="이메일을 입력해 주세요." type="text" id="inputEmail" onChange={ handleEmail } />
+        { !isValidEmail && (
           <Content color="#E03131" fontSize="12px" height="18px" width="undefined" lineHeight="18px">
             이메일 형식이 유효하지 않습니다.
           </Content>
-        )}
-        {isExistEmail && (
+        ) }
+        { isExistEmail && (
           <Content color="#E03131" fontSize="12px" height="18px" width="undefined" lineHeight="18px">
             이미 가입되어있는 아이디입니다.
           </Content>
-        )}
+        ) }
 
         <Label>비밀번호</Label>
         <Input
-          value={password}
+          value={ password }
           placeholder="비밀번호를 입력해 주세요."
           type="password"
           id="inputPassword"
-          onChange={handlePassword}
+          onChange={ handlePassword }
         />
-        {!isValidPassword && (
+        { !isValidPassword && (
           <Content color="#E03131" fontSize="12px" height="18px" width="162px" lineHeight="18px">
             비밀번호가 일치하지 않습니다.
           </Content>
-        )}
+        ) }
 
         <Label>비밀번호 확인</Label>
         <Input
-          value={passwordConfirm}
+          value={ passwordConfirm }
           placeholder="비밀번호를 한번 더 입력해 주세요."
           type="password"
           id="inputPassword"
-          onChange={handlePasswordConfirm}
+          onChange={ handlePasswordConfirm }
         />
-        {!isValidPassword && (
+        { !isValidPassword && (
           <Content color="#E03131" fontSize="12px" height="18px" width="162px" lineHeight="18px">
             비밀번호가 일치하지 않습니다.
           </Content>
-        )}
+        ) }
 
         <Label>이름</Label>
-        <Input value={name} placeholder="이름을 입력해 주세요." type="text" id="inputName" onChange={handleName} />
+        <Input value={ name } placeholder="이름을 입력해 주세요." type="text" id="inputName" onChange={ handleName } />
 
         {/* <Label>휴대폰인증</Label>
         <Input
@@ -257,8 +263,8 @@ export default publicOnly(() => {
         <FlexDiv margin="15px 0 0 0" justify="flex-start">
           <label>
             <CheckBoxContainer>
-              <HiddenCheckBox type="checkbox" id="checkAll" checked={checkAll} onChange={handleCheckAll} />
-              <StyledCheckBox checked={checkAll} big>
+              <HiddenCheckBox type="checkbox" id="checkAll" checked={ checkAll } onChange={ handleCheckAll } />
+              <StyledCheckBox checked={ checkAll } big>
                 <Icon viewBox="0 0 24 24">
                   <polyline points="19 7, 10 17, 5 12" strokeLinecap="round" strokeLinejoin="round" />
                 </Icon>
@@ -273,15 +279,15 @@ export default publicOnly(() => {
         <FlexDiv margin="0" justify="flex-start">
           <label>
             <CheckBoxContainer>
-              <HiddenCheckBox type="checkbox" id="agreeTerms" checked={agreeTerms} onChange={handleCheckTerms} />
-              <StyledCheckBox checked={agreeTerms}>
+              <HiddenCheckBox type="checkbox" id="agreeTerms" checked={ agreeTerms } onChange={ handleCheckTerms } />
+              <StyledCheckBox checked={ agreeTerms }>
                 <Icon viewBox="0 0 24 24">
                   <polyline points="19 7, 10 17, 5 12" strokeLinecap="round" strokeLinejoin="round" />
                 </Icon>
               </StyledCheckBox>
             </CheckBoxContainer>
             <Label chk>
-              [필수] 피치플래너 이용약관 동의{' '}
+              [필수] 피치플래너 이용약관 동의{ ' ' }
               <Underline href="/termsOfUse" target="_blank">
                 보기
               </Underline>
@@ -292,15 +298,15 @@ export default publicOnly(() => {
         <FlexDiv margin="15px 0 43px 0" justify="flex-start">
           <label>
             <CheckBoxContainer>
-              <HiddenCheckBox type="checkbox" id="agreePrivacy" checked={agreePrivacy} onChange={handleCheckPrivacy} />
-              <StyledCheckBox checked={agreePrivacy}>
+              <HiddenCheckBox type="checkbox" id="agreePrivacy" checked={ agreePrivacy } onChange={ handleCheckPrivacy } />
+              <StyledCheckBox checked={ agreePrivacy }>
                 <Icon viewBox="0 0 24 24">
                   <polyline points="19 7, 10 17, 5 12" strokeLinecap="round" strokeLinejoin="round" />
                 </Icon>
               </StyledCheckBox>
             </CheckBoxContainer>
             <Label chk>
-              [필수] 개인정보 처리방침 동의{' '}
+              [필수] 개인정보 처리방침 동의{ ' ' }
               <Underline href="/privacyPolicy" target="_blank">
                 보기
               </Underline>
@@ -313,7 +319,7 @@ export default publicOnly(() => {
           <label></label>
         </Styled> */}
 
-        <PButton color="pink" width="100%" height="40px" fontSize="12px" padding="0" onClick={handleSignUp}>
+        <PButton color="pink" width="100%" height="40px" fontSize="12px" padding="0" onClick={ handleSignUp }>
           가입 완료하기
         </PButton>
       </FlexDiv>

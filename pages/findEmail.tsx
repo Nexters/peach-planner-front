@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PButton from 'lib/pages/components/PButton';
 import { FlexDiv, Content, Title } from 'lib/pages/components/style/style';
@@ -9,6 +9,12 @@ import { publicOnly } from 'lib/routes/withAuth';
 
 export default publicOnly(() => {
   const router = useRouter();
+  useEffect(() => {
+    // Are you an authorized user or not?
+    if (localStorage.getItem('accessToken')) {
+      router.replace("/");
+    }
+  }, []);
 
   const [email, setEmail] = useState('');
   const [check, setCheck] = useState(false);

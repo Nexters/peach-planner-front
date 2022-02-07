@@ -41,21 +41,17 @@ export default authOnly(() => {
               찜 목록
             </Title>
             <FlexDiv justify="flex-end">
-              {picks?.pickLists?.length! > 6 ? (
-                <>
-                  <ArrowButton children={<Image src={LeftArrow} />} onClick={slider?.slickPrev} margin="0 8px 0 0" />
-                  <ArrowButton children={<Image src={RightArrow} />} onClick={slider?.slickNext} margin="0" />
-                </>
-              ) : (
-                <></>
-              )}
+              <>
+                <ArrowButton children={ <Image src={ LeftArrow } /> } onClick={ slider?.slickPrev } margin="0 8px 0 0" />
+                <ArrowButton children={ <Image src={ RightArrow } /> } onClick={ slider?.slickNext } margin="0" />
+              </>
             </FlexDiv>
           </PickTitleBox>
-          <PickListBox style={{ overflow: 'hidden' }}>
-            {(() => {
+          <PickListBox style={ { overflow: 'hidden' } }>
+            { (() => {
               if (picks?.pickLists?.length == 0) {
                 return (
-                  <EmptyText flex={10} textAlign='center'>찜한 목록이 없습니다.</EmptyText>
+                  <EmptyText flex={ 10 } textAlign='center'>찜한 목록이 없습니다.</EmptyText>
                 )
               }
 
@@ -63,41 +59,41 @@ export default authOnly(() => {
                 return picks.pickLists.map((pick) => {
                   return (
                     <PlannerMiniCard
-                      key={pick.id}
-                      id={pick.id}
-                      plannerId={pick.plannerId}
+                      key={ pick.id }
+                      id={ pick.id }
+                      plannerId={ pick.plannerId }
                       size="130px"
-                      image={pick.imageUrlPath}
-                      plannerName={pick.name}
-                      companyName={pick.subName}
-                      margin={'0 16px 0 0'}
+                      image={ pick.imageUrlPath }
+                      plannerName={ pick.name }
+                      companyName={ pick.subName }
+                      margin={ '0 16px 0 0' }
                     />
                   );
                 });
               }
               return (
-                <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
-                  {picks ? (
+                <Slider { ...slickSettings } ref={ (ref) => setSlider(ref!) }>
+                  { picks ? (
                     picks?.pickLists.map((pick) => {
                       return (
                         <PlannerMiniCard
-                          key={pick.id}
-                          id={pick.id}
-                          plannerId={pick.plannerId}
+                          key={ pick.id }
+                          id={ pick.id }
+                          plannerId={ pick.plannerId }
                           size="130px"
-                          image={pick.imageUrlPath}
-                          plannerName={pick.name}
-                          companyName={pick.subName}
-                          margin={'0 16px 0 0'}
+                          image={ pick.imageUrlPath }
+                          plannerName={ pick.name }
+                          companyName={ pick.subName }
+                          margin={ '0 16px 0 0' }
                         />
                       );
                     })
                   ) : (
                     <></>
-                  )}
+                  ) }
                 </Slider>
               );
-            })()}
+            })() }
           </PickListBox>
           <MyEstimateTitle>
             <Title height="27px" fontSize="18px" width="auto" lineHeight="normal" color="#000000">
@@ -131,22 +127,22 @@ export default authOnly(() => {
               </Title>
             </EstimateState>
           </TableHeader>
-          {estimates && estimates.length > 0 ? (
+          { estimates && estimates.length > 0 ? (
             estimates.map((estimate, index) => {
               return (
                 <MyEstimate
-                  id={estimate.id}
-                  createdAt={estimate.createDate}
-                  content={estimate.description}
-                  estimateNumber={estimate.id}
-                  plannerName={estimate.plannerName}
-                  status={estimate.status}
+                  id={ estimate.id }
+                  createdAt={ estimate.createDate }
+                  content={ estimate.description }
+                  estimateNumber={ estimate.id }
+                  plannerName={ estimate.plannerName }
+                  status={ estimate.status }
                 />
               );
             })
           ) : (
-            <EmptyText flex={1} textAlign='center' padding='30px 0 0 0'>견적서 내용이 없습니다.</EmptyText>
-          )}
+            <EmptyText flex={ 1 } textAlign='center' padding='30px 0 0 0'>견적서 내용이 없습니다.</EmptyText>
+          ) }
         </ContentContainer>
       </InnerContainer>
     </Container>
@@ -207,7 +203,7 @@ const Slider = styled(Slick)`
   }
 `;
 
-const ArrowButton = styled.div<{margin: string}>`
+const ArrowButton = styled.div<{ margin: string }>`
   margin: ${(props) => props.margin};
   cursor: pointer;
 `;

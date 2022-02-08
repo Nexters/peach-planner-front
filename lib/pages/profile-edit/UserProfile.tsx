@@ -88,6 +88,7 @@ const ProfileImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }
   margin: 0;
   border-radius: 100%;
   position: relative;
+  object-fit: cover;
 `;
 
 const EditIcon = styled.div`

@@ -228,6 +228,7 @@ const ProfileImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }
   width: 32px;
   margin: 0 0 0 7px;
   border-radius: 100%;
+  object-fit: cover;
 `;
 
 const DropdownImage = styled.img.attrs((props: ImageProps) => ({ src: props.src }))`

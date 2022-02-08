@@ -28,7 +28,7 @@ export const PortfolioCollect = ({ id, margin, images, setImages }: Props) => {
       const s3ImageUrl = await upload(imageFile);
       setImages(images?.concat(s3ImageUrl));
     } catch (e) {
-      window.alert(e);
+      window.alert("사진 용량이 너무 큽니다.");
     }
   };
 

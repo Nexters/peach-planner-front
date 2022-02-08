@@ -139,7 +139,7 @@ export default publicOnly(() => {
     const res = await axios.post('/auth/login', data);
     localStorage.setItem('accessToken', res?.data?.accessToken);
     localStorage.setItem('refreshToken', res?.data?.refreshToken);
-    router.push('/');
+    await router.push('/');
     window.location.reload();
     alert('회원가입 및 로그인이 완료되었습니다.');
     // axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;

@@ -71,4 +71,5 @@ const Detail = styled.div`
   margin: 30px 0 23.5px 0;
   font-size: 16px;
   color: #495057;
+  line-height: 160%;
 `;

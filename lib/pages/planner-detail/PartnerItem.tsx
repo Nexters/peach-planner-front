@@ -39,12 +39,14 @@ const Image = styled.img`
 const Title = styled.div`
   margin-top: 8px;
   font-size: 13px;
+  line-height: 160%;
   color: black;
 `;
 
 const Detail = styled.div`
-width: 160px;
+  width: 160px;
   font-size: 12px;
+  line-height: 160%;
   color: #495057;
   text-overflow:ellipsis;
 `;

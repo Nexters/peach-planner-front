@@ -59,7 +59,7 @@ const Img = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 100%;
-  object-fit: 'cover';
+  object-fit: cover;
 `;
 
 const InnerContainer = styled.div`

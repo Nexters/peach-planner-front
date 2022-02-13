@@ -22,7 +22,7 @@ export const fetchReviewDetail = async (reviewId: string) => {
 }
 
 
-interface CreateReviewReq {
+export interface CreateReviewReq {
   comment: string,
   plannerId: number,
   imageUrl?: string,

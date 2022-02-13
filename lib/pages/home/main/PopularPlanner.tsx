@@ -38,15 +38,17 @@ const PopularPlanner = () => {
   });
 
   return (
-    <FlexDiv margin={'64px 0 0 0'} direction="column">
-      <FlexDiv height={'56px'} justify="between" margin={'0 0 8px 0'}>
+    <FlexDiv margin={ '64px 0 0 0' } direction="column">
+      <FlexDiv height={ '56px' } justify="between" margin={ '0 0 8px 0' }>
         <Title>인기 플래너</Title>
         <FlexDiv justify="flex-end">
           <More>
             <Link prefetch passHref href="/search?sort=popular"><StyledLink>더 보기</StyledLink></Link>
           </More>
-          <ArrowButton src={LeftArrow} onClick={slider?.slickPrev} margin="0 8px 0 0" />
-          <ArrowButton src={RightArrow} onClick={slider?.slickNext} margin="0" />
+          <>
+            <ArrowButton src={ LeftArrow } onClick={ slider?.slickPrev } margin="0 8px 0 0" />
+            <ArrowButton src={ RightArrow } onClick={ slider?.slickNext } margin="0" />
+          </>
         </FlexDiv>
       </FlexDiv>
       <FlexDiv
@@ -55,35 +57,54 @@ const PopularPlanner = () => {
         direction="row"
         margin="0"
         width="1100px"
-        style={{ overflow: 'hidden' }}
+        style={ { overflow: 'hidden' } }
       >
-        <Slider {...slickSettings} ref={(ref) => setSlider(ref!)}>
-          {planners ? (
-            planners.content.map((planner) => {
+        { planners?.totalElements! > 4 ? (
+          <Slider { ...slickSettings } ref={ (ref) => setSlider(ref!) }>
+            { planners?.content.map((planner) => {
               return (
                 <PlannerCard
-                  key={planner.id}
-                  margin={'0 28px 0 0'}
-                  size={'254px'}
-                  imagePath={planner.images[0]}
-                  heartCount={planner.likes}
-                  reviewCount={planner.reviews}
-                  name={planner.name}
-                  organization={planner.company?.name}
-                  region={planner.locations.join(',')}
-                  id={planner.id}
-                  blogLink={planner.externalLinks.blogLink}
-                  instagramLink={planner.externalLinks.instagramLink}
-                  facebookLink={planner.externalLinks.facebookLink}
-                  postLiked={planner.postLiked}
-                  mutate={mutate}
-                ></PlannerCard>
+                  key={ planner.id }
+                  margin={ '0 28px 0 0' }
+                  size={ '254px' }
+                  imagePath={ planner.images[0] }
+                  heartCount={ planner.likes }
+                  reviewCount={ planner.reviews }
+                  name={ planner.name }
+                  organization={ planner.company?.name }
+                  region={ planner.locations.join(',') }
+                  id={ planner.id }
+                  blogLink={ planner.externalLinks?.blogLink }
+                  instagramLink={ planner.externalLinks?.instagramLink }
+                  facebookLink={ planner.externalLinks?.facebookLink }
+                  postLiked={ planner.postLiked }
+                  mutate={ mutate }
+                />
               );
-            })
-          ) : (
-            <></>
-          )}
-        </Slider>
+            }) }
+          </Slider>
+        ) : (planners?.content.map((planner) => {
+          return (
+            <PlannerCard
+              key={ planner.id }
+              margin={ '0 28px 0 0' }
+              size={ '254px' }
+              imagePath={ planner.images[0] }
+              heartCount={ planner.likes }
+              reviewCount={ planner.reviews }
+              name={ planner.name }
+              organization={ planner.company?.name }
+              region={ planner.locations.join(',') }
+              id={ planner.id }
+              blogLink={ planner.externalLinks?.blogLink }
+              instagramLink={ planner.externalLinks?.instagramLink }
+              facebookLink={ planner.externalLinks?.facebookLink }
+              postLiked={ planner.postLiked }
+              mutate={ mutate }
+            />
+          );
+        }))
+        }
       </FlexDiv>
     </FlexDiv>
   );

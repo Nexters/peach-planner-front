@@ -18,6 +18,12 @@ const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#
 
 export default publicOnly(() => {
   const router = useRouter();
+  useEffect(() => {
+    // Are you an authorized user or not?
+    if (localStorage.getItem('accessToken')) {
+      router.replace("/");
+    }
+  }, []);
 
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isExistEmail, setIsExistEmail] = useState(false);
@@ -133,7 +139,7 @@ export default publicOnly(() => {
     const res = await axios.post('/auth/login', data);
     localStorage.setItem('accessToken', res?.data?.accessToken);
     localStorage.setItem('refreshToken', res?.data?.refreshToken);
-    router.push('/');
+    await router.push('/');
     window.location.reload();
     alert('회원가입 및 로그인이 완료되었습니다.');
     // axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
@@ -304,7 +310,7 @@ export default publicOnly(() => {
 
         <a href={KAKAO_AUTH_URL} style={{ textDecoration: 'none' }}>
           <KakaoButton>
-            <Image src={logo} />
+            <Image src={logo.src} />
             <Span color="#000" cursor="pointer">
               카카오로 가입하기
             </Span>

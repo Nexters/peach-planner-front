@@ -50,7 +50,7 @@ const PlannerCard = (props: PlannerProps) => {
   };
 
   return (
-    <Link href={ `/planner/${props.id}/detail` }>
+    <Link href={ `/planner/${props.id}/detail` } passHref>
       <a style={{textDecoration:'none'}}>
         <FlexDiv width={ props.size } direction="column" margin={ props.margin } style={ { cursor: 'pointer' } }>
           <PlannerImageContainer>

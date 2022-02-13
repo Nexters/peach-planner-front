@@ -92,7 +92,7 @@ const AssociateOrganization = ({ id, name, type, margin, stores, setStores }: Pr
                         handleClick={() => {
                           setFocused(false);
                           setPartnerName('');
-                          if (stores?.filter(e => e.id === partner.id)) {
+                          if (stores?.filter(e => e.id === partner.id)?.length != 0) {
                             return;
                           }
 

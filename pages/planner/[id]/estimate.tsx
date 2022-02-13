@@ -4,7 +4,7 @@ import PButton from 'lib/pages/components/PButton';
 import EstimateBox from 'lib/pages/planner-estimate/EstimateBox';
 import EstimateRow from 'lib/pages/planner-estimate/EstimateRow';
 import { useQuery, useMutation } from 'react-query';
-import { fetchPlanner } from 'lib/api/Planner';
+import { fetchPlanner, PartnerInfo } from 'lib/api/Planner';
 import axios from 'axios';
 import { getUserMe } from 'lib/api/User';
 import { FiPaperclip, FiSearch } from 'react-icons/fi';
@@ -42,14 +42,15 @@ export default authOnly(() => {
     },
     {
       onSuccess: async (data) => {
-        console.log('postRequestEstimate success', { data });
+        console.log('postRequestEstimate success', data);
         router.push({
           pathname: "/chats",
           query: { roomId: data?.chatRoom?.id },
         });
       },
-      onError: async (err) => {
-        console.log('postRequestEstimate err', { err });
+      onError: async (error: any) => {
+        alert("이미 작성하신 견적서가 존재해요.");
+        console.log('postRequestEstimate err', { error });
       }
     },
   );
@@ -75,11 +76,11 @@ export default authOnly(() => {
   });
 
   const [companyInfo, setCompanyInfo] = useState({
-    studio: '',
-    dress: '',
-    makeup: '',
+    studios: [] as PartnerInfo[],
+    dresses: [] as PartnerInfo[],
+    makeups: [] as PartnerInfo[],
     weddingHall: 'false',
-    weddingCard: 'false'
+    weddingCard: 'false',
   });
 
   const [searchInfo, setSearchInfo] = useState({
@@ -120,7 +121,7 @@ export default authOnly(() => {
   };
 
   const handlePostEstimate = async () => {
-    if (!companyInfo.studio || !companyInfo.dress || !companyInfo.makeup || !myInfo.description) {
+    if (!companyInfo.studios || !companyInfo.dresses || !companyInfo.makeups || !myInfo.description) {
       alert('업체 선택과 요청사항은 필수값입니다.');
       return;
     }
@@ -131,9 +132,9 @@ export default authOnly(() => {
         email: user?.email ?? '',
         phoneNum: myInfo.phone ?? '',
         weddingDate: myInfo.date,
-        studio: companyInfo.studio,
-        dress: companyInfo.dress,
-        makeup: companyInfo.makeup,
+        studioIds: companyInfo.studios.map(e => e.id),
+        dressIds: companyInfo.dresses.map(e => e.id),
+        makeupIds: companyInfo.makeups.map(e => e.id),
         weddingHall: companyInfo.weddingHall === 'true' ? true : false,
         weddingCard: companyInfo.weddingCard === 'true' ? true : false,
         description: myInfo.description,
@@ -224,15 +225,14 @@ export default authOnly(() => {
               <EstimateRow label="연락처">
                 <InputBox width={ 230 }>
                   <PhoneInput
-                      country='KR'
-                      placeholder='연락처를 입력해주세요.'
-                      value={ myInfo.phone }
-                      onChange={ (value) => { 
-                        setMyInfo({ ...myInfo, phone: value?.toString() ?? '' });
-                      } }
-                      inputComponent={Input}
-                    />
-                  {/* <Input placeholder='연락처를 입력해주세요.' width={ 230 } value={ myInfo.phone } name="phone" onChange={ handleMyInfoChange } /> */}
+                    country='KR'
+                    placeholder='연락처를 입력해주세요.'
+                    value={ myInfo.phone }
+                    onChange={ (value) => {
+                      setMyInfo({ ...myInfo, phone: value?.toString() ?? '' });
+                    } }
+                    inputComponent={ Input }
+                  />
                 </InputBox>
               </EstimateRow>
               <EstimateRow label="이메일">{ user?.email }</EstimateRow>
@@ -258,7 +258,16 @@ export default authOnly(() => {
                       { studios.partners.map((studio) => {
                         return (
                           <div key={ studio.name } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
-                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => handleCompanyInfo('studio', studio.name) }>{ studio.name }</span>
+                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => {
+                              setCompanyInfo({
+                                ...companyInfo,
+                                studios: [studio],
+                              });
+                              setSearchInfo({
+                                ...searchInfo,
+                                studio: studio.name,
+                              });
+                            } }>{ studio.name }</span>
                             <IoCloseOutline color='#495057' />
                           </div>
                         )
@@ -282,7 +291,16 @@ export default authOnly(() => {
                       { dresses.partners.map((dress) => {
                         return (
                           <div key={ dress.name } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
-                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => handleCompanyInfo('dress', dress.name) }>{ dress.name }</span>
+                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => {
+                              setCompanyInfo({
+                                ...companyInfo,
+                                dresses: [dress],
+                              });
+                              setSearchInfo({
+                                ...searchInfo,
+                                dress: dress.name,
+                              });
+                            } }>{ dress.name }</span>
                             <IoCloseOutline color='#495057' />
                           </div>
                         )
@@ -306,7 +324,16 @@ export default authOnly(() => {
                       { makeups.partners.map((makeup) => {
                         return (
                           <div key={ makeup.name } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
-                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => handleCompanyInfo('makeup', makeup.name) }>{ makeup.name }</span>
+                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => {
+                              setCompanyInfo({
+                                ...companyInfo,
+                                makeups: [makeup],
+                              });
+                              setSearchInfo({
+                                ...searchInfo,
+                                makeup: makeup.name,
+                              });
+                            } }>{ makeup.name }</span>
                             <IoCloseOutline color='#495057' />
                           </div>
                         )
@@ -425,24 +452,24 @@ export default authOnly(() => {
             </EstimateBox>
             <EstimateBox title="첨부파일">
               <Description>웨딩플래너가 참고할 사진 등이 있으시다면 업로드해 주세요.</Description>
-                <div style={ { marginTop: '21px', marginBottom: '19px' } }>
-                  { files?.length > 0 ? (
-                    <SearchResultBox>
-                      { files.map((file, index) => {
-                        return (
-                          <div key={ file.fileName } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
-                            <a target={'_blank'} href={file.filePath}>
-                              <span style={ { color: '#212529', fontSize: '14px' } } >{ file.fileName }</span>
-                            </a>
-                            <IoCloseOutline color='#495057' style={{ cursor: 'pointer' }} onClick={() => {
-                              setFiles(files.filter((e, i) => i !== index));
-                            }}/>
-                          </div>
-                        )
-                      }) }
-                    </SearchResultBox>
-                  ) : <></> }
-                </div>
+              <div style={ { marginTop: '21px', marginBottom: '19px' } }>
+                { files?.length > 0 ? (
+                  <SearchResultBox>
+                    { files.map((file, index) => {
+                      return (
+                        <div key={ file.fileName } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
+                          <a target={ '_blank' } href={ file.filePath }>
+                            <span style={ { color: '#212529', fontSize: '14px' } } >{ file.fileName }</span>
+                          </a>
+                          <IoCloseOutline color='#495057' style={ { cursor: 'pointer' } } onClick={ () => {
+                            setFiles(files.filter((e, i) => i !== index));
+                          } } />
+                        </div>
+                      )
+                    }) }
+                  </SearchResultBox>
+                ) : <></> }
+              </div>
               <FileBox>
                 <label htmlFor='uploadFile'>
                   <FiPaperclip color='#495057' />

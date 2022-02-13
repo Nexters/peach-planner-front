@@ -16,7 +16,7 @@ interface Props {
 
 const PlannerMiniCard = ({ id, plannerId, size, image, plannerName, companyName, margin }: Props) => {
   return (
-    <Link href={ `/planner/${plannerId}/detail` }>
+    <Link href={ `/planner/${plannerId}/detail` } passHref>
       <a style={{textDecoration:'none'}}>
         <Container margin={ margin }>
           <PlannerImage src={ image } size={ size } />

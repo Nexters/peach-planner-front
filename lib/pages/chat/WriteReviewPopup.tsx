@@ -1,14 +1,13 @@
-
 import React, { useState, FC } from 'react';
 import styled from 'styled-components';
 import Popup from 'reactjs-popup';
 import Close from 'public/assets/svg/ic_close_b.svg';
 import { fetchPlanner } from 'lib/api/Planner';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import { Content } from 'lib/pages/components/style/style';
 import ImageUpload from 'lib/pages/components/ImageUpload';
 import { upload } from 'lib/api/Image';
-import { postReview } from 'lib/api/Review';
+import { postReview, CreateReviewReq } from 'lib/api/Review';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
@@ -24,18 +23,31 @@ export const WriteReviewPopup: FC<WriteReviewModalProps> = ({ showReviewModal, c
   const [reviewMessage, setReviewMessage] = React.useState('');
   const [previewImage, setPreviewImage] = useState('');
   const [imageFile, setImageFile] = useState(null);
-
+  const writeReview = useMutation(
+    async (req: CreateReviewReq) => {
+      return await postReview(req);
+    },
+    {
+      onSuccess: async (data) => {
+        console.log('writeReview success', { data });
+        closeReviewModal();
+        router.push(`/planner/${plannerId}/detail/#planner-review`);
+      },
+      onError: async (error: any) => {
+        alert("이미 작성하신 리뷰가 존재해요.");
+        closeReviewModal();
+        console.log('writeReview err', { error });
+      }
+    },
+  );
   const registerReview = async () => {
     const s3ImageUrl = imageFile ? await upload(imageFile) : null;
 
-    console.log(s3ImageUrl);
-    await postReview({
+    writeReview.mutate({
       comment: reviewMessage,
       plannerId: parseInt(plannerId),
       imageUrl: s3ImageUrl,
     });
-    closeReviewModal();
-    router.push(`/planner/${plannerId}/detail/#planner-review`);
   };
 
   return (

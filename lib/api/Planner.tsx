@@ -81,6 +81,7 @@ export interface Partners {
 }
 
 export interface RecommnededPlanners {
+  plannerId: number;
   description: string;
   imgUrl: string;
   plannerName: string;

@@ -46,7 +46,7 @@ export default authOnly(() => {
 
 
   const client = new Client({
-    brokerURL: 'wss://api.peachplanner.com/websocket',
+    brokerURL: `wss://${process.env.NEXT_PUBLIC_API_URL}/websocket`,
     connectHeaders: {
       // Authorization: `Bearer ${localStorage.getItem('accessToken')}`
     },
@@ -271,7 +271,6 @@ export default authOnly(() => {
                           {
                             message.messageType === 'FILE' ? (() => {
                               const fileList = JSON.parse(message.message);
-                              console.log(fileList);
                               return fileList.map((f: any) => f.mimeType.startsWith("image") ? <ChatMessageImage src={ f.filePath } /> : <a href={ f.filePath }>문서</a>);
                             })()
                               :
@@ -443,6 +442,7 @@ const ChatProfileImg = styled.img`
   height: 40px;
   margin: 8px;
   border-radius: 30px;
+  object-fit: cover;
 `;
 
 const ChatProfileLine = styled.div`

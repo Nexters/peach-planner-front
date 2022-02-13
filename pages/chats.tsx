@@ -442,6 +442,7 @@ const ChatProfileImg = styled.img`
   height: 40px;
   margin: 8px;
   border-radius: 30px;
+  object-fit: cover;
 `;
 
 const ChatProfileLine = styled.div`

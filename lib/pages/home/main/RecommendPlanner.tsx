@@ -3,6 +3,7 @@ import { fetchRecommendedPlanners } from 'lib/api/Planner';
 import styled from 'styled-components';
 import { FlexDiv } from 'lib/pages/components/style/style';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const RecommendedPlanner = () => {
   const { data: planners } = useQuery(['recommendedPlanners'], fetchRecommendedPlanners);
@@ -15,20 +16,24 @@ const RecommendedPlanner = () => {
       <FlexDiv margin={ '0' } justify="flex-start" direction="row">
         { planners?.map((planner, index) => {
           return (
-            <PlannerCard key={ index }>
-              <div style={ { position: 'absolute' } }><Img src={ planner.imgUrl } width='352px' height='198px' /></div>
-              <Description color={ planner.fontColor }>
-                { planner.description?.split('\\n').map((line, index) => {
-                  return (
-                    <span key={ index }>
-                      { line }
-                      <br />
-                    </span>
-                  );
-                }) }
-              </Description>
-              <PlannerName color={ planner.fontColor }>{ planner.plannerName } 플래너</PlannerName>
-            </PlannerCard>
+            <Link href={ `/planner/${planner.plannerId}/detail` } passHref>
+              <a>
+                <PlannerCard key={ index }>
+                  <div style={ { position: 'absolute' } }><Img src={ planner.imgUrl } width='352px' height='198px' /></div>
+                  <Description color={ planner.fontColor }>
+                    { planner.description?.split('\\n').map((line, index) => {
+                      return (
+                        <span key={ index }>
+                          { line }
+                          <br />
+                        </span>
+                      );
+                    }) }
+                  </Description>
+                  <PlannerName color={ planner.fontColor }>{ planner.plannerName } 플래너</PlannerName>
+                </PlannerCard>
+              </a>
+            </Link>
           );
         }) }
       </FlexDiv>

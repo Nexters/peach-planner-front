@@ -2687,7 +2687,7 @@
   "resolved" "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-2.0.1.tgz"
   "version" "2.0.1"
 
-"prop-types@^15.6.2", "prop-types@^15.7.2":
+"prop-types@^15.5.8", "prop-types@^15.6.2", "prop-types@^15.7.2":
   "integrity" "sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ=="
   "resolved" "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz"
   "version" "15.7.2"
@@ -2733,6 +2733,13 @@
     "object-assign" "^4.1.1"
     "scheduler" "^0.20.2"
 
+"react-easy-swipe@^0.0.21":
+  "integrity" "sha512-OeR2jAxdoqUMHIn/nS9fgreI5hSpgGoL5ezdal4+oO7YSSgJR8ga+PkYGJrSrJ9MKlPcQjMQXnketrD7WNmNsg=="
+  "resolved" "https://registry.npmjs.org/react-easy-swipe/-/react-easy-swipe-0.0.21.tgz"
+  "version" "0.0.21"
+  dependencies:
+    "prop-types" "^15.5.8"
+
 "react-icons@^4.3.1":
   "integrity" "sha512-cB10MXLTs3gVuXimblAdI71jrJx8njrJZmNMEMC+sQu5B/BIOmlsAjskdqpn81y8UBVEGuHODd7/ci5DvoSzTQ=="
   "resolved" "https://registry.npmjs.org/react-icons/-/react-icons-4.3.1.tgz"
@@ -2777,6 +2784,15 @@
     "@babel/runtime" "^7.5.5"
     "broadcast-channel" "^3.4.1"
     "match-sorter" "^6.0.2"
+
+"react-responsive-carousel@^3.2.22":
+  "integrity" "sha512-/r7dsIaN+l417IYIS0Fr7Z5VlpK3KYnTIIsdVCWSqtuJRIZNM+qdBIA4RIbzQtuW/ZBTnQanBecblCxg0HCqLQ=="
+  "resolved" "https://registry.npmjs.org/react-responsive-carousel/-/react-responsive-carousel-3.2.22.tgz"
+  "version" "3.2.22"
+  dependencies:
+    "classnames" "^2.2.5"
+    "prop-types" "^15.5.8"
+    "react-easy-swipe" "^0.0.21"
 
 "react-slick@^0.28.1":
   "integrity" "sha512-JwRQXoWGJRbUTE7eZI1rGIHaXX/4YuwX6gn7ulfvUZ4vFDVQAA25HcsHSYaUiRCduTr6rskyIuyPMpuG6bbluw=="

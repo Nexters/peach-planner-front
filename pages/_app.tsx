@@ -9,11 +9,17 @@ import GlobalStyle from 'lib/styles/globalStyle';
 import Mobile from 'lib/pages/mobile';
 import Header from 'lib/pages/components/Header';
 import Footer from 'lib/pages/components/Footer';
+import { useEffect } from 'react';
 
 export const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   setAxiosDefaults();
+  useEffect(() => {
+    if (pageProps.isMobile) {
+      window.alert("피치플래너는 PC 환경에 최적화 되어있어요.")
+    }
+  }, []);
 
   return (
     <RecoilRoot>

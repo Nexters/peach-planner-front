@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import PButton from 'lib/pages/components/PButton';
 import EstimateBox from 'lib/pages/planner-estimate/EstimateBox';
@@ -18,10 +18,32 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { upload } from 'lib/api/Image';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input/input';
+import CompanyItem from 'lib/pages/profile-edit/CompanyItem';
 
 interface File {
   fileName: string;
   filePath: string;
+}
+
+function useOutsideAlerter(ref: any, setFocused: any) {
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event: any) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setFocused(false);
+        // alert('You clicked outside of me!');
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [ref]);
 }
 
 export default authOnly(() => {
@@ -76,9 +98,9 @@ export default authOnly(() => {
   });
 
   const [companyInfo, setCompanyInfo] = useState({
-    studios: [] as PartnerInfo[],
-    dresses: [] as PartnerInfo[],
-    makeups: [] as PartnerInfo[],
+    studios: [] as any[],
+    dresses: [] as any[],
+    makeups: [] as any[],
     weddingHall: 'false',
     weddingCard: 'false',
   });
@@ -190,6 +212,44 @@ export default authOnly(() => {
     }
   };
 
+    const [studioFocused, setStudioFocused] = useState(false);
+    const [dressFocused, setDressFocused] = useState(false);
+    const [makeupFocused, setMakeupFocused] = useState(false); 
+    const studioRef = useRef(null);
+    useOutsideAlerter(studioRef, setStudioFocused);
+    const dressRef = useRef(null);
+    useOutsideAlerter(dressRef, setDressFocused);
+    const makeupRef = useRef(null);
+    useOutsideAlerter(makeupRef, setMakeupFocused);
+    const [studioNames, setStudioNames] = useState([]as any[]);
+    const [dressNames, setDressNames] = useState([]as any[]);
+    const [makeupNames, setMakeupNames] = useState([]as any[]);
+
+  useEffect(() => {
+    console.log({companyInfo})
+  },[companyInfo])
+
+  useEffect(() => {
+    if (studios) {
+      console.log({studios,studioFocused});
+      setStudioFocused(true);
+    }
+  },[studios])
+
+  useEffect(() => {
+    if(dresses) {
+      console.log({dresses,dressFocused});
+      setDressFocused(true);
+    }
+  },[dresses]);
+
+  useEffect(() => {
+    if(makeups) {
+      console.log({makeups,makeupFocused});
+      setMakeupFocused(true);
+    }
+  },[makeups])
+
   return (
     <Section>
       {
@@ -243,105 +303,227 @@ export default authOnly(() => {
               </EstimateRow>
             </EstimateBox>
             <EstimateBox title="업체 선택">
+
+
               <EstimateRow label="스튜디오">
+                <div >
                 <form onSubmit={ handleStudio }>
                   <InputBox>
-                    <Input type="text" placeholder='원하시는 스튜디오 업체를 검색해 주세요.' value={ searchInfo.studio } name="studio" onChange={ handleSearchInfoChange } />
+                    <Input type="text" placeholder='원하시는 스튜디오 업체를 검색해 주세요.' value={ searchInfo.studio } name="studio" onChange={ handleSearchInfoChange } 
+                    onFocus={() => setStudioFocused(true)}/>
                     <FiSearch color='#adb5bd' />
                   </InputBox>
                 </form>
-              </EstimateRow>
-              { studios && studios.partners && (
-                <div style={ { marginLeft: '135px', marginBottom: '10px' } }>
-                  { studios.partners?.length > 0 ? (
-                    <SearchResultBox>
-                      { studios.partners.map((studio) => {
-                        return (
-                          <div key={ studio.name } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
-                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => {
-                              setCompanyInfo({
-                                ...companyInfo,
-                                studios: [studio],
-                              });
-                              setSearchInfo({
-                                ...searchInfo,
-                                studio: studio.name,
-                              });
-                            } }>{ studio.name }</span>
-                            <IoCloseOutline color='#495057' />
-                          </div>
-                        )
-                      }) }
-                    </SearchResultBox>
-                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>) }
+                {studios && studios.partners && studioFocused && (
+                  <>
+                  {studios.partners?.length > 0 ? (
+                  <div ref={studioRef}>
+                    <CompanyContainer>
+                      <CompanyInnerContainer>
+                          {studios.partners.map((partner: PartnerInfo) => {
+                            return (
+                              <CompanyItem
+                                key={partner.id}
+                                location={partner.location}
+                                profilePath={partner.profilePath}
+                                name={partner.name}
+                                images={partner.images}
+                                handleClick={() => {
+                                  setStudioFocused(false);
+                                  if (companyInfo.studios?.filter(id => id === partner.id)?.length != 0) {
+                                    return;
+                                  }
+                                  setCompanyInfo({
+                                    ...companyInfo,
+                                    studios: [
+                                      ...companyInfo.studios,
+                                    partner.id,
+                                  ]});
+                                  setStudioNames(
+                                    [
+                                      ...studioNames,
+                                      {
+                                        id:partner.id,
+                                        name:partner.name
+                                      }
+                                    ]
+                                  )
+                                }}
+                              />
+                        );
+                      })}
+                      </CompanyInnerContainer>
+                    </CompanyContainer>
+                  </div>
+                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>)}
+                  </>
+                )}
                 </div>
-              ) }
+              </EstimateRow>
+              <div style={{display:'flex', width:'400px', marginLeft:'135px', marginBottom:'10px'}}>
+                <SearchResultBox>
+                  { studioNames.map((studio) => {
+                    return (
+                      <div key={ studio.id } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
+                        <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } }>{ studio.name }</span>
+                        <IoCloseOutline color='#495057' onClick={() => {
+                          setStudioNames(studioNames.filter(partner => partner.id !== studio.id));
+                          setCompanyInfo({
+                            ...companyInfo,
+                            studios: companyInfo.studios.filter(id  => id !== studio.id)
+                          })
+                        }}/>
+                      </div>
+                    )
+                  }) }
+                </SearchResultBox>
+              </div>
+
+
               <EstimateRow label="드레스">
                 <form onSubmit={ handleDress }>
                   <InputBox>
-                    <Input type="text" placeholder='원하시는 드레스업체를 검색해 주세요.' value={ searchInfo.dress } name="dress" onChange={ handleSearchInfoChange } />
+                    <Input type="text" placeholder='원하시는 드레스업체를 검색해 주세요.' value={ searchInfo.dress } name="dress" onChange={ handleSearchInfoChange } 
+                    onFocus={() => setDressFocused(true)} />
                     <FiSearch color='#adb5bd' />
                   </InputBox>
                 </form>
+                {dresses && dresses.partners && dressFocused && (
+                  <>
+                  {dresses.partners?.length > 0 ? (
+                    <div ref={dressRef}>
+                      <CompanyContainer>
+                        <CompanyInnerContainer>
+                            {dresses.partners.map((partner: PartnerInfo) => {
+                              return (
+                                <CompanyItem
+                                  key={partner.id}
+                                  location={partner.location}
+                                  profilePath={partner.profilePath}
+                                  name={partner.name}
+                                  images={partner.images}
+                                  handleClick={() => {
+                                    setDressFocused(false);
+                                    if (companyInfo.dresses?.filter(id => id === partner.id)?.length != 0) {
+                                      return;
+                                    }
+                                    setCompanyInfo({
+                                      ...companyInfo,
+                                      dresses: [
+                                        ...companyInfo.dresses,
+                                      partner.id,
+                                    ]});
+                                    setDressNames(
+                                      [
+                                        ...dressNames,
+                                        {
+                                          id:partner.id,
+                                          name:partner.name
+                                        }
+                                      ]
+                                    )
+                                  }}
+                                />
+                          );
+                        })}
+                        </CompanyInnerContainer>
+                      </CompanyContainer>
+                    </div>
+                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>)}
+                  </>
+                )}
               </EstimateRow>
-              { dresses && dresses.partners && (
-                <div style={ { marginLeft: '135px', marginBottom: '10px' } }>
-                  { dresses.partners?.length > 0 ? (
-                    <SearchResultBox>
-                      { dresses.partners.map((dress) => {
-                        return (
-                          <div key={ dress.name } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
-                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => {
-                              setCompanyInfo({
-                                ...companyInfo,
-                                dresses: [dress],
-                              });
-                              setSearchInfo({
-                                ...searchInfo,
-                                dress: dress.name,
-                              });
-                            } }>{ dress.name }</span>
-                            <IoCloseOutline color='#495057' />
-                          </div>
-                        )
-                      }) }
-                    </SearchResultBox>
-                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>) }
-                </div>
-              ) }
+              <div style={{display:'flex', width:'400px', marginLeft:'135px'}}>
+                <SearchResultBox>
+                  { dressNames.map((dress) => {
+                    return (
+                      <div key={ dress.id } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
+                        <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } }>{ dress.name }</span>
+                        <IoCloseOutline color='#495057' onClick={() => {
+                          setDressNames(dressNames.filter(partner => partner.id !== dress.id));
+                          setCompanyInfo({
+                            ...companyInfo,
+                            dresses: companyInfo.dresses.filter(id  => id !== dress.id)
+                          })
+                        }}/>
+                      </div>
+                    )
+                  }) }
+                </SearchResultBox>
+              </div>
+
               <EstimateRow label="메이크업">
                 <form onSubmit={ handleMakeup }>
                   <InputBox>
-                    <Input type="text" placeholder='원하시는 메이크업 업체를 검색해 주세요.' value={ searchInfo.makeup } name="makeup" onChange={ handleSearchInfoChange } />
+                    <Input type="text" placeholder='원하시는 메이크업 업체를 검색해 주세요.' value={ searchInfo.makeup } name="makeup" onChange={ handleSearchInfoChange } 
+                    onFocus={() => setMakeupFocused(true)}/>
                     <FiSearch color='#adb5bd' />
                   </InputBox>
                 </form>
+                {makeups && makeups.partners && makeupFocused && (
+                  <>
+                  {makeups.partners?.length > 0 ? (
+                    <div ref={makeupRef}>
+                      <CompanyContainer>
+                        <CompanyInnerContainer>
+                            {makeups.partners.map((partner: PartnerInfo) => {
+                              return (
+                                <CompanyItem
+                                  key={partner.id}
+                                  location={partner.location}
+                                  profilePath={partner.profilePath}
+                                  name={partner.name}
+                                  images={partner.images}
+                                  handleClick={() => {
+                                    setMakeupFocused(false);
+                                    if (companyInfo.makeups?.filter(id => id === partner.id)?.length != 0) {
+                                      return;
+                                    }
+                                    setCompanyInfo({
+                                      ...companyInfo,
+                                      makeups: [
+                                        ...companyInfo.makeups,
+                                      partner.id,
+                                    ]});
+                                    setMakeupNames(
+                                      [
+                                        ...makeupNames,
+                                        {
+                                          id:partner.id,
+                                          name:partner.name
+                                        }
+                                      ]
+                                    )
+                                  }}
+                                />
+                          );
+                        })}
+                        </CompanyInnerContainer>
+                      </CompanyContainer>
+                    </div>
+                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>)}
+                  </>
+                )}
               </EstimateRow>
-              { makeups && makeups.partners && (
-                <div style={ { marginLeft: '135px', marginBottom: '10px' } }>
-                  { makeups.partners?.length > 0 ? (
-                    <SearchResultBox>
-                      { makeups.partners.map((makeup) => {
-                        return (
-                          <div key={ makeup.name } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
-                            <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } } onClick={ () => {
-                              setCompanyInfo({
-                                ...companyInfo,
-                                makeups: [makeup],
-                              });
-                              setSearchInfo({
-                                ...searchInfo,
-                                makeup: makeup.name,
-                              });
-                            } }>{ makeup.name }</span>
-                            <IoCloseOutline color='#495057' />
-                          </div>
-                        )
-                      }) }
-                    </SearchResultBox>
-                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>) }
-                </div>
-              ) }
+              <div style={{display:'flex', width:'400px', marginLeft:'135px'}}>
+                <SearchResultBox>
+                  { makeupNames.map((makeup) => {
+                    return (
+                      <div key={ makeup.id } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
+                        <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } }>{ makeup.name }</span>
+                        <IoCloseOutline color='#495057' onClick={() => {
+                          setMakeupNames(makeupNames.filter(partner => partner.id !== makeup.id));
+                          setCompanyInfo({
+                            ...companyInfo,
+                            makeups: companyInfo.makeups.filter(id  => id !== makeup.id)
+                          })
+                        }}/>
+                      </div>
+                    )
+                  }) }
+                </SearchResultBox>
+              </div>
+
               <EstimateRow label="웨딩홀">
                 <FormControl sx={ { minWidth: 400, minHeight: 40, height: '40px' } }>
                   <Select
@@ -623,9 +805,26 @@ input[type="file"] {
 }`;
 
 const SearchResultBox = styled.div`
-marginTop:5px;
 max-height:150px; 
 overflow:auto;
+flex:5;
 ::-webkit-scrollbar {
   display:none;
 }`;
+
+const CompanyContainer = styled.div`
+  height: 252px;
+  width: 400px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 #adb5bd;
+  position: absolute;
+  overflow: auto;
+  overflow-x: hidden;
+  z-index: 1;
+`;
+
+const CompanyInnerContainer = styled.div`
+  margin-top: 10px;
+  margin-left: 10px;
+`;

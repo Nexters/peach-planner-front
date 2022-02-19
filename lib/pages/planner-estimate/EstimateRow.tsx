@@ -19,7 +19,7 @@ export default EstimateRow;
 
 const Row = styled.div`
   display: flex;
-  margin-bottom: 15px;
+  margin-top: 15px;
   align-items: center;
 `;
 

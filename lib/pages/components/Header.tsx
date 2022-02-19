@@ -169,7 +169,7 @@ const RightLink = styled(StyledLink)`
 `;
 
 const Container = styled.header`
-  width: auto;
+  width: 1100px;
   height: 70px;
   margin: 0 auto;
   padding: 20px 0 18px 0;

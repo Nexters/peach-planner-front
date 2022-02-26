@@ -10,6 +10,7 @@ import { fetchPartnerCompanies } from 'lib/api/partners';
 import CompanyItem from './CompanyItem';
 import { PartnerInfo } from 'lib/api/Planner';
 import { SupportStore } from 'lib/pages/profile-edit/interface/support-store';
+import { IoCloseOutline } from 'react-icons/io5';
 
 interface Props {
   id: string;
@@ -18,6 +19,7 @@ interface Props {
   margin: string;
   stores: SupportStore[];
   setStores: Dispatch<SetStateAction<SupportStore[]>>;
+  estimate?: boolean;
 }
 
 function useOutsideAlerter(ref: any, setFocused: any) {
@@ -41,7 +43,7 @@ function useOutsideAlerter(ref: any, setFocused: any) {
   }, [ref]);
 }
 
-const AssociateOrganization = ({ id, name, type, margin, stores, setStores }: Props) => {
+const AssociateOrganization = ({ id, name, type, margin, stores, setStores,estimate }: Props) => {
   const [focused, setFocused] = useState(false);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setFocused);
@@ -55,22 +57,26 @@ const AssociateOrganization = ({ id, name, type, margin, stores, setStores }: Pr
 
   return (
     <FlexDiv width="632px" margin={margin} direction="column" justify="flex-start" align="start">
-      <LineAndTitle title={`제휴 ${name} 업체`} content="제휴업체를 등록할 수 있어요."></LineAndTitle>
-      <Content
-        height={'24px'}
-        width={'auto'}
-        color={'#495057'}
-        fontSize={'16px'}
-        lineHeight={'24px'}
-        margin={'20px 0 8px 0'}
-      >
-        {`${name} 업체 이름`}
-      </Content>
+      {!estimate && (
+        <>
+        <LineAndTitle title={`제휴 ${name} 업체`} content="제휴업체를 등록할 수 있어요."></LineAndTitle>
+        <Content
+          height={'24px'}
+          width={'auto'}
+          color={'#495057'}
+          fontSize={'16px'}
+          lineHeight={'24px'}
+          margin={'20px 0 8px 0'}
+        >
+          {`${name} 업체 이름`}
+        </Content>
+        </>
+      )}
       <SearchContainer ref={wrapperRef}>
         <SearchInput
           height="41px"
           width="421px"
-          placeholder={`제휴 ${name} 업체 이름을 입력해주세요.`}
+          placeholder={estimate ? `원하시는 ${name} 업체를 검색해 주세요.` : `제휴 ${name} 업체 이름을 입력해주세요.`}
           handleInput={handleChangeOrganizationName}
           onFocus={() => setFocused(true)}
           value={partnerName}
@@ -115,15 +121,36 @@ const AssociateOrganization = ({ id, name, type, margin, stores, setStores }: Pr
           <></>
         )}
       </SearchContainer>
-      <HorizontalLine color="#dee2e6"/>
-      <OrganizationLists>
-        {stores?.map((organization, index) => {
-            return <Organization key={index} name={organization.name} image={organization.previewImage} handleOrgClose={() => {
-              setStores(stores.filter((e, i) => i !== index));
-            }} />;
-          }) ?? <></>}
-      </OrganizationLists>
-      <HorizontalLine color="#868E96"/>
+      {
+        estimate ? (
+          <div style={{display:'flex', width:'400px', marginBottom:'5px'}}>
+            <SearchResultBox>
+              {stores.map((store) => {
+                return (
+                  <div key={ store.id } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
+                    <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } }>{ store.name }</span>
+                    <IoCloseOutline color='#495057' onClick={() => {
+                      setStores(stores.filter((e, i) => e.id !== store.id));
+                    }}/>
+                  </div>
+                )
+              })}
+            </SearchResultBox>
+          </div>
+        ) : (
+          <>
+            <HorizontalLine color="#dee2e6"/>
+            <OrganizationLists>
+              {stores?.map((organization, index) => {
+                  return <Organization key={index} name={organization.name} image={organization.previewImage} handleOrgClose={() => {
+                    setStores(stores.filter((e, i) => i !== index));
+                  }} />;
+                }) ?? <></>}
+            </OrganizationLists>
+            <HorizontalLine color="#868E96"/>
+          </>
+        )
+      }
     </FlexDiv>
   );
 };
@@ -160,3 +187,11 @@ const SearchContainer = styled.div``;
 const Container = styled.div`
   display: flex;
 `;
+
+const SearchResultBox = styled.div`
+max-height:150px; 
+overflow:auto;
+flex:5;
+::-webkit-scrollbar {
+  display:none;
+}`;

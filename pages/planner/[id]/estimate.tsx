@@ -13,51 +13,24 @@ import { authOnly } from 'lib/routes/withAuth';
 import { requestEstimate, RequestEstimateBodyParams } from 'lib/api/Estimate';
 import { MenuItem, FormControl } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { fetchPartnerCompanies } from 'lib/api/partners';
 import { IoCloseOutline } from 'react-icons/io5';
 import { upload } from 'lib/api/Image';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input/input';
-import CompanyItem from 'lib/pages/profile-edit/CompanyItem';
+import AssociateOrganization from 'lib/pages/profile-edit/AssociateOrganization';
+import { SupportStore } from 'lib/pages/profile-edit/interface/support-store';
 
 interface File {
   fileName: string;
   filePath: string;
 }
 
-function useOutsideAlerter(ref: any, setFocused: any) {
-  useEffect(() => {
-    /**
-     * Alert if clicked on outside of element
-     */
-    function handleClickOutside(event: any) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setFocused(false);
-        // alert('You clicked outside of me!');
-      }
-    }
-
-    // Bind the event listener
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [ref]);
-}
-
 export default authOnly(() => {
-  const [studioName, setStudioName] = useState('');
-  const [dressName, setDressName] = useState('');
-  const [makeupName, setMakeupName] = useState('');
   const [files, setFiles] = useState<File[]>([]);
   const router = useRouter();
   const { data: user, isSuccess: isUserSuccess } = useQuery(['getUser'], getUserMe);
   const plannerId = router.query.id as string;
   const { data: plannerInfo, isSuccess: isPlannerInfoSuccess } = useQuery(['planner', plannerId], () => fetchPlanner(plannerId));
-  const { data: studios } = useQuery([`partners/${studioName},STUDIO`, studioName, "STUDIO"], fetchPartnerCompanies, { enabled: studioName ? true : false });
-  const { data: dresses } = useQuery([`dresses/${studioName},DRESS`, dressName, "DRESS"], fetchPartnerCompanies, { enabled: dressName ? true : false });
-  const { data: makeups } = useQuery([`makeups/${studioName},MAKEUP`, makeupName, "MAKEUP"], fetchPartnerCompanies, { enabled: makeupName ? true : false });
   const postRequestEstimate = useMutation(
     async (params: RequestEstimateBodyParams) => {
       return await requestEstimate(params);
@@ -98,25 +71,16 @@ export default authOnly(() => {
   });
 
   const [companyInfo, setCompanyInfo] = useState({
-    studios: [] as any[],
-    dresses: [] as any[],
-    makeups: [] as any[],
     weddingHall: 'false',
     weddingCard: 'false',
   });
 
-  const [searchInfo, setSearchInfo] = useState({
-    studio: '',
-    dress: '',
-    makeup: ''
-  });
+  const [studios, setStudios] = useState<SupportStore[]>([]);
+  const [dresses, setDresses] = useState<SupportStore[]>([]);
+  const [makeUps, setMakeUps] = useState<SupportStore[]>([]);
 
   const handleMyInfoChange = (e: ChangeEvent<HTMLInputElement>) => {
     setMyInfo({ ...myInfo, [e.target.name]: e.target.value });
-  };
-
-  const handleSearchInfoChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInfo({ ...searchInfo, [e.target.name]: e.target.value });
   };
 
   const handleWeddingHallChange = (e: SelectChangeEvent) => {
@@ -143,7 +107,7 @@ export default authOnly(() => {
   };
 
   const handlePostEstimate = async () => {
-    if (!companyInfo.studios || !companyInfo.dresses || !companyInfo.makeups || !myInfo.description) {
+    if (!studios || !dresses || !makeUps || !myInfo.description) {
       alert('업체 선택과 요청사항은 필수값입니다.');
       return;
     }
@@ -154,9 +118,9 @@ export default authOnly(() => {
         email: user?.email ?? '',
         phoneNum: myInfo.phone ?? '',
         weddingDate: myInfo.date,
-        studioIds: companyInfo.studios.map(e => e.id),
-        dressIds: companyInfo.dresses.map(e => e.id),
-        makeupIds: companyInfo.makeups.map(e => e.id),
+        studioIds: studios.map(e => e.id),
+        dressIds: dresses.map(e => e.id),
+        makeupIds: makeUps.map(e => e.id),
         weddingHall: companyInfo.weddingHall === 'true' ? true : false,
         weddingCard: companyInfo.weddingCard === 'true' ? true : false,
         description: myInfo.description,
@@ -164,42 +128,6 @@ export default authOnly(() => {
       }
     );
   };
-
-  const handleStudio = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchInfo.studio) {
-      setStudioName(searchInfo.studio);
-    }
-  };
-
-  const handleDress = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchInfo.dress) {
-      setDressName(searchInfo.dress);
-    }
-  };
-
-  const handleMakeup = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchInfo.makeup) {
-      setMakeupName(searchInfo.makeup);
-    }
-  };
-
-  useEffect(() => {
-    console.log({ companyInfo })
-  }, [companyInfo])
-
-  const handleCompanyInfo = (category: string, name: string) => {
-    setCompanyInfo({
-      ...companyInfo,
-      [category]: name
-    });
-    setSearchInfo({
-      ...searchInfo,
-      [category]: name
-    });
-  }
 
   const handleFile = async (e: any) => {
     const file = e.target.files[0];
@@ -211,44 +139,6 @@ export default authOnly(() => {
       }]);
     }
   };
-
-    const [studioFocused, setStudioFocused] = useState(false);
-    const [dressFocused, setDressFocused] = useState(false);
-    const [makeupFocused, setMakeupFocused] = useState(false); 
-    const studioRef = useRef(null);
-    useOutsideAlerter(studioRef, setStudioFocused);
-    const dressRef = useRef(null);
-    useOutsideAlerter(dressRef, setDressFocused);
-    const makeupRef = useRef(null);
-    useOutsideAlerter(makeupRef, setMakeupFocused);
-    const [studioNames, setStudioNames] = useState([]as any[]);
-    const [dressNames, setDressNames] = useState([]as any[]);
-    const [makeupNames, setMakeupNames] = useState([]as any[]);
-
-  useEffect(() => {
-    console.log({companyInfo})
-  },[companyInfo])
-
-  useEffect(() => {
-    if (studios) {
-      console.log({studios,studioFocused});
-      setStudioFocused(true);
-    }
-  },[studios])
-
-  useEffect(() => {
-    if(dresses) {
-      console.log({dresses,dressFocused});
-      setDressFocused(true);
-    }
-  },[dresses]);
-
-  useEffect(() => {
-    if(makeups) {
-      console.log({makeups,makeupFocused});
-      setMakeupFocused(true);
-    }
-  },[makeups])
 
   return (
     <Section>
@@ -304,225 +194,41 @@ export default authOnly(() => {
             </EstimateBox>
             <EstimateBox title="업체 선택">
 
-
               <EstimateRow label="스튜디오">
-                <div >
-                <form onSubmit={ handleStudio }>
-                  <InputBox>
-                    <Input type="text" placeholder='원하시는 스튜디오 업체를 검색해 주세요.' value={ searchInfo.studio } name="studio" onChange={ handleSearchInfoChange } 
-                    onFocus={() => setStudioFocused(true)}/>
-                    <FiSearch color='#adb5bd' />
-                  </InputBox>
-                </form>
-                {studios && studios.partners && studioFocused && (
-                  <>
-                  {studios.partners?.length > 0 ? (
-                  <div ref={studioRef}>
-                    <CompanyContainer>
-                      <CompanyInnerContainer>
-                          {studios.partners.map((partner: PartnerInfo) => {
-                            return (
-                              <CompanyItem
-                                key={partner.id}
-                                location={partner.location}
-                                profilePath={partner.profilePath}
-                                name={partner.name}
-                                images={partner.images}
-                                handleClick={() => {
-                                  setStudioFocused(false);
-                                  if (companyInfo.studios?.filter(id => id === partner.id)?.length != 0) {
-                                    return;
-                                  }
-                                  setCompanyInfo({
-                                    ...companyInfo,
-                                    studios: [
-                                      ...companyInfo.studios,
-                                    partner.id,
-                                  ]});
-                                  setStudioNames(
-                                    [
-                                      ...studioNames,
-                                      {
-                                        id:partner.id,
-                                        name:partner.name
-                                      }
-                                    ]
-                                  )
-                                }}
-                              />
-                        );
-                      })}
-                      </CompanyInnerContainer>
-                    </CompanyContainer>
-                  </div>
-                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>)}
-                  </>
-                )}
-                </div>
+                <AssociateOrganization
+                  id="studio"
+                  name="스튜디오"
+                  type="STUDIO"
+                  margin="0"
+                  stores={studios}
+                  setStores={setStudios}
+                  estimate
+                />
               </EstimateRow>
-              <div style={{display:'flex', width:'400px', marginLeft:'135px', marginBottom:'10px'}}>
-                <SearchResultBox>
-                  { studioNames.map((studio) => {
-                    return (
-                      <div key={ studio.id } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
-                        <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } }>{ studio.name }</span>
-                        <IoCloseOutline color='#495057' onClick={() => {
-                          setStudioNames(studioNames.filter(partner => partner.id !== studio.id));
-                          setCompanyInfo({
-                            ...companyInfo,
-                            studios: companyInfo.studios.filter(id  => id !== studio.id)
-                          })
-                        }}/>
-                      </div>
-                    )
-                  }) }
-                </SearchResultBox>
-              </div>
-
 
               <EstimateRow label="드레스">
-                <form onSubmit={ handleDress }>
-                  <InputBox>
-                    <Input type="text" placeholder='원하시는 드레스업체를 검색해 주세요.' value={ searchInfo.dress } name="dress" onChange={ handleSearchInfoChange } 
-                    onFocus={() => setDressFocused(true)} />
-                    <FiSearch color='#adb5bd' />
-                  </InputBox>
-                </form>
-                {dresses && dresses.partners && dressFocused && (
-                  <>
-                  {dresses.partners?.length > 0 ? (
-                    <div ref={dressRef}>
-                      <CompanyContainer>
-                        <CompanyInnerContainer>
-                            {dresses.partners.map((partner: PartnerInfo) => {
-                              return (
-                                <CompanyItem
-                                  key={partner.id}
-                                  location={partner.location}
-                                  profilePath={partner.profilePath}
-                                  name={partner.name}
-                                  images={partner.images}
-                                  handleClick={() => {
-                                    setDressFocused(false);
-                                    if (companyInfo.dresses?.filter(id => id === partner.id)?.length != 0) {
-                                      return;
-                                    }
-                                    setCompanyInfo({
-                                      ...companyInfo,
-                                      dresses: [
-                                        ...companyInfo.dresses,
-                                      partner.id,
-                                    ]});
-                                    setDressNames(
-                                      [
-                                        ...dressNames,
-                                        {
-                                          id:partner.id,
-                                          name:partner.name
-                                        }
-                                      ]
-                                    )
-                                  }}
-                                />
-                          );
-                        })}
-                        </CompanyInnerContainer>
-                      </CompanyContainer>
-                    </div>
-                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>)}
-                  </>
-                )}
+                <AssociateOrganization
+                  id="dress"
+                  name="드레스"
+                  type="DRESS"
+                  margin="0"
+                  stores={dresses}
+                  setStores={setDresses}
+                  estimate
+                />
               </EstimateRow>
-              <div style={{display:'flex', width:'400px', marginLeft:'135px'}}>
-                <SearchResultBox>
-                  { dressNames.map((dress) => {
-                    return (
-                      <div key={ dress.id } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
-                        <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } }>{ dress.name }</span>
-                        <IoCloseOutline color='#495057' onClick={() => {
-                          setDressNames(dressNames.filter(partner => partner.id !== dress.id));
-                          setCompanyInfo({
-                            ...companyInfo,
-                            dresses: companyInfo.dresses.filter(id  => id !== dress.id)
-                          })
-                        }}/>
-                      </div>
-                    )
-                  }) }
-                </SearchResultBox>
-              </div>
 
               <EstimateRow label="메이크업">
-                <form onSubmit={ handleMakeup }>
-                  <InputBox>
-                    <Input type="text" placeholder='원하시는 메이크업 업체를 검색해 주세요.' value={ searchInfo.makeup } name="makeup" onChange={ handleSearchInfoChange } 
-                    onFocus={() => setMakeupFocused(true)}/>
-                    <FiSearch color='#adb5bd' />
-                  </InputBox>
-                </form>
-                {makeups && makeups.partners && makeupFocused && (
-                  <>
-                  {makeups.partners?.length > 0 ? (
-                    <div ref={makeupRef}>
-                      <CompanyContainer>
-                        <CompanyInnerContainer>
-                            {makeups.partners.map((partner: PartnerInfo) => {
-                              return (
-                                <CompanyItem
-                                  key={partner.id}
-                                  location={partner.location}
-                                  profilePath={partner.profilePath}
-                                  name={partner.name}
-                                  images={partner.images}
-                                  handleClick={() => {
-                                    setMakeupFocused(false);
-                                    if (companyInfo.makeups?.filter(id => id === partner.id)?.length != 0) {
-                                      return;
-                                    }
-                                    setCompanyInfo({
-                                      ...companyInfo,
-                                      makeups: [
-                                        ...companyInfo.makeups,
-                                      partner.id,
-                                    ]});
-                                    setMakeupNames(
-                                      [
-                                        ...makeupNames,
-                                        {
-                                          id:partner.id,
-                                          name:partner.name
-                                        }
-                                      ]
-                                    )
-                                  }}
-                                />
-                          );
-                        })}
-                        </CompanyInnerContainer>
-                      </CompanyContainer>
-                    </div>
-                  ) : (<div style={ { marginTop: '5px', color: '#212529', fontSize: '14px' } }>검색 결과가 없습니다.</div>)}
-                  </>
-                )}
+                <AssociateOrganization
+                  id="makeup"
+                  name="메이크업"
+                  type="MAKEUP"
+                  margin="0"
+                  stores={makeUps}
+                  setStores={setMakeUps}
+                  estimate
+                />
               </EstimateRow>
-              <div style={{display:'flex', width:'400px', marginLeft:'135px'}}>
-                <SearchResultBox>
-                  { makeupNames.map((makeup) => {
-                    return (
-                      <div key={ makeup.id } style={ { marginTop: '5px', width: '400px', display: 'flex', justifyContent: 'space-between' } }>
-                        <span style={ { cursor: 'pointer', color: '#212529', fontSize: '14px' } }>{ makeup.name }</span>
-                        <IoCloseOutline color='#495057' onClick={() => {
-                          setMakeupNames(makeupNames.filter(partner => partner.id !== makeup.id));
-                          setCompanyInfo({
-                            ...companyInfo,
-                            makeups: companyInfo.makeups.filter(id  => id !== makeup.id)
-                          })
-                        }}/>
-                      </div>
-                    )
-                  }) }
-                </SearchResultBox>
-              </div>
 
               <EstimateRow label="웨딩홀">
                 <FormControl sx={ { minWidth: 400, minHeight: 40, height: '40px' } }>
@@ -811,20 +517,3 @@ flex:5;
 ::-webkit-scrollbar {
   display:none;
 }`;
-
-const CompanyContainer = styled.div`
-  height: 252px;
-  width: 400px;
-  border-radius: 3px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px 0 #adb5bd;
-  position: absolute;
-  overflow: auto;
-  overflow-x: hidden;
-  z-index: 1;
-`;
-
-const CompanyInnerContainer = styled.div`
-  margin-top: 10px;
-  margin-left: 10px;
-`;

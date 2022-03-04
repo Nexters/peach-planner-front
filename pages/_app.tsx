@@ -10,16 +10,30 @@ import Mobile from 'lib/pages/mobile';
 import Header from 'lib/pages/components/Header';
 import Footer from 'lib/pages/components/Footer';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import * as gtag from "../lib/utils/gtag";
 
 export const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   setAxiosDefaults();
+  const router = useRouter();
+
   useEffect(() => {
     if (pageProps.isMobile) {
       window.alert("피치플래너는 PC 환경에 최적화 되어있어요.")
     }
   }, []);
+
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => {
+      gtag.pageview(url);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <RecoilRoot>

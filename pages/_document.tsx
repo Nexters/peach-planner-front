@@ -1,6 +1,7 @@
 import Header from "lib/pages/components/Header";
 import Document, { Html, Head, Main, NextScript, DocumentContext } from "next/document";
 import { ServerStyleSheet } from 'styled-components';
+import { GA_TRACKING_ID } from "../lib/utils/gtag";
 
 export default class CustomDocument extends Document {
     // for styled-component
@@ -32,7 +33,25 @@ export default class CustomDocument extends Document {
     render() {
         return (
             <Html>
-                <Head />
+                <Head>
+                    {/* Global Site Tag (gtag.js) - Google Analytics */ }
+                    <script
+                        async
+                        src={ `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}` }
+                    />
+                    <script
+                        dangerouslySetInnerHTML={ {
+                            __html: `
+                                window.dataLayer = window.dataLayer || [];
+                                function gtag(){dataLayer.push(arguments);}
+                                gtag('js', new Date());
+                                gtag('config', '${GA_TRACKING_ID}', {
+                                    page_path: window.location.pathname,
+                                });
+                            `
+                        } }
+                    />
+                </Head>
                 <body>
                     <Main />
                 </body>

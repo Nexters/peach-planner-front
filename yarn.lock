@@ -661,6 +661,11 @@
   dependencies:
     "axios" "*"
 
+"@types/gtag.js@^0.0.8":
+  "integrity" "sha512-xKDygydxruSUNkVbZWjiEbMijz9+xZCLb2yiTiQT88pm5EhIAUhaCo05IZF1HcQc90u4W7cp+7OZNpcJxpyL5g=="
+  "resolved" "https://registry.npmjs.org/@types/gtag.js/-/gtag.js-0.0.8.tgz"
+  "version" "0.0.8"
+
 "@types/hoist-non-react-statics@*":
   "integrity" "sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA=="
   "resolved" "https://registry.npmjs.org/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz"

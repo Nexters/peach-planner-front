@@ -10,16 +10,29 @@ import { Carousel } from 'react-responsive-carousel';
 export default () => {
   return (
     <Carousel width={ 1100 } autoPlay infiniteLoop interval={ 5000 } showStatus={false}>
-      <Link href="https://blog.naver.com/peachplanner/222637086412">
+      <Link href="https://peachplanner.com/planner/220/detail">
         <a target={ '_blank' }>
           <TopBox>
-            <Img src={ background.src } />
+            <Img src={ 'banners/4.png' } />
           </TopBox>
         </a>
       </Link>
-      <Link href="/">
+      <Link href="https://peachplanner.com/planner/219/detail">
         <a target={ '_blank' }>
-          {/* TODO:: Modify it to image */}
+          <TopBox>
+            <Img src={ 'banners/5.png' } />
+          </TopBox>
+        </a>
+      </Link>
+      <Link href="https://peachplanner.com/planner/218/detail">
+        <a target={ '_blank' }>
+          <TopBox>
+            <Img src={ 'banners/6.png' } />
+          </TopBox>
+        </a>
+      </Link>
+      {/* <Link href="/">
+        <a target={ '_blank' }>
           <TopBox>
             <Img src={ background2.src } style={{position:'absolute', left: 0}}/>
             <FlexDiv margin={ '97px 0 0 73px' } justify="flex-start" align="start" direction="column" style={{position:'absolute'}}>
@@ -33,7 +46,7 @@ export default () => {
             </FlexDiv>
           </TopBox>
         </a>
-      </Link>
+      </Link> */}
     </Carousel>
   );
 };
